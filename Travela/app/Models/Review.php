@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class Review extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use  HasFactory, Notifiable, SoftDeletes;
@@ -18,17 +18,14 @@ class User extends Authenticatable
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role',
+        'user_id',
+        'activity_id',
+        'review',
+        'feedback',
         'created_at',
         'updated_at',
         'deleted_at'
     ];
-
-    use  HasFactory, Notifiable, SoftDeletes;
-
 
     protected $dates = ['deleted_at'];
     public $timestamps = true;

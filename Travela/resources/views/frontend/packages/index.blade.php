@@ -60,7 +60,7 @@
         <!-- Navbar & Hero End -->
 
         <!-- Header Start -->
-        <div class="container-fluid bg-breadcrumb">
+        <div class="container-fluid bg-breadcrumb" style="background: linear-gradient(rgba(19, 53, 123, 0.5), rgba(19, 53, 123, 0.5)), url({{ asset('images/breadcrumb-bg.jpg') }});">
             <div class="container text-center py-5" style="max-width: 900px;">
                 <h3 class="text-white display-3 mb-4">Travel Packages</h1>
                 <ol class="breadcrumb justify-content-center mb-0">
@@ -82,7 +82,7 @@
                 <div class="packages-carousel owl-carousel">
                     <div class="packages-item">
                         <div class="packages-img">
-                            <img src="img/packages-4.jpg" class="img-fluid w-100 rounded-top" alt="Image">
+                            <img src="{{asset("images/packages-4.jpg")}}" class="img-fluid w-100 rounded-top" alt="Image">
                             <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
                                 <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>Venice - Italy</small>
                                 <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>3 days</small>
@@ -115,7 +115,7 @@
                     </div>
                     <div class="packages-item">
                         <div class="packages-img">
-                            <img src="img/packages-2.jpg" class="img-fluid w-100 rounded-top" alt="Image">
+                            <img src="{{asset("images/packages-4.jpg")}}" class="img-fluid w-100 rounded-top" alt="Image">
                             <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
                                 <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>Venice - Italy</small>
                                 <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>3 days</small>
@@ -148,7 +148,7 @@
                     </div>
                     <div class="packages-item">
                         <div class="packages-img">
-                            <img src="img/packages-3.jpg" class="img-fluid w-100 rounded-top" alt="Image">
+                            <img src="{{asset("images/packages-3.jpg")}}" class="img-fluid w-100 rounded-top" alt="Image">
                             <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
                                 <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>Venice - Italy</small>
                                 <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>3 days</small>
@@ -181,7 +181,7 @@
                     </div>
                     <div class="packages-item">
                         <div class="packages-img">
-                            <img src="img/packages-1.jpg" class="img-fluid w-100 rounded-top" alt="Image">
+                            <img src="{{asset("images/packages-1.jpg")}}" class="img-fluid w-100 rounded-top" alt="Image">
                             <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
                                 <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>Thayland</small>
                                 <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>3 days</small>

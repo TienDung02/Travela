@@ -6,6 +6,6 @@ class PackageController
 {
     public function index()
     {
-        return view('frontend.package.index');
+        return view('frontend.packages.index');
     }
 }

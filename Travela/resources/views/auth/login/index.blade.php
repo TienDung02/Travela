@@ -39,15 +39,11 @@
                                 <div class="col-md-6">
                                     <div class="card p-5">
                                         <div class="card-header text-center">
-                                            <h3>Đăng Ký</h3>
+                                            <h3>Đăng Nhập</h3>
                                         </div>
                                         <div class="card-body">
                                             <form action="{{route('auth.reg')}}" method="POST">
                                                 @csrf
-                                                <div class="mb-3">
-                                                    <label for="name" class="form-label">User name</label>
-                                                    <input type="text" class="form-control" id="name" name="name" required>
-                                                </div>
                                                 <div class="mb-3">
                                                     <label for="email" class="form-label">Email</label>
                                                     <input type="email" class="form-control" id="email" name="email" required>
@@ -59,31 +55,21 @@
                                                 <div class="notification-limit notice closeable d-none form p-2 bg-white rounded">
                                                     <p class="text-center"><span class="text-danger">Password minimum 8 characters</span></p>
                                                 </div>
-                                                <div class="mb-3">
-                                                    <label for="password" class="form-label ">Confirm Password</label>
-                                                    <input type="password" class="form-control confirm_password" id="confirm_password" name="password_confirmation" required>
-                                                </div>
-                                                <div class="notification notice closeable form p-2 d-none bg-white rounded">
-                                                    <p class="text-center"><span class="text-danger">Confirm password does not match</span></p>
-                                                </div>
 
-                                                <button type="submit" class="btn btn-primary w-100 btn-submit-update">Đăng Ký</button>
+                                                <button type="submit" class="btn btn-primary w-100 btn-submit-update">Đăng Nhập</button>
                                             </form>
 
                                             <hr>
                                             <p class="text-center">Hoặc đăng nhập bằng</p>
                                             <div class="d-flex justify-content-center">
-                                                <a href="YOUR_GOOGLE_LOGIN_URL" class="btn btn-danger me-2">
+                                                <a href="{{route('google.login')}}" class="btn btn-danger me-2">
                                                     <i class="bi bi-google"></i> Google
                                                 </a>
-                                                <a href="YOUR_FACEBOOK_LOGIN_URL" class="btn btn-primary">
+                                                <a href="{{route('facebook.login')}}" class="btn btn-primary">
                                                     <i class="bi bi-facebook"></i> Facebook
                                                 </a>
                                             </div>
                                         </div>
-                                        <p class="mt-3 text-center">
-                                            Đã có tài khoản? <a href="{{route('login.index')}}">Đăng nhập</a>
-                                        </p>
                                     </div>
 
                                 </div>

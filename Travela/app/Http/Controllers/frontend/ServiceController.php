@@ -6,6 +6,6 @@ class ServiceController
 {
     public function index()
     {
-        return view('frontend.service.index');
+        return view('frontend.services.index');
     }
 }

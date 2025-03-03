@@ -60,7 +60,7 @@
         <!-- Navbar & Hero End -->
 
         <!-- Header Start -->
-        <div class="container-fluid bg-breadcrumb">
+        <div class="container-fluid bg-breadcrumb" style="background: linear-gradient(rgba(19, 53, 123, 0.5), rgba(19, 53, 123, 0.5)), url({{ asset('images/breadcrumb-bg.jpg') }});">
             <div class="container text-center py-5" style="max-width: 900px;">
                 <h3 class="text-white display-3 mb-4">Our Services</h1>
                 <ol class="breadcrumb justify-content-center mb-0">
@@ -208,7 +208,7 @@
                             </p>
                         </div>
                         <div class="testimonial-img p-1">
-                            <img src="img/testimonial-1.jpg" class="img-fluid rounded-circle" alt="Image">
+                            <img src="{{asset("images/testimonial-1.jpg")}}" class="img-fluid rounded-circle" alt="Image">
                         </div>
                         <div style="margin-top: -35px;">
                             <h5 class="mb-0">John Abraham</h5>
@@ -228,7 +228,7 @@
                             </p>
                         </div>
                         <div class="testimonial-img p-1">
-                            <img src="img/testimonial-2.jpg" class="img-fluid rounded-circle" alt="Image">
+                            <img src="{{asset("images/testimonial-2.jpg")}}" class="img-fluid rounded-circle" alt="Image">
                         </div>
                         <div style="margin-top: -35px;">
                             <h5 class="mb-0">John Abraham</h5>
@@ -248,7 +248,7 @@
                             </p>
                         </div>
                         <div class="testimonial-img p-1">
-                            <img src="img/testimonial-3.jpg" class="img-fluid rounded-circle" alt="Image">
+                            <img src="{{asset("images/testimonial-3.jpg")}}" class="img-fluid rounded-circle" alt="Image">
                         </div>
                         <div style="margin-top: -35px;">
                             <h5 class="mb-0">John Abraham</h5>
@@ -268,7 +268,7 @@
                             </p>
                         </div>
                         <div class="testimonial-img p-1">
-                            <img src="img/testimonial-4.jpg" class="img-fluid rounded-circle" alt="Image">
+                            <img src="{{asset("images/testimonial-4.jpg")}}" class="img-fluid rounded-circle" alt="Image">
                         </div>
                         <div style="margin-top: -35px;">
                             <h5 class="mb-0">John Abraham</h5>
