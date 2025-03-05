@@ -40,24 +40,15 @@
             </div>
             <div class="row g-5 align-items-center">
                 <div class="col-lg-4">
-                    <div class="bg-white rounded p-4">
-                        <div class="text-center mb-4">
-                            <i class="fa fa-map-marker-alt fa-3x text-primary"></i>
-                            <h4 class="text-primary"><Address></Address></h4>
-                            <p class="mb-0">123 ranking Street, <br> New York, USA</p>
+                    <div class="bg-white rounded p-4 position-relative">
+                        <div class="text-center w-75 position-absolute">
+                            <img class="w-100" src="{{asset('images/destination-1.jpg')}}" alt="">
                         </div>
-                        <div class="text-center mb-4">
-                            <i class="fa fa-phone-alt fa-3x text-primary mb-3"></i>
-                            <h4 class="text-primary">Mobile</h4>
-                            <p class="mb-0">+012 345 67890</p>
-                            <p class="mb-0">+012 345 67890</p>
+                        <div class="text-center w-75 position-absolute">
+                            <img class="w-100" src="{{asset('images/destination-1.jpg')}}" alt="">
                         </div>
-
-                        <div class="text-center">
-                            <i class="fa fa-envelope-open fa-3x text-primary mb-3"></i>
-                            <h4 class="text-primary">Email</h4>
-                            <p class="mb-0">info@example.com</p>
-                            <p class="mb-0">info@example.com</p>
+                        <div class="text-center w-75 position-absolute">
+                            <img class="w-100" src="{{asset('images/destination-1.jpg')}}" alt="">
                         </div>
                     </div>
                 </div>
