@@ -1735,3 +1735,13 @@ h2 {
     object-fit: cover;
     border: 1px solid #0b204a;
 }
+.image-left-schedule{
+    position: relative;
+}
+.image-left-schedule div{
+    position: absolute;
+}
+
+.image-left-schedule img{
+    width: 100%;
+}
