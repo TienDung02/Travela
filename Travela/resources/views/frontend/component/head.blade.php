@@ -14,4 +14,6 @@
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
     @vite(['resources/css/bootstrap.min.css', 'resources/css/style.css'])
-</head>
+    <link rel="icon" href="{{asset('images/logo.png')}}" type="image/x-icon">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    </head>

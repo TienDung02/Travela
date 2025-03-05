@@ -1,14 +1,8 @@
 @extends('frontend.layouts.layout')
 @section('content')
 
-    <body>
 
-        <!-- Spinner Start -->
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
+
 
         <div class="container-fluid position-relative p-0">
             <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
@@ -42,9 +36,10 @@
                                             <h3>Đăng Ký</h3>
                                         </div>
                                         <div class="card-body">
-                                            <form action="register.php" method="POST">
+                                            <form action="{{route('auth.reg')}}" method="POST" class="reg">
+                                                @csrf
                                                 <div class="mb-3">
-                                                    <label for="name" class="form-label">Họ và Tên</label>
+                                                    <label for="name" class="form-label">User name</label>
                                                     <input type="text" class="form-control" id="name" name="name" required>
                                                 </div>
                                                 <div class="mb-3">
@@ -52,10 +47,21 @@
                                                     <input type="email" class="form-control" id="email" name="email" required>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="password" class="form-label">Mật khẩu</label>
-                                                    <input type="password" class="form-control" id="password" name="password" required>
+                                                    <label for="password" class="form-label">Password</label>
+                                                    <input type="password" class="form-control password" id="password" name="password" required>
                                                 </div>
-                                                <button type="submit" class="btn btn-primary w-100">Đăng Ký</button>
+                                                <div class="notification-limit notice closeable d-none form p-2 bg-white rounded">
+                                                    <p class="text-center"><span class="text-danger">Password minimum 8 characters</span></p>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="password" class="form-label ">Confirm Password</label>
+                                                    <input type="password" class="form-control confirm_password" id="confirm_password" name="password_confirmation" required>
+                                                </div>
+                                                <div class="notification notice closeable form p-2 d-none bg-white rounded">
+                                                    <p class="text-center"><span class="text-danger">Confirm password does not match</span></p>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-primary w-100 btn-submit-update">Đăng Ký</button>
                                             </form>
 
                                             <hr>
@@ -70,7 +76,7 @@
                                             </div>
                                         </div>
                                         <p class="mt-3 text-center">
-                                            Đã có tài khoản? <a href="login.html">Đăng nhập</a>
+                                            Đã có tài khoản? <a href="{{route('login.index')}}">Đăng nhập</a>
                                         </p>
                                     </div>
 

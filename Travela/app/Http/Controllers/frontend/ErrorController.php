@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\frontend;
 
-class PackageController
+class ErrorController
 {
     public function index()
     {
-        return view('frontend.packages.index');
+        return view('frontend.404');
     }
 }

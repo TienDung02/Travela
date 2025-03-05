@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\frontend;
 
-class PackageController
+class GuideController
 {
     public function index()
     {
-        return view('frontend.packages.index');
+        return view('frontend.guide.index');
     }
 }

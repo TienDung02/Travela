@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\frontend;
 
-class PackageController
+class BookingController
 {
     public function index()
     {
-        return view('frontend.packages.index');
+        return view('frontend.booking.index');
     }
 }

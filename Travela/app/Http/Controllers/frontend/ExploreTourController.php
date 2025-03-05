@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\frontend;
 
-class PackageController
+class ExploreTourController
 {
     public function index()
     {
-        return view('frontend.packages.index');
+        return view('frontend.tour.index');
     }
 }
