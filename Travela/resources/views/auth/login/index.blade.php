@@ -1,6 +1,18 @@
 @extends('frontend.layouts.layout')
 @section('content')
 
+<<<<<<< HEAD
+=======
+    <body>
+
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+>>>>>>> origin/master
         <div class="container-fluid position-relative p-0">
             <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
                 <a href="" class="navbar-brand p-0">
@@ -13,6 +25,12 @@
                 @include('frontend.component.menu-top')
             </nav>
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> origin/master
             <!-- Carousel Start -->
             <div class="carousel-header">
                 <div id="carouselId" class="carousel slide" data-bs-ride="carousel">
@@ -30,7 +48,11 @@
                                             <h3>Đăng Nhập</h3>
                                         </div>
                                         <div class="card-body">
+<<<<<<< HEAD
                                             <form action="{{route('login.login')}}" method="POST"  id="loginForm">
+=======
+                                            <form action="{{route('auth.reg')}}" method="POST">
+>>>>>>> origin/master
                                                 @csrf
                                                 <div class="mb-3">
                                                     <label for="email" class="form-label">Email</label>
@@ -92,6 +114,10 @@
         </div>
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
     @vite(['resources/js/app.js'])
 @endsection
 
