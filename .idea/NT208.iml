@@ -8,6 +8,8 @@
       <sourceFolder url="file://$MODULE_DIR$/Travela/tests" isTestSource="true" packagePrefix="Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/Travela/tests/Feature" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/Travela/tests/Unit" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/Travela/vendor/brick/math" />
       <excludeFolder url="file://$MODULE_DIR$/Travela/vendor/carbonphp/carbon-doctrine-types" />
       <excludeFolder url="file://$MODULE_DIR$/Travela/vendor/composer" />
@@ -119,6 +121,12 @@
       <excludeFolder url="file://$MODULE_DIR$/Travela/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/Travela/vendor/voku/portable-ascii" />
       <excludeFolder url="file://$MODULE_DIR$/Travela/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/Travela/vendor/firebase/php-jwt" />
+      <excludeFolder url="file://$MODULE_DIR$/Travela/vendor/laravel/socialite" />
+      <excludeFolder url="file://$MODULE_DIR$/Travela/vendor/league/oauth1-client" />
+      <excludeFolder url="file://$MODULE_DIR$/Travela/vendor/paragonie/constant_time_encoding" />
+      <excludeFolder url="file://$MODULE_DIR$/Travela/vendor/paragonie/random_compat" />
+      <excludeFolder url="file://$MODULE_DIR$/Travela/vendor/phpseclib/phpseclib" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
