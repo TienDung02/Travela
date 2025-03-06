@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Services;
+
+use Illuminate\Support\Facades\Http;
+
+class WeatherService
+{
+    protected $apiKey;
+
+    public function __construct()
+    {
+        $this->apiKey = env('WEATHER_API_KEY');
+    }
+
+    public function getWeatherByCity($city)
+    {
+        $url = "https://api.weatherapi.com/v1/forecast.json?key={$this->apiKey}&q={$city}&days=3";
+
+        $response = Http::get($url);
+
+        if ($response->failed()) {
+            return null; // Trả về null nếu request thất bại
+        }
+
+        return $response->json();
+    }
+}
