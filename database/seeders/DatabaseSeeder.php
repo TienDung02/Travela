@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Preference;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,6 +18,7 @@ class DatabaseSeeder extends Seeder
             ItineraryDetailSeeder::class,
             ReviewSeeder::class,
             CurrencySeeder::class,
+            PreferencesSeeder::class,
         ]);
     }
 }

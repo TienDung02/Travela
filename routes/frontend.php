@@ -24,6 +24,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\frontend\GoMapsController;
 use App\Http\Controllers\WeatherController;
+use App\Http\Controllers\frontend\ProvinceController;
+
+
+
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
@@ -90,8 +94,10 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 
-
-
+Route::get('/api/provinces', [ProvinceController::class, 'getProvinces']);
+Route::get('/districts/{provinceId}', [ProvinceController::class, 'getDistricts']);
+Route::get('/wards/{districtId}', [ProvinceController::class, 'getWards']);
+Route::get('/api/search', [ScheduleController::class, 'search']);
 
 
 Route::get('/weather', [WeatherController::class, 'getWeather']);

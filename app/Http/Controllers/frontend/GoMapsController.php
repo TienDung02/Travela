@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\frontend;
 
-use App\Services\GoMapsService;
+use App\Services\MapAPIService;
 use Illuminate\Http\Request;
 use App\Services\GeoNamesService;
 class GoMapsController
@@ -11,7 +11,7 @@ class GoMapsController
     protected $geoNamesService;
 
 
-    public function __construct(GoMapsService $goMapsService,GeoNamesService $geoNamesService)
+    public function __construct(MapAPIService $goMapsService, GeoNamesService $geoNamesService)
     {
         $this->goMapsService = $goMapsService;
         $this->geoNamesService = $geoNamesService;

@@ -3,36 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Location</title>
+    <title>Tìm kiếm thành phố</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+
+        body{
+            background: #0a0a0f;
+        }
+
+        h2{
+            color: #fff3cd;
+        }
+
+        #suggestions {
+            border: 1px solid #ccc;
+            max-width: 300px;
+            background: #fff;
+            position: absolute;
+            display: none;
+        }
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #ddd;
+        }
+        .suggestion-item:hover {
+            background: #f0f0f0;
+        }
+    </style>
 </head>
 <body>
-<h1>Search Location</h1>
-<input type="text" id="search" placeholder="Nhập tên địa điểm">
-<button onclick="searchLocation()">Tìm kiếm</button>
-
-<ul id="results"></ul>
+<div style="width: 500px; margin: 10rem auto;">
+    <h2>Tìm kiếm thành phố</h2>
+    <input type="text" id="city-input" style="width: 20rem; height: 2rem; font-size: 1.25rem" placeholder="Nhập tên thành phố..." autocomplete="off">
+    <div id="suggestions"></div>
+</div>
 
 <script>
-    function searchLocation() {
-        let query = document.getElementById('search').value;
-        fetch(`/search-location?q=${query}`)
-            .then(response => response.json())
-            .then(data => {
-                let resultsList = document.getElementById('results');
-                resultsList.innerHTML = '';
+    $(document).ready(function() {
+        $('#city-input').on('input', function() {
+            let query = $(this).val();
+            if (query.length < 1) {
+                $('#suggestions').hide();
+                return;
+            }
 
-                if (data.geonames) {
-                    data.geonames.forEach(location => {
-                        let li = document.createElement('li');
-                        li.textContent = `${location.name}, ${location.countryName} (Lat: ${location.lat}, Lng: ${location.lng})`;
-                        resultsList.appendChild(li);
+            $.ajax({
+                url: "/api/search-city",
+                type: "GET",
+                data: { q: query },
+                success: function(data) {
+                    let suggestionsHtml = '';
+                    data.forEach(city => {
+                        suggestionsHtml += `<div class="suggestion-item" data-name="${city.name}">
+                                                    ${city.name}
+                                                </div>`;
                     });
-                } else {
-                    resultsList.innerHTML = '<li>Không có kết quả.</li>';
+
+                    if (data.length > 0) {
+                        $('#suggestions').html(suggestionsHtml).show();
+                    } else {
+                        $('#suggestions').hide();
+                    }
                 }
-            })
-            .catch(error => console.error('Error:', error));
-    }
+            });
+        });
+
+        $(document).on('click', '.suggestion-item', function() {
+            $('#city-input').val($(this).data('name'));
+            $('#suggestions').hide();
+        });
+
+        $(document).click(function(event) {
+            if (!$(event.target).closest('#city-input, #suggestions').length) {
+                $('#suggestions').hide();
+            }
+        });
+    });
 </script>
 </body>
 </html>

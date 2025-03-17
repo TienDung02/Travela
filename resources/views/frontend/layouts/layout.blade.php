@@ -12,18 +12,76 @@
 
 
 @include('.frontend.component.script')
-@vite(['resources/js/func.js'])
+
+
+
+
+
+
+
+{{--<script>--}}
+{{--    document.addEventListener('livewire:load', function () {--}}
+{{--        $('.create_conversation').on('click', function() {--}}
+{{--            const id = $(this).data('id');--}}
+{{--            Livewire.emit('createConversation', id);--}}
+{{--            console.log('Sự kiện đã phát: createConversation với ID:', id);--}}
+
+{{--        });--}}
+{{--    });--}}
+{{--</script>--}}
 <script>
-    document.addEventListener('livewire:load', function () {
-        $('.create_conversation').on('click', function() {
-            const id = $(this).data('id');
-            Livewire.emit('createConversation', id);
-            console.log('Sự kiện đã phát: createConversation với ID:', id);
-
-        });
-    });
+    // $(document).ready(function () {
+    //     console.log('aaaaa')
+    //     $('#searchInput').on('input', function () {
+    //         let query = $(this).val().trim();
+    //         console.log(query)
+    //         console.log('bbbbbb')
+    //
+    //         if (query.length === 0) {
+    //             $('#results').hide();
+    //             return;
+    //         }
+    //
+    //         $.ajax({
+    //             url: '/api/search',
+    //             type: 'GET',
+    //             data: { q: query },
+    //             success: function (data) {
+    //                 let resultsDiv = $('#results');
+    //                 resultsDiv.empty();
+    //
+    //                 if (data.length === 0) {
+    //                     resultsDiv.hide();
+    //                     return;
+    //                 }
+    //                 $('#searchInput').addClass('rounded-top rounded-0');
+    //
+    //                 $.each(data, function (index, item) {
+    //                     resultsDiv.append(`<div class="result-item">${item.name}</div>`);
+    //                 });
+    //
+    //                 resultsDiv.show();
+    //             },
+    //             error: function (xhr) {
+    //                 console.error('Lỗi khi gọi API:', xhr);
+    //             }
+    //         });
+    //     });
+    //
+    //     $(document).on('click', '.result-item', function () {
+    //         $('#searchInput').val($(this).text());
+    //         $('#searchInput').removeClass('rounded-top rounded-0');
+    //         $('#results').hide();
+    //     });
+    //
+    //     $(document).click(function (e) {
+    //         if (!$(e.target).closest('#searchInput, #results').length) {
+    //             $('#searchInput').removeClass('rounded-top rounded-0');
+    //             $('#results').hide();
+    //         }
+    //     });
+    // });
 </script>
-
 
 @if (isset(session('alert_')['alert__type']))
     <script>

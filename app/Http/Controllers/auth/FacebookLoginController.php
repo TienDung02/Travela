@@ -20,59 +20,47 @@ class FacebookLoginController extends Controller
     public function callback()
     {
         $facebookUser = Socialite::driver('facebook')->user();
-        try {
-            $user = User::updateOrCreate(
-                ['provider_id' => $facebookUser->id, 'provider' => 'facebook'],
-                [
-                    'name' => $facebookUser->name,
-                    'email' => $facebookUser->email,
-                    'avatar' => $facebookUser->avatar,
-                ]
-            );
-            Auth::login($user);
-            Session::put('user_data', [
-                'id' => $user->id,
-                'avatar' => $user->avatar ?? '',
-                'name' => $user->name ?? '',
-                'email' => $user->email ?? '',
-            ]);
-            Session::put('alert_', [
-                'alert__type' => 'success',
-                'alert__title' => 'Login success',
-                'alert__text' => '',
-                'alert_reload' => 'false',
-            ]);
-            return redirect('/');
-        } catch (\Exception $e) {
-            if ($e->errorInfo[1] == 1062) {
-                $existingUser = User::where('email', $facebookUser->email)->first();
-                if ($existingUser) {
-                    $existingUser->update([
-                        'provider_id' => $facebookUser->id,
-                        'provider' => 'google',
-                        'name' => $facebookUser->name,
-                        'avatar' => $facebookUser->avatar,
-                        'updated_at' => now(),
-                    ]);
-                    $user = $existingUser;
-                }
-                Auth::login($user);
-                Session::put('user_data', [
-                    'id' => $user->id,
-                    'avatar' => $user->avatar ?? '',
-                    'name' => $user->name ?? '',
-                    'email' => $user->email ?? '',
-                ]);
-                Session::put('alert_', [
-                    'alert__type' => 'success',
-                    'alert__title' => 'Login success',
-                    'alert__text' => '',
-                    'alert_reload' => 'false',
-                ]);
-                return redirect('/');
-            } else {
-                throw $e;
-            }
+
+        // Kiểm tra user có tồn tại theo email chưa
+        $existingUser = User::where('email', $facebookUser->email)->first();
+
+        if ($existingUser) {
+            // Nếu user đã tồn tại, cập nhật thông tin
+            $existingUser->provider_id = $facebookUser->id;
+            $existingUser->provider = 'facebook';
+            $existingUser->name = $facebookUser->name;
+            $existingUser->updated_at = now();
+            $existingUser->save(); // Gọi save() để chắc chắn cập nhật dữ liệu
+            $user = $existingUser;
+        } else {
+            // Nếu user chưa tồn tại, tạo mới
+            $user = new User();
+            $user->provider_id = $facebookUser->id;
+            $user->provider = 'facebook';
+            $user->name = $facebookUser->name;
+            $user->email = $facebookUser->email;
+            $user->password = bcrypt(Str::random(16)); // Mật khẩu ngẫu nhiên
+            $user->created_at = now();
+            $user->updated_at = now();
+            $user->save(); // Gọi save() để chắc chắn dữ liệu được lưu
         }
+
+        // Đăng nhập & lưu session
+        Auth::login($user);
+        Session::put('user_data', [
+            'id' => $user->id,
+            'avatar' => $user->avatar ?? '',
+            'name' => $user->name ?? '',
+            'email' => $user->email ?? '',
+        ]);
+        Session::put('alert_', [
+            'alert__type' => 'success',
+            'alert__title' => 'Login success',
+            'alert__text' => '',
+            'alert_reload' => 'false',
+        ]);
+
+        return redirect('/');
     }
+
 }

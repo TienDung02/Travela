@@ -1,9 +1,6 @@
 @extends('frontend.layouts.layout')
 @section('content')
 
-
-
-
     <!-- Navbar & Hero Start -->
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
@@ -44,7 +41,7 @@
                         <div class="text-start w-75 position-absolute top-0 start-0">
                             <img src="{{asset('images/destination-1.jpg')}}" alt="">
                         </div>
-                        <div class="text-end w-75 position-absolute end-0" style="    transform: translateY(65%) !important;">
+                        <div class="text-end w-75 position-absolute end-0" style="    transform: translateY(50%) !important;">
                             <img src="{{asset('images/destination-2.jpg')}}" alt="">
                         </div>
                         <div class="text-center w-75 position-absolute bottom-0">
@@ -54,69 +51,78 @@
                 </div>
                 <div class="col-lg-8">
                     <h3 class="mb-2">Enter trip information</h3>
-                    <form action="{{ route('map') }}" method="GET" class="mb-4">
-                        <div class="input-group">
-                            <input type="text" name="address" class="form-control" placeholder="Nhập địa điểm..." required>
-                            <button class="btn btn-primary" type="submit">Tìm kiếm</button>
-                        </div>
-                    </form>
-                    <form>
+                    <form action="{{ route('map') }}" method="GET" class="">
                         <div class="row g-3">
                             <div class="col-12">
-
-                            </div>
-                            <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control border-0" id="subject" placeholder="">
-                                    <label for="subject">Where do you want to go ?</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control border-0" id="name" placeholder="">
-                                    <label for="name">Departure date</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="email" class="form-control border-0" id="email" placeholder="">
-                                    <label for="email">Return date</label>
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="form-floating">
-                                    <input type="email" class="form-control border-0" id="email" placeholder="">
-                                    <label for="email">Budget</label>
+                                    <input type="text" id="searchInput" name="address" class="form-control border-0" placeholder="Nhập địa điểm..." required>
+                                    <label for="searchInput">Where do you want to go ?</label>
+                                    <div class="dropdown">
+                                        <div id="results" class="dropdown-menu rounded-bottom rounded-0 w-100 p-0"></div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-floating">
-                                    <select class="form-control bg-white border-0">
+                                    <input type="date" class="form-control border-0" id="start_date" name="start_date" placeholder="">
+                                    <label for="start_date">Departure date</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    <input type="date" class="form-control border-0" id="end_date" name="end_date" placeholder="">
+                                    <label for="end_date">Return date</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    <select class="form-control bg-white border-0" name="transportation" id="currency">
+                                            <option value="Motorbike (Personal)">Motorbike (Personal)</option>
+                                            <option value="Car (Personal)">Car (Personal)</option>
+                                            <option value="Bicycle (Personal)">Bicycle (Personal)</option>
+                                            <option value="Motorbike (Rental)">Motorbike (Rental)</option>
+                                            <option value="Car (Rental)">Car (Rental)</option>
+                                            <option value="Bicycle (Rental)">Bicycle (Rental)</option>
+                                            <option value="Public transport">Public transport</option>
+                                            <option value="Unknown">Unknown</option>
+                                    </select>
+                                    <label for="end_date">transportation</label>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control border-0" id="budget" name="budget" placeholder="">
+                                    <label for="budget">Budget</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    <select class="form-control bg-white border-0" name="currency" id="currency">
                                         @foreach($currencies as $currency)
-                                            <option>{{$currency->country}} - {{$currency->code }}</option>
+                                            <option value="{{$currency->code }}">{{$currency->country}} - {{$currency->code }}</option>
                                         @endforeach
                                     </select>
-                                    <label for="email">Currency</label>
+                                    <label for="currency">Currency</label>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-floating">
-                                            <input type="number" class="form-control border-0" id="email" placeholder="">
-                                            <label for="email">Adults > 10 years old</label>
+                                            <input type="number" class="form-control border-0" name="adults" id="adults" placeholder="">
+                                            <label for="adults">Adults > 10 years old</label>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-floating">
-                                            <input type="number" class="form-control border-0" id="email" placeholder="">
-                                            <label for="email">Children 2 - 10 years old</label>
+                                            <input type="number" class="form-control border-0" name="children-2" id="children-2" placeholder="">
+                                            <label for="children-2">Children 2 - 10 years old</label>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-floating">
-                                            <input type="number" class="form-control border-0" id="email" placeholder="">
-                                            <label for="email">Children < 2 years old</label>
+                                            <input type="number" class="form-control border-0" name="children-1" id="children-1" placeholder="">
+                                            <label for="children-1">Children < 2 years old </label>
                                         </div>
                                     </div>
                                 </div>
@@ -124,8 +130,11 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-floating">
-                                    <input type="email" class="form-control border-0" id="email" placeholder="">
-                                    <label for="email">Interest</label>
+                                    <select data-placeholder="Interest" class="chosen-select form-control" name="interest[]" multiple >
+                                        @foreach($preferences as $preference)
+                                            <option value="{{$preference->name}}"> {{$preference->name}} </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
@@ -138,18 +147,18 @@
 
             </div>
             @if(isset($weather))
-            <div class="mt-5 row bg-white rounded" style="height: 68rem">
+            <div class="mt-5 row bg-white rounded schedule-page" style="height: 70rem">
 
                     <h2 class="text-center mt-4 mb-3">{{ $weather['location']['name'] }}, {{ $weather['location']['country'] }}</h2>
                     <hr>
-                <div class="col-lg-7 ps-4 pb-3">
-                    <div class="weather">
+                <div class="col-lg-7 ps-4 h-90">
+                    <div class="weather h-15">
                         @if(isset($error))
                             <p style="color: red;">{{ $error }}</p>
                         @else
 
                             @if(isset($weather['forecast']) && isset($weather['forecast']['forecastday']))
-                                <ul class="row">
+                                <ul class="row mb-0 pb-4">
                                     @foreach($weather['forecast']['forecastday'] as $day)
                                         <li class="col-lg-4">
                                             <strong style="color: #0b204a">{{ \Carbon\Carbon::parse($day['date'])->format('d/m/Y') }}</strong>
@@ -165,67 +174,132 @@
                             @endif
                         @endif
                     </div>
-                    <div>
+                    <div class="h-85 border-top">
                         <!-- Carousel Start -->
-                        <div class="carousel-header">
-                            <div id="carouselId" class="carousel slide" data-bs-ride="carousel">
-                                <ol class="carousel-indicators">
-                                    <li data-bs-target="#carouselId" data-bs-slide-to="0" class="active"></li>
-                                    <li data-bs-target="#carouselId" data-bs-slide-to="1"></li>
-                                    <li data-bs-target="#carouselId" data-bs-slide-to="2"></li>
+                        <div class="carousel-header h-95">
+                            <div id="carouselId" class="carousel slide h-100 mb-0 mt-2 ps-0" data-bs-ride="carousel" data-bs-interval="false">
+                                <ol class="carousel-indicators menu-schedule mb-1">
+                                    <li data-bs-target="#carouselId" data-bs-slide-to="0" class="border-0 m-0 p-0 active col-lg-4">List of locations</li>
+                                    <li data-bs-target="#carouselId" data-bs-slide-to="1" class="border-0 m-0 p-0 col-lg-4 Schedule-tab">Schedule</li>
+                                    <li data-bs-target="#carouselId" data-bs-slide-to="2" class="border-0 m-0 p-0 col-lg-4">Event/Activity</li>
                                 </ol>
-                                <div class="carousel-inner" role="listbox">
-                                    <div class="carousel-item active">
-                                        <img src="{{asset("images/carousel-2.jpg")}}" class="img-fluid" alt="Image">
-                                        <div class="carousel-caption">
-                                            <div class="p-3" style="max-width: 900px; margin-top: 10rem;">
-                                                <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Explore The World</h4>
-                                                <h1 class="display-2 text-capitalize text-white mb-4">Let's The World Together!</h1>
-                                                <p class="mb-5 fs-5">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                                </p>
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{{route('schedule.index')}}">Discover Now</a>
+                                <div class="carousel-inner border-top h-95 mb-2" role="listbox">
+                                    <div class="carousel-item active h-100 list-of-locations mt-2">
+{{--                                        {{dd($places)}}--}}
+
+                                        @if(isset($places))
+                                            @foreach($places as $place => $thong_tin)
+                                                <div class="w-100 h-30 border me-1 mb-2">
+                                                    <div class="row h-100 w-100 ms-1">
+                                                        <a href="#" class="h-100 col-lg-11 p-0 d-flex">
+                                                            <div class="w-35 align-content-center position-relative h-100 p-0">
+                                                                <img class="w-75 h-90 ms-2 rounded  " src="{{asset('images/destination-3.jpg')}}">
+                                                                <img class="w-65 h-80 ms-2 rounded position-absolute sec-image" src="{{asset('images/destination-3.jpg')}}">
+                                                            </div>
+                                                            <div class="w-65 h-60 m-auto p-0">
+{{--                                                                @php unset($thong_tin["Mô tả"]) @endphp--}}
+{{--                                                            {{dd($thong_tin)}}--}}
+                                                                @foreach ($thong_tin as $key => $value)
+
+                                                                    @if($key == "Tên" || $key == "Tên địa điểm" || $key == 0)
+                                                                            <p class="fw-bold">{{$value}}</p>
+                                                                    @else
+                                                                        <p class="">
+                                                                            @if(is_array($value))
+                                                                                @foreach($value as $tag)
+                                                                                    <span class="btn">{{ $tag }}</span>
+                                                                                @endforeach
+                                                                            @else
+                                                                                {{$key}} : {{$value}}
+                                                                            @endif
+                                                                        </p>
+                                                                    @endif
+                                                                @endforeach
+                                                            </div>
+                                                        </a>
+                                                        <a href="#" class="col-lg-1 p-0"><div class=" h-100 p-0 delete align-content-center white"><i class="bi bi-trash"></i></div></a>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <div class="carousel-item h-100 schedule">
+                                        <!-- Testimonial Start -->
+                                        <div class="container-fluid h-5 mb-2">
+                                            <div class="container h-100">
+                                                <div class="schedule-carousel owl-carousel h-100">
+                                                    <div class="schedule-item text-center rounded pb-1">
+                                                        <div class="schedule-day bg-light rounded p-1">
+                                                            Day 1
+                                                        </div>
+                                                    </div>
+                                                    <div class="schedule-item text-center rounded pb-1">
+                                                        <div class="schedule-day bg-light rounded p-1">
+                                                            Day 2
+                                                        </div>
+                                                    </div>
+                                                    <div class="schedule-item text-center rounded pb-1">
+                                                        <div class="schedule-day bg-light rounded p-1">
+                                                            Day 3
+                                                        </div>
+                                                    </div>
+                                                    <div class="schedule-item text-center rounded pb-1">
+                                                        <div class="schedule-day bg-light rounded p-1">
+                                                            Day 4
+                                                        </div>
+                                                    </div>
+                                                    <div class="schedule-item text-center rounded pb-1">
+                                                        <div class="schedule-day bg-light rounded p-1">
+                                                            Day 5
+                                                        </div>
+                                                    </div>
+                                                    <div class="schedule-item text-center rounded pb-1">
+                                                        <div class="schedule-day bg-light rounded p-1">
+                                                            Day 6
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        @if(isset($plans))
+                                            {{print_r($plans)}}
+{{--                                            @foreach($places as $place => $thong_tin)--}}
+{{--                                                <div class="w-100 h-30 border me-1 mb-2">--}}
+{{--                                                    <div class="row h-100 w-100 ms-1">--}}
+{{--                                                        <a href="#" class="h-100 col-lg-11 p-0 d-flex">--}}
+{{--                                                            <div class="w-35 align-content-center position-relative h-100 p-0">--}}
+{{--                                                                <img class="w-75 h-90 ms-2 rounded  " src="{{asset('images/destination-3.jpg')}}">--}}
+{{--                                                                <img class="w-65 h-80 ms-2 rounded position-absolute sec-image" src="{{asset('images/destination-3.jpg')}}">--}}
+{{--                                                            </div>--}}
+{{--                                                            <div class="w-65 h-60 m-auto p-0">--}}
+{{--                                                                --}}{{--                                                                @php unset($thong_tin["Mô tả"]) @endphp--}}
+{{--                                                                --}}{{--                                                            {{dd($thong_tin)}}--}}
+{{--                                                                @foreach ($thong_tin as $key => $value)--}}
+
+{{--                                                                    @if($key == "Tên" || $key == "Tên địa điểm" || $key == 0)--}}
+{{--                                                                        <p class="fw-bold">{{$value}}</p>--}}
+{{--                                                                    @else--}}
+{{--                                                                        <p class="">--}}
+{{--                                                                            @if(is_array($value))--}}
+{{--                                                                                @foreach($value as $tag)--}}
+{{--                                                                                    <span class="btn">{{ $tag }}</span>--}}
+{{--                                                                                @endforeach--}}
+{{--                                                                            @else--}}
+{{--                                                                                {{$key}} : {{$value}}--}}
+{{--                                                                            @endif--}}
+{{--                                                                        </p>--}}
+{{--                                                                    @endif--}}
+{{--                                                                @endforeach--}}
+{{--                                                            </div>--}}
+{{--                                                        </a>--}}
+{{--                                                        <a href="#" class="col-lg-1 p-0"><div class=" h-100 p-0 delete align-content-center white"><i class="bi bi-trash"></i></div></a>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            @endforeach--}}
+                                        @endif
                                     </div>
-                                    <div class="carousel-item">
-                                        <img src="{{asset('images/carousel-1.jpg')}}" class="img-fluid" alt="Image">
-                                        <div class="carousel-caption">
-                                            <div class="p-3" style="max-width: 900px; margin-top: 10rem;">
-                                                <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Explore The World</h4>
-                                                <h1 class="display-2 text-capitalize text-white mb-4">Find Your Perfect Tour At Travel</h1>
-                                                <p class="mb-5 fs-5">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                                </p>
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{{route('schedule.index')}}">Discover Now</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="{{asset('images/carousel-3.jpg')}}" class="img-fluid" alt="Image">
-                                        <div class="carousel-caption">
-                                            <div class="p-3" style="max-width: 900px; margin-top: 10rem;">
-                                                <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Explore The World</h4>
-                                                <h1 class="display-2 text-capitalize text-white mb-4">You Like To Go?</h1>
-                                                <p class="mb-5 fs-5">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                                </p>
-                                                <div class="d-flex align-items-center justify-content-center">
-                                                    <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{{route('schedule.index')}}">Discover Now</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                 </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon btn bg-primary" aria-hidden="false"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carouselId" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon btn bg-primary" aria-hidden="false"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
                             </div>
                         </div>
                         <!-- Carousel End -->
@@ -245,7 +319,6 @@
                 </div>
             </div>
             @endif
-                
         </div>
     </div>
     <!-- Contact End -->
@@ -377,23 +450,23 @@
     <a href="#" class="btn btn-primary btn-primary-outline-0 btn-md-square back-to-top"><i class="fa fa-arrow-up"></i></a>
 
     @if(isset($data))
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                var map = L.map('map').setView([{{ $data['geometry']['location']['lat'] }}, {{ $data['geometry']['location']['lng'] }}], 14);
+            var lat = {{ $lat ?? 21.0285 }};
+            var lon = {{ $lon ?? 105.8542 }};
+            var addr = '{{$address}}';
 
-                // Thêm tile từ OpenStreetMap
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; OpenStreetMap contributors'
-                }).addTo(map);
+            console.log(addr)
+            var map = L.map('map').setView([lat, lon], 9);
 
-                // Thêm marker vào vị trí
-                L.marker([{{ $data['geometry']['location']['lat'] }}, {{ $data['geometry']['location']['lng'] }}])
-                    .addTo(map)
-                    .bindPopup('{{ $data['formatted_address'] }}')
-                    .openPopup();
-            });
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            var marker = L.marker([lat, lon]).addTo(map)
+                .bindPopup(addr)
+                .openPopup();
         </script>
 
     @endif
-
 @endsection

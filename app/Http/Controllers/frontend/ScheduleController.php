@@ -1,31 +1,39 @@
 <?php
 
 namespace App\Http\Controllers\frontend;
-use App\Services\GeoNamesService;
-use App\Services\GoMapsService;
+use App\Models\Preference;
+use App\Services\ProvinceService;
+use App\Services\MapAPIService;
 use App\Services\WeatherService;
-use Avcodewizard\GooglePlaceApi\GooglePlacesApi;
+use App\Services\GeminiService;
+use App\Services\WikipediaService;
 use App\Models\Currency;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class ScheduleController
 {
     protected $goMapsService;
-    protected $geoNamesService;
     protected $weatherService;
-    public function __construct(GoMapsService $goMapsService,GeoNamesService $geoNamesService,WeatherService $weatherService)
+    protected $provinceService;
+    protected $geminiService;
+    protected $wikipediaService;
+
+
+    public function __construct(MapAPIService $goMapsService, ProvinceService $provinceService, WeatherService $weatherService, GeminiService $geminiService, WikipediaService $wikipediaService)
     {
         $this->goMapsService = $goMapsService;
-        $this->geoNamesService = $geoNamesService;
+        $this->provinceService = $provinceService;
         $this->weatherService = $weatherService;
+        $this->geminiService = $geminiService;
+        $this->wikipediaService = $wikipediaService;
 
     }
     public function index()
     {
         $currencies = Currency::query()->get();
-        return view('frontend.schedule.index', compact('currencies'));
+        $preferences = Preference::query()->get();
+        return view('frontend.schedule.index', compact('currencies', 'preferences'));
     }
     public function searfchPlace()
     {
@@ -37,21 +45,30 @@ class ScheduleController
     public function map(Request $request)
     {
         $address = $request->input('address');
+        $address = str_replace(['Tỉnh ', 'Thành phố '], '', $address);
         $data = null;
         $error = null;
 
         if ($address) {
-            $result = $this->goMapsService->geocode($address);
+            $result = $this->goMapsService->geocode($address); // Gọi API Nominatim
 
-            if (!$result || $result['status'] !== 'OK') {
+            if (!$result || empty($result)) {
                 $error = 'Không tìm thấy địa điểm.';
             } else {
-                $data = $result['results'][0];
+                $data = $result[0]; // Nominatim trả về một mảng các kết quả, lấy kết quả đầu tiên
             }
         }
+        if (!empty($data)) {
+            $lat = $data['lat'];
+            $lon = $data['lon'];
+        } else {
+            $lat = 10.8206;
+            $lon = 106.6281;
+        }
+//        print_r($lon);
+//        print_r($lat);die;
+
         $currencies = Currency::query()->get();
-
-
         $weather = $this->weatherService->getWeatherByCity($address);
 
         if (!$weather) {
@@ -60,7 +77,48 @@ class ScheduleController
             ]);
         }
 
-        return view('frontend.schedule.index', compact('data', 'currencies', 'weather', 'error'));
+
+
+        $budget = floatval($request->input('budget', 0));
+        $currencyCode = $request->input('currency', 'VND'); // Mặc định VND
+        // 🔹 Gửi dữ liệu này đến AI để tạo lịch trình
+        $preferences = $request->input('interest');
+//        dd($preferences);
+        // 🔹 Lấy ngày đi & ngày về
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $days = 3; // Mặc định nếu không nhập ngày
+        if ($startDate && $endDate) {
+            $days = (new \DateTime($startDate))->diff(new \DateTime($endDate))->days;
+        }
+
+        $adults = $request->input('adults');
+        $children_1 = $request->input('children-1');
+        $children_2 = $request->input('children-2');
+        $transportation = $request->input('transportation');
+
+
+        $interest = $request->input('interest');
+        $interest = implode(', ', $interest);
+
+        $places = $this->geminiService->getTourismInfo($address, $preferences);
+        $placeNames = array_keys($places);
+//        print_r($places);
+        $placeNames = implode(", ", $placeNames);
+
+//        dd($places, $placeNames);
+
+
+        // Gửi ngân sách và đơn vị tiền tệ cho AI
+        $plans = $this->geminiService->generateItinerary($address, $days, $startDate, $endDate, $budget, $currencyCode, $interest, $adults, $children_1, $children_2, $placeNames, $transportation);
+
+//        dd($plan);
+        $preferences = Preference::query()->get();
+
+        $address = removeVietnameseAccents($address);
+
+        return view('frontend.schedule.index', compact('data', 'currencies', 'weather', 'error' , 'preferences', 'lat', 'lon', 'address', 'places', 'plans'));
     }
     public function getDirections(Request $request)
     {
@@ -75,17 +133,31 @@ class ScheduleController
 
         return response()->json($result);
     }
-    public function getWeatherByCity($city, $days = 3)
+
+
+    public function search(Request $request)
     {
-        $url = "https://api.weatherapi.com/v1/forecast.json?key={$this->apiKey}&q={$city}&days={$days}";
+        $query = trim($request->query('q', ''));
 
-        $response = Http::get($url);
-
-        if ($response->failed()) {
-            \Log::error("Weather API Error: " . $response->body());
-            return null;
+        if (empty($query)) {
+            return response()->json([]);
         }
 
-        return $response->json();
+        $provinces = $this->provinceService->getProvinces();
+
+        if (empty($provinces)) {
+            return response()->json([]);
+        }
+
+        $filtered = collect($provinces)->filter(function ($province) use ($query) {
+            $provinceName = str_replace(['Tỉnh ', 'Thành phố '], '', $province['name']);
+
+            return stripos(mb_strtolower($provinceName), mb_strtolower($query)) === 0;
+        })->values()->all();
+
+        return response()->json($filtered);
     }
+
+
+
 }

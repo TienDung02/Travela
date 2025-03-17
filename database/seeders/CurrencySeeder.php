@@ -33,7 +33,5 @@ class CurrencySeeder extends Seeder
             ['name' => 'Argentine Peso', 'code' => 'ARS', 'symbol' => '$', 'country' => 'Argentina'],
             ['name' => 'Egyptian Pound', 'code' => 'EGP', 'symbol' => '£', 'country' => 'Egypt'],
         ]);
-
-//        DB::table('currencies')->insert($currencies);
     }
 }

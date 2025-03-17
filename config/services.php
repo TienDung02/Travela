@@ -47,15 +47,7 @@ return [
         'redirect' => env('FB_CALLBACK_REDIRECT')
     ],
 
-    'gomaps' => [
-        'base_url' => 'https://api.gomaps.pro',
-        'api_key' => env('GOMAPS_API_KEY'),
-    ],
-
-    'geonames' => [
-        'base_url' => 'http://api.geonames.org/',
-        'username' => env('GEONAMES_USERNAME'),
-    ],
+    'province_api' => env('PROVINCE_API_URL', 'https://provinces.open-api.vn/api/')
 
 
 ];

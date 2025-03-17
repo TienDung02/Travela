@@ -7,4 +7,7 @@
 <script src="{{asset('lib/waypoints/waypoints.min.js')}}"></script>
 <script src="{{asset('lib/owlcarousel/owl.carousel.min.js')}}"></script>
 <script src="{{asset('lib/lightbox/js/lightbox.min.js')}}"></script>
-@vite(['resources/js/main.js'])
+<script src="{{asset('lib/lightbox/js/lightbox.min.js')}}"></script>
+<script src="{{asset('lib/chosen_v1.8.7/chosen.jquery.min.js')}}"></script>
+<script src="{{asset('js/main.js')}}?v={{time()}}"></script>
+<script src="{{asset('js/func.js')}}?v={{time()}}"></script>
