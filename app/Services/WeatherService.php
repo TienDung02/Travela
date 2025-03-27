@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
-//use app\Helpers;
+use app\Helpers;
 
 class WeatherService
 {
@@ -17,16 +17,19 @@ class WeatherService
 
     public function getWeatherByCity($city)
     {
-        $city = removeVietnameseAccents($city);
+        $city = convertVietnameseToLatin($city);
 
         $url = "https://api.weatherapi.com/v1/forecast.json?key={$this->apiKey}&q={$city}&days=3";
         $response = Http::get($url);
-
+        
         if ($response->failed()) {
             return null; // Trả về null nếu request thất bại
         }
 
         return $response->json();
+    }
+    public function getApiKey(){
+        return $this->apiKey;
     }
 
 }

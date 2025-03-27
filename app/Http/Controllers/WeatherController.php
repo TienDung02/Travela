@@ -35,7 +35,8 @@ class WeatherController extends Controller
 
     public function getWeatherByCity($city, $days = 3)
     {
-        $url = "https://api.weatherapi.com/v1/forecast.json?key={$this->apiKey}&q={$city}&days={$days}"; // Sử dụng forecast.json để lấy dự báo nhiều ngày
+        $apiKey = $this->weatherService->getApiKey();
+        $url = "https://api.weatherapi.com/v1/forecast.json?key={$apiKey}&q={$city}&days={$days}"; // Sử dụng forecast.json để lấy dự báo nhiều ngày
 
         $response = Http::get($url);
 

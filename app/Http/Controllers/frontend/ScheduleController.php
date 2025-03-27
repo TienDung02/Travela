@@ -10,7 +10,7 @@ use App\Services\WikipediaService;
 use App\Models\Currency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-
+use App\Helpers\Helper;
 class ScheduleController
 {
     protected $goMapsService;
@@ -116,7 +116,7 @@ class ScheduleController
 //        dd($plan);
         $preferences = Preference::query()->get();
 
-        $address = removeVietnameseAccents($address);
+        $address = convertVietnameseToLatin($address);
 
         return view('frontend.schedule.index', compact('data', 'currencies', 'weather', 'error' , 'preferences', 'lat', 'lon', 'address', 'places', 'plans'));
     }

@@ -19,7 +19,7 @@ class GoogleLoginController extends Controller
 
     public function callback()
     {
-        $googleUser = Socialite::driver('google')->user();
+        $googleUser = Socialite::driver('google')->stateless()->user();
 
         // Kiểm tra xem user đã tồn tại theo email chưa
         $existingUser = User::where('email', $googleUser->email)->first();
@@ -39,7 +39,7 @@ class GoogleLoginController extends Controller
             $user->provider = 'google';
             $user->name = $googleUser->name;
             $user->email = $googleUser->email;
-            $user->password = bcrypt(Str::random(16)); // Mật khẩu ngẫu nhiên
+            $user->password = bcrypt(random_bytes(16)); // Mật khẩu ngẫu nhiên
             $user->created_at = now();
             $user->updated_at = now();
             $user->save(); // Gọi save() để chắc chắn dữ liệu được lưu
