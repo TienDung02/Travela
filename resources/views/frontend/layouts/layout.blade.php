@@ -7,7 +7,9 @@
 @else
     @include('frontend.component.top-bar')
 @endif
-
+@if(!request()->is('/'))
+    @include('frontend.component.header')
+@endif
 @yield('content')
 
 
