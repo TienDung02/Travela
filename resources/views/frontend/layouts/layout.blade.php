@@ -2,6 +2,7 @@
 <html lang="en">
 
 @include('frontend.component.head')
+
 @if(auth()->check())
     @include('frontend.component.top-bar-logged-in')
 @else

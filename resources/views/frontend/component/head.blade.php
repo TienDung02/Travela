@@ -16,9 +16,14 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {{--    @vite(['resources/css/bootstrap.min.css', 'resources/css/style.css'])--}}
-    <link rel="icon" href="{{asset('images/logo.png')}}" type="image/x-icon">
+    <link rel="icon" href="{{asset('images/logo2.png')}}" type="image/x-icon">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{asset('css/base.css')}}?v={{time()}}" rel="stylesheet">
     <link href="{{asset('css/bootstrap.min.css')}}?v={{time()}}" rel="stylesheet">
     <link href="{{asset('css/style.css')}}?v={{time()}}" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{{asset('js/slick/slick/slick.css')}}?v={{time()}}"/>
+{{--    // Add the new slick-theme.css if you want the default styling--}}
+    <link rel="stylesheet" type="text/css" href="{{asset('js/slick/slick/slick-theme.css')}}?v={{time()}}"/>
+
 </head>

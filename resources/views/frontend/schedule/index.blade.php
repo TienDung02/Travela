@@ -3,15 +3,7 @@
 
     <!-- Navbar & Hero Start -->
     <div class="container-fluid position-relative p-0">
-        <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-            <a href="" class="navbar-brand p-0">
-                <h1 class="m-0"><i class="fa fa-map-marker-alt me-3"></i>Travela</h1>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="fa fa-bars"></span>
-            </button>
-            @include('frontend.component.menu-top')
-        </nav>
+        @include('frontend.component.navbar')
     </div>
     <!-- Navbar & Hero End -->
 
@@ -223,79 +215,33 @@
                                             @endforeach
                                         @endif
                                     </div>
-                                    <div class="carousel-item h-100 schedule">
+                                    <div id="schedule-response" class="carousel-item h-100 schedule">
+
+
                                         <!-- Testimonial Start -->
-                                        <div class="container-fluid h-5 mb-2">
-                                            <div class="container h-100">
-                                                <div class="schedule-carousel owl-carousel h-100">
-                                                    <div class="schedule-item text-center rounded pb-1">
-                                                        <div class="schedule-day bg-light rounded p-1">
-                                                            Day 1
-                                                        </div>
-                                                    </div>
-                                                    <div class="schedule-item text-center rounded pb-1">
-                                                        <div class="schedule-day bg-light rounded p-1">
-                                                            Day 2
-                                                        </div>
-                                                    </div>
-                                                    <div class="schedule-item text-center rounded pb-1">
-                                                        <div class="schedule-day bg-light rounded p-1">
-                                                            Day 3
-                                                        </div>
-                                                    </div>
-                                                    <div class="schedule-item text-center rounded pb-1">
-                                                        <div class="schedule-day bg-light rounded p-1">
-                                                            Day 4
-                                                        </div>
-                                                    </div>
-                                                    <div class="schedule-item text-center rounded pb-1">
-                                                        <div class="schedule-day bg-light rounded p-1">
-                                                            Day 5
-                                                        </div>
-                                                    </div>
-                                                    <div class="schedule-item text-center rounded pb-1">
-                                                        <div class="schedule-day bg-light rounded p-1">
-                                                            Day 6
-                                                        </div>
-                                                    </div>
+                                        <div id="btn-build-schedule" class="container-fluid h-50 mt-2">
+                                            <div id="schedule-response" class="container h-100 text-center">
+                                                <button id="generateSchedule" class="rounded btn btn-primary p-3 m-t-100" data-place-names="{{ $placeNames }}">
+                                                    <span class="d-none" id="get-url" data-url="{{route('build-schedule')}}"></span>
+                                                    <span class="d-block"><i class="bi bi-stars"></i> Generate Detailed Itinerary <i class="bi bi-stars"></i></span>
+                                                    <span class="d-block fw-normal">- Based on a list of locations -</span>
+                                                </button>
+
+                                            </div>
+                                        </div>
+                                        <!-- Spinner Start -->
+                                        <div class="position-relative h-50">
+                                            <div id="spinner2" class="show bg-white position-absolute translate-middle w-100 top-50 start-50 align-items-center justify-content-center d-none">
+                                                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                                                    <span class="sr-only">Loading...</span>
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Spinner End -->
+
+
                                         @if(isset($plans))
                                             {{print_r($plans)}}
-{{--                                            @foreach($places as $place => $thong_tin)--}}
-{{--                                                <div class="w-100 h-30 border me-1 mb-2">--}}
-{{--                                                    <div class="row h-100 w-100 ms-1">--}}
-{{--                                                        <a href="#" class="h-100 col-lg-11 p-0 d-flex">--}}
-{{--                                                            <div class="w-35 align-content-center position-relative h-100 p-0">--}}
-{{--                                                                <img class="w-75 h-90 ms-2 rounded  " src="{{asset('images/destination-3.jpg')}}">--}}
-{{--                                                                <img class="w-65 h-80 ms-2 rounded position-absolute sec-image" src="{{asset('images/destination-3.jpg')}}">--}}
-{{--                                                            </div>--}}
-{{--                                                            <div class="w-65 h-60 m-auto p-0">--}}
-{{--                                                                --}}{{--                                                                @php unset($thong_tin["Mô tả"]) @endphp--}}
-{{--                                                                --}}{{--                                                            {{dd($thong_tin)}}--}}
-{{--                                                                @foreach ($thong_tin as $key => $value)--}}
-
-{{--                                                                    @if($key == "Tên" || $key == "Tên địa điểm" || $key == 0)--}}
-{{--                                                                        <p class="fw-bold">{{$value}}</p>--}}
-{{--                                                                    @else--}}
-{{--                                                                        <p class="">--}}
-{{--                                                                            @if(is_array($value))--}}
-{{--                                                                                @foreach($value as $tag)--}}
-{{--                                                                                    <span class="btn">{{ $tag }}</span>--}}
-{{--                                                                                @endforeach--}}
-{{--                                                                            @else--}}
-{{--                                                                                {{$key}} : {{$value}}--}}
-{{--                                                                            @endif--}}
-{{--                                                                        </p>--}}
-{{--                                                                    @endif--}}
-{{--                                                                @endforeach--}}
-{{--                                                            </div>--}}
-{{--                                                        </a>--}}
-{{--                                                        <a href="#" class="col-lg-1 p-0"><div class=" h-100 p-0 delete align-content-center white"><i class="bi bi-trash"></i></div></a>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                            @endforeach--}}
                                         @endif
                                     </div>
 

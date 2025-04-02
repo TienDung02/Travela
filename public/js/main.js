@@ -133,38 +133,31 @@
             }
         });
 
-        // schedule carousel
-        $(".schedule-carousel").owlCarousel({
-            autoplay: false,
-            smartSpeed: 1000,
-            center: true,
-            autoWidth: true,
-            dots: false,
-            loop: true,
-            margin: 0,
-            nav : true,
-            navText : [
-                '<i class="bi bi-arrow-left"></i>',
-                '<i class="bi bi-arrow-right"></i>'
-            ],
-            responsiveClass: true,
-            responsive: {
-                0:{
-                    items:1
+        $('.schedule-carousel').slick({
+            centerMode: true,
+            centerPadding: '0px',
+            slidesToShow: 3,
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        arrows: true,
+                        centerMode: true,
+                        centerPadding: '0px',
+                        slidesToShow: 3
+                    }
                 },
-                768:{
-                    items:2
-                },
-                992:{
-                    items:2
-                },
-                1200:{
-                    items:3
+                {
+                    breakpoint: 480,
+                    settings: {
+                        arrows: true,
+                        centerMode: true,
+                        centerPadding: '0px',
+                        slidesToShow: 1
+                    }
                 }
-            }
+            ]
         });
-
-
 
 
         // Back to top button
@@ -563,54 +556,73 @@
         /*----------------------------------------------------*/
 
 
-        $(document).ready(function () {
-            let hasRun = false; // Biến kiểm soát, mặc định là false
 
-            $(".Schedule-tab").click(function () {
-                let $owlStage = $(".owl-stage"); // Lấy phần tử cần chỉnh sửa
-                if (!$owlStage.length) return;
-                let transform = $owlStage.css("transform");
+        setTimeout(function() {
+            $('.slick-track').css('transform', 'translate3d(-756px, 0px, 0px)');
+        }, 500);
 
-                let match = transform.match(/matrix\(([^,]+),[^,]+,[^,]+,[^,]+,([^,]+),([^,]+)\)/);
-                if (!match) return;
-                let x = parseFloat(match[2]); // Giá trị X hiện tại
-                let y = parseFloat(match[3]); // Giá trị Y hiện tại
+        /*----------------------------------------------------*/
+        /*  Ajax Build Schedule
+        /*----------------------------------------------------*/
+        $('#generateSchedule').click(function () {
+            let placeNames = $(this).data('place-names');
 
-                let xPixels = -87; // Giá trị muốn cộng thêm
+            console.log('123');
 
-                x += xPixels;
-                $owlStage.css("transform", `translate3d(${x}px, ${y}px, 0px)`);
+            var url = $('#get-url').attr('data-url');
+            $('#btn-build-schedule').remove();
+            $('#spinner2').removeClass('d-none').addClass('d-flex');
+            console.log(url)
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                data: { placeNames: placeNames },
+                success: function (data) {
+                    // $('.schedule-carousel').html(response.html);
+
+
+                    var $data = $(data);
+                    $('#schedule-response').html($data);
+                    $('.schedule-carousel').slick({
+                        centerMode: true,
+                        centerPadding: '0px',
+                        slidesToShow: 3,
+                        responsive: [
+                            {
+                                breakpoint: 768,
+                                settings: {
+                                    arrows: true,
+                                    centerMode: true,
+                                    centerPadding: '0px',
+                                    slidesToShow: 3
+                                }
+                            },
+                            {
+                                breakpoint: 480,
+                                settings: {
+                                    arrows: true,
+                                    centerMode: true,
+                                    centerPadding: '0px',
+                                    slidesToShow: 1
+                                }
+                            }
+                        ]
+                    });
+                    $('#spinner2').removeClass('d-flex').addClass('d-none');
+                },
+                error: function (xhr, status, error) {
+                    console.error("Lỗi status:", status);  // Lỗi HTTP (404, 500, v.v.)
+                    console.error("Lỗi từ server:", xhr.responseText);  // Nội dung lỗi
+                    console.error("Chi tiết lỗi:", error);  // Mô tả lỗi
+
+                    alert("Có lỗi xảy ra: " + xhr.status + " - " + error);
+                }
             });
-
-
         });
-        $(".owl-next, .owl-prev").click(function () {
-            let $owlStage = $(".owl-stage"); // Lấy phần tử cần chỉnh sửa
-            if (!$owlStage.length) return;
-
-            let transform = $owlStage.css("transform");
-
-            // Lấy giá trị hiện tại của translate3d
-            let match = transform.match(/matrix\(([^,]+),[^,]+,[^,]+,[^,]+,([^,]+),([^,]+)\)/);
-            if (!match) return;
-
-            let x = parseFloat(match[2]); // Giá trị X hiện tại
-            let y = parseFloat(match[3]); // Giá trị Y hiện tại
-            console.log('bf')
-            console.log(x)
-            // let xRem = 85; // Giá trị cần cộng thêm (rem)
-            let xPixels = -119;
-            if (x == 77){
-                x = -130;
-            }else {
-                x += xPixels;
-            }
-            console.log('af')
-            console.log(x)
-            $owlStage.css("transform", `translate3d(${x}px, ${y}px, 0px)`);
-        });
-
-
+        /*----------------------------------------------------*/
+        /*  End Ajax Build Schedule
+        /*----------------------------------------------------*/
 
 
     });

@@ -7,6 +7,7 @@ use App\Services\MapAPIService;
 use App\Services\WeatherService;
 use App\Services\GeminiService;
 use App\Services\WikipediaService;
+use App\Services\RapidApiService;
 use App\Models\Currency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -18,15 +19,17 @@ class ScheduleController
     protected $provinceService;
     protected $geminiService;
     protected $wikipediaService;
+    protected $rapidApiService;
 
 
-    public function __construct(MapAPIService $goMapsService, ProvinceService $provinceService, WeatherService $weatherService, GeminiService $geminiService, WikipediaService $wikipediaService)
+    public function __construct(MapAPIService $goMapsService, ProvinceService $provinceService, WeatherService $weatherService, GeminiService $geminiService, WikipediaService $wikipediaService, RapidApiService $rapidApiService)
     {
         $this->goMapsService = $goMapsService;
         $this->provinceService = $provinceService;
         $this->weatherService = $weatherService;
         $this->geminiService = $geminiService;
         $this->wikipediaService = $wikipediaService;
+        $this->rapidApiService = $rapidApiService;
 
     }
     public function index()
@@ -48,6 +51,18 @@ class ScheduleController
         $address = str_replace(['Tỉnh ', 'Thành phố '], '', $address);
         $data = null;
         $error = null;
+
+        $endpoint = 'weather';
+        $params = [
+            'query' => $address,
+        ];
+
+        $data = $this->rapidApiService->fetchData($params);
+
+//        dd(response()->json($data));
+
+
+
 
         if ($address) {
             $result = $this->goMapsService->geocode($address); // Gọi API Nominatim
@@ -77,48 +92,83 @@ class ScheduleController
             ]);
         }
 
+        $address = $request->input('address');
+        $address = str_replace(['Tỉnh ', 'Thành phố '], '', $address);
 
-
-        $budget = floatval($request->input('budget', 0));
-        $currencyCode = $request->input('currency', 'VND'); // Mặc định VND
-        // 🔹 Gửi dữ liệu này đến AI để tạo lịch trình
-        $preferences = $request->input('interest');
-//        dd($preferences);
-        // 🔹 Lấy ngày đi & ngày về
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
 
-        $days = 3; // Mặc định nếu không nhập ngày
+        $days = 3;
         if ($startDate && $endDate) {
             $days = (new \DateTime($startDate))->diff(new \DateTime($endDate))->days;
         }
+        $budget = floatval($request->input('budget', 0));
+        $currencyCode = $request->input('currency', 'VND');
 
         $adults = $request->input('adults');
         $children_1 = $request->input('children-1');
         $children_2 = $request->input('children-2');
         $transportation = $request->input('transportation');
 
-
         $interest = $request->input('interest');
         $interest = implode(', ', $interest);
 
+        session([
+            'trip_data' => [
+                'address' => $address,
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+                'days' => $days,
+                'budget' => $budget,
+                'currency' => $currencyCode,
+                'adults' => $adults,
+                'children_1' => $children_1,
+                'children_2' => $children_2,
+                'transportation' => $transportation,
+                'interest' => $interest,
+            ]
+        ]);
+
+
+        $preferences = $request->input('interest');
+
+
+
         $places = $this->geminiService->getTourismInfo($address, $preferences);
         $placeNames = array_keys($places);
-//        print_r($places);
         $placeNames = implode(", ", $placeNames);
 
-//        dd($places, $placeNames);
+        $preferences = Preference::query()->get();
+        $address = convertVietnameseToLatin($address);
 
+        return view('frontend.schedule.index', compact('data', 'currencies', 'weather', 'error' , 'preferences', 'lat', 'lon', 'address', 'places', 'placeNames'));
+    }
+    public function build_schedule(Request $request)
+    {
+//        dd('123');
+        $address = $tripData['address'] ?? null;
+        $startDate = $tripData['start_date'] ?? null;
+        $endDate = $tripData['end_date'] ?? null;
+        $days = $tripData['days'] ?? null;
+        $budget = $tripData['budget'] ?? null;
+        $currencyCode = $tripData['currency'] ?? null;
+        $adults = $tripData['adults'] ?? null;
+        $children_1 = $tripData['children_1'] ?? null;
+        $children_2 = $tripData['children_2'] ?? null;
+        $transportation = $tripData['transportation'] ?? null;
+        $interest = $tripData['interest'] ?? null;
 
-        // Gửi ngân sách và đơn vị tiền tệ cho AI
-        $plans = $this->geminiService->generateItinerary($address, $days, $startDate, $endDate, $budget, $currencyCode, $interest, $adults, $children_1, $children_2, $placeNames, $transportation);
+        session()->forget('trip_data');
 
-//        dd($plan);
+        $placeNames = $request->input('placeNames');
+
+        $currencies = Currency::query()->get();
         $preferences = Preference::query()->get();
 
-        $address = removeVietnameseAccents($address);
+        $plans = $this->geminiService->generateItinerary($address, $days, $startDate, $endDate, $budget, $currencyCode, $interest, $adults, $children_1, $children_2, $placeNames, $transportation);
+        dd($plans);
+        return view('frontend.schedule.ajax.schedule-built', compact('plans', 'currencies', 'preferences'));
 
-        return view('frontend.schedule.index', compact('data', 'currencies', 'weather', 'error' , 'preferences', 'lat', 'lon', 'address', 'places', 'plans'));
     }
     public function getDirections(Request $request)
     {

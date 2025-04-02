@@ -45,25 +45,6 @@ class GeminiService
 
     }
 
-    function normalizeString($str) {
-        $str = preg_replace('/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/', 'a', $str);
-        $str = preg_replace('/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/', 'e', $str);
-        $str = preg_replace('/(ì|í|ị|ỉ|ĩ)/', 'i', $str);
-        $str = preg_replace('/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/', 'o', $str);
-        $str = preg_replace('/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/', 'u', $str);
-        $str = preg_replace('/(ỳ|ý|ỵ|ỷ|ỹ)/', 'y', $str);
-        $str = preg_replace('/(đ)/', 'd', $str);
-
-        $str = preg_replace('/(À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ)/', 'A', $str);
-        $str = preg_replace('/(È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ)/', 'E', $str);
-        $str = preg_replace('/(Ì|Í|Ị|Ỉ|Ĩ)/', 'I', $str);
-        $str = preg_replace('/(Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ)/', 'O', $str);
-        $str = preg_replace('/(Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ)/', 'U', $str);
-        $str = preg_replace('/(Ỳ|Ý|Ỵ|Ỷ|Ỹ)/', 'Y', $str);
-        $str = preg_replace('/(Đ)/', 'D', $str);
-        return $str;
-    }
-
 
 //    function updatePlacesWithImages(&$places) {
 ////        foreach ($places as $key => &$place) {
@@ -87,7 +68,99 @@ class GeminiService
     public function generateItinerary($address, $days, $startDate, $endDate, $budget, $currencyCode, $interest, $adults, $children_1, $children_2, $placename, $transportation)
     {
         $prompt = "Lên kế hoạch du lịch tại $address, mô tả chi tiết (Sáng, trưa, chiều, tối làm gì ăn và ngủ ở đâu) chỉ bao gồm các địa điểm $placename (có thể ít hơn hay loại bỏ một số địa điểm nếu số ngày du lịch có hạn) trong $days ngày (từ ngày $startDate đến $endDate) bằng phương tiện di chuyển: $transportation với số lượng (người trưởng thành: $adults, trẻ em từ 2 đến 10 tuổi: $children_2, trẻ em dưới 2 tuổi: $children_1). Nơi bắt đầu du lịch là $address, tôi cần có đầy đủ các lần di chuyển mỗi khi tham quan, ăn uống, nghỉ chân, mỗi lần di chuyển cần có: Điểm xuất phát → Điểm đến, Khoảng cách (km/m), Phương tiện di chuyển phù hợp, Thời gian di chuyển (phút, số cụ thể) và làm ơn bỏ 'tùy thuộc vào điểm xuất phát và tốc độ di chuyển' đi giùm tôi.
-        Sở thích: $interest. Ngân sách: $budget $currencyCode. KHÔNG ĐƯA RA LƯU Ý HAY GỢI Ý GÌ THÊM";
+        Sở thích: $interest. Ngân sách: $budget $currencyCode. KHÔNG ĐƯA RA LƯU Ý HAY GỢI Ý GÌ THÊM
+
+
+        cấu trúc dạng:
+            **Ngày **
+                *Sáng*
+                    [Ăn sáng]
+                        - Tên địa điểm ăn sáng
+                    [Di chuyển]
+                        - Điểm đi: vị trí, tên địa điểm bắt đầu di chuyển
+                        - Điểm đến: vị trí, tên địa điểm muốn đến
+                        - Khoảng cách: đơn vị (km)
+                        - thời gian: giờ/phút
+                        - phương tiện di chuyển: đề xuất phương tiện di chuyển (hoặc phương tiện cá nhân của người du lịch)
+                    [Địa điểm tham quan]
+                        - Tên địa điểm
+                        - Thời gian tham quan: từ (thời gian) -> đến (thời gian)
+                    [Di chuyển]
+                        - Điểm đi: vị trí, tên địa điểm bắt đầu di chuyển
+                        - Điểm đến: vị trí, tên địa điểm muốn đến
+                        - Khoảng cách: đơn vị (km)
+                        - thời gian: giờ/phút
+                        - phương tiện di chuyển: đề xuất phương tiện di chuyển (hoặc phương tiện cá nhân của người du lịch)
+                    [Địa điểm tham quan]
+                        - Tên địa điểm
+                        - Thời gian tham quan: từ (thời gian) -> đến (thời gian)
+                *Trưa*
+                    [Di chuyển]
+                        - Điểm đi: vị trí, tên địa điểm bắt đầu di chuyển
+                        - Điểm đến: vị trí, tên địa điểm muốn đến
+                        - Khoảng cách: đơn vị (km)
+                        - thời gian: giờ/phút
+                        - phương tiện di chuyển: đề xuất phương tiện di chuyển (hoặc phương tiện cá nhân của người du lịch)
+                    [Ăn Trưa]
+                        - Tên địa điểm ăn trưa
+                *Chiều*
+                    [Di chuyển]
+                        - Điểm đi: vị trí, tên địa điểm bắt đầu di chuyển
+                        - Điểm đến: vị trí, tên địa điểm muốn đến
+                        - Khoảng cách: đơn vị (km)
+                        - thời gian: giờ/phút
+                        - phương tiện di chuyển: đề xuất phương tiện di chuyển (hoặc phương tiện cá nhân của người du lịch)
+                    [Địa điểm tham quan]
+                        - Tên địa điểm
+                        - Thời gian tham quan: từ (thời gian) -> đến (thời gian)
+                    [Di chuyển]
+                        - Điểm đi: vị trí, tên địa điểm bắt đầu di chuyển
+                        - Điểm đến: vị trí, tên địa điểm muốn đến
+                        - Khoảng cách: đơn vị (km)
+                        - thời gian: giờ/phút
+                        - phương tiện di chuyển: đề xuất phương tiện di chuyển (hoặc phương tiện cá nhân của người du lịch)
+                    [Địa điểm tham quan]
+                        - Tên địa điểm
+                        - Thời gian tham quan: từ (thời gian) -> đến (thời gian)
+                *Tối*
+                    [Di chuyển]
+                        - Điểm đi: vị trí, tên địa điểm bắt đầu di chuyển
+                        - Điểm đến: vị trí, tên địa điểm muốn đến
+                        - Khoảng cách: đơn vị (km)
+                        - thời gian: giờ/phút
+                        - phương tiện di chuyển: đề xuất phương tiện di chuyển (hoặc phương tiện cá nhân của người du lịch)
+                    [Ăn tối]
+                        - Tên địa điểm ăn tối
+                    [Di chuyển]
+                        - Điểm đi: vị trí, tên địa điểm bắt đầu di chuyển
+                        - Điểm đến: vị trí, tên địa điểm muốn đến
+                        - Khoảng cách: đơn vị (km)
+                        - thời gian: giờ/phút
+                        - phương tiện di chuyển: đề xuất phương tiện di chuyển (hoặc phương tiện cá nhân của người du lịch)
+                    [Địa điểm tham quan]
+                        - Tên địa điểm
+                        - Thời gian tham quan: từ (thời gian) -> đến (thời gian)
+                    [Di chuyển]
+                        - Điểm đi: vị trí, tên địa điểm bắt đầu di chuyển
+                        - Điểm đến: vị trí, tên địa điểm muốn đến
+                        - Khoảng cách: đơn vị (km)
+                        - thời gian: giờ/phút
+                        - phương tiện di chuyển: đề xuất phương tiện di chuyển (hoặc phương tiện cá nhân của người du lịch)
+                    [Chỗ ngủ]
+                        - Tên địa điểm nghỉ chân qua đêm
+//
+        ";
+
+
+
+
+
+
+
+
+
+
+
 
         $response = Http::post($this->apiUrl . "?key=" . $this->apiKey, [
             'contents' => [
@@ -101,12 +174,10 @@ class GeminiService
 
         $plan = $response->json();
         $plan = $plan['candidates'][0]['content']['parts'][0]['text'];
-
-//        dd($plan);
+        dd($plan);
 
         $plan = str_replace('*', '', $plan);
 
-//        dd($plan);
 
 
 
@@ -114,12 +185,11 @@ class GeminiService
         $result = [];
         $skip = false;
         $currentDay = null;
-        $timeSlot = null; // Thêm biến $timeSlot
+        $timeSlot = null;
 
         foreach ($lines as $line => $value) {
             $value = trim($value);
 
-            // Bỏ qua các dòng "Lưu ý" hoặc "Lời khuyên"
             if ($value == '"Lưu ý"' || $value == '"Lời khuyên"') {
                 $skip = true;
                 continue;
@@ -136,32 +206,19 @@ class GeminiService
                 $timeSlot = null; // Reset time slot cho ngày mới
                 continue;
             }
+//            dd($result);
 
-            // Kiểm tra dòng "Sáng", "Trưa", "Chiều", "Tối"
             if (preg_match("/^\s*(Sáng|Trưa|Chiều|Tối):/", $value, $matches)) {
                 $timeSlot = trim($matches[1]);
                 $result[$currentDay][$timeSlot] = [];
                 continue;
             }
 
-            // Thêm các dòng hoạt động vào mảng
             if ($currentDay !== null && $timeSlot !== null && !empty($value)) {
                 $result[$currentDay][$timeSlot][] = $value;
             }
         }
-//            if ($value != ""){
-//                $lastKey = array_key_last($result);
-//
-//                if (strpos($value, ":") !== false) {
-//                    list($key, $val) = explode(":", $value, 2);
-//                    $result[$lastKey][trim($key)] = trim($val);
-//                } else {
-//                    $result[$lastKey][] = $value;
-//                }
-//            }
-//        $result = updatePlacesWithImages($result);
 
-//        $this->updatePlacesWithImages($result);
 
 //        dd($result);
 
@@ -177,7 +234,7 @@ class GeminiService
         }
 
         $prompt .= " Bao gồm:
-        - Tên các địa điểm du lịch
+        - Tên các địa điểm du lịch ( các địa điểm cụ thể đúng tên có thể tìm kiếm trên google map )
         - Loại địa điểm (ví dụ: di tích lịch sử, công viên, bảo tàng)
         - giờ hoạt động (giờ mở cửa và giờ đóng cửa tôi chỉ muốn con số cụ thể nếu là cả 1 khu du lịch thì giờ của cả khu thay vì quán không mở ngoặc mô tả gì thêm). Không lưu ý và khuyên gì thêm, chỉ các địa điểm, càng nhiều càng tốt
         - Các thẻ (khóa là 'Tag') liên quan (các tên tác cách nhau bằng ', ')
@@ -200,13 +257,14 @@ class GeminiService
             ]);
 
             $places = $response->json();
-        } while (!isset($places['candidates'])); // Lặp lại nếu không có "candidates"
+        } while (!isset($places['candidates']));
 
         $places = $places['candidates'][0]['content']['parts'][0]['text'];
 
 
         $places = str_replace('*', '', $places);
 
+//        dd($places);
 
         $lines = explode("\n", $places);
         $result = [];

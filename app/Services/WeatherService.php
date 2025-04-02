@@ -17,7 +17,7 @@ class WeatherService
 
     public function getWeatherByCity($city)
     {
-        $city = removeVietnameseAccents($city);
+        $city = convertVietnameseToLatin($city);
 
         $url = "https://api.weatherapi.com/v1/forecast.json?key={$this->apiKey}&q={$city}&days=3";
         $response = Http::get($url);

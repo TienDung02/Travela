@@ -65,8 +65,9 @@ Route::get('/testimonial', [TestimonialController::class, 'index'])->name('testi
 Route::get('/schedule', [ScheduleController::class, 'index'])->name('schedule.index');
 Route::get('/place-details', [ScheduleController::class, 'searfchPlace'])->name('place');
 
-Route::get('/map2', [GoMapsController::class, 'map2'])->name('map2');
+//Route::get('/map2', [GoMapsController::class, 'map2'])->name('map2');
 Route::get('/map', [ScheduleController::class, 'map'])->name('map');
+Route::get('/build-schedule', [ScheduleController::class, 'build_schedule'])->name('build-schedule');
 Route::get('/directions', [ScheduleController::class, 'getDirections'])->name('directions');
 
 Route::get('/404', [ErrorController::class, 'index'])->name('404');
