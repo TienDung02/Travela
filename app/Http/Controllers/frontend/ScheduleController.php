@@ -8,6 +8,7 @@ use App\Services\WeatherService;
 use App\Services\GeminiService;
 use App\Services\WikipediaService;
 use App\Services\RapidApiService;
+use App\Services\GoogleMapsScraper;
 use App\Models\Currency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -38,11 +39,12 @@ class ScheduleController
         $preferences = Preference::query()->get();
         return view('frontend.schedule.index', compact('currencies', 'preferences'));
     }
-    public function searfchPlace()
+    public function testMap($placeName)
     {
-        Log::info('Đã vào hàm searchPlace');
-        echo '123';
-        exit();
+        $scraper = new GoogleMapsScraper();
+        $data = $scraper->getPlaceInfo($placeName);
+
+        return response()->json($data);
     }
 
     public function map(Request $request)
@@ -58,11 +60,6 @@ class ScheduleController
         ];
 
         $data = $this->rapidApiService->fetchData($params);
-
-//        dd(response()->json($data));
-
-
-
 
         if ($address) {
             $result = $this->goMapsService->geocode($address); // Gọi API Nominatim
@@ -80,8 +77,6 @@ class ScheduleController
             $lat = 10.8206;
             $lon = 106.6281;
         }
-//        print_r($lon);
-//        print_r($lat);die;
 
         $currencies = Currency::query()->get();
         $weather = $this->weatherService->getWeatherByCity($address);
@@ -129,15 +124,18 @@ class ScheduleController
             ]
         ]);
 
-
         $preferences = $request->input('interest');
-
-
 
         $places = $this->geminiService->getTourismInfo($address, $preferences);
         $placeNames = array_keys($places);
+        foreach ($placeNames as $placeName){
+            $placeName = str_replace("Tên:", "", $placeName);
+            $info_place = $this->testMap($placeName);
+            dd($info_place);
+            dd($placeName);
+        }
         $placeNames = implode(", ", $placeNames);
-
+//        dd($placeNames);
         $preferences = Preference::query()->get();
         $address = convertVietnameseToLatin($address);
 

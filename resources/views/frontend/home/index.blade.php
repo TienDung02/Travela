@@ -16,7 +16,7 @@
                 </ol>
                 <div class="carousel-inner" role="listbox">
                     <div class="carousel-item active">
-                        <img src="{{asset("images/carousel-2.jpg")}}" class="img-fluid" alt="Image">
+                        <img src="{{asset("frontend/images/carousel-2.jpg")}}" class="img-fluid" alt="Image">
                         <div class="carousel-caption">
                             <div class="p-3" style="max-width: 900px; margin-top: 10rem;">
                                 <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Explore The World</h4>
@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="{{asset('images/carousel-1.jpg')}}" class="img-fluid" alt="Image">
+                        <img src="{{asset('frontend/images/carousel-1.jpg')}}" class="img-fluid" alt="Image">
                         <div class="carousel-caption">
                             <div class="p-3" style="max-width: 900px; margin-top: 10rem;">
                                 <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Explore The World</h4>
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="{{asset('images/carousel-3.jpg')}}" class="img-fluid" alt="Image">
+                        <img src="{{asset('frontend/images/carousel-3.jpg')}}" class="img-fluid" alt="Image">
                         <div class="carousel-caption">
                             <div class="p-3" style="max-width: 900px; margin-top: 10rem;">
                                 <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Explore The World</h4>
@@ -123,53 +123,53 @@
                                 <div class="row g-4">
                                     <div class="col-lg-6">
                                         <div class="destination-img">
-                                            <img class="img-fluid rounded w-100" src="{{asset('images/destination-1.jpg')}}" alt="">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-1.jpg')}}" alt="">
                                             <div class="destination-overlay p-4">
                                                 <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
                                                 <h4 class="text-white mb-2 mt-3">New York City</h4>
                                                 <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
                                             </div>
                                             <div class="search-icon">
-                                                <a href="{{asset("images/destination-1.jpg")}}" data-lightbox="destination-1"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                                <a href="{{asset("frontend/images/destination-1.jpg")}}" data-lightbox="destination-1"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="destination-img">
-                                            <img class="img-fluid rounded w-100" src="{{asset('images/destination-2.jpg')}}" alt="">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-2.jpg')}}" alt="">
                                             <div class="destination-overlay p-4">
                                                 <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
                                                 <h4 class="text-white mb-2 mt-3">Las vegas</h4>
                                                 <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
                                             </div>
                                             <div class="search-icon">
-                                                <a href="{{asset("images/destination-2.jpg")}}" data-lightbox="destination-2"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                                <a href="{{asset("frontend/images/destination-2.jpg")}}" data-lightbox="destination-2"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="destination-img">
-                                            <img class="img-fluid rounded w-100" src="{{asset('images/destination-7.jpg')}}" alt="">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-7.jpg')}}" alt="">
                                             <div class="destination-overlay p-4">
                                                 <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
                                                 <h4 class="text-white mb-2 mt-3">Los angelas</h4>
                                                 <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
                                             </div>
                                             <div class="search-icon">
-                                                <a href="{{asset("images/destination-7.jpg")}}" data-lightbox="destination-7"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                                <a href="{{asset("frontend/images/destination-7.jpg")}}" data-lightbox="destination-7"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="destination-img">
-                                            <img class="img-fluid rounded w-100" src="{{asset('images/destination-8.jpg')}}" alt="">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-8.jpg')}}" alt="">
                                             <div class="destination-overlay p-4">
                                                 <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
                                                 <h4 class="text-white mb-2 mt-3">Los angelas</h4>
                                                 <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
                                             </div>
                                             <div class="search-icon">
-                                                <a href="{{asset('images/destination-8.jpg')}}" data-lightbox="destination-8"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                                <a href="{{asset('frontend/images/destination-8.jpg')}}" data-lightbox="destination-8"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -177,53 +177,53 @@
                             </div>
                             <div class="col-xl-4">
                                 <div class="destination-img h-100">
-                                    <img class="img-fluid rounded w-100 h-100" src="{{asset('images/destination-9.jpg')}}" style="object-fit: cover; min-height: 300px;" alt="">
+                                    <img class="img-fluid rounded w-100 h-100" src="{{asset('frontend/images/destination-9.jpg')}}" style="object-fit: cover; min-height: 300px;" alt="">
                                     <div class="destination-overlay p-4">
                                         <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
                                         <h4 class="text-white mb-2 mt-3">San francisco</h4>
                                         <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
                                     </div>
                                     <div class="search-icon">
-                                        <a href="{{asset('images/destination-9.jpg')}}" data-lightbox="destination-4"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                        <a href="{{asset('frontend/images/destination-9.jpg')}}" data-lightbox="destination-4"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="destination-img">
-                                    <img class="img-fluid rounded w-100" src="{{asset('images/destination-4.jpg')}}" alt="">
+                                    <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-4.jpg')}}" alt="">
                                     <div class="destination-overlay p-4">
                                         <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
                                         <h4 class="text-white mb-2 mt-3">Los angelas</h4>
                                         <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
                                     </div>
                                     <div class="search-icon">
-                                        <a href="{{asset('images/destination-4.jpg')}}" data-lightbox="destination-4"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                        <a href="{{asset('frontend/images/destination-4.jpg')}}" data-lightbox="destination-4"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="destination-img">
-                                    <img class="img-fluid rounded w-100" src="{{asset('images/destination-5.jpg')}}" alt="">
+                                    <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-5.jpg')}}" alt="">
                                     <div class="destination-overlay p-4">
                                         <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
                                         <h4 class="text-white mb-2 mt-3">Los angelas</h4>
                                         <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
                                     </div>
                                     <div class="search-icon">
-                                        <a href="{{asset('images/destination-5.jpg')}}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                        <a href="{{asset('frontend/images/destination-5.jpg')}}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="destination-img">
-                                    <img class="img-fluid rounded w-100" src="{{asset('images/destination-6.jpg')}}" alt="">
+                                    <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-6.jpg')}}" alt="">
                                     <div class="destination-overlay p-4">
                                         <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
                                         <h4 class="text-white mb-2 mt-3">Los angelas</h4>
                                         <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
                                     </div>
                                     <div class="search-icon">
-                                        <a href="{{asset('images/destination-6.jpg')}}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                        <a href="{{asset('frontend/images/destination-6.jpg')}}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -293,26 +293,26 @@
                         <div class="row g-4">
                             <div class="col-lg-6">
                                 <div class="destination-img">
-                                    <img class="img-fluid rounded w-100" src="{{asset("images/destination-5.jpg")}}" alt="">
+                                    <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-5.jpg")}}" alt="">
                                     <div class="destination-overlay p-4">
                                         <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
                                         <h4 class="text-white mb-2 mt-3">San francisco</h4>
                                         <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
                                     </div>
                                     <div class="search-icon">
-                                        <a href="{{asset("images/destination-5.jpg")}}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                        <a href="{{asset("frontend/images/destination-5.jpg")}}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="destination-img">
-                                        <img class="img-fluid rounded w-100" src="{{asset("images/destination-6.jpg")}}" alt="">
+                                        <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-6.jpg")}}" alt="">
                                         <div class="destination-overlay p-4">
                                             <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
                                             <h4 class="text-white mb-2 mt-3">San francisco</h4>
                                             <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
                                         </div>
                                         <div class="search-icon">
-                                            <a href="{{asset("images/destination-6.jpg")}}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            <a href="{{asset("frontend/images/destination-6.jpg")}}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -322,27 +322,27 @@
                             <div class="row g-4">
                                 <div class="col-lg-6">
                                     <div class="destination-img">
-                                        <img class="img-fluid rounded w-100" src="{{asset("images/destination-5.jpg")}}" alt="">
+                                        <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-5.jpg")}}" alt="">
                                         <div class="destination-overlay p-4">
                                             <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
                                             <h4 class="text-white mb-2 mt-3">San francisco</h4>
                                             <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
                                         </div>
                                         <div class="search-icon">
-                                            <a href="{{asset("images/destination5.jpg")}}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            <a href="{{asset("frontend/images/destination5.jpg")}}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="destination-img">
-                                        <img class="img-fluid rounded w-100" src="{{asset("images/destination-6.jpg")}}" alt="">
+                                        <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-6.jpg")}}" alt="">
                                         <div class="destination-overlay p-4">
                                             <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
                                             <h4 class="text-white mb-2 mt-3">San francisco</h4>
                                             <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
                                         </div>
                                         <div class="search-icon">
-                                            <a href="{{asset("images/destination-6.jpg")}}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            <a href="{{asset("frontend/images/destination-6.jpg")}}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -352,20 +352,20 @@
                             <div class="row g-4">
                                 <div class="col-lg-6">
                                     <div class="destination-img">
-                                        <img class="img-fluid rounded w-100" src="{{asset("images/destination-5.jpg")}}" alt="">
+                                        <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-5.jpg")}}" alt="">
                                         <div class="destination-overlay p-4">
                                             <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
                                             <h4 class="text-white mb-2 mt-3">San francisco</h4>
                                             <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
                                         </div>
                                         <div class="search-icon">
-                                            <a href="{{asset("images/destination-5.jpg")}}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            <a href="{{asset("frontend/images/destination-5.jpg")}}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="destination-img">
-                                        <img class="img-fluid rounded w-100" src="{{asset("images/destination-6.jpg")}}" alt="">
+                                        <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-6.jpg")}}" alt="">
                                         <div class="destination-overlay p-4">
                                             <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
                                             <h4 class="text-white mb-2 mt-3">San francisco</h4>
@@ -411,7 +411,7 @@
                             <div class="row g-4">
                                 <div class="col-md-6 col-lg-4">
                                     <div class="national-item">
-                                        <img src="{{asset("images/explore-tour-1.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
+                                        <img src="{{asset("frontend/images/explore-tour-1.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
                                         <div class="national-content">
                                             <div class="national-info">
                                                 <h5 class="text-white text-uppercase mb-2">Weekend Tour</h5>
@@ -425,7 +425,7 @@
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="national-item">
-                                        <img src="{{asset("images/explore-tour-2.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
+                                        <img src="{{asset("frontend/images/explore-tour-2.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
                                         <div class="national-content">
                                             <div class="national-info">
                                                 <h5 class="text-white text-uppercase mb-2">Holiday Tour</h5>
@@ -439,7 +439,7 @@
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="national-item">
-                                        <img src="{{asset("images/explore-tour-3.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
+                                        <img src="{{asset("frontend/images/explore-tour-3.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
                                         <div class="national-content">
                                             <div class="national-info">
                                                 <h5 class="text-white text-uppercase mb-2">Road Trip</h5>
@@ -454,7 +454,7 @@
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="national-item">
-                                        <img src="{{asset("images/explore-tour-4.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
+                                        <img src="{{asset("frontend/images/explore-tour-4.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
                                         <div class="national-content">
                                             <div class="national-info">
                                                 <h5 class="text-white text-uppercase mb-2">Historical Trip</h5>
@@ -468,7 +468,7 @@
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="national-item">
-                                        <img src="{{asset("images/explore-tour-5.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
+                                        <img src="{{asset("frontend/images/explore-tour-5.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
                                         <div class="national-content">
                                             <div class="national-info">
                                                 <h5 class="text-white text-uppercase mb-2">Family Tour</h5>
@@ -483,7 +483,7 @@
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="national-item">
-                                        <img src="{{asset("images/explore-tour-6.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
+                                        <img src="{{asset("frontend/images/explore-tour-6.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
                                         <div class="national-content">
                                             <div class="national-info">
                                                 <h5 class="text-white text-uppercase mb-2">Beach Tour</h5>
@@ -500,7 +500,7 @@
                         <div id="InternationalTab-2" class="tab-pane fade show p-0">
                             <div class="InternationalTour-carousel owl-carousel">
                                 <div class="international-item">
-                                    <img src="{{asset("images/explore-tour-1.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/explore-tour-1.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
                                     <div class="international-content">
                                         <div class="international-info">
                                             <h5 class="text-white text-uppercase mb-2">Australia</h5>
@@ -514,7 +514,7 @@
                                     </div>
                                 </div>
                                 <div class="international-item">
-                                    <img src="{{asset("images/explore-tour-2.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/explore-tour-2.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
                                     <div class="international-content">
                                         <div class="international-info">
                                             <h5 class="text-white text-uppercase mb-2">Germany</h5>
@@ -527,7 +527,7 @@
                                     </div>
                                 </div>
                                 <div class="international-item">
-                                    <img src="{{asset("images/explore-tour-3.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/explore-tour-3.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
                                     <div class="international-content">
                                         <div class="tour-offer bg-warning">45% Off</div>
                                         <div class="international-info">
@@ -541,7 +541,7 @@
                                     </div>
                                 </div>
                                 <div class="international-item">
-                                    <img src="{{asset("images/explore-tour-4.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/explore-tour-4.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
                                     <div class="international-content">
                                         <div class="international-info">
                                             <h5 class="text-white text-uppercase mb-2">Japan</h5>
@@ -554,7 +554,7 @@
                                     </div>
                                 </div>
                                 <div class="international-item">
-                                    <img src="{{asset("images/explore-tour-5.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/explore-tour-5.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
                                     <div class="international-content">
                                         <div class="tour-offer bg-info">70% Off</div>
                                         <div class="international-info">
@@ -618,7 +618,7 @@
                         <div class="row g-2">
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-1.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-1.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -626,13 +626,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-1.jpg")}}" data-lightbox="gallery-1" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-1.jpg")}}" data-lightbox="gallery-1" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-2.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-2.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -640,13 +640,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-2.jpg")}}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-2.jpg")}}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-3.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-3.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -654,13 +654,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-3.jpg")}}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-3.jpg")}}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-4.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-4.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -668,13 +668,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-4.jpg")}}" data-lightbox="gallery-4" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-4.jpg")}}" data-lightbox="gallery-4" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-5.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-5.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -682,13 +682,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-5.jpg")}}" data-lightbox="gallery-5" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-5.jpg")}}" data-lightbox="gallery-5" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-6.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-6.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -696,13 +696,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-6.jpg")}}" data-lightbox="gallery-6" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-6.jpg")}}" data-lightbox="gallery-6" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-7.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-7.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -710,13 +710,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-7.jpg")}}" data-lightbox="gallery-7" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-7.jpg")}}" data-lightbox="gallery-7" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-3 col-xl-2">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-8.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-8.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -724,13 +724,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-8.jpg")}}" data-lightbox="gallery-8" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-8.jpg")}}" data-lightbox="gallery-8" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-9.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-9.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -738,13 +738,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-9.jpg")}}" data-lightbox="gallery-9" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-9.jpg")}}" data-lightbox="gallery-9" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-3 col-xl-2">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-10.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-10.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -752,7 +752,7 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-10.jpg")}}" data-lightbox="gallery-10" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-10.jpg")}}" data-lightbox="gallery-10" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -762,7 +762,7 @@
                         <div class="row g-2">
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-2.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-2.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -770,13 +770,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-2.jpg")}}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-2.jpg")}}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-3.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-3.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -784,7 +784,7 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-3.jpg")}}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-3.jpg")}}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -794,7 +794,7 @@
                         <div class="row g-2">
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-2.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-2.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -802,13 +802,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-2.jpg")}}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-2.jpg")}}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-3.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-3.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -816,7 +816,7 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-3.jpg")}}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-3.jpg")}}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -826,7 +826,7 @@
                         <div class="row g-2">
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-2.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-2.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -834,13 +834,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-2.jpg")}}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-2.jpg")}}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-3.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-3.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -848,7 +848,7 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-3.jpg")}}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-3.jpg")}}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -858,7 +858,7 @@
                         <div class="row g-2">
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-2.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-2.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -866,13 +866,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-2.jpg")}}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-2.jpg")}}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-3.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-3.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -880,7 +880,7 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-3.jpg")}}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-3.jpg")}}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -987,7 +987,7 @@
                         <div class="guide-item">
                             <div class="guide-img">
                                 <div class="guide-img-efects">
-                                    <img src="{{asset("images/guide-1.jpg")}}" class="img-fluid w-100 rounded-top" alt="Image">
+                                    <img src="{{asset("frontend/images/guide-1.jpg")}}" class="img-fluid w-100 rounded-top" alt="Image">
                                 </div>
                                 <div class="guide-icon rounded-pill p-2">
                                     <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-facebook-f"></i></a>
@@ -1008,7 +1008,7 @@
                         <div class="guide-item">
                             <div class="guide-img">
                                 <div class="guide-img-efects">
-                                    <img src="{{asset("images/guide-2.jpg")}}" class="img-fluid w-100 rounded-top" alt="Image">
+                                    <img src="{{asset("frontend/images/guide-2.jpg")}}" class="img-fluid w-100 rounded-top" alt="Image">
                                 </div>
                                 <div class="guide-icon rounded-pill p-2">
                                     <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-facebook-f"></i></a>
@@ -1029,7 +1029,7 @@
                         <div class="guide-item">
                             <div class="guide-img">
                                 <div class="guide-img-efects">
-                                    <img src="{{asset("images/guide-3.jpg")}}" class="img-fluid w-100 rounded-top" alt="Image">
+                                    <img src="{{asset("frontend/images/guide-3.jpg")}}" class="img-fluid w-100 rounded-top" alt="Image">
                                 </div>
                                 <div class="guide-icon rounded-pill p-2">
                                     <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-facebook-f"></i></a>
@@ -1050,7 +1050,7 @@
                         <div class="guide-item">
                             <div class="guide-img">
                                 <div class="guide-img-efects">
-                                    <img src="{{asset("images/guide-4.jpg")}}" class="img-fluid w-100 rounded-top" alt="Image">
+                                    <img src="{{asset("frontend/images/guide-4.jpg")}}" class="img-fluid w-100 rounded-top" alt="Image">
                                 </div>
                                 <div class="guide-icon rounded-pill p-2">
                                     <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-facebook-f"></i></a>
@@ -1086,7 +1086,7 @@
                             </p>
                         </div>
                         <div class="testimonial-img p-1">
-                            <img src="{{asset("images/testimonial-1.jpg")}}" class="img-fluid rounded-circle" alt="Image">
+                            <img src="{{asset("frontend/images/testimonial-1.jpg")}}" class="img-fluid rounded-circle" alt="Image">
                         </div>
                         <div style="margin-top: -35px;">
                             <h5 class="mb-0">John Abraham</h5>
@@ -1106,7 +1106,7 @@
                             </p>
                         </div>
                         <div class="testimonial-img p-1">
-                            <img src="{{asset("images/testimonial-2.jpg")}}" class="img-fluid rounded-circle" alt="Image">
+                            <img src="{{asset("frontend/images/testimonial-2.jpg")}}" class="img-fluid rounded-circle" alt="Image">
                         </div>
                         <div style="margin-top: -35px;">
                             <h5 class="mb-0">John Abraham</h5>
@@ -1126,7 +1126,7 @@
                             </p>
                         </div>
                         <div class="testimonial-img p-1">
-                            <img src="{{asset("images/testimonial-3.jpg")}}" class="img-fluid rounded-circle" alt="Image">
+                            <img src="{{asset("frontend/images/testimonial-3.jpg")}}" class="img-fluid rounded-circle" alt="Image">
                         </div>
                         <div style="margin-top: -35px;">
                             <h5 class="mb-0">John Abraham</h5>
@@ -1146,7 +1146,7 @@
                             </p>
                         </div>
                         <div class="testimonial-img p-1">
-                            <img src="{{asset("images/testimonial-4.jpg")}}" class="img-fluid rounded-circle" alt="Image">
+                            <img src="{{asset("frontend/images/testimonial-4.jpg")}}" class="img-fluid rounded-circle" alt="Image">
                         </div>
                         <div style="margin-top: -35px;">
                             <h5 class="mb-0">John Abraham</h5>

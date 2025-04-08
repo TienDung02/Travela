@@ -8,7 +8,7 @@
     <!-- Navbar & Hero End -->
 
     <!-- Header Start -->
-    <div class="container-fluid bg-breadcrumb" style="background: linear-gradient(rgba(19, 53, 123, 0.5), rgba(19, 53, 123, 0.5)), url({{ asset('images/breadcrumb-bg.jpg') }});">
+    <div class="container-fluid bg-breadcrumb" style="background: linear-gradient(rgba(19, 53, 123, 0.5), rgba(19, 53, 123, 0.5)), url({{ asset('frontend/images/breadcrumb-bg.jpg') }});">
         <div class="container text-center py-5" style="max-width: 900px;">
             <h1 class="text-white display-3 mb-4">Contact Us</h1>
             <ol class="breadcrumb justify-content-center mb-0">
@@ -31,13 +31,13 @@
                 <div class="col-lg-4 image-left-schedule">
                     <div class="rounded h-100 p-4 position-relative d-flex flex-column">
                         <div class="text-start w-75 position-absolute top-0 start-0">
-                            <img src="{{asset('images/destination-1.jpg')}}" alt="">
+                            <img src="{{asset('frontend/images/destination-1.jpg')}}" alt="">
                         </div>
                         <div class="text-end w-75 position-absolute end-0" style="    transform: translateY(50%) !important;">
-                            <img src="{{asset('images/destination-2.jpg')}}" alt="">
+                            <img src="{{asset('frontend/images/destination-2.jpg')}}" alt="">
                         </div>
                         <div class="text-center w-75 position-absolute bottom-0">
-                            <img src="{{asset('images/destination-3.jpg')}}" alt="">
+                            <img src="{{asset('frontend/images/destination-3.jpg')}}" alt="">
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                         <div class="row g-3">
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="text" id="searchInput" name="address" class="form-control border-0" placeholder="Nhập địa điểm..." required>
+                                    <input type="text" id="searchInput" name="address" class="form-control border-0" autocomplete="off" placeholder="Nhập địa điểm..." required>
                                     <label for="searchInput">Where do you want to go ?</label>
                                     <div class="dropdown">
                                         <div id="results" class="dropdown-menu rounded-bottom rounded-0 w-100 p-0"></div>
@@ -185,8 +185,8 @@
                                                     <div class="row h-100 w-100 ms-1">
                                                         <a href="#" class="h-100 col-lg-11 p-0 d-flex">
                                                             <div class="w-35 align-content-center position-relative h-100 p-0">
-                                                                <img class="w-75 h-90 ms-2 rounded  " src="{{asset('images/destination-3.jpg')}}">
-                                                                <img class="w-65 h-80 ms-2 rounded position-absolute sec-image" src="{{asset('images/destination-3.jpg')}}">
+                                                                <img class="w-75 h-90 ms-2 rounded  " src="{{asset('frontend/images/destination-3.jpg')}}">
+                                                                <img class="w-65 h-80 ms-2 rounded position-absolute sec-image" src="{{asset('frontend/images/destination-3.jpg')}}">
                                                             </div>
                                                             <div class="w-65 h-60 m-auto p-0">
 {{--                                                                @php unset($thong_tin["Mô tả"]) @endphp--}}
