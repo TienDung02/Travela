@@ -248,48 +248,48 @@ class ScheduleController
 //        $currencies = Currency::query()->get();
 //        $preferences = Preference::query()->get();
 
-        $activity = $this->geminiService->getEvent($data);
-        dd($activity);
-        return view('frontend.schedule.ajax.schedule-built', compact('plans', 'currencies', 'preferences'));
+        $activities = $this->geminiService->getEvent($data);
+//        dd($activities);
+        return view('frontend.schedule.ajax.eventAndActivity', compact('activities'));
 
     }
-    public function getDirections(Request $request)
-    {
-        $origin = $request->input('origin');
-        $destination = $request->input('destination');
-
-        if (!$origin || !$destination) {
-            return response()->json(['error' => 'Vui lòng nhập điểm đi và điểm đến.'], 400);
-        }
-
-        $result = $this->goMapsService->getDirections($origin, $destination);
-
-        return response()->json($result);
-    }
-
-
-    public function search(Request $request)
-    {
-        $query = trim($request->query('q', ''));
-
-        if (empty($query)) {
-            return response()->json([]);
-        }
-
-        $provinces = $this->provinceService->getProvinces();
-
-        if (empty($provinces)) {
-            return response()->json([]);
-        }
-
-        $filtered = collect($provinces)->filter(function ($province) use ($query) {
-            $provinceName = str_replace(['Tỉnh ', 'Thành phố '], '', $province['name']);
-
-            return stripos(mb_strtolower($provinceName), mb_strtolower($query)) === 0;
-        })->values()->all();
-
-        return response()->json($filtered);
-    }
+//    public function getDirections(Request $request)
+//    {
+//        $origin = $request->input('origin');
+//        $destination = $request->input('destination');
+//
+//        if (!$origin || !$destination) {
+//            return response()->json(['error' => 'Vui lòng nhập điểm đi và điểm đến.'], 400);
+//        }
+//
+//        $result = $this->goMapsService->getDirections($origin, $destination);
+//
+//        return response()->json($result);
+//    }
+//
+//
+//    public function search(Request $request)
+//    {
+//        $query = trim($request->query('q', ''));
+//
+//        if (empty($query)) {
+//            return response()->json([]);
+//        }
+//
+//        $provinces = $this->provinceService->getProvinces();
+//
+//        if (empty($provinces)) {
+//            return response()->json([]);
+//        }
+//
+//        $filtered = collect($provinces)->filter(function ($province) use ($query) {
+//            $provinceName = str_replace(['Tỉnh ', 'Thành phố '], '', $province['name']);
+//
+//            return stripos(mb_strtolower($provinceName), mb_strtolower($query)) === 0;
+//        })->values()->all();
+//
+//        return response()->json($filtered);
+//    }
 
 
 

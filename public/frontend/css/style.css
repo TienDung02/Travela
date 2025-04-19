@@ -2698,3 +2698,65 @@ input[type=number]::-webkit-outer-spin-button
     }
 }
 /* ----------------------------End Chat bot--------------------------------------- */
+
+
+/* -----------------------------------------*/
+/*   Event And Activity
+/*------------------------------------------*/
+.eventAndActivity {
+    min-height: unset !important;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.eventAndActivity::-webkit-scrollbar {
+    width: 4px;
+}
+/* Màu nền của thanh scrollbar */
+.eventAndActivity::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+/* Phần cuộn di chuyển */
+.eventAndActivity::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+/* Khi hover vào scrollbar */
+.eventAndActivity::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.eventAndActivity i {
+    display: block;
+    font-size: 2rem;
+    text-align: center;
+    color: #757575;
+}
+.eventAndActivity img{
+    object-fit: cover;
+    border: 2px inset #bfbfbf;
+    box-shadow: #e5e5e5 4px 2px 0px 1px;
+    top: 5%;
+    z-index: 111;
+}
+.eventAndActivity p{
+    color: #757575;
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+}
+.eventAndActivity span{
+    color: #757575;
+    border: 1px solid #8b8b8b;
+    padding: 0.25rem 0.75rem;
+    border-radius: 5px;
+}
+.eventAndActivity span:hover{
+    color: #FFFFFF;
+    background-color: #0b204a;
+}
+/* -----------------------------------------*/
+/*  End Event And Activity
+/*------------------------------------------*/
