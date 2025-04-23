@@ -263,7 +263,11 @@
                     @elseif(isset($map))
                         <div class="card border-start-0 border-0">
                             <div class="card-body pt-0">
-                                <div id="map" style="width: 100%; height: 61rem;"></div>
+                                <div id="map" style="width: 100%; height: 61rem;">
+                                    <div class="menu">
+                                        <button id="routeButton">Chỉ đường từ A đến B</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     @endif
@@ -401,23 +405,292 @@
     <a href="#" class="btn btn-primary btn-primary-outline-0 btn-md-square back-to-top"><i class="fa fa-arrow-up"></i></a>
 
     @if(isset($map))
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+
+
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+
         <script>
-            var lat = {{ $lat ?? 21.0285 }};
-            var lon = {{ $lon ?? 105.8542 }};
-            var addr = '{{$address}}';
+            const initialLat = {{ $lat }};
+            const initialLon = {{ $lon }};
+            const initialZoom = 10;
+            let map = null;
+            let directionsRenderer = null;
+            let rawProvinceName = "{{ $address_old }}";
+            let provinceNameToDraw = rawProvinceName.replace(/^(Tỉnh|Thành phố|TP\.?|Tp\.?|tp\.?|thành phố|tỉnh)\s+/i, "").trim();
+            console.log(provinceNameToDraw)
 
-            var map = L.map('map').setView([lat, lon], 9);
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors'
-            }).addTo(map);
 
-            var marker = L.marker([lat, lon]).addTo(map)
-                .bindPopup(addr)
-                .openPopup();
+
+            function initMap() {
+                console.log("Map4D SDK đã tải xong. Bắt đầu khởi tạo bản đồ.");
+                map = new map4d.Map(document.getElementById("map"), {
+                    center: { lat: initialLat, lng: initialLon },
+                    zoom: initialZoom,
+                    controls: true,
+                    mapType: "satellite"
+                });
+
+                let marker = new map4d.Marker({
+                    position: {lat: initialLat, lng:initialLon},
+                })
+                marker.setMap(map)
+                directionsRenderer = new map4d.DirectionsRenderer({ map: map });
+                if (provinceNameToDraw) {
+                    drawProvinceByName(provinceNameToDraw);
+                } else {
+                    console.warn("Không có tên tỉnh được chỉ định để vẽ.");
+                }
+
+
+
+
+                const routeButton = document.getElementById('routeButton');
+                if (routeButton) {
+                    routeButton.addEventListener('click', function() {
+                        console.log("Button 'Chỉ đường' clicked.");
+                        const pointA = { lat: 21.0333, lng: 105.8500 }; // Gần Hồ Tây
+                        const pointB = { lat: 21.0379, lng: 105.8346 }; // Lăng Bác
+                        const travelMode = 'car';
+                        requestAndDisplayRoute(pointA, pointB, travelMode);
+                    });
+                } else {
+                    console.error("HTML element with ID 'routeButton' not found.");
+                }
+            }
+            async function drawProvinceByName(provinceName) {
+                const geojsonUrl = '/vn.json';
+                try {
+                    const response = await axios.get(geojsonUrl);
+                    const geojsonData = response.data;
+                    if (!geojsonData || geojsonData.type !== 'FeatureCollection' || !Array.isArray(geojsonData.features)) {
+                        return;
+                    }
+                    const foundProvinceFeature = geojsonData.features.find(feature =>
+                        feature.properties && feature.properties.ten_tinh === provinceName
+                    );
+                    if (foundProvinceFeature) {
+                        const boundaryStyleOptions = {
+
+                        };
+                        const drawFeatureGeometry = (geometry, styleOptions) => {
+                            const drawn = [];
+                            if (!geometry || !geometry.coordinates) return drawn;
+                            const processLinearRingAndDraw = (linearRingCoords) => {
+                                if (Array.isArray(linearRingCoords) && linearRingCoords.length >= 3) {
+                                    const path = linearRingCoords.map(coord => {
+                                        if (Array.isArray(coord) && coord.length >= 2 && typeof coord[0] === 'number' && typeof coord[1] === 'number') {
+                                            return { lat: coord[1], lng: coord[0] };
+                                        }
+                                        return null;
+                                    }).filter(point => point !== null);
+
+
+                                    if (path.length >= 3) {
+                                        let polygon = new map4d.Polygon({
+                                            fillOpacity: 0.1,
+                                            strokeWidth: 1.5,
+                                            userInteractionEnabled: true,
+                                            paths: [path],
+                                        });
+                                        polygon.setMap(map)
+                                        drawn.push(polygon);
+                                    } else {
+                                        console.warn("Bỏ qua LinearRing không đủ điểm hợp lệ (>=3) sau chuyển đổi/lọc. Path:", path);
+                                    }
+                                } else {
+                                    console.warn(`Bỏ qua LinearRing không đủ điểm ban đầu (>=3). Số điểm: ${linearRingCoords ? linearRingCoords.length : 'null'}.`, linearRingCoords);
+                                }
+                            };
+                            if (geometry.type === 'Polygon') {
+                                if(Array.isArray(geometry.coordinates)) {
+                                    geometry.coordinates.forEach(linearRingCoords => {
+                                        processLinearRingAndDraw(linearRingCoords);
+                                    });
+                                } else {
+                                    console.warn("Cấu trúc Polygon.coordinates không phải mảng.");
+                                }
+                            } else if (geometry.type === 'MultiPolygon') {
+                                if(Array.isArray(geometry.coordinates)) {
+                                    geometry.coordinates.forEach(polygonCoords => {
+                                        if(Array.isArray(polygonCoords)) {
+                                            polygonCoords.forEach(linearRingCoords => {
+                                                processLinearRingAndDraw(linearRingCoords);
+                                            });
+                                        } else {
+                                            console.warn("Cấu trúc MultiPolygon lồng không phải mảng (polygonCoords).");
+                                        }
+                                    });
+                                } else {
+                                    console.warn("Cấu trúc MultiPolygon.coordinates không phải mảng.");
+                                }
+                            }
+                            return drawn;
+                        };
+
+
+
+                        const drawnPolygons = drawFeatureGeometry(foundProvinceFeature.geometry, boundaryStyleOptions);
+                        let minLat = Infinity;
+                        let maxLat = -Infinity;
+                        let minLng = Infinity;
+                        let maxLng = -Infinity;
+                        const collectAndCalculateBounds = (coordsArray) => {
+                            if (!Array.isArray(coordsArray)) return;
+                            if (Array.isArray(coordsArray[0]) && typeof coordsArray[0][0] === 'number') {
+                                coordsArray.forEach(coord => {
+                                    if (Array.isArray(coord) && coord.length >= 2 && typeof coord[0] === 'number' && typeof coord[1] === 'number') {
+                                        minLat = Math.min(minLat, coord[1]); // coord[1] là lat
+                                        maxLat = Math.max(maxLat, coord[1]); // coord[1] là lat
+                                        minLng = Math.min(minLng, coord[0]); // coord[0] là lng
+                                        maxLng = Math.max(maxLng, coord[0]); // coord[0] là lng
+                                    }
+                                });
+                            } else {
+                                coordsArray.forEach(subArray => collectAndCalculateBounds(subArray));
+                            }
+                        };
+                        try {
+                            fitMapToBoundsFromCoordinates(map, foundProvinceFeature.geometry.coordinates);
+                        } catch (e) {
+                            map.setCenter({ lat: initialLat, lng: initialLon });
+                            map.setZoom(initialZoom);
+                        }
+
+
+                    } else {
+                        map.setCenter({lat: initialLat, lng: initialLon});
+                        map.setZoom(initialZoom);
+                    }
+
+
+                } catch (error) {
+                    console.error("Lỗi khi tải hoặc xử lý GeoJSON:", error);
+                    alert("Không thể tải hoặc xử lý dữ liệu ranh giới từ server.");
+                }
+            }
+
+            async function requestAndDisplayRoute(origin, destination, travelMode) {
+                if (!directionsRenderer) {
+                    console.error("DirectionsRenderer chưa được khởi tạo.");
+                    return;
+                }
+
+                // Lấy API Key từ script tag
+                const map4dScript = document.querySelector('script[src*="api.map4d.vn/sdk/map/js"]');
+                let apiKey = '';
+                if (map4dScript) {
+                    const src = map4dScript.getAttribute('src');
+                    const urlParams = new URLSearchParams(src.split('?')[1]);
+                    apiKey = urlParams.get('key');
+                    console.log("Map4D API Key detected from script tag:", apiKey);
+                } else {
+                    console.error("Map4D SDK script tag not found to extract API key. Please provide API Key manually.");
+                    alert("Không thể lấy API Key Map4D từ script tag.");
+                    return;
+                }
+                const routeApiUrl = `https://api.map4d.vn/sdk/route?origin=${origin.lat},${origin.lng}&destination=${destination.lat},${destination.lng}&mode=${travelMode}&key=${apiKey}`;
+                try {
+                    const response = await axios.get(routeApiUrl);
+                    if (response.data && response.data.code === 'ok' && response.data.result.routes && response.data.result.routes.length > 0) {
+                        if (directionsRenderer) {
+                            directionsRenderer.setMap(null);  // Xóa bản đồ hiện tại
+                        }
+                        let directions = new map4d.DirectionsRenderer({
+                            routes: response.data,
+                            originMarkerOptions: {
+                                position: {lat: origin.lat, lng: origin.lng },
+                                title: "Start",
+                                draggable: false,
+                                strokePattern: new map4d.IconPattern({
+                                    url: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAICAYAAADwdn+XAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIdJREFUeNpiZMAC7L0XGACpeiAOgAptAOLGg1sTLqCrZcShef8HXXmBT2pSYDG+W88YBC4//ABkOqIbwoTFAfUgzR905Bj+sbGAMYgNEoO6ioGQAQEwm5EBVCyAGANIAtgM2ADyMzqAim0gxoBGUIAJXHnEwPTrDxiD2NBAbCQYC6RGI0CAAQDXEjYOjbjUPQAAAABJRU5ErkJggg=="
+                                }),
+                                visible: true
+                            },
+                            destinationMarkerOptions: {
+                                position: {lat: destination.lat, lng: destination.lng},
+                                title: "End",
+                                visible: true,
+                                draggable: false,
+                                strokePattern: new map4d.IconPattern({
+                                    url: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAICAYAAADwdn+XAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIdJREFUeNpiZMAC7L0XGACpeiAOgAptAOLGg1sTLqCrZcShef8HXXmBT2pSYDG+W88YBC4//ABkOqIbwoTFAfUgzR905Bj+sbGAMYgNEoO6ioGQAQEwm5EBVCyAGANIAtgM2ADyMzqAim0gxoBGUIAJXHnEwPTrDxiD2NBAbCQYC6RGI0CAAQDXEjYOjbjUPQAAAABJRU5ErkJggg=="
+                                }),
+                                userInteractionEnabled: true
+                            },
+                            strokePattern: new map4d.IconPattern({
+                                url: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAICAYAAADwdn+XAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIdJREFUeNpiZMAC7L0XGACpeiAOgAptAOLGg1sTLqCrZcShef8HXXmBT2pSYDG+W88YBC4//ABkOqIbwoTFAfUgzR905Bj+sbGAMYgNEoO6ioGQAQEwm5EBVCyAGANIAtgM2ADyMzqAim0gxoBGUIAJXHnEwPTrDxiD2NBAbCQYC6RGI0CAAQDXEjYOjbjUPQAAAABJRU5ErkJggg=="
+                            }),
+                            activeOutlineWidth: 3,
+                            inactiveOutlineWidth: 3,
+                            inactiveOutlineColor: "#FF00FF",
+                        })
+                        directions.setMap(map)
+
+
+                    } else {
+                        console.warn("Không có tuyến đường nào hoặc có lỗi trong dữ liệu trả về. Dữ liệu trả về:", response.data);
+                        alert("Không tìm thấy tuyến đường cho các điểm đã chọn.");
+                    }
+
+                } catch (error) {
+                    console.error("❌ Lỗi khi gọi API Map4D:", error);
+                    alert("Có lỗi xảy ra khi yêu cầu tính toán tuyến đường.");
+                }
+            }
+
+            function fitMapToBoundsFromCoordinates(map, coordinates) {
+                let minLat = Infinity;
+                let maxLat = -Infinity;
+                let minLng = Infinity;
+                let maxLng = -Infinity;
+
+                const traverseCoords = (coordsArray) => {
+                    if (!Array.isArray(coordsArray)) return;
+                    if (Array.isArray(coordsArray[0]) && typeof coordsArray[0][0] === 'number') {
+                        coordsArray.forEach(coord => {
+                            if (Array.isArray(coord) && coord.length >= 2) {
+                                minLat = Math.min(minLat, coord[1]);
+                                maxLat = Math.max(maxLat, coord[1]);
+                                minLng = Math.min(minLng, coord[0]);
+                                maxLng = Math.max(maxLng, coord[0]);
+                            }
+                        });
+                    } else {
+                        coordsArray.forEach(subArray => traverseCoords(subArray));
+                    }
+                };
+
+                traverseCoords(coordinates);
+
+                if (minLat !== Infinity && minLng !== Infinity) {
+                    const bounds = [
+                        { lat: minLat, lng: minLng },
+                        { lat: maxLat, lng: maxLng }
+                    ];
+                    try {
+                        map.fitBounds(bounds);
+                    } catch (e) {
+                        console.error("Không thể fitBounds:", e);
+                    }
+                }
+            }
+
+
+
         </script>
+        <script src="https://api.map4d.vn/sdk/map/js?version=2.6&key=320fdc09342c67c6879c20e64e1475c0&mapId=680393095d65bdb7b81fdcaf&callback=initMap"></script>
 
     @endif
 
 @endsection
+@push('extra_scripts')
+    <script>
+        console.log("Hello from view con!");
+        $(document).on('click' , '.requestAndDisplayRoute', function() {
+
+        })
+    </script>
+@endpush

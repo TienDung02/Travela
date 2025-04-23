@@ -17,13 +17,15 @@ class WeatherService
 
     public function getWeatherByCity($city)
     {
+
+
         $city = convertVietnameseToLatin($city);
 
         $url = "https://api.weatherapi.com/v1/forecast.json?key={$this->apiKey}&q={$city}&days=3";
         $response = Http::get($url);
 
         if ($response->failed()) {
-            return null; // Trả về null nếu request thất bại
+            return null;
         }
 
         return $response->json();

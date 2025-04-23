@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http; // Sử dụng Laravel HTTP Client
 use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Client\RequestException; // Để bắt lỗi HTTP
@@ -72,33 +73,50 @@ class Map4DService
      * @param string $address Địa chỉ cần tìm kiếm
      * @return array|null Dữ liệu JSON trả về từ API hoặc null nếu lỗi
      */
-    public function geocode(string $address): ?array
+//    public function geocode(string $address): ?array
+//    {
+//        $queryParams = [
+//            'key' => $this->apiKey,
+//            'address' => $address,
+//        ];
+//
+//        try {
+//            $response = Http::baseUrl($this->baseUrl)
+//                ->get('/geocode', $queryParams);
+//
+//            $response->throw();
+//            dd($response->json());
+//
+//            return $response->json();
+//
+//        } catch (RequestException $e) {
+//            logger()->error('Map4D API Error (Geocode): ' . $e->getMessage(), [
+//                'url' => $this->baseUrl . '/geocode',
+//                'params' => ['address' => $address],
+//                'status' => $e->response->status() ?? 'N/A',
+//                'response_body' => $e->response->body() ?? 'N/A'
+//            ]);
+//            return null;
+//        } catch (\Exception $e) {
+//            logger()->error('Map4D Service Error (Geocode): ' . $e->getMessage());
+//            return null;
+//        }
+//    }
+
+    public function geocode($address)
     {
-        $queryParams = [
-            'key' => $this->apiKey,
-            'address' => $address,
-        ];
-
-        try {
-            $response = Http::baseUrl($this->baseUrl)
-                ->get('/geocode', $queryParams);
-
-            $response->throw();
-
-            return $response->json();
-
-        } catch (RequestException $e) {
-            logger()->error('Map4D API Error (Geocode): ' . $e->getMessage(), [
-                'url' => $this->baseUrl . '/geocode',
-                'params' => ['address' => $address], // Chỉ log tham số không nhạy cảm
-                'status' => $e->response->status() ?? 'N/A',
-                'response_body' => $e->response->body() ?? 'N/A'
+        $cacheKey = 'geo_'.md5($address);
+        $data = Cache::remember($cacheKey, now()->addHours(12), function () use ($address) {
+            $response = Http::withHeaders([
+                'User-Agent' => 'YourAppName/1.0 (nongtiendugn2309@gmail.com)'
+            ])->get("https://nominatim.openstreetmap.org/search", [
+                'q' => $address,
+                'format' => 'json'
             ]);
-            return null;
-        } catch (\Exception $e) {
-            logger()->error('Map4D Service Error (Geocode): ' . $e->getMessage());
-            return null;
-        }
+            return $response->json();
+        });
+//        print_r($data);die;
+        return $data;
     }
 
     // Thêm các phương thức khác cho các API khác của Map4D nếu cần

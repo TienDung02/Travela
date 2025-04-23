@@ -11,6 +11,9 @@ use App\Services\RapidApiService;
 use App\Services\GoogleMapsScraper;
 use App\Services\Map4DService;
 use App\Models\Currency;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Promise;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -42,7 +45,6 @@ class ScheduleController
 
     public function showRoute(Request $request)
     {
-        // Lấy tọa độ từ request hoặc dùng giá trị mặc định
         $origin = $request->input('origin', '21.0285,105.8522'); // Mặc định Hồ Hoàn Kiếm
         $destination = $request->input('destination', '21.0367,105.8347'); // Mặc định Lăng Bác
         $mode = $request->input('mode', 'car');
@@ -63,7 +65,7 @@ class ScheduleController
             'origin' => $origin,
             'destination' => $destination,
             'mode' => $mode
-            // Truyền thêm các dữ liệu khác nếu cần cho View
+
         ]);
     }
     public function searchAddress(Request $request)
@@ -73,13 +75,11 @@ class ScheduleController
             return response()->json(['error' => 'Vui lòng nhập địa chỉ'], 400);
         }
 
-        $geocodeResult = $this->map4dService->geocode($address);
+        $geocodeResult = $this->map4DService->geocode($address);
 
         if (!$geocodeResult || empty($geocodeResult['result'])) {
             return response()->json(['error' => 'Không tìm thấy địa chỉ'], 404);
         }
-
-        // Trả về kết quả dạng JSON (thường dùng cho AJAX request)
         return response()->json($geocodeResult);
     }
     public function index()
@@ -98,8 +98,8 @@ class ScheduleController
 
     public function map(Request $request)
     {
-        $address = $request->input('address');
-        $address = str_replace(['Tỉnh ', 'Thành phố '], '', $address);
+        $address_old = $request->input('address');
+        $address = str_replace(['Tỉnh ', 'Thành phố '], '', $address_old);
         $map = null;
         $error = null;
 
@@ -108,10 +108,10 @@ class ScheduleController
             'query' => $address,
         ];
 
-        $map = $this->rapidApiService->fetchData($params);
-
+//        $map = $this->rapidApiService->fetchData($params);
+//        $address = "Chùa minh thành";
         if ($address) {
-            $result = $this->goMapsService->geocode($address); // Gọi API Nominatim
+            $result = $this->map4DService->geocode($address);
 
             if (!$result || empty($result)) {
                 $error = 'Không tìm thấy địa điểm.';
@@ -127,6 +127,9 @@ class ScheduleController
             $lon = 106.6281;
         }
 
+//        print_r($lat);
+//        dd($lon);
+
         $currencies = Currency::query()->get();
         $weather = $this->weatherService->getWeatherByCity($address);
 
@@ -135,9 +138,6 @@ class ScheduleController
                 'error' => "Không thể lấy thông tin thời tiết của thành phố: {$address}. Vui lòng thử lại!"
             ]);
         }
-
-        $address = $request->input('address');
-        $address = str_replace(['Tỉnh ', 'Thành phố '], '', $address);
 
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
@@ -181,6 +181,7 @@ class ScheduleController
             'lat' => $lat,
             'lon' => $lon,
             'address' => $address,
+            'address_old' => $address_old,
             'places' => $places,
             'finalUrl' => $finalUrl,
             'for_schedule' => [
@@ -228,10 +229,64 @@ class ScheduleController
         $preferences = Preference::query()->get();
 
         $plans = $this->geminiService->generateItinerary($data);
+        foreach ($plans as $day => &$activities){
+            foreach ($activities as &$session_key){
+                foreach ($session_key as &$session_active){
+                    $type = $session_active['type'];
+                    if($type == 'Di chuyển'){
+                        $from = str_replace(" (tự tìm)", "", $session_active['details']['Điểm đi']);
+                        $to = str_replace(" (tự tìm)", "", $session_active['details']['Điểm đến']);
+                        $origin = $this->map4DService->geocode($from);
+                        $de = $this->map4DService->geocode($to);
+                        $session_active['details']['ori_lat'] = $origin[0]['lat'] ?? '';
+                        $session_active['details']['ori_lon'] = $origin[0]['lon'] ?? '';
+                        $session_active['details']['de_lat'] = $de[0]['lat'] ?? '';
+                        $session_active['details']['de_lon'] = $de[0]['lon'] ?? '';
+                    }
+                }
+            }
+        }
+
 
         return view('frontend.schedule.ajax.schedule-built', compact('plans', 'currencies', 'preferences'));
 
     }
+    public function getToaDo($location){
+
+    }
+
+    public function cacheAllLocations($locations)
+    {
+
+
+
+        $locations = [
+            'diem_1',
+            'diem_2',
+            'diem_3',
+            'diem_4',
+        ];
+
+        $client = Http::withOptions(['synchronous' => false])->getClient();
+
+        $promises = [];
+        foreach ($locations as $id) {
+            $promises[$id] = $client->getAsync("https://api.example.com/coords/{$id}");
+        }
+
+        $results = Promise\settle($promises)->wait();
+
+        foreach ($results as $id => $response) {
+            if ($response['state'] === 'fulfilled') {
+                $data = json_decode($response['value']->getBody(), true);
+                Cache::put("coords_{$id}", $data, now()->addHours(12)); // cache 12h
+            }
+        }
+
+        return response()->json(['message' => 'Cached successfully']);
+    }
+
+
     public function getEventAndActivity(Request $request)
     {
 //        print_r($request->all());
