@@ -21,8 +21,7 @@
                             <div class="p-3" style="max-width: 900px; margin-top: 10rem;">
                                 <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Explore The World</h4>
                                 <h1 class="display-2 text-capitalize text-white mb-4">Let's The World Together!</h1>
-                                <p class="mb-5 fs-5">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                </p>
+                                <p class="mb-5 fs-4 fw-bold" style="text-shadow: 2px 2px #13357b;">Build your free trip plan & enjoy discounted activities!</p>
                                 <div class="d-flex align-items-center justify-content-center">
                                     <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{{route('schedule.index')}}">Discover Now</a>
                                 </div>
@@ -35,8 +34,7 @@
                             <div class="p-3" style="max-width: 900px; margin-top: 10rem;">
                                 <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Explore The World</h4>
                                 <h1 class="display-2 text-capitalize text-white mb-4">Find Your Perfect Tour At Travel</h1>
-                                <p class="mb-5 fs-5">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                </p>
+                                <p class="mb-5 fs-4 fw-bold" style="text-shadow: 2px 2px #13357b;">Build your free trip plan & enjoy discounted activities!</p>
                                 <div class="d-flex align-items-center justify-content-center">
                                     <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{{route('schedule.index')}}">Discover Now</a>
                                 </div>
@@ -49,8 +47,7 @@
                             <div class="p-3" style="max-width: 900px; margin-top: 10rem;">
                                 <h4 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Explore The World</h4>
                                 <h1 class="display-2 text-capitalize text-white mb-4">You Like To Go?</h1>
-                                <p class="mb-5 fs-5">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                </p>
+                                <p class="mb-5 fs-4 fw-bold" style="text-shadow: 2px 2px #13357b;">Build your free trip plan & enjoy discounted activities!</p>
                                 <div class="d-flex align-items-center justify-content-center">
                                     <a class="btn-hover-bg btn btn-primary rounded-pill text-white py-3 px-5" href="{{route('schedule.index')}}">Discover Now</a>
                                 </div>
