@@ -19,7 +19,7 @@
         <!-- Navbar & Hero End -->
 
         <!-- Header Start -->
-        <div class="container-fluid bg-breadcrumb" style="background: linear-gradient(rgba(19, 53, 123, 0.5), rgba(19, 53, 123, 0.5)), url({{ asset('images/breadcrumb-bg.jpg') }});">
+        <div class="container-fluid bg-breadcrumb" style="background: linear-gradient(rgba(19, 53, 123, 0.5), rgba(19, 53, 123, 0.5)), url({{ asset('frontend/images/breadcrumb-bg.jpg') }});">
             <div class="container text-center py-5" style="max-width: 900px;">
                 <h3 class="text-white display-3 mb-4">Our Travel Guides</h1>
                 <ol class="breadcrumb justify-content-center mb-0">
@@ -43,7 +43,7 @@
                         <div class="guide-item">
                             <div class="guide-img">
                                 <div class="guide-img-efects">
-                                    <img src="{{asset("images/guide-1.jpg")}}" class="img-fluid w-100 rounded-top" alt="Image">
+                                    <img src="{{asset("frontend/images/guide-1.jpg")}}" class="img-fluid w-100 rounded-top" alt="Image">
                                 </div>
                                 <div class="guide-icon rounded-pill p-2">
                                     <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-facebook-f"></i></a>
@@ -64,7 +64,7 @@
                         <div class="guide-item">
                             <div class="guide-img">
                                 <div class="guide-img-efects">
-                                    <img src="{{asset("images/guide-2.jpg")}}" class="img-fluid w-100 rounded-top" alt="Image">
+                                    <img src="{{asset("frontend/images/guide-2.jpg")}}" class="img-fluid w-100 rounded-top" alt="Image">
                                 </div>
                                 <div class="guide-icon rounded-pill p-2">
                                     <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-facebook-f"></i></a>
@@ -85,7 +85,7 @@
                         <div class="guide-item">
                             <div class="guide-img">
                                 <div class="guide-img-efects">
-                                    <img src="{{asset("images/guide-3.jpg")}}" class="img-fluid w-100 rounded-top" alt="Image">
+                                    <img src="{{asset("frontend/images/guide-3.jpg")}}" class="img-fluid w-100 rounded-top" alt="Image">
                                 </div>
                                 <div class="guide-icon rounded-pill p-2">
                                     <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-facebook-f"></i></a>
@@ -106,7 +106,7 @@
                         <div class="guide-item">
                             <div class="guide-img">
                                 <div class="guide-img-efects">
-                                    <img src="{{asset("images/guide-4.jpg")}}" class="img-fluid w-100 rounded-top" alt="Image">
+                                    <img src="{{asset("frontend/images/guide-4.jpg")}}" class="img-fluid w-100 rounded-top" alt="Image">
                                 </div>
                                 <div class="guide-icon rounded-pill p-2">
                                     <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-facebook-f"></i></a>
