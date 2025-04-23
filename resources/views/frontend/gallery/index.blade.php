@@ -19,7 +19,7 @@
         <!-- Navbar & Hero End -->
 
         <!-- Header Start -->
-        <div class="container-fluid bg-breadcrumb" style="background: linear-gradient(rgba(19, 53, 123, 0.5), rgba(19, 53, 123, 0.5)), url({{ asset('images/breadcrumb-bg.jpg') }});">
+        <div class="container-fluid bg-breadcrumb" style="background: linear-gradient(rgba(19, 53, 123, 0.5), rgba(19, 53, 123, 0.5)), url({{ asset('frontend/images/breadcrumb-bg.jpg') }});">
             <div class="container text-center py-5" style="max-width: 900px;">
                 <h3 class="text-white display-3 mb-4">Our Gallery</h1>
                 <ol class="breadcrumb justify-content-center mb-0">
@@ -72,7 +72,7 @@
                         <div class="row g-2">
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-1.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-1.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -80,13 +80,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-1.jpg")}}" data-lightbox="gallery-1" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-1.jpg")}}" data-lightbox="gallery-1" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-2.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-2.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -94,13 +94,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-2.jpg")}}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-2.jpg")}}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-3.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-3.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -108,13 +108,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-3.jpg")}}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-3.jpg")}}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-4.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-4.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -122,13 +122,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-4.jpg")}}" data-lightbox="gallery-4" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-4.jpg")}}" data-lightbox="gallery-4" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-5.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-5.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -136,13 +136,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-5.jpg")}}" data-lightbox="gallery-5" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-5.jpg")}}" data-lightbox="gallery-5" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-6.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-6.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -150,13 +150,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-6.jpg")}}" data-lightbox="gallery-6" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-6.jpg")}}" data-lightbox="gallery-6" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-7.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-7.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -164,13 +164,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-7.jpg")}}" data-lightbox="gallery-7" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-7.jpg")}}" data-lightbox="gallery-7" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-3 col-xl-2">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-8.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-8.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -178,13 +178,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-8.jpg")}}" data-lightbox="gallery-8" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-8.jpg")}}" data-lightbox="gallery-8" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-9.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-9.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -192,13 +192,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-9.jpg")}}" data-lightbox="gallery-9" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-9.jpg")}}" data-lightbox="gallery-9" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-3 col-xl-2">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-10.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-10.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -206,7 +206,7 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-10.jpg")}}" data-lightbox="gallery-10" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-10.jpg")}}" data-lightbox="gallery-10" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -216,7 +216,7 @@
                         <div class="row g-2">
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-2.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-2.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -224,13 +224,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-2.jpg")}}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-2.jpg")}}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-3.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-3.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -238,7 +238,7 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-3.jpg")}}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-3.jpg")}}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -248,7 +248,7 @@
                         <div class="row g-2">
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-2.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-2.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -256,13 +256,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-2.jpg")}}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-2.jpg")}}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-3.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-3.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -270,7 +270,7 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-3.jpg")}}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-3.jpg")}}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -280,7 +280,7 @@
                         <div class="row g-2">
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-2.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-2.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -288,13 +288,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-2.jpg")}}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-2.jpg")}}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-3.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-3.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -302,7 +302,7 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-3.jpg")}}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-3.jpg")}}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -312,7 +312,7 @@
                         <div class="row g-2">
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-2.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-2.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -320,13 +320,13 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-2.jpg")}}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-2.jpg")}}" data-lightbox="gallery-2" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-2">
                                 <div class="gallery-item h-100">
-                                    <img src="{{asset("images/gallery-3.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
+                                    <img src="{{asset("frontend/images/gallery-3.jpg")}}" class="img-fluid w-100 h-100 rounded" alt="Image">
                                     <div class="gallery-content">
                                         <div class="gallery-info">
                                             <h5 class="text-white text-uppercase mb-2">World Tour</h5>
@@ -334,7 +334,7 @@
                                         </div>
                                     </div>
                                     <div class="gallery-plus-icon">
-                                        <a href="{{asset("images/gallery-3.jpg")}}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
+                                        <a href="{{asset("frontend/images/gallery-3.jpg")}}" data-lightbox="gallery-3" class="my-auto"><i class="fas fa-plus fa-2x text-white"></i></a>
                                     </div>
                                 </div>
                             </div>

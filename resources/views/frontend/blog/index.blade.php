@@ -21,7 +21,7 @@
         <!-- Navbar & Hero End -->
 
         <!-- Header Start -->
-        <div class="container-fluid bg-breadcrumb" style="background: linear-gradient(rgba(19, 53, 123, 0.5), rgba(19, 53, 123, 0.5)), url({{ asset('images/breadcrumb-bg.jpg') }});">
+        <div class="container-fluid bg-breadcrumb" style="background: linear-gradient(rgba(19, 53, 123, 0.5), rgba(19, 53, 123, 0.5)), url({{ asset('frontend/images/breadcrumb-bg.jpg') }});">
             <div class="container text-center py-5" style="max-width: 900px;">
                 <h3 class="text-white display-3 mb-4">Our Blog</h1>
                 <ol class="breadcrumb justify-content-center mb-0">
@@ -47,7 +47,7 @@
                         <div class="blog-item">
                             <div class="blog-img">
                                 <div class="blog-img-inner">
-                                    <img class="img-fluid w-100 rounded-top" src="{{asset("images/blog-1.jpg")}}" alt="Image">
+                                    <img class="img-fluid w-100 rounded-top" src="{{asset("frontend/images/blog-1.jpg")}}" alt="Image">
                                     <div class="blog-icon">
                                         <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
                                     </div>
@@ -70,7 +70,7 @@
                         <div class="blog-item">
                             <div class="blog-img">
                                 <div class="blog-img-inner">
-                                    <img class="img-fluid w-100 rounded-top" src="{{asset("images/blog-2.jpg")}}" alt="Image">
+                                    <img class="img-fluid w-100 rounded-top" src="{{asset("frontend/images/blog-2.jpg")}}" alt="Image">
                                     <div class="blog-icon">
                                         <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
                                     </div>
@@ -93,7 +93,7 @@
                         <div class="blog-item">
                             <div class="blog-img">
                                 <div class="blog-img-inner">
-                                    <img class="img-fluid w-100 rounded-top" src="{{asset("images/blog-3.jpg")}}" alt="Image">
+                                    <img class="img-fluid w-100 rounded-top" src="{{asset("frontend/images/blog-3.jpg")}}" alt="Image">
                                     <div class="blog-icon">
                                         <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
                                     </div>
