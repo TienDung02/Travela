@@ -6,6 +6,8 @@ class DashboardController
 {
     public function index()
     {
-        return view('backend.dashboard.index');
+        return view('backend.dashboard.index', [
+            'title' => 'Dashboard',
+        ]);
     }
 }
