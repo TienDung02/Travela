@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
-@include('backend.component.head')
+<head>
+    @include('backend.component.head')
+    @include('backend.component.script')
+</head>
 
 <body class="fix-header fix-sidebar card-no-border">
     <!-- ============================================================== -->
@@ -58,7 +60,7 @@
     <!-- End Wrapper -->
     <!-- ============================================================== -->
     <!-- ============================================================== -->
-    @include('backend.component.script')
+   
 </body>
 
 </html>

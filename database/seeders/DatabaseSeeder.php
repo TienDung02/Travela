@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             ReviewSeeder::class,
             CurrencySeeder::class,
             PreferencesSeeder::class,
+            TourSeeder::class,
         ]);
     }
 }
