@@ -7,14 +7,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
-class Tour extends Model
+class Blog extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'desc', 'location', 'start_date', 'end_date', 'price'];
+    protected $fillable = ['title', 'content', 'user_id', 'category_id', 'active', 'published_at'];
 
-    public function packages()
+    public function user()
     {
-        return $this->hasMany(Package::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(BlogCategory::class);
     }
 }

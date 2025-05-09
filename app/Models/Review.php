@@ -3,31 +3,18 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-
-class Review extends Authenticatable
+use Illuminate\Database\Eloquent\Model;
+class Review extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use  HasFactory, Notifiable, SoftDeletes;
+    use HasFactory;
 
-    protected $primaryKey = 'id';
+    protected $fillable = ['user_id', 'reviewable_id', 'reviewable_type', 'rating', 'comment'];
 
-    protected $fillable = [
-        'user_id',
-        'activity_id',
-        'review',
-        'feedback',
-        'created_at',
-        'updated_at',
-        'deleted_at'
-    ];
-
-    protected $dates = ['deleted_at'];
-    public $timestamps = true;
-
+    public function reviewable()
+    {
+        return $this->morphTo();
+    }
 }

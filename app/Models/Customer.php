@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
-class Tour extends Model
+class Customer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'desc', 'location', 'start_date', 'end_date', 'price'];
+    protected $fillable = ['user_id', 'fullname', 'gender', 'birth_date'];
 
-    public function packages()
+    public function user()
     {
-        return $this->hasMany(Package::class);
+        return $this->belongsTo(User::class);
     }
 }

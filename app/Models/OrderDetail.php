@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
-class Tour extends Model
+class OrderDetail extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'desc', 'location', 'start_date', 'end_date', 'price'];
+    protected $fillable = ['order_id', 'item_id', 'item_type', 'quantity', 'price'];
 
-    public function packages()
+    public function order()
     {
-        return $this->hasMany(Package::class);
+        return $this->belongsTo(Order::class);
     }
 }

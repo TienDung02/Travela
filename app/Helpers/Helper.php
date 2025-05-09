@@ -6,6 +6,14 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 
+if (!function_exists('cleanLocationString')) {
+
+    function cleanLocationString($str) {
+        $cleanedStr = preg_replace('/\s*\([^)]*\)/', '', $str);
+        return trim($cleanedStr);
+    }
+
+}
 if (!function_exists('convertVietnameseToLatin')) {
     function convertVietnameseToLatin($str)
     {

@@ -11,20 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('places', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('provider_id')->nullable()->default(null);
-            $table->string('provider')->nullable()->default(null);
-            $table->rememberToken();
-            $table->string('password')->nullable();
-            $table->string('phone')->nullable();
-            $table->integer('role_id')->default('0');
+            $table->string('desc')->nullable();
+            $table->string('address')->nullable();
+            $table->string('tag')->nullable();
+            $table->decimal('lat', 10, 7)->nullable();
+            $table->decimal('lon', 10, 7)->nullable();
+            $table->boolean('status')->default(true); // trạng thái hoạt động
             $table->timestamps();
             $table->softDeletes();
         });
     }
+
 
     /**
      * Reverse the migrations.

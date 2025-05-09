@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
-class Tour extends Model
+class PlaceMedia extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'desc', 'location', 'start_date', 'end_date', 'price'];
+    protected $fillable = ['place_id', 'media', 'media_type'];
 
-    public function packages()
+    public function place()
     {
-        return $this->hasMany(Package::class);
+        return $this->belongsTo(Place::class);
     }
 }
