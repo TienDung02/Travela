@@ -13,8 +13,8 @@
                                         <option value="quarter" {{ $timePeriod == 'quarter' ? 'selected' : '' }}>Quarter</option>
                                         <option value="year" {{ $timePeriod == 'year' ? 'selected' : '' }}>Year</option>
                                     </select>
-                                    <div class="chart-container" style="overflow-x: auto; white-space: nowrap;">
-                                        <div id="revenue-chart" style="height: 360px; display: inline-block; min-width: 1000px; max-width: 20000px;"></div>
+                                    <div class="chart-container" style="overflow-x: auto; overflow-y: hidden; white-space: nowrap;">
+                                        <div id="revenue-chart" class="flex align-content-center justify-content-center" style="height:400px;min-width: 700px; max-width: 20000px;"></div>
                                     </div>
                                 </div>
                             </div>

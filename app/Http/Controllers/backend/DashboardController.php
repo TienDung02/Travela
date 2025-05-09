@@ -18,7 +18,7 @@ class DashboardController
             END AS period,
             SUM(price) AS revenue
         ", [$timePeriod, $timePeriod, $timePeriod])
-        ->whereNull('deleted_at') // Exclude soft-deleted rows
+         // Exclude soft-deleted rows
         ->groupBy('period')
         ->orderBy('period')
         ->get();
