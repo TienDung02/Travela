@@ -5,6 +5,7 @@ use App\Models\Employer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
+
 if (!function_exists('cleanLocationString')) {
 
     function cleanLocationString($str) {

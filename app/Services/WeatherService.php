@@ -17,8 +17,6 @@ class WeatherService
 
     public function getWeatherByCity($city)
     {
-
-
         $city = convertVietnameseToLatin($city);
 
         $url = "https://api.weatherapi.com/v1/forecast.json?key={$this->apiKey}&q={$city}&days=3";
