@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
-class Review extends Model
+class OrderDetail extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'reviewable_id', 'reviewable_type', 'rating', 'comment'];
+    protected $fillable = ['order_id', 'item_id', 'item_type', 'quantity', 'price'];
 
-    public function reviewable()
+    public function order()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Order::class);
     }
 }

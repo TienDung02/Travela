@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reviews', function (Blueprint $table) {
+        Schema::create('packages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('activity_id')->constrained('activities')->onDelete('cascade');
-            $table->text('review');
-            $table->text('feedback')->nullable();
+            $table->string('name');
+            $table->text('desc')->nullable();
+            $table->decimal('price', 10, 2);
+            $table->integer('duration'); // đơn vị: ngày
+            $table->foreignId('tour_id')->constrained()->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
+
     }
 
     /**
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('destinations');
     }
 };

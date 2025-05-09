@@ -11,19 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('contacts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('provider_id')->nullable()->default(null);
-            $table->string('provider')->nullable()->default(null);
-            $table->rememberToken();
-            $table->string('password')->nullable();
-            $table->string('phone')->nullable();
-            $table->integer('role_id')->default('0');
+            $table->string('email');
+            $table->string('phone');
+            $table->string('subject');
+            $table->text('message');
+            $table->string('status')->default('pending');
             $table->timestamps();
             $table->softDeletes();
         });
+
     }
 
     /**
