@@ -7,14 +7,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
-class Review extends Model
+class Role extends Model
 {
+    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
 
-    protected $fillable = ['user_id', 'reviewable_id', 'reviewable_type', 'rating', 'comment'];
+    protected $fillable = ['name', 'desc'];
 
-    public function reviewable()
+    public function users()
     {
-        return $this->morphTo();
+        return $this->hasMany(User::class);
     }
 }

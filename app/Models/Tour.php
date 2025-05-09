@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
-class Review extends Model
+class Tour extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'reviewable_id', 'reviewable_type', 'rating', 'comment'];
+    protected $fillable = ['name', 'desc', 'location', 'start_date', 'end_date', 'price'];
 
-    public function reviewable()
+    public function packages()
     {
-        return $this->morphTo();
+        return $this->hasMany(Package::class);
     }
 }
