@@ -84,7 +84,7 @@
                                     </div>
                                 </div>
                                 <div class="h-100 w-15 p-0">
-                                    <div class="btn w-100 btn-primary h-100 p-0 align-content-center white text-center requestAndDisplayRoute" data-ori-lat="{{$detailInfo['ori_lat'] ?? ''}}" data-ori-lon="{{$detailInfo['ori_lon'] ?? ''}}" data-de-lat="{{$detailInfo['de_lat'] ?? ''}}" data-de-lon="{{$detailInfo['de_lon'] ?? ''}}">Xem đường đi</div>
+                                    <div class="btn w-100 btn-primary h-100 p-0 align-content-center white text-center requestAndDisplayRoute" data-ori-lat="{{$detailInfo['origin_lat'] ?? ''}}" data-ori-lon="{{$detailInfo['origin_lon'] ?? ''}}" data-de-lat="{{$detailInfo['destination_lat'] ?? ''}}" data-de-lon="{{$detailInfo['destination_lon'] ?? ''}}">Xem đường đi</div>
                                 </div>
                             </div>
                         </div>

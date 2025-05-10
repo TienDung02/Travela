@@ -1,19 +1,20 @@
 <?php
 
+namespace App\Models;
+
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
-class Tour extends Model
+class Place extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'desc', 'location', 'start_date', 'end_date', 'price'];
+    protected $fillable = ['name', 'desc', 'address', 'tag', 'lat', 'lon', 'status'];
 
-    public function packages()
+    public function placeMedia()
     {
-        return $this->hasMany(Package::class);
+        return $this->hasMany(PlaceMedia::class);
     }
-
 }

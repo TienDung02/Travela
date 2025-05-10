@@ -7,14 +7,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
-class Review extends Model
+class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'reviewable_id', 'reviewable_type', 'rating', 'comment'];
+    protected $fillable = ['customer_id', 'total_price', 'status', 'note'];
 
-    public function reviewable()
+    public function customer()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
     }
 }

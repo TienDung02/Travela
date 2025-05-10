@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http; // Sử dụng Laravel HTTP Client
 use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Client\RequestException; // Để bắt lỗi HTTP
-
+use Illuminate\Support\Arr;
 class Map4DService
 {
     protected $apiKey;
@@ -105,18 +105,47 @@ class Map4DService
 
     public function geocode($address)
     {
-        $cacheKey = 'geo_'.md5($address);
-        $data = Cache::remember($cacheKey, now()->addHours(12), function () use ($address) {
+        $cacheKey = 'geo_' . md5($address);
+
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
+        }
+
+        $maxRetries = 3; // Giới hạn số lần thử lại
+        $retryDelaySeconds = 1; // Chờ 1 giây giữa các lần thử
+
+        $apiData = null;
+
+        for ($i = 0; $i < $maxRetries; $i++) {
             $response = Http::withHeaders([
                 'User-Agent' => 'YourAppName/1.0 (nongtiendugn2309@gmail.com)'
             ])->get("https://nominatim.openstreetmap.org/search", [
                 'q' => $address,
                 'format' => 'json'
             ]);
-            return $response->json();
-        });
-//        print_r($data);die;
-        return $data;
+
+            $responseData = $response->json();
+
+            // Kiểm tra kết quả: là mảng, không rỗng, và phần tử đầu tiên có lat/lon không rỗng
+            if (is_array($responseData) && !empty($responseData) &&
+                Arr::has($responseData[0], ['lat', 'lon']) &&
+                !empty($responseData[0]['lat']) && !empty($responseData[0]['lon'])
+            ) {
+                $apiData = $responseData;
+                break;
+            }
+
+            if ($i < $maxRetries - 1) {
+                sleep($retryDelaySeconds);
+            }
+        }
+
+        if ($apiData !== null) {
+            Cache::put($cacheKey, $apiData, now()->addHours(12));
+            return $apiData;
+        } else {
+            return null;
+        }
     }
 
     // Thêm các phương thức khác cho các API khác của Map4D nếu cần
