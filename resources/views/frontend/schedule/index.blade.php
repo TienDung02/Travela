@@ -1,6 +1,5 @@
 @extends('frontend.layouts.layout')
 @section('content')
-
     <!-- Navbar & Hero Start -->
     <div class="container-fluid position-relative p-0">
         @include('frontend.component.navbar')
@@ -8,7 +7,7 @@
     <!-- Navbar & Hero End -->
 
     <!-- Header Start -->
-    <div class="container-fluid bg-breadcrumb" style="background: linear-gradient(rgba(19, 53, 123, 0.5), rgba(19, 53, 123, 0.5)), url({{ asset('frontend/images/breadcrumb-bg.jpg') }});">
+    <div class="container-fluid bg-breadcrumb" style="background: linear-gradient(rgba(19, 53, 123, 0.5), rgba(19, 53, 123, 0.5)), url({{ asset('frontend/images/breadcrumb-bg.jpg') }}); background-repeat: no-repeat; background-size: cover; background-position: center;">
         <div class="container text-center py-5" style="max-width: 900px;">
             <h1 class="text-white display-3 mb-4">Contact Us</h1>
             <ol class="breadcrumb justify-content-center mb-0">
@@ -152,7 +151,7 @@
                             @if(isset($weather['forecast']) && isset($weather['forecast']['forecastday']))
                                 <ul class="row mb-0 pb-4">
                                     @foreach($weather['forecast']['forecastday'] as $day)
-                                        <li class="col-lg-4">
+                                        <li class="col-12 col-lg-4">
                                             <strong style="color: #0b204a">{{ \Carbon\Carbon::parse($day['date'])->format('d/m/Y') }}</strong>
                                             <p><strong>Temperature:</strong> {{ $day['day']['avgtemp_c'] }}°C</p>
                                             <p><strong>Humidity:</strong> {{ $day['day']['avghumidity'] }}%</p>
@@ -169,11 +168,13 @@
                     <div class="h-85 border-top">
                         <!-- Carousel Start -->
                         <div class="carousel-header h-95">
-                            <div id="carouselId" class="carousel slide h-100 mb-0 mt-2 ps-0" data-bs-ride="carousel" data-bs-interval="false">
+                            <div id="carouselId" class="carousel slide h-100 mb-0 mt-2 ps-0" data-bs-ride="carousel" data-bs-interval="false"  data-bs-touch="false">
                                 <ol class="carousel-indicators menu-schedule mb-1">
                                     <li data-bs-target="#carouselId" data-bs-slide-to="0" class="border-0 m-0 p-0 active col-lg-4">List of locations</li>
                                     <li data-bs-target="#carouselId" data-bs-slide-to="1" class="border-0 m-0 p-0 col-lg-4 Schedule-tab">Schedule</li>
                                     <li data-bs-target="#carouselId" data-bs-slide-to="2" class="border-0 m-0 p-0  col-lg-4 Event-tab">Event/Activity</li>
+                                    <li data-bs-target="#carouselId" data-bs-slide-to="3" class="border-0 m-0 p-0 col-lg-4 Map-tab d-lg-none">Bản đồ</li>
+    
                                 </ol>
                                 <div class="carousel-inner border-top h-95 mb-2" role="listbox">
                                     <div class="carousel-item active h-100 list-of-locations mt-2">
@@ -201,10 +202,10 @@
                                                                             @endif
                                                                         </p>
                                                                     @endif
-                                                                @endforeach
+                                                                @endforeach                                                              
                                                             </div>
-                                                        </a>
-                                                        <a href="#" class="col-lg-1 p-0"><div class=" h-100 p-0 delete align-content-center white"><i class="bi bi-trash"></i></div></a>
+                                                            </a>
+                                                        <a href="#" class="col-lg-1 p-0"><div class=" h-100 p-0 delete align-content-center white"><i class="bi bi-trash"></i></div></a> 
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -240,6 +241,7 @@
                                                 </button>
                                             </div>
                                         </div>
+                               
                                         <!-- Spinner Start -->
                                         <div class="position-relative h-50">
                                             <div id="spinner3" class="show bg-white position-absolute translate-middle w-100 top-50 start-50 align-items-center justify-content-center d-none">
@@ -249,18 +251,34 @@
                                             </div>
                                         </div>
                                         <!-- Spinner End -->
-
                                     </div>
-                                </div>
+                                    <div class="carousel-item h-100 map-slide mt-2 d-lg-none">
+                                        @if(isset($map))
+                                            <div class="card border-start-0 border-0">
+                                                <div class="card-body pt-0">
+                                                    <div id="mapmobile" style="width: 100%; height: 70rem;">
+                                                        <div class="menu">
+                                                            <button id="routeButtonMobile">Chỉ đường từ A đến B</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>  
+                                     
                             </div>
+                            
                         </div>
+                              
                         <!-- Carousel End -->
                     </div>
                 </div>
-                <div class="col-lg-5 p-0">
+                <div class="col-lg-5 p-0 d-none d-lg-block ">
                     @if(isset($error))
                         <div class="alert alert-danger">{{ $error }}</div>
                     @elseif(isset($map))
+        
                         <div class="card border-start-0 border-0">
                             <div class="card-body pt-0">
                                 <div id="map" style="width: 100%; height: 61rem;">
@@ -418,50 +436,87 @@
             const initialZoom = 10;
             let map = null;
             let directionsRenderer = null;
+            let mapMobile = null;
+            let directionsRendererMobile = null;
             let rawProvinceName = "{{ $address_old }}";
             let provinceNameToDraw = rawProvinceName.replace(/^(Tỉnh|Thành phố|TP\.?|Tp\.?|tp\.?|thành phố|tỉnh)\s+/i, "").trim();
             console.log(provinceNameToDraw)
 
+function initMap() {
+    console.log("Map4D SDK đã tải xong. Bắt đầu khởi tạo bản đồ.");
+
+    // === Desktop Map ===
+    map = new map4d.Map(document.getElementById("map"), {
+        center: { lat: initialLat, lng: initialLon },
+        zoom: initialZoom,
+        controls: true,
+        mapType: "satellite"
+    });
+
+    let marker = new map4d.Marker({
+        position: { lat: initialLat, lng: initialLon },
+    });
+    marker.setMap(map);
+
+    directionsRenderer = new map4d.DirectionsRenderer({ map: map });
+
+    if (provinceNameToDraw) {
+        drawProvinceByName(provinceNameToDraw, map);
+    }
+
+    // === Mobile Map ===
+    const mapMobileElement = document.getElementById("mapmobile");
+    if (mapMobileElement) {
+        
+        console.log("Khởi tạo bản đồ mobile...");
+        mapMobile = new map4d.Map(mapMobileElement, {
+            center: { lat: initialLat, lng: initialLon },
+            zoom: initialZoom,
+            controls: true,
+            mapType: "satellite"
+        });
+
+        const markerMobile = new map4d.Marker({
+            position: { lat: initialLat, lng: initialLon }
+        });
+        markerMobile.setMap(mapMobile);
+
+        directionsRendererMobile = new map4d.DirectionsRenderer({ map: mapMobile });
+
+        if (provinceNameToDraw) {
+            drawProvinceByName(provinceNameToDraw, mapMobile);
+        }
+    }
+
+     // === Nút chỉ đường cho desktop ===
+    const routeButton = document.getElementById('routeButton');
+    if (routeButton && map && directionsRenderer) {
+        routeButton.addEventListener('click', function () {
+            console.log("Desktop: Button 'Chỉ đường' clicked.");
+            const pointA = { lat: 21.0333, lng: 105.8500 };
+            const pointB = { lat: 21.0379, lng: 105.8346 };
+            const travelMode = 'car';
+
+            requestAndDisplayRoute(pointA, pointB, travelMode, map);
+        });
+    }
+
+    // === Nút chỉ đường cho mobile ===
+    const routeButtonMobile = document.getElementById('routeButtonMobile');
+    if (routeButtonMobile && mapMobile && directionsRendererMobile) {
+        routeButtonMobile.addEventListener('click', function () {
+            console.log("Mobile: Button 'Chỉ đường' clicked.");
+            const pointA = { lat: 21.0333, lng: 105.8500 };
+            const pointB = { lat: 21.0379, lng: 105.8346 };
+            const travelMode = 'car';
+
+            requestAndDisplayRoute(pointA, pointB, travelMode, mapMobile);
+        });
+    }
+}
 
 
-
-            function initMap() {
-                console.log("Map4D SDK đã tải xong. Bắt đầu khởi tạo bản đồ.");
-                map = new map4d.Map(document.getElementById("map"), {
-                    center: { lat: initialLat, lng: initialLon },
-                    zoom: initialZoom,
-                    controls: true,
-                    mapType: "satellite"
-                });
-
-                let marker = new map4d.Marker({
-                    position: {lat: initialLat, lng:initialLon},
-                })
-                marker.setMap(map)
-                directionsRenderer = new map4d.DirectionsRenderer({ map: map });
-                if (provinceNameToDraw) {
-                    drawProvinceByName(provinceNameToDraw);
-                } else {
-                    console.warn("Không có tên tỉnh được chỉ định để vẽ.");
-                }
-
-
-
-
-                const routeButton = document.getElementById('routeButton');
-                if (routeButton) {
-                    routeButton.addEventListener('click', function() {
-                        console.log("Button 'Chỉ đường' clicked.");
-                        const pointA = { lat: 21.0333, lng: 105.8500 }; // Gần Hồ Tây
-                        const pointB = { lat: 21.0379, lng: 105.8346 }; // Lăng Bác
-                        const travelMode = 'car';
-                        requestAndDisplayRoute(pointA, pointB, travelMode);
-                    });
-                } else {
-                    console.error("HTML element with ID 'routeButton' not found.");
-                }
-            }
-            async function drawProvinceByName(provinceName) {
+            async function drawProvinceByName(provinceName, mapInstance) {
                 const geojsonUrl = '/vn.json';
                 try {
                     const response = await axios.get(geojsonUrl);
@@ -496,7 +551,7 @@
                                             userInteractionEnabled: true,
                                             paths: [path],
                                         });
-                                        polygon.setMap(map)
+                                        polygon.setMap(mapInstance)
                                         drawn.push(polygon);
                                     } else {
                                         console.warn("Bỏ qua LinearRing không đủ điểm hợp lệ (>=3) sau chuyển đổi/lọc. Path:", path);
@@ -573,7 +628,7 @@
                 }
             }
 
-            async function requestAndDisplayRoute(origin, destination, travelMode) {
+            async function requestAndDisplayRoute(origin, destination, travelMode,mapInstance) {
                 if (!directionsRenderer) {
                     console.error("DirectionsRenderer chưa được khởi tạo.");
                     return;
@@ -627,8 +682,7 @@
                             inactiveOutlineWidth: 3,
                             inactiveOutlineColor: "#FF00FF",
                         })
-                        directions.setMap(map)
-
+                        directions.setMap(mapInstance)
 
                     } else {
                         console.warn("Không có tuyến đường nào hoặc có lỗi trong dữ liệu trả về. Dữ liệu trả về:", response.data);
@@ -686,6 +740,374 @@
     @endif
 
 @endsection
+
+@push('styles')
+<style>
+
+.hamburger-menu {
+  display: none;
+}
+
+
+
+
+/* 🔵 Mobile (<480px) */
+@media (max-width: 480px) {
+  .navbar-nav, .nav-links, .top-links {
+    display: none;
+  }
+
+  .hamburger-menu {
+    display: block;
+  }
+
+  .navbar {
+    justify-content: space-between;
+    padding: 0 1rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.5rem;
+  }
+  .bg-breadcrumb {
+      height: 40vh !important; 
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+    .bg-breadcrumb .container {
+    padding: 0 !important;
+  }
+
+  .bg-breadcrumb h1 {
+    font-size: 1.4rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .breadcrumb {
+    font-size: 0.75rem;
+    justify-content: center;
+  }
+
+  .image-left-schedule {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+ .image-left-schedule *,
+  .image-left-schedule img {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    position: static !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+  /* Form container full width */
+  .col-lg-8 {
+    width: 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Gộp tất cả các input theo 1 cột */
+  .col-md-4,
+  .col-md-8,
+  .col-md-12 {
+    width: 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+
+  input[name="adults"],
+  input[name="children-2"],
+  input[name="children-1"] {
+    margin-bottom: 0.7rem !important;
+  }
+
+  .form-floating > input,
+  .form-floating > select,
+  .form-floating > textarea {
+    height: auto !important;
+    padding: 1.8rem 1rem 0.5rem !important;
+  }
+
+  .form-floating > label {
+    font-size: 1.1rem !important;
+      padding: 1rem 1.5rem !important;
+    pointer-events: none;
+  }
+  /* Giảm cỡ nút */
+  .btn.w-100 {
+    padding: 0.75rem !important;
+    font-size: 1rem;
+  }
+
+  /* Tiêu đề và spacing */
+  h3.mb-2 {
+    font-size: 1.2rem !important;
+    text-align: center;
+  }
+  .subscribe,
+  .footer,
+  .copyright {
+    display: none !important;
+  }
+  .schedule-page {
+    height: auto !important;
+  }
+
+
+
+/* ✅ Khối chứa ảnh (w-35) */
+.carousel-item .w-35 {
+  width: 30% !important;                /* Chiếm 30% chiều ngang container */
+  display: flex;                        /* Dùng flex để dễ căn giữa */
+  align-items: center;                  /* Căn giữa theo chiều dọc */
+  justify-content: flex-start;             /* Căn giữa theo chiều ngang */
+  padding-left: 0.25rem;                /* Đẩy ảnh cách mép trái một chút */
+}
+
+/* ✅ Ảnh hiển thị chính */
+.carousel-item img {
+   margin-top: 0 !important;
+}
+
+/* ✅ Ảnh đè (nếu có dùng ảnh overlay hoặc ảnh phụ) sẽ bị ẩn trên mobile */
+.carousel-item .sec-image {
+  display: none !important;            /* Ẩn hoàn toàn ảnh thứ hai */
+}
+
+
+  .carousel-item .w-65 {
+    width: 65% !important;
+    padding: 0 !important;
+  }
+
+ 
+
+  .carousel-item .w-65 p,
+  .carousel-item .w-65 span {
+    font-size: 0.85rem;
+    line-height: 1.3;
+  }
+
+  .carousel-item .btn {
+    font-size: 0.6rem !important;
+    padding: 0.3rem 0.5rem !important;
+  }
+
+ .carousel-item .row {
+    position: relative;
+  }
+
+  .carousel-item .delete {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    z-index: 10;
+    background: white;
+    padding: 0.25rem;
+    border-radius: 4px;
+  }
+
+.routeButton {
+    display: none;
+}
+
+}
+
+
+</style>
+@endpush
+
+
+@push('styles')
+<style>
+
+
+
+
+/* 🔵 tablet (<768px) */
+@media (max-width: 768px) {
+  .navbar-nav, .nav-links, .top-links {
+    display: none;
+  }
+
+  .hamburger-menu {
+    display: block;
+  }
+
+  .navbar {
+    justify-content: space-between;
+    padding: 0 1rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.5rem;
+  }
+  .bg-breadcrumb {
+      height: 40vh !important; 
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+    .bg-breadcrumb .container {
+    padding: 0 !important;
+  }
+
+  .bg-breadcrumb h1 {
+    font-size: 1.4rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .breadcrumb {
+    font-size: 0.75rem;
+    justify-content: center;
+  }
+
+  .image-left-schedule {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+ .image-left-schedule *,
+  .image-left-schedule img {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    position: static !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+  /* Form container full width */
+  .col-lg-8 {
+    width: 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Gộp tất cả các input theo 1 cột */
+  .col-md-4,
+  .col-md-8,
+  .col-md-12 {
+    width: 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+
+  input[name="adults"],
+  input[name="children-2"],
+  input[name="children-1"] {
+    margin-bottom: 0.7rem !important;
+  }
+
+  .form-floating > input,
+  .form-floating > select,
+  .form-floating > textarea {
+    height: auto !important;
+    padding: 1.8rem 1rem 0.5rem !important;
+  }
+
+  .form-floating > label {
+    font-size: 1.1rem !important;
+      padding: 1rem 1.5rem !important;
+    pointer-events: none;
+  }
+  /* Giảm cỡ nút */
+  .btn.w-100 {
+    padding: 0.75rem !important;
+    font-size: 1rem;
+  }
+
+  /* Tiêu đề và spacing */
+  h3.mb-2 {
+    font-size: 1.2rem !important;
+    text-align: center;
+  }
+  .subscribe,
+  .footer,
+  .copyright {
+    display: none !important;
+  }
+  .schedule-page {
+    height: auto !important;
+  }
+
+
+
+/* ✅ Khối chứa ảnh (w-35) */
+.carousel-item .w-35 {
+  width: 30% !important;                /* Chiếm 30% chiều ngang container */
+  display: flex;                        /* Dùng flex để dễ căn giữa */
+  align-items: center;                  /* Căn giữa theo chiều dọc */
+  justify-content: flex-start;             /* Căn giữa theo chiều ngang */
+  padding-left: 0.25rem;                /* Đẩy ảnh cách mép trái một chút */
+}
+
+/* ✅ Ảnh hiển thị chính */
+.carousel-item img {
+   margin-top: 0 !important;
+}
+
+/* ✅ Ảnh đè (nếu có dùng ảnh overlay hoặc ảnh phụ) sẽ bị ẩn trên mobile */
+.carousel-item .sec-image {
+  display: none !important;            /* Ẩn hoàn toàn ảnh thứ hai */
+}
+
+
+  .carousel-item .w-65 {
+    width: 65% !important;
+    padding: 0 !important;
+  }
+
+ 
+
+  .carousel-item .w-65 p,
+  .carousel-item .w-65 span {
+    font-size: 0.85rem;
+    line-height: 1.3;
+  }
+
+  .carousel-item .btn {
+    font-size: 0.6rem !important;
+    padding: 0.3rem 0.5rem !important;
+  }
+
+ .carousel-item .row {
+    position: relative;
+  }
+
+  .carousel-item .delete {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    z-index: 10;
+    background: white;
+    padding: 0.25rem;
+    border-radius: 4px;
+  }
+
+.routeButton {
+    display: none;
+}
+
+}
+
+
+</style>
+@endpush
+
+
+
+
+
 @push('extra_scripts')
     <script>
         console.log("Hello from view con!");
@@ -694,3 +1116,5 @@
         })
     </script>
 @endpush
+
+
