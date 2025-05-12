@@ -202,10 +202,10 @@
                                                                             @endif
                                                                         </p>
                                                                     @endif
-                                                                @endforeach
+                                                                @endforeach                                                              
                                                             </div>
-                                                        </a>
-                                                        <a href="#" class="col-lg-1 p-0"><div class=" h-100 p-0 delete align-content-center white"><i class="bi bi-trash"></i></div></a>
+                                                            </a>
+                                                        <a href="#" class="col-lg-1 p-0"><div class=" h-100 p-0 delete align-content-center white"><i class="bi bi-trash"></i></div></a> 
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -796,7 +796,7 @@ function initMap() {
     pointer-events: none !important;
   }
 
-  .image-left-schedule *,
+ .image-left-schedule *,
   .image-left-schedule img {
     display: none !important;
     visibility: hidden !important;
@@ -821,14 +821,23 @@ function initMap() {
     flex: 0 0 100% !important;
     max-width: 100% !important;
   }
- .form-floating > input,
+
+  input[name="adults"],
+  input[name="children-2"],
+  input[name="children-1"] {
+    margin-bottom: 0.7rem !important;
+  }
+
+  .form-floating > input,
   .form-floating > select,
   .form-floating > textarea {
-    padding: 1.8rem 1rem 1rem !important;
     height: auto !important;
+    padding: 1.8rem 1rem 0.5rem !important;
   }
- .form-floating > label {
-    padding: 0.2rem 0.5rem !important;
+
+  .form-floating > label {
+    font-size: 1.1rem !important;
+      padding: 1rem 1.5rem !important;
     pointer-events: none;
   }
   /* Giảm cỡ nút */
@@ -878,12 +887,7 @@ function initMap() {
     padding: 0 !important;
   }
 
-  .carousel-item .delete {
-    width: 5%;
-    text-align: right;
-    padding-right: 0.5rem;
-    margin-left: auto;
-  }
+ 
 
   .carousel-item .w-65 p,
   .carousel-item .w-65 span {
@@ -894,6 +898,20 @@ function initMap() {
   .carousel-item .btn {
     font-size: 0.6rem !important;
     padding: 0.3rem 0.5rem !important;
+  }
+
+ .carousel-item .row {
+    position: relative;
+  }
+
+  .carousel-item .delete {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    z-index: 10;
+    background: white;
+    padding: 0.25rem;
+    border-radius: 4px;
   }
 
 .routeButton {
@@ -958,7 +976,7 @@ function initMap() {
     pointer-events: none !important;
   }
 
-  .image-left-schedule *,
+ .image-left-schedule *,
   .image-left-schedule img {
     display: none !important;
     visibility: hidden !important;
@@ -983,14 +1001,23 @@ function initMap() {
     flex: 0 0 100% !important;
     max-width: 100% !important;
   }
- .form-floating > input,
+
+  input[name="adults"],
+  input[name="children-2"],
+  input[name="children-1"] {
+    margin-bottom: 0.7rem !important;
+  }
+
+  .form-floating > input,
   .form-floating > select,
   .form-floating > textarea {
-    padding: 1.8rem 1rem 1rem !important;
     height: auto !important;
+    padding: 1.8rem 1rem 0.5rem !important;
   }
- .form-floating > label {
-    padding: 0.2rem 0.5rem !important;
+
+  .form-floating > label {
+    font-size: 1.1rem !important;
+      padding: 1rem 1.5rem !important;
     pointer-events: none;
   }
   /* Giảm cỡ nút */
@@ -1040,12 +1067,7 @@ function initMap() {
     padding: 0 !important;
   }
 
-  .carousel-item .delete {
-    width: 5%;
-    text-align: right;
-    padding-right: 0.5rem;
-    margin-left: auto;
-  }
+ 
 
   .carousel-item .w-65 p,
   .carousel-item .w-65 span {
@@ -1056,6 +1078,20 @@ function initMap() {
   .carousel-item .btn {
     font-size: 0.6rem !important;
     padding: 0.3rem 0.5rem !important;
+  }
+
+ .carousel-item .row {
+    position: relative;
+  }
+
+  .carousel-item .delete {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    z-index: 10;
+    background: white;
+    padding: 0.25rem;
+    border-radius: 4px;
   }
 
 .routeButton {
