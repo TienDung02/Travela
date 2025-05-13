@@ -31,6 +31,7 @@ class UserFactory extends Factory
             'role_id' => \App\Models\Role::inRandomOrder()->first(),
             'created_at' => now(),
             'updated_at' => now(),
+            'provider' => $this->faker->randomElement(['google', 'facebook', 'local']),
         ];
     }
 
