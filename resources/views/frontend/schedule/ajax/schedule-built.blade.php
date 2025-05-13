@@ -17,7 +17,6 @@
         @php $day_id = str_replace('Ngày ', '', $day); @endphp
         <h4 id="myTarget{{$day_id}}">{{ $day }}</h4>
         @foreach($activities as $activity => $details)
-{{--            <div class="h-95">--}}
                 <div class="middle-border"></div>
                 <div class="time fw-bold ps-0">{{ $activity }}</div>
                 @foreach($details as $detail)

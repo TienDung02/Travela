@@ -111,34 +111,26 @@ class Map4DService
             return Cache::get($cacheKey);
         }
 
-        $maxRetries = 3; // Giới hạn số lần thử lại
-        $retryDelaySeconds = 1; // Chờ 1 giây giữa các lần thử
 
         $apiData = null;
 
-        for ($i = 0; $i < $maxRetries; $i++) {
-            $response = Http::withHeaders([
-                'User-Agent' => 'YourAppName/1.0 (nongtiendugn2309@gmail.com)'
-            ])->get("https://nominatim.openstreetmap.org/search", [
-                'q' => $address,
-                'format' => 'json'
-            ]);
+        $response = Http::withHeaders([
+            'User-Agent' => 'YourAppName/1.0 (nongtiendugn2309@gmail.com)'
+        ])->get("https://nominatim.openstreetmap.org/search", [
+            'q' => $address,
+            'format' => 'json'
+        ]);
 
-            $responseData = $response->json();
+        $responseData = $response->json();
 
-            // Kiểm tra kết quả: là mảng, không rỗng, và phần tử đầu tiên có lat/lon không rỗng
-            if (is_array($responseData) && !empty($responseData) &&
-                Arr::has($responseData[0], ['lat', 'lon']) &&
-                !empty($responseData[0]['lat']) && !empty($responseData[0]['lon'])
-            ) {
-                $apiData = $responseData;
-                break;
-            }
-
-            if ($i < $maxRetries - 1) {
-                sleep($retryDelaySeconds);
-            }
+        if (is_array($responseData) && !empty($responseData) &&
+            Arr::has($responseData[0], ['lat', 'lon']) &&
+            !empty($responseData[0]['lat']) && !empty($responseData[0]['lon'])
+        ) {
+            $apiData = $responseData;
         }
+
+
 
         if ($apiData !== null) {
             Cache::put($cacheKey, $apiData, now()->addHours(12));
@@ -148,6 +140,4 @@ class Map4DService
         }
     }
 
-    // Thêm các phương thức khác cho các API khác của Map4D nếu cần
-    // Ví dụ: reverseGeocode, placeSearch, ...
 }

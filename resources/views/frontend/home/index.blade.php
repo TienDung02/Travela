@@ -391,18 +391,7 @@
                     </p>
                 </div>
                 <div class="tab-class text-center">
-                    <ul class="nav nav-pills d-inline-flex justify-content-center mb-5">
-                        <li class="nav-item">
-                            <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill active" data-bs-toggle="pill" href="#NationalTab-1">
-                                <span class="text-dark" style="width: 250px;">National Tour Category</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="d-flex py-2 mx-3 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#InternationalTab-2">
-                                <span class="text-dark" style="width: 250px;">International tour Category</span>
-                            </a>
-                        </li>
-                    </ul>
+
                     <div class="tab-content">
                         <div id="NationalTab-1" class="tab-pane fade show p-0 active">
                             <div class="row g-4">
@@ -494,78 +483,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="InternationalTab-2" class="tab-pane fade show p-0">
-                            <div class="InternationalTour-carousel owl-carousel">
-                                <div class="international-item">
-                                    <img src="{{asset("frontend/images/explore-tour-1.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                    <div class="international-content">
-                                        <div class="international-info">
-                                            <h5 class="text-white text-uppercase mb-2">Australia</h5>
-                                            <a href="#" class="btn-hover text-white me-4"><i class="fas fa-map-marker-alt me-1"></i> 8 Cities</a>
-                                            <a href="#" class="btn-hover text-white"><i class="fa fa-eye ms-2"></i> <span>143+ Tour Places</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="tour-offer bg-success">30% Off</div>
-                                    <div class="international-plus-icon">
-                                        <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                    </div>
-                                </div>
-                                <div class="international-item">
-                                    <img src="{{asset("frontend/images/explore-tour-2.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                    <div class="international-content">
-                                        <div class="international-info">
-                                            <h5 class="text-white text-uppercase mb-2">Germany</h5>
-                                            <a href="#" class="btn-hover text-white me-4"><i class="fas fa-map-marker-alt me-1"></i> 12 Cities</a>
-                                            <a href="#" class="btn-hover text-white"><i class="fa fa-eye ms-2"></i> <span>21+ Tour Places</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="international-plus-icon">
-                                        <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                    </div>
-                                </div>
-                                <div class="international-item">
-                                    <img src="{{asset("frontend/images/explore-tour-3.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                    <div class="international-content">
-                                        <div class="tour-offer bg-warning">45% Off</div>
-                                        <div class="international-info">
-                                            <h5 class="text-white text-uppercase mb-2">Spain</h5>
-                                            <a href="#" class="btn-hover text-white me-4"><i class="fas fa-map-marker-alt me-1"></i> 9 Cities</a>
-                                            <a href="#" class="btn-hover text-white"><i class="fa fa-eye ms-2"></i> <span>133+ Tour Places</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="international-plus-icon">
-                                        <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                    </div>
-                                </div>
-                                <div class="international-item">
-                                    <img src="{{asset("frontend/images/explore-tour-4.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                    <div class="international-content">
-                                        <div class="international-info">
-                                            <h5 class="text-white text-uppercase mb-2">Japan</h5>
-                                            <a href="#" class="btn-hover text-white me-4"><i class="fas fa-map-marker-alt me-1"></i> 8 Cities</a>
-                                            <a href="#" class="btn-hover text-white"><i class="fa fa-eye ms-2"></i> <span>137+ Tour Places</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="international-plus-icon">
-                                        <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                    </div>
-                                </div>
-                                <div class="international-item">
-                                    <img src="{{asset("frontend/images/explore-tour-5.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                    <div class="international-content">
-                                        <div class="tour-offer bg-info">70% Off</div>
-                                        <div class="international-info">
-                                            <h5 class="text-white text-uppercase mb-2">London</h5>
-                                            <a href="#" class="btn-hover text-white me-4"><i class="fas fa-map-marker-alt me-1"></i> 17 Cities</a>
-                                            <a href="#" class="btn-hover text-white"><i class="fa fa-eye ms-2"></i> <span>26+ Tour Places</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="international-plus-icon">
-                                        <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -587,16 +504,6 @@
                     <li class="nav-item">
                         <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill active" data-bs-toggle="pill" href="#GalleryTab-1">
                             <span class="text-dark" style="width: 150px;">All</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="d-flex py-2 mx-3 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#GalleryTab-2">
-                            <span class="text-dark" style="width: 150px;">World tour</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#GalleryTab-3">
-                            <span class="text-dark" style="width: 150px;">Ocean Tour</span>
                         </a>
                     </li>
                     <li class="nav-item">
