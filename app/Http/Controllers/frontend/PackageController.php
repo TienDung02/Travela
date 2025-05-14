@@ -2,10 +2,31 @@
 
 namespace App\Http\Controllers\frontend;
 
-class PackageController
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Package;
+
+class PackageController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('frontend.packages.index');
+        $query = Package::query();
+
+        if($request->has('search') && $request->search != '') {
+            $query->where(function($q) use ($request){
+                $q->where('name', 'like', '%' . $request->search .'%')
+                  ->orWhere('location', 'like', '%' . $request->search . '%')
+                  ->orWhere('desc', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        $packages = $query->paginate(10);
+//dd($packages);
+        return view('frontend.packages.index', compact('packages'));
+    }
+    public function show($id)
+    {
+        $package = Package::findOrFail($id);
+        return view('frontend.packages.show', compact('package'));
     }
 }

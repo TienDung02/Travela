@@ -174,7 +174,6 @@
                                     <li data-bs-target="#carouselId" data-bs-slide-to="1" class="border-0 m-0 p-0 col-lg-4 Schedule-tab">Schedule</li>
                                     <li data-bs-target="#carouselId" data-bs-slide-to="2" class="border-0 m-0 p-0  col-lg-4 Event-tab">Event/Activity</li>
                                     <li data-bs-target="#carouselId" data-bs-slide-to="3" class="border-0 m-0 p-0 col-lg-4 Map-tab d-lg-none">Bản đồ</li>
-    
                                 </ol>
                                 <div class="carousel-inner border-top h-95 mb-2" role="listbox">
                                     <div class="carousel-item active h-100 list-of-locations mt-2">
@@ -202,10 +201,10 @@
                                                                             @endif
                                                                         </p>
                                                                     @endif
-                                                                @endforeach                                                              
+                                                                @endforeach
                                                             </div>
-                                                            </a>
-                                                        <a href="#" class="col-lg-1 p-0"><div class=" h-100 p-0 delete align-content-center white"><i class="bi bi-trash"></i></div></a> 
+                                                        </a>
+                                                        <a href="#" class="col-lg-1 p-0"><div class=" h-100 p-0 delete align-content-center white"><i class="bi bi-trash"></i></div></a>
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -241,7 +240,7 @@
                                                 </button>
                                             </div>
                                         </div>
-                               
+
                                         <!-- Spinner Start -->
                                         <div class="position-relative h-50">
                                             <div id="spinner3" class="show bg-white position-absolute translate-middle w-100 top-50 start-50 align-items-center justify-content-center d-none">
@@ -257,20 +256,17 @@
                                             <div class="card border-start-0 border-0">
                                                 <div class="card-body pt-0">
                                                     <div id="mapmobile" style="width: 100%; height: 70rem;">
-                                                        <div class="menu">
-                                                            <button id="routeButtonMobile">Chỉ đường từ A đến B</button>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         @endif
                                     </div>
-                                </div>  
-                                     
+                                </div>
+
                             </div>
-                            
+
                         </div>
-                              
+
                         <!-- Carousel End -->
                     </div>
                 </div>
@@ -278,13 +274,11 @@
                     @if(isset($error))
                         <div class="alert alert-danger">{{ $error }}</div>
                     @elseif(isset($map))
-        
+
                         <div class="card border-start-0 border-0">
                             <div class="card-body pt-0">
                                 <div id="map" style="width: 100%; height: 61rem;">
-                                    <div class="menu">
-                                        <button id="routeButton">Chỉ đường từ A đến B</button>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -442,78 +436,78 @@
             let provinceNameToDraw = rawProvinceName.replace(/^(Tỉnh|Thành phố|TP\.?|Tp\.?|tp\.?|thành phố|tỉnh)\s+/i, "").trim();
             console.log(provinceNameToDraw)
 
-function initMap() {
-    console.log("Map4D SDK đã tải xong. Bắt đầu khởi tạo bản đồ.");
+            function initMap() {
+                console.log("Map4D SDK đã tải xong. Bắt đầu khởi tạo bản đồ.");
 
-    // === Desktop Map ===
-    map = new map4d.Map(document.getElementById("map"), {
-        center: { lat: initialLat, lng: initialLon },
-        zoom: initialZoom,
-        controls: true,
-        mapType: "satellite"
-    });
+                // === Desktop Map ===
+                map = new map4d.Map(document.getElementById("map"), {
+                    center: { lat: initialLat, lng: initialLon },
+                    zoom: initialZoom,
+                    controls: true,
+                    mapType: "satellite"
+                });
 
-    let marker = new map4d.Marker({
-        position: { lat: initialLat, lng: initialLon },
-    });
-    marker.setMap(map);
+                let marker = new map4d.Marker({
+                    position: { lat: initialLat, lng: initialLon },
+                });
+                marker.setMap(map);
 
-    directionsRenderer = new map4d.DirectionsRenderer({ map: map });
+                directionsRenderer = new map4d.DirectionsRenderer({ map: map });
 
-    if (provinceNameToDraw) {
-        drawProvinceByName(provinceNameToDraw, map);
-    }
+                if (provinceNameToDraw) {
+                    drawProvinceByName(provinceNameToDraw, map);
+                }
 
-    // === Mobile Map ===
-    const mapMobileElement = document.getElementById("mapmobile");
-    if (mapMobileElement) {
-        
-        console.log("Khởi tạo bản đồ mobile...");
-        mapMobile = new map4d.Map(mapMobileElement, {
-            center: { lat: initialLat, lng: initialLon },
-            zoom: initialZoom,
-            controls: true,
-            mapType: "satellite"
-        });
+                // === Mobile Map ===
+                const mapMobileElement = document.getElementById("mapmobile");
+                if (mapMobileElement) {
 
-        const markerMobile = new map4d.Marker({
-            position: { lat: initialLat, lng: initialLon }
-        });
-        markerMobile.setMap(mapMobile);
+                    console.log("Khởi tạo bản đồ mobile...");
+                    mapMobile = new map4d.Map(mapMobileElement, {
+                        center: { lat: initialLat, lng: initialLon },
+                        zoom: initialZoom,
+                        controls: true,
+                        mapType: "satellite"
+                    });
 
-        directionsRendererMobile = new map4d.DirectionsRenderer({ map: mapMobile });
+                    const markerMobile = new map4d.Marker({
+                        position: { lat: initialLat, lng: initialLon }
+                    });
+                    markerMobile.setMap(mapMobile);
 
-        if (provinceNameToDraw) {
-            drawProvinceByName(provinceNameToDraw, mapMobile);
-        }
-    }
+                    directionsRendererMobile = new map4d.DirectionsRenderer({ map: mapMobile });
 
-     // === Nút chỉ đường cho desktop ===
-    const routeButton = document.getElementById('routeButton');
-    if (routeButton && map && directionsRenderer) {
-        routeButton.addEventListener('click', function () {
-            console.log("Desktop: Button 'Chỉ đường' clicked.");
-            const pointA = { lat: 21.0333, lng: 105.8500 };
-            const pointB = { lat: 21.0379, lng: 105.8346 };
-            const travelMode = 'car';
+                    if (provinceNameToDraw) {
+                        drawProvinceByName(provinceNameToDraw, mapMobile);
+                    }
+                }
 
-            requestAndDisplayRoute(pointA, pointB, travelMode, map);
-        });
-    }
+                 // === Nút chỉ đường cho desktop ===
+                const routeButton = document.getElementById('routeButton');
+                if (routeButton && map && directionsRenderer) {
+                    routeButton.addEventListener('click', function () {
+                        console.log("Desktop: Button 'Chỉ đường' clicked.");
+                        const pointA = { lat: 21.0333, lng: 105.8500 };
+                        const pointB = { lat: 21.0379, lng: 105.8346 };
+                        const travelMode = 'car';
 
-    // === Nút chỉ đường cho mobile ===
-    const routeButtonMobile = document.getElementById('routeButtonMobile');
-    if (routeButtonMobile && mapMobile && directionsRendererMobile) {
-        routeButtonMobile.addEventListener('click', function () {
-            console.log("Mobile: Button 'Chỉ đường' clicked.");
-            const pointA = { lat: 21.0333, lng: 105.8500 };
-            const pointB = { lat: 21.0379, lng: 105.8346 };
-            const travelMode = 'car';
+                        requestAndDisplayRoute(pointA, pointB, travelMode, map);
+                    });
+                }
 
-            requestAndDisplayRoute(pointA, pointB, travelMode, mapMobile);
-        });
-    }
-}
+                // === Nút chỉ đường cho mobile ===
+                const routeButtonMobile = document.getElementById('routeButtonMobile');
+                if (routeButtonMobile && mapMobile && directionsRendererMobile) {
+                    routeButtonMobile.addEventListener('click', function () {
+                        console.log("Mobile: Button 'Chỉ đường' clicked.");
+                        const pointA = { lat: 21.0333, lng: 105.8500 };
+                        const pointB = { lat: 21.0379, lng: 105.8346 };
+                        const travelMode = 'car';
+
+                        requestAndDisplayRoute(pointA, pointB, travelMode, mapMobile);
+                    });
+                }
+            }
 
 
             async function drawProvinceByName(provinceName, mapInstance) {
@@ -778,7 +772,7 @@ function initMap() {
     font-size: 1.5rem;
   }
   .bg-breadcrumb {
-      height: 40vh !important; 
+      height: 40vh !important;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -804,7 +798,7 @@ function initMap() {
     pointer-events: none !important;
   }
 
- .image-left-schedule *,
+  .image-left-schedule *,
   .image-left-schedule img {
     display: none !important;
     visibility: hidden !important;
@@ -827,12 +821,29 @@ function initMap() {
   }
 
 
+
   #budget-input {
     order: 4;
   }
 
   #currency-input {
     order: 5;
+
+ .form-floating > input,
+  .form-floating > select,
+  .form-floating > textarea {
+    padding: 1.8rem 1rem 1rem !important;
+    height: auto !important;
+  }
+ .form-floating > label {
+    padding: 0.2rem 0.5rem !important;
+    pointer-events: none;
+  }
+  /* Giảm cỡ nút */
+  .btn.w-100 {
+    padding: 0.75rem !important;
+    font-size: 1rem;
+
   }
 
   #adults-input {
@@ -878,16 +889,94 @@ order: 8;
     box-sizing: border-box;
   }
 
-  .form-floating > input,
-  .form-floating > select,
-  .form-floating > textarea {
-    height: auto !important;
-    padding: 1.8rem 1rem 0.5rem !important;
+
+
+
+  .carousel-item .delete {
+    width: 5%;
+    text-align: right;
+    padding-right: 0.5rem;
+    margin-left: auto;
   }
 
-  .form-floating > label {
-    font-size: 1.1rem !important;
-      padding: 1rem 1.5rem !important;
+
+
+
+
+.routeButton {
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+  .navbar-brand {
+    font-size: 1.5rem;
+  }
+  .bg-breadcrumb {
+      height: 40vh !important;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+
+
+  .form-floating > input,
+
+  .breadcrumb {
+    font-size: 0.75rem;
+    justify-content: center;
+  }
+
+  .image-left-schedule {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .image-left-schedule *,
+  .image-left-schedule img {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    position: static !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+  /* Form container full width */
+  .col-lg-8 {
+    width: 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Gộp tất cả các input theo 1 cột */
+  .col-md-4,
+  .col-md-8,
+  .col-md-12 {
+    width: 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+ .form-floating > input,
+  .form-floating > select,
+  .form-floating > textarea {
+    padding: 1.8rem 1rem 1rem !important;
+    height: auto !important;
+  }
+ .form-floating > label {
+    padding: 0.2rem 0.5rem !important;
     pointer-events: none;
   }
   /* Giảm cỡ nút */
@@ -937,7 +1026,12 @@ order: 8;
     padding: 0 !important;
   }
 
- 
+  .carousel-item .delete {
+    width: 5%;
+    text-align: right;
+    padding-right: 0.5rem;
+    margin-left: auto;
+  }
 
   .carousel-item .w-65 p,
   .carousel-item .w-65 span {
@@ -950,20 +1044,19 @@ order: 8;
     padding: 0.3rem 0.5rem !important;
   }
 
- .carousel-item .row {
-    position: relative;
-  }
+    .carousel-item .row {
+        position: relative;
+    }
 
-  .carousel-item .delete {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    z-index: 10;
-    background: white;
-    padding: 0.25rem;
-    border-radius: 4px;
-  }
-
+    .carousel-item .delete {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        z-index: 10;
+        background: white;
+        padding: 0.25rem;
+        border-radius: 4px;
+    }
 .routeButton {
     display: none;
 }

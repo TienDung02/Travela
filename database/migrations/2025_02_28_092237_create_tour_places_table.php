@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reviews', function (Blueprint $table) {
+        Schema::create('tour_places', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('activity_id')->constrained('activities')->onDelete('cascade');
-            $table->text('review');
-            $table->text('feedback')->nullable();
+            $table->string('tour_id')->constrained('tours')->onDelete('cascade');
+            $table->string('place_id')->constrained('places')->onDelete('cascade');
+            $table->string('day_number');
+            $table->string('duration_days');
+            $table->text('note')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -25,8 +26,5 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
-        Schema::dropIfExists('reviews');
-    }
+
 };
