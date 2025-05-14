@@ -2753,6 +2753,155 @@ input[type=number]::-webkit-outer-spin-button
     color: #FFFFFF;
     background-color: #0b204a;
 }
+/* Căn giữa toàn bộ nav */
+.pagination {
+    display: flex !important;
+    justify-content: center;
+    margin: 1.5rem 0;
+  }
+  
+  /* Thay đổi style cho từng item */
+  .pagination .page-item .page-link {
+    border-radius: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    margin: 0 0.25rem;
+    background-color: #f8f9fa;
+    color: #007bff;
+    border: 1px solid #dee2e6;
+    transition: background-color .2s;
+  }
+  
+  .pagination .page-item .page-link:hover {
+    background-color: #e2e6ea;
+  }
+  
+  /* Active */
+  .pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+  }
+  
+  /* Disabled */
+  .pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #fff;
+  }
+/* === Main media === */
+.gallery-main-img img,
+.gallery-main-img video {
+    width: 100%;           /* Lấp đầy chiều ngang container */
+    max-height: 100%;     /* Giới hạn chiều cao (bạn có thể thay 400px thành giá trị mong muốn) */
+    object-fit: contain;   /* Giữ tỉ lệ, không cắt nội dung, chạm ít nhất một cạnh */
+    display: block;
+    margin: auto;
+    border-radius: 8px;
+}
+
+/* Reset padding/border cho button chứa media */
+button.gallery-main-img,
+button.thumb-btn {
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+/* Đảm bảo container không bị tràn */
+.destination-img,
+.wrapper,
+.gallery,
+.col-lg-7 {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+.thumbs-container-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+}
+
+/* Thanh thumbnail cuộn ngang */
+.gallery-thumbs {
+    display: flex;
+    overflow: hidden;
+    width: calc(6 * 80px + 5 * 0.5rem); /* 6 thumbnails + 5 gaps*/
+    gap: 0.5rem;
+    scroll-behavior: smooth;
+}
+.thumb-btn img,
+.thumb-btn video {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+/* Nút chuyển trái/phải */
+.thumb-nav-btn {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0 0.5rem;
+}
+
+.thumb-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+.thumb-nav-btn:hover {
+    background-color: #e0e0e0;
+  }
+  #thumb-prev { 
+    left: -1.5rem; 
+    width: 100px;
+}
+  #thumb-next { 
+    right: -1.5rem; 
+    width: 100px;
+}
+/* === Responsive: Mobile (<= 600px) show 3 thumbnails === */
+@media (max-width: 600px) {
+    .gallery-main-img img,
+    .gallery-main-img video {
+      max-height: 100%;
+    }
+  
+    .gallery-thumbs {
+      width: calc(3 * 50px + 2 * 0.3rem);
+    }
+    .thumb-btn img,
+    .thumb-btn video {
+      width: 50px;
+      height: 50px;
+    }
+    .thumb-nav-btn {
+      width: 20px;
+      height: 50px;
+      font-size: 0.5rem;
+    }
+    #thumb-prev { 
+        left: -0.5rem; 
+        width: 50px;
+    }
+      #thumb-next { 
+        right: -0.5rem; 
+        width: 50px;
+    }
+  }
+  .packages .packages-carousel .owl-nav .owl-next:hover i {
+    color: var(--bs-white);
+}
+
+
 /* -----------------------------------------*/
 /*  End Event And Activity
 /*------------------------------------------*/

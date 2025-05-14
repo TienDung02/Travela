@@ -1,7 +1,6 @@
 <?php
 
 namespace Database\Factories;
-
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -14,12 +13,14 @@ class TourFactory extends Factory
 
     public function definition(): array
     {
+
+        $startDate = Carbon::now()->addDays(rand(5, 90));
+
         return [
             'name' => $this->faker->word,
             'desc' => $this->faker->sentence,
-            'location' => $this->faker->city,
-            'start_date' => Carbon::now()->addDays(rand(1, 10)),
-            'end_date' => Carbon::now()->addDays(rand(11, 20)),
+            'start_date' => Carbon::now()->addDays(rand(5, 90)),
+            'end_date' => (clone $startDate)->addDays(rand(7, 30)),
             'price' => $this->faker->randomFloat(2, 100, 1000),
         ];
     }

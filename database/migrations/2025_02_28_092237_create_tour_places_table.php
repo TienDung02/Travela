@@ -11,23 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('packages', function (Blueprint $table) {
+        Schema::create('tour_places', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('desc')->nullable();
-            $table->decimal('price', 10, 2);
-            $table->foreignId('tour_id')->constrained()->onDelete('cascade');
+            $table->string('tour_id')->constrained('tours')->onDelete('cascade');
+            $table->string('place_id')->constrained('places')->onDelete('cascade');
+            $table->string('day_number');
+            $table->string('duration_days');
+            $table->text('note')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
-
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
-        Schema::dropIfExists('destinations');
-    }
+
 };

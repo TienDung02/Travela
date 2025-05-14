@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,11 +11,12 @@ class Tour extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'desc', 'location', 'start_date', 'end_date', 'price'];
+    protected $fillable = ['name', 'desc', 'price'];
 
-    public function packages()
-    {
-        return $this->hasMany(Package::class);
-    }
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
+
+    ];
 
 }

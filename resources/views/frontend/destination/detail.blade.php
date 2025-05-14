@@ -35,40 +35,67 @@
     <div class="container-fluid destination py-5">
         <div class="container py-5">
             <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-                <h2 class="section-title px-3">{{$Destination->name}}</h2>
+                <h2 class="section-title px-3">{{$Place->name}}</h2>
             </div>
             <div class="tab-class text-center">
                 <div class="tab-content">
                     <div id="tab-1" class="tab-pane fade show p-0 active">
                         <div class="row g-4">
-                            <div class="">
-                                <div class="row d-flex">
-                                    <div class="col-lg-7">
-                                        <div class="destination-img">
-                                            <div class="wrapper">
-                                                <section class="gallery">
-                                                    <button id="gallery-main-img" type="button"
-                                                            class="gallery-main-img"><img
-                                                            src="https://picsum.photos/id/27/600/600" alt="The Sea">
-                                                    </button>
+                            <div class="row d-flex">
+                                <div class="col-lg-7">
+                                    <div class="destination-img">
+                                        <div class="wrapper">
+                                            <section class="gallery">
+                                                {{-- ẢNH CHÍNH --}}
+                                                <button id="gallery-main-img" type="button" class="gallery-main-img">
+                                                    @if($primaryMedia->media_type === 'image')
+                                                        <img src="{{ asset($primaryMedia->media) }}" alt="Primary Media" id="main-img-preview">
+                                                    @elseif($primaryMedia->media_type === 'video')
+                                                        <video src="{{ asset($primaryMedia->media) }}" controls id="main-img-preview" width="100px" height="400px"></video>
+                                                    @endif
+                                                </button>
+
+                                                {{-- THUMBNAILS --}}
+                                                <div class="thumbs-container-wrapper">
+                                                    <button id="thumb-prev" class="thumb-nav-btn">&#10094;</button>
+
                                                     <div id="gallery-thumbs" class="gallery-thumbs">
-                                                        <!-- thumnails loaded here --></div>
-                                                </section>
-                                            </div>
-                                            <dialog id="slider-dialog">
-                                                <section class="slider-wrapper">
-                                                    <button type="button" btn-slider="prev" id="btn-prev">&lsaquo;
-                                                    </button>
-                                                    <button type="button" btn-slider="next">&rsaquo;</button>
-                                                    <div class="slider-content">
-                                                        <div id="slider" class="slider">
-                                                            <!-- slideshow images loaded here --></div>
+                                                        @foreach($otherMedia as $media)
+                                                            <button class="thumb-btn"  onclick="changeMainMedia('{{ asset($media->media) }}','{{ $media->media_type }}')">
+                                                                @if($media->media_type === 'image')
+                                                                    <img src="{{ asset($media->media) }}" width="25%" height="25%">
+                                                                @elseif($media->media_type === 'video')
+                                                                    <video src="{{ asset($media->media) }}" width="25%" height="25%"></video>
+                                                                @endif
+                                                            </button>
+                                                        @endforeach
                                                     </div>
-                                                </section>
-                                                <button id="btn-dialog-close" class="btn-dialog-close">&#10005;</button>
-                                            </dialog>
-                                            <hr>
-                                        </div>
+
+                                                    <button id="thumb-next" class="thumb-nav-btn">&#10095;</button>
+                                                </div>
+
+                                        {{-- SLIDESHOW (nếu bạn muốn dùng) --}}
+                                        <dialog id="slider-dialog">
+                                            <section class="slider-wrapper">
+                                                <button type="button" btn-slider="prev" id="btn-prev">&lsaquo;</button>
+                                                <button type="button" btn-slider="next">&rsaquo;</button>
+                                                <div class="slider-content">
+                                                    <div id="slider" class="slider">
+                                                        @foreach($otherMedia as $media)
+                                                            @if($media->media_type === 'image')
+                                                                <div class="slide"><img src="{{ asset($media->media) }}" alt="Media" class="slider-item"></div>
+                                                            @elseif($media->media_type === 'video')
+                                                                <div class="slide"><video src="{{ asset($media->media) }}" controls class="slider-item"></video></div>
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </section>
+                                            <button id="btn-dialog-close" class="btn-dialog-close">&#10005;</button>
+                                        </dialog>
+                                        <hr>
+                                    </div>
+                                </div>
                                         <div class="col-lg-5">
                                             <div class="container mt-5">
 
@@ -213,167 +240,7 @@
                                                 sản UNESCO đáng kinh ngạc.
                                             </div>
                                         </div>
-                                        <div class="col-lg-5"></div>
-                                        <div class="col-lg-7">
-                                            <div class="title">
-                                                Trải nghiệm thú vị trong tour
-
-                                            </div>
-                                            <div>
-                                                - Khám phá Tháp Eiffel và Du thuyền sông Seine – Biểu tượng nước Pháp và
-                                                trải nghiệm ngắm cảnh Paris thơ mộng.
-
-                                                - Tham quan làng Giethoorn – Venice của Hà Lan, nơi giao thông chỉ có
-                                                kênh đào và thuyền.
-
-                                                - Chiêm ngưỡng hoa tulip tại Keukenhof – Vườn hoa lớn nhất thế giới với
-                                                hàng triệu bông hoa rực rỡ.
-
-                                                - Quảng trường Grand Place – Di sản thế giới tại Brussels, trung tâm văn
-                                                hóa và kiến trúc châu Âu.
-
-                                                - Nhà thờ Cologne và các biểu tượng nước Đức – Kiến trúc Gothic và di
-                                                sản UNESCO đáng kinh ngạc.
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-5"></div>
-                                        <div class="col-lg-7">
-                                            <div class="title">
-                                                Trải nghiệm thú vị trong tour
-
-                                            </div>
-                                            <div>
-                                                - Khám phá Tháp Eiffel và Du thuyền sông Seine – Biểu tượng nước Pháp và
-                                                trải nghiệm ngắm cảnh Paris thơ mộng.
-
-                                                - Tham quan làng Giethoorn – Venice của Hà Lan, nơi giao thông chỉ có
-                                                kênh đào và thuyền.
-
-                                                - Chiêm ngưỡng hoa tulip tại Keukenhof – Vườn hoa lớn nhất thế giới với
-                                                hàng triệu bông hoa rực rỡ.
-
-                                                - Quảng trường Grand Place – Di sản thế giới tại Brussels, trung tâm văn
-                                                hóa và kiến trúc châu Âu.
-
-                                                - Nhà thờ Cologne và các biểu tượng nước Đức – Kiến trúc Gothic và di
-                                                sản UNESCO đáng kinh ngạc.
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-5"></div>
-                                        <div class="col-lg-7">
-                                            <div class="title">
-                                                Trải nghiệm thú vị trong tour
-
-                                            </div>
-                                            <div>
-                                                - Khám phá Tháp Eiffel và Du thuyền sông Seine – Biểu tượng nước Pháp và
-                                                trải nghiệm ngắm cảnh Paris thơ mộng.
-
-                                                - Tham quan làng Giethoorn – Venice của Hà Lan, nơi giao thông chỉ có
-                                                kênh đào và thuyền.
-
-                                                - Chiêm ngưỡng hoa tulip tại Keukenhof – Vườn hoa lớn nhất thế giới với
-                                                hàng triệu bông hoa rực rỡ.
-
-                                                - Quảng trường Grand Place – Di sản thế giới tại Brussels, trung tâm văn
-                                                hóa và kiến trúc châu Âu.
-
-                                                - Nhà thờ Cologne và các biểu tượng nước Đức – Kiến trúc Gothic và di
-                                                sản UNESCO đáng kinh ngạc.
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-5"></div>
-                                        <div class="col-lg-7">
-                                            <div class="title">
-                                                Trải nghiệm thú vị trong tour
-
-                                            </div>
-                                            <div>
-                                                - Khám phá Tháp Eiffel và Du thuyền sông Seine – Biểu tượng nước Pháp và
-                                                trải nghiệm ngắm cảnh Paris thơ mộng.
-
-                                                - Tham quan làng Giethoorn – Venice của Hà Lan, nơi giao thông chỉ có
-                                                kênh đào và thuyền.
-
-                                                - Chiêm ngưỡng hoa tulip tại Keukenhof – Vườn hoa lớn nhất thế giới với
-                                                hàng triệu bông hoa rực rỡ.
-
-                                                - Quảng trường Grand Place – Di sản thế giới tại Brussels, trung tâm văn
-                                                hóa và kiến trúc châu Âu.
-
-                                                - Nhà thờ Cologne và các biểu tượng nước Đức – Kiến trúc Gothic và di
-                                                sản UNESCO đáng kinh ngạc.
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-5"></div>
-                                        <div class="col-lg-7">
-                                            <div class="title">
-                                                Trải nghiệm thú vị trong tour
-
-                                            </div>
-                                            <div>
-                                                - Khám phá Tháp Eiffel và Du thuyền sông Seine – Biểu tượng nước Pháp và
-                                                trải nghiệm ngắm cảnh Paris thơ mộng.
-
-                                                - Tham quan làng Giethoorn – Venice của Hà Lan, nơi giao thông chỉ có
-                                                kênh đào và thuyền.
-
-                                                - Chiêm ngưỡng hoa tulip tại Keukenhof – Vườn hoa lớn nhất thế giới với
-                                                hàng triệu bông hoa rực rỡ.
-
-                                                - Quảng trường Grand Place – Di sản thế giới tại Brussels, trung tâm văn
-                                                hóa và kiến trúc châu Âu.
-
-                                                - Nhà thờ Cologne và các biểu tượng nước Đức – Kiến trúc Gothic và di
-                                                sản UNESCO đáng kinh ngạc.
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-5"></div>
-                                        <div class="col-lg-7">
-                                            <div class="title">
-                                                Trải nghiệm thú vị trong tour
-
-                                            </div>
-                                            <div>
-                                                - Khám phá Tháp Eiffel và Du thuyền sông Seine – Biểu tượng nước Pháp và
-                                                trải nghiệm ngắm cảnh Paris thơ mộng.
-
-                                                - Tham quan làng Giethoorn – Venice của Hà Lan, nơi giao thông chỉ có
-                                                kênh đào và thuyền.
-
-                                                - Chiêm ngưỡng hoa tulip tại Keukenhof – Vườn hoa lớn nhất thế giới với
-                                                hàng triệu bông hoa rực rỡ.
-
-                                                - Quảng trường Grand Place – Di sản thế giới tại Brussels, trung tâm văn
-                                                hóa và kiến trúc châu Âu.
-
-                                                - Nhà thờ Cologne và các biểu tượng nước Đức – Kiến trúc Gothic và di
-                                                sản UNESCO đáng kinh ngạc.
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-5"></div>
-                                        <div class="col-lg-7">
-                                            <div class="title">
-                                                Trải nghiệm thú vị trong tour
-
-                                            </div>
-                                            <div>
-                                                - Khám phá Tháp Eiffel và Du thuyền sông Seine – Biểu tượng nước Pháp và
-                                                trải nghiệm ngắm cảnh Paris thơ mộng.
-
-                                                - Tham quan làng Giethoorn – Venice của Hà Lan, nơi giao thông chỉ có
-                                                kênh đào và thuyền.
-
-                                                - Chiêm ngưỡng hoa tulip tại Keukenhof – Vườn hoa lớn nhất thế giới với
-                                                hàng triệu bông hoa rực rỡ.
-
-                                                - Quảng trường Grand Place – Di sản thế giới tại Brussels, trung tâm văn
-                                                hóa và kiến trúc châu Âu.
-
-                                                - Nhà thờ Cologne và các biểu tượng nước Đức – Kiến trúc Gothic và di
-                                                sản UNESCO đáng kinh ngạc.
-                                            </div>
-                                        </div>
+                                        
                                         <div class="col-lg-5"></div>
                                         <div class="col-lg-7">
                                             <hr>
@@ -501,54 +368,9 @@
                     </div>
                 </div>
             </div>
-            <div class="tour-box">
-                <div class="tour-header mb-4">Lịch Trình và Giá Tour</div>
-                <div class="d-flex gap-2 mb-4">
-                    <button class="tour-btn active">18/03</button>
-                    <button class="tour-btn">24/03</button>
-                    <button class="tour-btn">07/04</button>
-                    <button class="tour-btn">Tất cả</button>
-                </div>
-                <div class="tour-item tour-top mb-4">
-                    <span>
-                        <p class="mb-0 fw-bold">Người lớn </p>
-                        > 9 tuổi
-                    </span>
-                    <span class="price">0</span>
-                    <div>
-                        <button class="btn btn-light me-2">-</button>
-                        <span class="value">0</span>
-                        <button class="btn btn-light ms-2">+</button>
-                    </div>
-                </div>
-
-                <div class="tour-item tour-middle mb-4">
-                    <span><p class="mb-0 fw-bold">Trẻ em</p>2 - 9 tuổi</span>
-                    <span class="price">0</span>
-                    <div>
-                        <button class="btn btn-light me-2">-</button>
-                        <span class="value">0</span>
-                        <button class="btn btn-light ms-2">+</button>
-                    </div>
-                </div>
-
-                <div class="tour-item tour-bottom mb-4">
-                    <span><p class="mb-0 fw-bold">Trẻ em</p>< 2 tuổi</span>
-                    <span class="price">0</span>
-                    <div class="">
-                        <button class="btn btn-light me-2">-</button>
-                        <span class="value">0</span>
-                        <button class="btn btn-light ms-2">+</button>
-                    </div>
-                </div>
-
-                <div class="text-center mt-3 mb-4">
-                    <p class="total-price">0 VNĐ</p>
-                </div>
-
-                <button class="btn-book btn btn-primary rounded-pill py-2 px-4 ">Yêu cầu đặt</button>
-            </div>
-        </div>
+            
+            
+            
         <!-- Destination End -->
 
         <!-- Subscribe Start -->
@@ -691,26 +513,88 @@
     <a href="#" class="btn btn-primary btn-primary-outline-0 btn-md-square back-to-top"><i
             class="fa fa-arrow-up"></i></a>
 
+
     <script>
-        let slideIndex = 0;
-        let slides = document.querySelectorAll(".slide");
-        let autoSlide;
+    let slideIndex = 0;
+    let slides = document.querySelectorAll(".slide");
+    let autoSlide;
 
-        function showSlides(n) {
-            if (n >= slides.length) slideIndex = 0;
-            if (n < 0) slideIndex = slides.length - 1;
+    function showSlides(n) {
+        if (n >= slides.length) slideIndex = 0;
+        if (n < 0) slideIndex = slides.length - 1;
 
-            slides.forEach(slide => slide.style.display = "none");
-            slides[slideIndex].style.display = "block";
-        }
+        slides.forEach(slide => slide.style.display = "none");
+        slides[slideIndex].style.display = "block";
+    }
 
-        function changeSlide(n) {
-            clearTimeout(autoSlide); // Dừng tự động khi bấm nút
-            showSlides(slideIndex += n);
-            autoSlide = setTimeout(() => changeSlide(1), 3000); // Tự động sau 3 giây
-        }
+    function changeSlide(n) {
+        clearTimeout(autoSlide);
+        showSlides(slideIndex += n);
+        autoSlide = setTimeout(() => changeSlide(1), 3000);
+    }
 
+    // Khởi động slideshow
+    if (slides.length > 0) {
         showSlides(slideIndex);
         autoSlide = setTimeout(() => changeSlide(1), 3000);
-    </script>
+    }
+
+    // Đổi ảnh chính khi click thumbnail
+    function changeMainMedia(url, type) {
+        const main = document.getElementById('main-img-preview');
+        if (type === 'image') {
+            main.outerHTML = `<img src="${url}" alt="Media" id="main-img-preview">`;
+        } else if (type === 'video') {
+            main.outerHTML = `<video src="${url}" controls id="main-img-preview"></video>`;
+        }
+
+        // Optional: cập nhật slideIndex nếu ảnh nằm trong slides
+        slides.forEach((slide, index) => {
+            const mediaSrc = slide.querySelector('img, video')?.src;
+            if (mediaSrc === url) {
+                slideIndex = index;
+                showSlides(slideIndex);
+            }
+        });
+    }
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const thumbs = document.getElementById('gallery-thumbs');
+    const prevBtn = document.getElementById('thumb-prev');
+    const nextBtn = document.getElementById('thumb-next');
+
+    const thumbCount = thumbs.children.length;
+    const thumbVisible = 6;
+    const thumbWidth = 80;
+    const thumbGap = 8; // = 0.5rem
+    const scrollStep = (thumbWidth + thumbGap) * thumbVisible;
+
+    let currentIndex = 0;
+
+    function updateButtons() {
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex + thumbVisible >= thumbCount;
+    }
+
+    prevBtn.addEventListener('click', () => {
+        if (currentIndex > 0) {
+            currentIndex--;
+            thumbs.scrollBy({ left: -(thumbWidth + thumbGap), behavior: 'smooth' });
+        }
+        updateButtons();
+    });
+
+    nextBtn.addEventListener('click', () => {
+        if (currentIndex + thumbVisible < thumbCount) {
+            currentIndex++;
+            thumbs.scrollBy({ left: thumbWidth + thumbGap, behavior: 'smooth' });
+        }
+        updateButtons();
+    });
+
+    updateButtons();
+});
+</script>
+
 @endsection

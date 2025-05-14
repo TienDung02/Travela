@@ -11,14 +11,13 @@ use Illuminate\Support\Str;
  */
 class PlaceMediaFactory extends Factory
 {
-
     public function definition(): array
     {
         return [
             'place_id' => \App\Models\Place::inRandomOrder()->first(),
             'media' => $this->faker->imageUrl(),
             'media_type' => 'image',
+            'is_primary' => $this->faker->boolean(),
         ];
     }
-
 }

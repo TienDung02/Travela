@@ -23,7 +23,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $providers = ['google', 'facebook', 'local']; // Cho thêm null để giả lập trường hợp không dùng social login
+        $providers = ['google', 'facebook', 'github', 'local']; // Cho thêm null để giả lập trường hợp không dùng social login
         $provider = $this->faker->randomElement($providers);
 
         return [

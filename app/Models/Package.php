@@ -11,7 +11,7 @@ class Package extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'desc', 'price', 'duration', 'tour_id'];
+    protected $fillable = ['name', 'desc', 'price', 'tour_id'];
 
     public function tour()
     {
