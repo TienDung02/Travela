@@ -891,6 +891,7 @@ order: 8;
 
 
 
+
   .carousel-item .delete {
     width: 5%;
     text-align: right;
