@@ -878,29 +878,6 @@ order: 8;
     box-sizing: border-box;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   .form-floating > input,
   .form-floating > select,
   .form-floating > textarea {
