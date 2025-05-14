@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('place_id')->constrained()->onDelete('cascade');
             $table->string('media'); // đường dẫn ảnh/video
             $table->string('media_type'); // image/video
+            $table->boolean('is_primary')->default(false); // Thêm cột đánh dấu ảnh/video chính
             $table->timestamps();
             $table->softDeletes();
         });

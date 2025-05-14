@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RoleSeeder::class,
+            PlaceSeeder::class,
+            PlaceMediaSeeder::class,
         ]);
         // Tạo dữ liệu cho bảng Role
 //        Role::factory(5)->create();

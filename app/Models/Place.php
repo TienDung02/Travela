@@ -11,7 +11,7 @@ class Place extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'desc', 'address', 'tag', 'lat', 'lon', 'status'];
+    protected $fillable = ['name', 'desc', 'address','country', 'tag', 'lat', 'lon', 'status'];
 
     public function placeMedia()
     {
