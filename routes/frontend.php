@@ -30,7 +30,6 @@ use App\Http\Controllers\frontend\ProvinceController;
 
 
 
-
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
