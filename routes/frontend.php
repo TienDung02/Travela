@@ -12,7 +12,7 @@ use App\Http\Controllers\Auth\GoogleLoginController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\FacebookLoginController;
 use App\Http\Controllers\frontend\ContactController;
-use App\Http\Controllers\frontend\DestinationController;
+use App\Http\Controllers\frontend\PlaceController;
 use App\Http\Controllers\frontend\ExploreTourController;
 use App\Http\Controllers\frontend\GalleryController;
 use App\Http\Controllers\frontend\GuideController;
@@ -85,8 +85,8 @@ Route::get('/404', [ErrorController::class, 'index'])->name('404');
 
 
 //---------------Destination---------------//
-Route::get('/destination', [DestinationController::class, 'index'])->name('destination.index');
-Route::get('/destination-detail/{id}', [DestinationController::class, 'detail'])->name('destination.detail');
+Route::get('/destination', [PlaceController::class, 'index'])->name('destination.index');
+Route::get('/destination-detail/{id}', [PlaceController::class, 'detail'])->name('destination.detail');
 
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 

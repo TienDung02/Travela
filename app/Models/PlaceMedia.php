@@ -11,7 +11,7 @@ class PlaceMedia extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['place_id', 'media', 'media_type'];
+    protected $fillable = ['place_id', 'media', 'media_type', 'is_primary'];
 
     public function place()
     {
