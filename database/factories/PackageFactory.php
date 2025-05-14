@@ -18,7 +18,6 @@ class PackageFactory extends Factory
             'name' => $this->faker->city,
             'desc' => $this->faker->sentence,
             'price' => $this->faker->numberBetween(1000000, 10000000),
-            'duration' => $this->faker->numberBetween(1, 10),
             'tour_id' => \App\Models\Tour::inRandomOrder()->first(),
             'created_at' => now(),
             'updated_at' => now(),

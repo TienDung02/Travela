@@ -19,9 +19,9 @@ class PackageController extends Controller
                   ->orWhere('desc', 'like', '%' . $request->search . '%');
             });
         }
-        
-        $packages = $query->paginate(10);
 
+        $packages = $query->paginate(10);
+//dd($packages);
         return view('frontend.packages.index', compact('packages'));
     }
     public function show($id)

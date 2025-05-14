@@ -18,6 +18,7 @@ use App\Models\OrderDetail;
 use App\Models\Review;
 use App\Models\Contact;
 use App\Models\ActivityLog;
+use App\Models\TourPlace;
 use Database\Seeders\RoleSeeder;
 class DatabaseSeeder extends Seeder
 {
@@ -50,7 +51,7 @@ class DatabaseSeeder extends Seeder
         Tour::factory(10)->create();
 
         // Tạo dữ liệu cho bảng Package
-        Package::factory(10)->create();
+        Package::factory(50)->create();
 
         // Tạo dữ liệu cho bảng Customer
         Customer::factory(10)->create();
@@ -76,5 +77,9 @@ class DatabaseSeeder extends Seeder
 
         // Tạo dữ liệu cho bảng ActivityLog
         ActivityLog::factory(10)->create();
+
+        $this->call([
+            TourPlaceSeeder::class,
+        ]);
     }
 }
