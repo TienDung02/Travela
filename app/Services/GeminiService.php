@@ -89,7 +89,6 @@ class GeminiService
 
 
 
-//        dd($activityAray);
         Cache::put($cacheKey_event, $activityAray, now()->addMinutes(60));
 
         return $activityAray;
@@ -138,37 +137,38 @@ class GeminiService
         $transportation = $data['transportation'];
 
         $dataString = $address . $startDate . $endDate . $budget . $currencyCode . $interest . $adults . $children_1 . $children_2 . $transportation;
+//        print_r($dataString);
         $cacheKey = md5($dataString);
         if (Cache::has($cacheKey)) {
             return Cache::get($cacheKey);
         }
 
         $prompt = "Hãy tạo một kế hoạch du lịch chi tiết cho chuyến đi tại $address, bắt đầu từ ngày $startDate đến ngày $endDate.
-                    Thông tin chuyến đi:
-                    - Điểm bắt đầu: $address
-                    - Phương tiện di chuyển chính: $transportation
-                    - Số lượng người: Người lớn: $adults, Trẻ em (2-10 tuổi): $children_2, Trẻ em (<2 tuổi): $children_1
-                    - Các địa điểm mong muốn tham quan (có thể chọn lọc/bỏ bớt nếu thời gian không đủ): $placeName
-                    - Sở thích: $interest
-                    - Ngân sách: $budget $currencyCode
+            Thông tin chuyến đi:
+            - Điểm bắt đầu: $address
+            - Phương tiện di chuyển chính: $transportation
+            - Số lượng người: Người lớn: $adults, Trẻ em (2-10 tuổi): $children_2, Trẻ em (<2 tuổi): $children_1
+            - Các địa điểm mong muốn tham quan (có thể chọn lọc/bỏ bớt nếu thời gian không đủ): $placeName
+            - Sở thích: $interest
+            - Ngân sách: $budget $currencyCode
 
-                    YÊU CẦU QUAN TRỌNG VỀ ĐỊNH DẠNG ĐẦU RA:
-                    Hãy trả về kết quả dưới dạng MỘT ĐỐI TƯỢNG JSON HỢP LỆ DUY NHẤT. Không bao gồm bất kỳ văn bản giới thiệu, giải thích, không trả lời thiếu nhất quán (như tự tìm quán, tự tìm) tôi cần tên địa điểm cụ thể, markdown formatting (như **, *), hay ghi chú nào khác ngoài đối tượng JSON này.
+            YÊU CẦU QUAN TRỌNG VỀ ĐỊNH DẠNG ĐẦU RA:
+            Hãy trả về kết quả dưới dạng MỘT ĐỐI TƯỢNG JSON HỢP LỆ DUY NHẤT. Không bao gồm bất kỳ văn bản giới thiệu, giải thích, markdown formatting (như **, *), hay ghi chú nào **BÊN NGOÀI** đối tượng JSON này.
 
-                    CẤU TRÚC JSON MONG MUỐN NHƯ SAU:
-                    - Đối tượng JSON gốc có các key là chuỗi đại diện cho từng ngày (ví dụ: 'Ngày 1', 'Ngày 2',...).
-                    - Giá trị của mỗi key ngày là một đối tượng chứa các key là 'Sáng', 'Trưa', 'Chiều', 'Tối'.
-                    - Giá trị của mỗi key buổi (Sáng, Trưa, Chiều, Tối) là MỘT MẢNG (JSON array) chứa các đối tượng đại diện cho từng hoạt động theo thứ tự thời gian.
-                    - Mỗi đối tượng hoạt động trong mảng phải có 2 key chính:
-                        1. 'type': Chuỗi cho biết loại hoạt động (ví dụ: 'Ăn sáng', 'Di chuyển', 'Địa điểm tham quan', 'Ăn trưa', 'Ăn tối', 'Chỗ ngủ').
-                        2. 'details': Giá trị của key này phụ thuộc vào loại hoạt động:
-                            - Đối với 'Ăn sáng', 'Ăn trưa', 'Ăn tối', 'Chỗ ngủ': Giá trị là một CHUỖI (JSON string) mô tả địa điểm/chi tiết (ví dụ: 'Phở khô Gia Lai (tự tìm quán)').
-                            - Đối với 'Di chuyển': Giá trị là MỘT ĐỐI TƯỢNG (JSON object) chứa các key sau: 'Điểm đi' (chuỗi), 'Điểm đến' (chuỗi), 'Khoảng cách' (chuỗi, ví dụ: '2 km'), 'Thời gian' (chuỗi, ví dụ: '5 phút'), 'Phương tiện di chuyển' (chuỗi). Hãy cung cấp ước tính khoảng cách và thời gian cụ thể, không dùng các cụm từ chung chung như 'tùy thuộc vào...'.
-                            - Đối với 'Địa điểm tham quan': Giá trị là MỘT ĐỐI TƯỢNG (JSON object) chứa các key sau: 'Tên địa điểm' (chuỗi) và 'Thời gian tham quan' (chuỗi, ví dụ: '8:00 -> 10:00').
+            CẤU TRÚC JSON MONG MUỐN NHƯ SAU:
+            - Đối tượng JSON gốc có các key là chuỗi đại diện cho từng ngày (ví dụ: 'Ngày 1', 'Ngày 2',...).
+            - Giá trị của mỗi key ngày là một đối tượng chứa các key là 'Sáng', 'Trưa', 'Chiều', 'Tối'.
+            - Giá trị của mỗi key buổi (Sáng, Trưa, Chiều, Tối) là MỘT MẢNG (JSON array) chứa các đối tượng đại diện cho từng hoạt động theo thứ tự thời gian.
+            - Mỗi đối tượng hoạt động trong mảng phải có 2 key chính:
+                1. 'type': Chuỗi cho biết loại hoạt động (ví dụ: 'Ăn sáng', 'Di chuyển', 'Địa điểm tham quan', 'Ăn trưa', 'Ăn tối', 'Chỗ ngủ').
+                2. 'details': Giá trị của key này phụ thuộc vào loại hoạt động:
+                    - Đối với 'Ăn sáng', 'Ăn trưa', 'Ăn tối', 'Chỗ ngủ': Giá trị là một CHUỖI (JSON string) mô tả địa điểm/chi tiết. **Chuỗi này CHỈ được chứa TÊN THUẦN TÚY của địa điểm ăn uống/lưu trú. TUYỆT ĐỐI KHÔNG bao gồm bất kỳ ghi chú hay ký tự bổ sung nào trong ngoặc đơn () hay các ký tự tương tự.** (ví dụ: 'Phở khô Gia Lai', 'Khách sạn XYZ')
+                    - Đối với 'Di chuyển': Giá trị là MỘT ĐỐI TƯỢNG (JSON object) chứa các key sau: 'Điểm đi' (chuỗi), 'Điểm đến' (chuỗi), 'Khoảng cách' (chuỗi, ví dụ: '2 km'), 'Thời gian' (chuỗi, ví dụ: '5 phút'), 'Phương tiện di chuyển' (chuỗi). **Giá trị của key 'Điểm đi' và 'Điểm đến' CHỈ được chứa TÊN THUẦN TÚY của địa điểm di chuyển (nơi xuất phát/nơi đến). TUYỆT ĐỐI KHÔNG bao gồm bất kỳ ghi chú hay ký tự bổ sung nào trong ngoặc đơn () hay các ký tự tương tự.** Hãy cung cấp ước tính khoảng cách và thời gian cụ thể, không dùng các cụm từ chung chung như 'tùy thuộc vào...'.
+                    - Đối với 'Địa điểm tham quan': Giá trị là MỘT ĐỐI TƯỢNG (JSON object) chứa các key sau: 'Tên địa điểm' (chuỗi) và 'Thời gian tham quan' (chuỗi, ví dụ: '8:00 -> 10:00'). **Giá trị của key 'Tên địa điểm' CHỈ được chứa TÊN THUẦN TÚY của địa điểm tham quan. TUYỆT ĐỐI KHÔNG bao gồm bất kỳ ghi chú hay ký tự bổ sung nào trong ngoặc đơn () hay các ký tự tương tự.**
 
-                    Lập kế hoạch chi tiết cho từng buổi (Sáng, trưa, chiều, tối) bao gồm các hoạt động ăn uống, tham quan, nghỉ ngơi và ĐẦY ĐỦ các bước di chuyển giữa các địa điểm. Đảm bảo tính logic về thời gian và lộ trình.
+            Lập kế hoạch chi tiết cho từng buổi (Sáng, trưa, chiều, tối) bao gồm các hoạt động ăn uống, tham quan, nghỉ ngơi và ĐẦY ĐỦ các bước di chuyển giữa các địa điểm. Đảm bảo tính logic về thời gian và lộ trình.
 
-                    NHẮC LẠI: Chỉ trả về đối tượng JSON hợp lệ. KHÔNG ĐƯA RA LƯU Ý HAY GỢI Ý GÌ THÊM.";
+            NHẮC LẠI QUAN TRỌNG: **CHỈ** trả về đối tượng JSON hợp lệ duy nhất. **TUYỆT ĐỐI KHÔNG** bao gồm bất kỳ văn bản giới thiệu, kết thúc, markdown, hay bất kỳ loại ghi chú/giải thích nào **bên ngoài** đối tượng JSON. **Và, TUYỆT ĐỐI KHÔNG ĐƯA BẤT KỲ GHI CHÚ NÀO TRONG NGOẶC ĐƠN () HAY KÝ TỰ BỔ SUNG VÀO BÊN TRONG CÁC GIÁ TRỊ CHUỖI TÊN ĐỊA ĐIỂM ĐÃ NÊU TRÊN.**";
 
                     // Bây giờ bạn có thể gửi $prompt này đến AI API
                     // và xử lý kết quả trả về bằng json_decode($apiResponse, true) trong PHP
@@ -205,7 +205,6 @@ class GeminiService
         }
 
         Cache::put($cacheKey, $planArray, now()->addMinutes(60));
-
         return $planArray;
     }
     public function getTourismInfo($address, $interests = [])

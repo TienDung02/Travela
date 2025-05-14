@@ -1911,6 +1911,8 @@ input[type=number]::-webkit-outer-spin-button
 .slick-track{
     opacity: 1;
     width: 4032px !important;
+    height: 24px;
+    overflow-y: hidden;
 }
 
 
@@ -2400,12 +2402,6 @@ input[type=number]::-webkit-outer-spin-button
 }
 
 /* ----------------------------End Detail Schedule--------------------------------------- */
-
-
-
-
-
-
 
 /* ----------------------------Chat bot--------------------------------------- */
 

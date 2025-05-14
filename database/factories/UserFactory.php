@@ -23,14 +23,24 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $providers = ['google', 'facebook', 'local']; // Cho thêm null để giả lập trường hợp không dùng social login
+        $provider = $this->faker->randomElement($providers);
+
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'password' => bcrypt('password'),
+            'phone' => $this->faker->phoneNumber,
+            'role_id' => \App\Models\Role::inRandomOrder()->value('id'),
+            'provider' => $provider,
+            'provider_id' => $provider ? Str::uuid() : null, // Chỉ sinh provider_id nếu có provider
             'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now(),
+            'deleted_at' => null,
         ];
     }
+
 
     /**
      * Indicate that the model's email address should be unverified.
