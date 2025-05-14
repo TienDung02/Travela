@@ -8,7 +8,7 @@
 
     <!-- Header Start -->
     <div class="container-fluid bg-breadcrumb" style="background: linear-gradient(rgba(19, 53, 123, 0.5), rgba(19, 53, 123, 0.5)), url({{ asset('frontend/images/breadcrumb-bg.jpg') }}); background-repeat: no-repeat; background-size: cover; background-position: center;">
-        <div class="container text-center py-5" style="max-width: 900px;">
+        <div class="container-fluid text-center py-5" style="max-width: 900px;">
             <h1 class="text-white display-3 mb-4">Contact Us</h1>
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -21,7 +21,7 @@
 
     <!-- Contact Start -->
     <div class="container-fluid contact bg-light py-5">
-        <div class="container py-5">
+        <div class="container-fluid py-5">
             <div class="mx-auto text-center mb-5" style="max-width: 900px;">
                 <h5 class="section-title px-3">Build schedule</h5>
                 <h1 class="mb-0">Build Your Schedule</h1>
@@ -65,7 +65,7 @@
                                     <label for="end_date">Return date</label>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" id="transportation-input">
                                 <div class="form-floating">
                                     <select class="form-control bg-white border-0" name="transportation" id="currency">
                                             <option value="Motorbike (Personal)">Motorbike (Personal)</option>
@@ -80,13 +80,13 @@
                                     <label for="end_date">transportation</label>
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-8" id= "budget-input">
                                 <div class="form-floating">
                                     <input type="number" class="form-control border-0" id="budget" name="budget" placeholder="">
                                     <label for="budget">Budget</label>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" id="currency-input">
                                 <div class="form-floating">
                                     <select class="form-control bg-white border-0" name="currency" id="currency">
                                         @foreach($currencies as $currency)
@@ -96,7 +96,7 @@
                                     <label for="currency">Currency</label>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12" id="adults-input">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-floating">
@@ -104,13 +104,13 @@
                                             <label for="adults">Adults > 10 years old</label>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-4" id="children-input">
                                         <div class="form-floating">
                                             <input type="number" class="form-control border-0" name="children-2" id="children-2" placeholder="">
                                             <label for="children-2">Children 2 - 10 years old</label>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-4" id="children-input-v2">
                                         <div class="form-floating">
                                             <input type="number" class="form-control border-0" name="children-1" id="children-1" placeholder="">
                                             <label for="children-1">Children < 2 years old </label>
@@ -119,7 +119,7 @@
                                 </div>
 
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12" id="interest-input">
                                 <div class="form-floating">
                                     <select data-placeholder="Interest" class="chosen-select form-control" name="interest[]" multiple >
                                         @foreach($preferences as $preference)
@@ -129,7 +129,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-12">
+                            <div class="col-12" id="submit-enter">
                                 <button class="btn btn-primary w-100 py-3" type="submit">Create a schedule now</button>
                             </div>
                         </div>
@@ -292,7 +292,7 @@
 
     <!-- Subscribe Start -->
     <div class="container-fluid subscribe py-5">
-        <div class="container text-center py-5">
+        <div class="container-fluid text-center py-5">
             <div class="mx-auto text-center" style="max-width: 900px;">
                 <h5 class="subscribe-title px-3">Subscribe</h5>
                 <h1 class="text-white mb-4">Our Newsletter</h1>
@@ -309,7 +309,7 @@
 
     <!-- Footer Start -->
     <div class="container-fluid footer py-5">
-        <div class="container py-5">
+        <div class="container-fluid py-5">
             <div class="row g-5">
                 <div class="col-md-6 col-lg-6 col-xl-3">
                     <div class="footer-item d-flex flex-column">
@@ -397,7 +397,7 @@
 
     <!-- Copyright Start -->
     <div class="container-fluid copyright text-body py-4">
-        <div class="container">
+        <div class="container-fluid py-5">
             <div class="row g-4 align-items-center">
                 <div class="col-md-6 text-center text-md-end mb-md-0">
                     <i class="fas fa-copyright me-2"></i><a class="text-white" href="#">Your Site Name</a>, All right reserved.
@@ -743,10 +743,18 @@
 }
 
 
+</style>
+@endpush
 
 
-/* 🔵 Mobile (<480px) */
-@media (max-width: 480px) {
+@push('styles')
+<style>
+
+
+
+
+/* 🔵 tablet (<992px) */
+@media (max-width: 992px) {
   .navbar-nav, .nav-links, .top-links {
     display: none;
   }
@@ -807,14 +815,20 @@
     max-width: 100% !important;
   }
 
-  /* Gộp tất cả các input theo 1 cột */
-  .col-md-4,
-  .col-md-8,
-  .col-md-12 {
-    width: 100% !important;
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
+ /* Gán order cho từng block cần thiết */
+  #transportation-input {
+    order: 3;
   }
+
+
+
+  #budget-input {
+    order: 4;
+  }
+
+  #currency-input {
+    order: 5;
+
  .form-floating > input,
   .form-floating > select,
   .form-floating > textarea {
@@ -829,48 +843,53 @@
   .btn.w-100 {
     padding: 0.75rem !important;
     font-size: 1rem;
+
   }
 
-  /* Tiêu đề và spacing */
-  h3.mb-2 {
-    font-size: 1.2rem !important;
-    text-align: center;
+  #adults-input {
+    order: 6;
   }
-  .subscribe,
-  .footer,
-  .copyright {
-    display: none !important;
+  #children-input{
+order: 8;
   }
-  .schedule-page {
-    height: auto !important;
+   #children-input-v2{
+    order:7;
   }
-
-
-
-/* ✅ Khối chứa ảnh (w-35) */
-.carousel-item .w-35 {
-  width: 30% !important;                /* Chiếm 30% chiều ngang container */
-  display: flex;                        /* Dùng flex để dễ căn giữa */
-  align-items: center;                  /* Căn giữa theo chiều dọc */
-  justify-content: flex-start;             /* Căn giữa theo chiều ngang */
-  padding-left: 0.25rem;                /* Đẩy ảnh cách mép trái một chút */
+#interest-input{
+    order:2;
 }
-
-/* ✅ Ảnh hiển thị chính */
-.carousel-item img {
-   margin-top: 0 !important;
+#submit-enter{
+    order: 9;
 }
-
-/* ✅ Ảnh đè (nếu có dùng ảnh overlay hoặc ảnh phụ) sẽ bị ẩn trên mobile */
-.carousel-item .sec-image {
-  display: none !important;            /* Ẩn hoàn toàn ảnh thứ hai */
-}
-
-
-  .carousel-item .w-65 {
-    width: 65% !important;
-    padding: 0 !important;
+ .col-md-4{
+    width: 50% !important;
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+    padding: 0.5rem;
+    box-sizing: border-box;
   }
+ #budget-input {
+    flex: 0 0 60% !important;
+    max-width: 60% !important;
+    padding: 0.5rem;
+    box-sizing: border-box;
+  }
+
+  
+  #currency-input {
+    flex: 0 0 40% !important;
+    max-width: 40% !important;
+    padding: 0.5rem;
+    box-sizing: border-box;
+  }
+ #transportation-input {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    padding: 0.5rem;
+    box-sizing: border-box;
+  }
+
+
 
   .carousel-item .delete {
     width: 5%;
@@ -879,48 +898,25 @@
     margin-left: auto;
   }
 
-  .carousel-item .w-65 p,
-  .carousel-item .w-65 span {
-    font-size: 0.85rem;
-    line-height: 1.3;
-  }
 
-  .carousel-item .btn {
-    font-size: 0.6rem !important;
-    padding: 0.3rem 0.5rem !important;
-  }
+
+
 
 .routeButton {
     display: none;
 }
 
-}
-
-
-</style>
-@endpush
-
-
-@push('styles')
-<style>
 
 
 
 
-/* 🔵 tablet (<768px) */
-@media (max-width: 768px) {
-  .navbar-nav, .nav-links, .top-links {
-    display: none;
-  }
 
-  .hamburger-menu {
-    display: block;
-  }
 
-  .navbar {
-    justify-content: space-between;
-    padding: 0 1rem;
-  }
+
+
+
+
+
 
   .navbar-brand {
     font-size: 1.5rem;
@@ -932,14 +928,9 @@
     text-align: center;
   }
 
-    .bg-breadcrumb .container {
-    padding: 0 !important;
-  }
 
-  .bg-breadcrumb h1 {
-    font-size: 1.4rem !important;
-    margin-bottom: 0.5rem !important;
-  }
+
+  .form-floating > input,
 
   .breadcrumb {
     font-size: 0.75rem;
