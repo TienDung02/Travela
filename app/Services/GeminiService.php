@@ -89,7 +89,6 @@ class GeminiService
 
 
 
-//        dd($activityAray);
         Cache::put($cacheKey_event, $activityAray, now()->addMinutes(60));
 
         return $activityAray;
@@ -138,7 +137,7 @@ class GeminiService
         $transportation = $data['transportation'];
 
         $dataString = $address . $startDate . $endDate . $budget . $currencyCode . $interest . $adults . $children_1 . $children_2 . $transportation;
-        print_r($dataString);
+//        print_r($dataString);
         $cacheKey = md5($dataString);
         if (Cache::has($cacheKey)) {
             return Cache::get($cacheKey);

@@ -279,7 +279,7 @@ class ScheduleController
                 }
             }
         }
-        dd($plans);
+
 
         return view('frontend.schedule.ajax.schedule-built', compact('plans', 'currencies', 'preferences'));
 
