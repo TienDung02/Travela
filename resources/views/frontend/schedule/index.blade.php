@@ -886,7 +886,7 @@ order: 8;
   }
 
   .form-floating > label {
-    font-size: 1.1rem !important;
+    font-size: 0.9rem !important;
       padding: 1rem 1.5rem !important;
     pointer-events: none;
   }
