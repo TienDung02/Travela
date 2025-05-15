@@ -75,7 +75,7 @@
 
     <!-- Destination Start -->
     <div class="container-fluid destination py-5">
-        <div class="container py-5">
+        <div class="container-fluid py-5">
             <div class="mx-auto text-center mb-5" style="max-width: 900px; margin-top: 10rem;">
                 <h5 class="section-title px-3">Destination</h5>
                 <h1 class="mb-0">Popular Destination</h1>
@@ -118,7 +118,7 @@
                         <div class="row g-4">
                             <div class="col-xl-8">
                                 <div class="row g-4">
-                                    <div class="col-lg-6">
+                                    <div class="col-12 col-lg-6">
                                         <div class="destination-img">
                                             <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-1.jpg')}}" alt="">
                                             <div class="destination-overlay p-4">
@@ -131,7 +131,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-12 col-lg-6">
                                         <div class="destination-img">
                                             <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-2.jpg')}}" alt="">
                                             <div class="destination-overlay p-4">
@@ -144,7 +144,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-12 col-lg-6">
                                         <div class="destination-img">
                                             <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-7.jpg')}}" alt="">
                                             <div class="destination-overlay p-4">
@@ -157,7 +157,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-12 col-lg-6">
                                         <div class="destination-img">
                                             <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-8.jpg')}}" alt="">
                                             <div class="destination-overlay p-4">
@@ -172,7 +172,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-4">
+                            <div class="col-12 col-xl-4">
                                 <div class="destination-img h-100">
                                     <img class="img-fluid rounded w-100 h-100" src="{{asset('frontend/images/destination-9.jpg')}}" style="object-fit: cover; min-height: 300px;" alt="">
                                     <div class="destination-overlay p-4">
@@ -185,7 +185,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-12 col-lg-4">
                                 <div class="destination-img">
                                     <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-4.jpg')}}" alt="">
                                     <div class="destination-overlay p-4">
@@ -198,7 +198,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-12 col-lg-4">
                                 <div class="destination-img">
                                     <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-5.jpg')}}" alt="">
                                     <div class="destination-overlay p-4">
@@ -211,7 +211,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-12 col-lg-4">
                                 <div class="destination-img">
                                     <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-6.jpg')}}" alt="">
                                     <div class="destination-overlay p-4">
@@ -226,9 +226,10 @@
                             </div>
                         </div>
                     </div>
+                
                     <div id="tab-2" class="tab-pane fade show p-0">
                         <div class="row g-4">
-                            <div class="col-lg-6">
+                            <div class="col-12 col-lg-6">
                                 <div class="destination-img">
                                     <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-5.jpg")}}" alt="">
                                     <div class="destination-overlay p-4">
@@ -241,7 +242,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-12 col-lg-6">
                                 <div class="destination-img">
                                     <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-6.jpg")}}" alt="">
                                     <div class="destination-overlay p-4">
@@ -256,9 +257,10 @@
                             </div>
                         </div>
                     </div>
+            
                     <div id="tab-3" class="tab-pane fade show p-0">
                         <div class="row g-4">
-                            <div class="col-lg-6">
+                            <div class="col-12 col-lg-6">
                                 <div class="destination-img">
                                     <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-5.jpg")}}" alt="">
                                     <div class="destination-overlay p-4">
@@ -271,7 +273,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-12 col-lg-6">
                                 <div class="destination-img">
                                     <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-6.jpg")}}" alt="">
                                     <div class="destination-overlay p-4">
@@ -286,9 +288,10 @@
                             </div>
                         </div>
                     </div>
+        
                     <div id="tab-4" class="tab-pane fade show p-0">
                         <div class="row g-4">
-                            <div class="col-lg-6">
+                            <div class="col-12 col-lg-6">
                                 <div class="destination-img">
                                     <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-5.jpg")}}" alt="">
                                     <div class="destination-overlay p-4">
@@ -300,7 +303,8 @@
                                         <a href="{{asset("frontend/images/destination-5.jpg")}}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary position-relative"></i></a>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                            </div>
+                                <div class="col-12 col-lg-6">
                                     <div class="destination-img">
                                         <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-6.jpg")}}" alt="">
                                         <div class="destination-overlay p-4">
@@ -314,10 +318,11 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        
+                    
                         <div id="tab-5" class="tab-pane fade show p-0">
                             <div class="row g-4">
-                                <div class="col-lg-6">
+                                <div class="col-12 col-lg-6">
                                     <div class="destination-img">
                                         <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-5.jpg")}}" alt="">
                                         <div class="destination-overlay p-4">
@@ -330,7 +335,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-12 col-lg-6">
                                     <div class="destination-img">
                                         <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-6.jpg")}}" alt="">
                                         <div class="destination-overlay p-4">
@@ -345,9 +350,10 @@
                                 </div>
                             </div>
                         </div>
+    
                         <div id="tab-6" class="tab-pane fade show p-0">
                             <div class="row g-4">
-                                <div class="col-lg-6">
+                                <div class="col-12 col-lg-6">
                                     <div class="destination-img">
                                         <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-5.jpg")}}" alt="">
                                         <div class="destination-overlay p-4">
@@ -360,7 +366,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-12 col-lg-6">
                                     <div class="destination-img">
                                         <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-6.jpg")}}" alt="">
                                         <div class="destination-overlay p-4">
@@ -379,11 +385,12 @@
                 </div>
             </div>
         </div>
+    </div>    
         <!-- Destination End -->
 
         <!-- Explore Tour Start -->
         <div class="container-fluid ExploreTour py-5">
-            <div class="container py-5">
+            <div class="container-fluid py-5">
                 <div class="mx-auto text-center mb-5" style="max-width: 900px; margin-top: 10rem;">
                     <h5 class="section-title px-3">Explore Tour</h5>
                     <h1 class="mb-4">The World</h1>
@@ -391,18 +398,7 @@
                     </p>
                 </div>
                 <div class="tab-class text-center">
-                    <ul class="nav nav-pills d-inline-flex justify-content-center mb-5">
-                        <li class="nav-item">
-                            <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill active" data-bs-toggle="pill" href="#NationalTab-1">
-                                <span class="text-dark" style="width: 250px;">National Tour Category</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="d-flex py-2 mx-3 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#InternationalTab-2">
-                                <span class="text-dark" style="width: 250px;">International tour Category</span>
-                            </a>
-                        </li>
-                    </ul>
+
                     <div class="tab-content">
                         <div id="NationalTab-1" class="tab-pane fade show p-0 active">
                             <div class="row g-4">
@@ -494,78 +490,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="InternationalTab-2" class="tab-pane fade show p-0">
-                            <div class="InternationalTour-carousel owl-carousel">
-                                <div class="international-item">
-                                    <img src="{{asset("frontend/images/explore-tour-1.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                    <div class="international-content">
-                                        <div class="international-info">
-                                            <h5 class="text-white text-uppercase mb-2">Australia</h5>
-                                            <a href="#" class="btn-hover text-white me-4"><i class="fas fa-map-marker-alt me-1"></i> 8 Cities</a>
-                                            <a href="#" class="btn-hover text-white"><i class="fa fa-eye ms-2"></i> <span>143+ Tour Places</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="tour-offer bg-success">30% Off</div>
-                                    <div class="international-plus-icon">
-                                        <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                    </div>
-                                </div>
-                                <div class="international-item">
-                                    <img src="{{asset("frontend/images/explore-tour-2.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                    <div class="international-content">
-                                        <div class="international-info">
-                                            <h5 class="text-white text-uppercase mb-2">Germany</h5>
-                                            <a href="#" class="btn-hover text-white me-4"><i class="fas fa-map-marker-alt me-1"></i> 12 Cities</a>
-                                            <a href="#" class="btn-hover text-white"><i class="fa fa-eye ms-2"></i> <span>21+ Tour Places</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="international-plus-icon">
-                                        <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                    </div>
-                                </div>
-                                <div class="international-item">
-                                    <img src="{{asset("frontend/images/explore-tour-3.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                    <div class="international-content">
-                                        <div class="tour-offer bg-warning">45% Off</div>
-                                        <div class="international-info">
-                                            <h5 class="text-white text-uppercase mb-2">Spain</h5>
-                                            <a href="#" class="btn-hover text-white me-4"><i class="fas fa-map-marker-alt me-1"></i> 9 Cities</a>
-                                            <a href="#" class="btn-hover text-white"><i class="fa fa-eye ms-2"></i> <span>133+ Tour Places</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="international-plus-icon">
-                                        <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                    </div>
-                                </div>
-                                <div class="international-item">
-                                    <img src="{{asset("frontend/images/explore-tour-4.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                    <div class="international-content">
-                                        <div class="international-info">
-                                            <h5 class="text-white text-uppercase mb-2">Japan</h5>
-                                            <a href="#" class="btn-hover text-white me-4"><i class="fas fa-map-marker-alt me-1"></i> 8 Cities</a>
-                                            <a href="#" class="btn-hover text-white"><i class="fa fa-eye ms-2"></i> <span>137+ Tour Places</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="international-plus-icon">
-                                        <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                    </div>
-                                </div>
-                                <div class="international-item">
-                                    <img src="{{asset("frontend/images/explore-tour-5.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                    <div class="international-content">
-                                        <div class="tour-offer bg-info">70% Off</div>
-                                        <div class="international-info">
-                                            <h5 class="text-white text-uppercase mb-2">London</h5>
-                                            <a href="#" class="btn-hover text-white me-4"><i class="fas fa-map-marker-alt me-1"></i> 17 Cities</a>
-                                            <a href="#" class="btn-hover text-white"><i class="fa fa-eye ms-2"></i> <span>26+ Tour Places</span></a>
-                                        </div>
-                                    </div>
-                                    <div class="international-plus-icon">
-                                        <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -587,16 +511,6 @@
                     <li class="nav-item">
                         <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill active" data-bs-toggle="pill" href="#GalleryTab-1">
                             <span class="text-dark" style="width: 150px;">All</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="d-flex py-2 mx-3 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#GalleryTab-2">
-                            <span class="text-dark" style="width: 150px;">World tour</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#GalleryTab-3">
-                            <span class="text-dark" style="width: 150px;">Ocean Tour</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -890,7 +804,7 @@
 
         <!-- Tour Booking Start -->
         <div class="container-fluid booking py-5">
-            <div class="container py-5">
+            <div class="container-fluid py-5">
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6">
                         <h5 class="section-booking-title pe-3">Booking</h5>
@@ -974,7 +888,7 @@
 
         <!-- Travel Guide Start -->
         <div class="container-fluid guide py-5">
-            <div class="container py-5">
+            <div class="container-fluid py-5">
                 <div class="mx-auto text-center mb-5" style="max-width: 900px; margin-top: 10rem;">
                     <h5 class="section-title px-3">Travel Guide</h5>
                     <h1 class="mb-0">Meet Our Guide</h1>
@@ -1071,7 +985,7 @@
 
         <!-- Testimonial Start -->
         <div class="container-fluid testimonial py-5">
-            <div class="container py-5">
+            <div class="container-fluid py-5">
                 <div class="mx-auto text-center mb-5" style="max-width: 900px;">
                     <h5 class="section-title px-3">Testimonial</h5>
                     <h1 class="mb-0">Our Clients Say!!!</h1>
@@ -1164,7 +1078,7 @@
 
         <!-- Subscribe Start -->
         <div class="container-fluid subscribe py-5">
-            <div class="container text-center py-5">
+            <div class="container-fluid text-center py-5">
                 <div class="mx-auto text-center" style="max-width: 900px; margin-top: 10rem;">
                     <h5 class="subscribe-title px-3">Subscribe</h5>
                     <h1 class="text-white mb-4">Our Newsletter</h1>
@@ -1181,7 +1095,7 @@
 
         <!-- Footer Start -->
         <div class="container-fluid footer py-5">
-            <div class="container py-5">
+            <div class="container-fluid py-5">
                 <div class="row g-5">
                     <div class="col-md-6 col-lg-6 col-xl-3">
                         <div class="footer-item d-flex flex-column">
@@ -1274,7 +1188,7 @@
 
         <!-- Copyright Start -->
         <div class="container-fluid copyright text-body py-4">
-            <div class="container">
+            <div class="container-fuild py-5">
                 <div class="row g-4 align-items-center">
                     <div class="col-md-6 text-center text-md-end mb-md-0">
                         <i class="fas fa-copyright me-2"></i><a class="text-white" href="#">Your Site Name</a>, All right reserved.
@@ -1295,3 +1209,7 @@
         <a href="#" class="btn btn-primary btn-primary-outline-0 btn-md-square back-to-top"><i class="fa fa-arrow-up"></i></a>
 
 @endsection
+
+@push('style')
+    
+@endpush

@@ -25,7 +25,6 @@ class ScheduleController
     protected $geminiService;
     protected $wikipediaService;
     protected $rapidApiService;
-
     protected $map4DService;
 
 
@@ -229,6 +228,40 @@ class ScheduleController
         $preferences = Preference::query()->get();
 
         $plans = $this->geminiService->generateItinerary($data);
+
+        foreach ($plans as $day => &$dailyPlan) {
+            foreach ($dailyPlan as $partOfDay => &$activities) {
+                if (is_array($activities)) {
+                    foreach ($activities as &$activity) {
+                        if (isset($activity['type']) && isset($activity['details'])) {
+                            $type = $activity['type'];
+
+                            if (in_array($type, ['Ăn sáng', 'Ăn trưa', 'Ăn tối', 'Chỗ ngủ'])) {
+                                if (is_string($activity['details'])) {
+                                    $activity['details'] = cleanLocationString($activity['details']);
+                                }
+                            } elseif ($type === 'Di chuyển') {
+                                if (is_array($activity['details'])) {
+                                    if (isset($activity['details']['Điểm đi']) && is_string($activity['details']['Điểm đi'])) {
+                                        $activity['details']['Điểm đi'] = cleanLocationString($activity['details']['Điểm đi']);
+                                    }
+                                    if (isset($activity['details']['Điểm đến']) && is_string($activity['details']['Điểm đến'])) {
+                                        $activity['details']['Điểm đến'] = cleanLocationString($activity['details']['Điểm đến']);
+                                    }
+                                }
+                            } elseif ($type === 'Địa điểm tham quan') {
+                                if (is_array($activity['details'])) {
+                                    if (isset($activity['details']['Tên địa điểm']) && is_string($activity['details']['Tên địa điểm'])) {
+                                        $activity['details']['Tên địa điểm'] = cleanLocationString($activity['details']['Tên địa điểm']);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         foreach ($plans as $day => &$activities){
             foreach ($activities as &$session_key){
                 foreach ($session_key as &$session_active){
@@ -237,11 +270,11 @@ class ScheduleController
                         $from = str_replace(" (tự tìm)", "", $session_active['details']['Điểm đi']);
                         $to = str_replace(" (tự tìm)", "", $session_active['details']['Điểm đến']);
                         $origin = $this->map4DService->geocode($from);
-                        $de = $this->map4DService->geocode($to);
-                        $session_active['details']['ori_lat'] = $origin[0]['lat'] ?? '';
-                        $session_active['details']['ori_lon'] = $origin[0]['lon'] ?? '';
-                        $session_active['details']['de_lat'] = $de[0]['lat'] ?? '';
-                        $session_active['details']['de_lon'] = $de[0]['lon'] ?? '';
+                        $destination = $this->map4DService->geocode($to);
+                        $session_active['details']['origin_lat'] = $origin[0]['lat'] ?? '';
+                        $session_active['details']['origin_lon'] = $origin[0]['lon'] ?? '';
+                        $session_active['details']['destination_lat'] = $destination[0]['lat'] ?? '';
+                        $session_active['details']['destination_lon'] = $destination[0]['lon'] ?? '';
                     }
                 }
             }

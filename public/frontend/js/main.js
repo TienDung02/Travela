@@ -589,6 +589,7 @@
 
                     var $data = $(data);
                     $('#schedule-response').html($data);
+                    updateRouteButtons();
                     $('.schedule-carousel').slick({
                         centerMode: true,
                         centerPadding: '0px',
@@ -878,6 +879,27 @@
 
         /*----------------------------------------------------*/
         /*  End Map
+        /*----------------------------------------------------*/
+
+        /*----------------------------------------------------*/
+        /*  Function Check For Button Direction
+        /*----------------------------------------------------*/
+        function updateRouteButtons() {
+            $('.requestAndDisplayRoute').each(function () {
+                const $btn = $(this);
+
+                const oriLat = $btn.data('ori-lat');
+                const oriLon = $btn.data('ori-lon');
+                const deLat  = $btn.data('de-lat');
+                const deLon  = $btn.data('de-lon');
+
+                if (!oriLat || !oriLon || !deLat || !deLon) {
+                    $btn.removeClass('btn-primary requestAndDisplayRoute').addClass('btn-secondary');
+                }
+            });
+        }
+        /*----------------------------------------------------*/
+        /*  End Function Check For Button Direction
         /*----------------------------------------------------*/
 
     });

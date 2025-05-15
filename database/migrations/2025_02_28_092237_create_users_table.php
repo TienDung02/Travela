@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('provider')->nullable()->default(null);
             $table->rememberToken();
             $table->string('password')->nullable();
-            $table->enum('role', ['admin', 'user'])->default('user'); // Phân quyền
+            $table->string('phone')->nullable();
+            $table->integer('role_id')->default('0');
             $table->timestamps();
             $table->softDeletes();
         });

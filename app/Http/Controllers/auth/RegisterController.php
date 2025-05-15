@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -26,7 +26,7 @@ class RegisterController extends Controller
 
         if ($validator->fails()) {
             print_r($request->all());
-            dd($validator->errors());
+//            dd($validator->errors());
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
