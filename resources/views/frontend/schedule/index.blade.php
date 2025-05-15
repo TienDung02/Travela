@@ -772,7 +772,7 @@
     font-size: 1.5rem;
   }
   .bg-breadcrumb {
-      height: 40vh !important;
+      height: 40vh !important; 
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -798,7 +798,7 @@
     pointer-events: none !important;
   }
 
-  .image-left-schedule *,
+ .image-left-schedule *,
   .image-left-schedule img {
     display: none !important;
     visibility: hidden !important;
@@ -821,29 +821,12 @@
   }
 
 
-
   #budget-input {
     order: 4;
   }
 
   #currency-input {
     order: 5;
-
- .form-floating > input,
-  .form-floating > select,
-  .form-floating > textarea {
-    padding: 1.8rem 1rem 1rem !important;
-    height: auto !important;
-  }
- .form-floating > label {
-    padding: 0.2rem 0.5rem !important;
-    pointer-events: none;
-  }
-  /* Giảm cỡ nút */
-  .btn.w-100 {
-    padding: 0.75rem !important;
-    font-size: 1rem;
-
   }
 
   #adults-input {
@@ -889,94 +872,16 @@ order: 8;
     box-sizing: border-box;
   }
 
-
-
-
-  .carousel-item .delete {
-    width: 5%;
-    text-align: right;
-    padding-right: 0.5rem;
-    margin-left: auto;
-  }
-
-
-
-
-
-.routeButton {
-    display: none;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-  .navbar-brand {
-    font-size: 1.5rem;
-  }
-  .bg-breadcrumb {
-      height: 40vh !important;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-
-
-
   .form-floating > input,
-
-  .breadcrumb {
-    font-size: 0.75rem;
-    justify-content: center;
-  }
-
-  .image-left-schedule {
-    display: none !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-  }
-
-  .image-left-schedule *,
-  .image-left-schedule img {
-    display: none !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-    position: static !important;
-    width: 0 !important;
-    height: 0 !important;
-    overflow: hidden !important;
-  }
-  /* Form container full width */
-  .col-lg-8 {
-    width: 100% !important;
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
-  }
-
-  /* Gộp tất cả các input theo 1 cột */
-  .col-md-4,
-  .col-md-8,
-  .col-md-12 {
-    width: 100% !important;
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
-  }
- .form-floating > input,
   .form-floating > select,
   .form-floating > textarea {
-    padding: 1.8rem 1rem 1rem !important;
     height: auto !important;
+    padding: 1.8rem 1rem 0.5rem !important;
   }
- .form-floating > label {
-    padding: 0.2rem 0.5rem !important;
+
+  .form-floating > label {
+    font-size: 0.9rem !important;
+      padding: 1rem 1.5rem !important;
     pointer-events: none;
   }
   /* Giảm cỡ nút */
@@ -1026,12 +931,7 @@ order: 8;
     padding: 0 !important;
   }
 
-  .carousel-item .delete {
-    width: 5%;
-    text-align: right;
-    padding-right: 0.5rem;
-    margin-left: auto;
-  }
+ 
 
   .carousel-item .w-65 p,
   .carousel-item .w-65 span {
@@ -1044,19 +944,20 @@ order: 8;
     padding: 0.3rem 0.5rem !important;
   }
 
-    .carousel-item .row {
-        position: relative;
-    }
+ .carousel-item .row {
+    position: relative;
+  }
 
-    .carousel-item .delete {
-        position: absolute;
-        top: 0.5rem;
-        right: 0.5rem;
-        z-index: 10;
-        background: white;
-        padding: 0.25rem;
-        border-radius: 4px;
-    }
+  .carousel-item .delete {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    z-index: 10;
+    background: white;
+    padding: 0.25rem;
+    border-radius: 4px;
+  }
+
 .routeButton {
     display: none;
 }
@@ -1066,8 +967,6 @@ order: 8;
 
 </style>
 @endpush
-
-
 
 
 
