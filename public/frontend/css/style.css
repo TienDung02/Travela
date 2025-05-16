@@ -426,11 +426,10 @@
 
 /*** Single Page Hero Header Start ***/
 .bg-breadcrumb {
-
     background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-attachment: fixed ;
     padding: 150px 0 50px 0;
 }
 
@@ -485,6 +484,10 @@
 
 
 /*** Destination Start ***/
+.container-fluid.destination {
+    overflow: auto;
+}
+
 .destination .tab-class .tab-content .tab-pane .destination-img {
     position: relative;
     overflow: hidden;
@@ -1279,7 +1282,12 @@
     background: var(--bs-dark) !important;
 }
 /*** copyright end ***/
-
+@media (max-width: 768px) {
+    .subscribe {
+      background-attachment: scroll !important;
+    }
+}
+  
 
 
 /*Tour box*/
@@ -2826,17 +2834,15 @@ button.thumb-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 1rem;
-    gap: 0.5rem;
     flex-wrap: nowrap;
 }
-
-/* Thanh thumbnail cuộn ngang */
+/* === Thumbnails === */
 .gallery-thumbs {
     display: flex;
     overflow: hidden;
-    width: calc(6 * 80px + 5 * 0.5rem); /* 6 thumbnails + 5 gaps*/
+    max-width: calc(6 * 80px + 5 * 0.5rem); /* 6 thumbnails + 5 gaps*/
     gap: 0.5rem;
+    width: auto;
     scroll-behavior: smooth;
 }
 .thumb-btn img,
@@ -2854,9 +2860,8 @@ button.thumb-btn {
     justify-content: center;
     background-color: #fff;
     border: none;
-    font-size: 2rem;
     cursor: pointer;
-    padding: 0 0.5rem;
+    
 }
 
 .thumb-nav-btn:disabled {
@@ -2906,8 +2911,6 @@ button.thumb-btn {
   .packages .packages-carousel .owl-nav .owl-next:hover i {
     color: var(--bs-white);
 }
-
-
 /* -----------------------------------------*/
 /*  End Event And Activity
 /*------------------------------------------*/

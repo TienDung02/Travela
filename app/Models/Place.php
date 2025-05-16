@@ -17,4 +17,9 @@ class Place extends Model
     {
         return $this->hasMany(PlaceMedia::class);
     }
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
+
 }

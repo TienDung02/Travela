@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -15,5 +15,8 @@ class Tour extends Model
     {
         return $this->hasMany(Package::class);
     }
-
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
 }
