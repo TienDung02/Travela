@@ -76,10 +76,10 @@
                 </ul>
                 <div class="tab-content">
                     <div id="tab-all" class="tab-pane fade show p-0 active">
-                        <div class="row g-4">
-                            <div class="col-xl-8">
+                        <div id="destination-container" class="row g-4">
+                            <div class="col-xl-12">
                                 <div class="row g-4">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4 destination-item">
                                         <div class="destination-img">
                                             <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-1.jpg')}}" alt="">
                                             <div class="destination-overlay p-4">
@@ -92,7 +92,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4 destination-item">
                                         <div class="destination-img">
                                             <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-2.jpg')}}" alt="">
                                             <div class="destination-overlay p-4">
@@ -105,7 +105,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4 destination-item">
                                         <div class="destination-img">
                                             <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-7.jpg')}}" alt="">
                                             <div class="destination-overlay p-4">
@@ -118,7 +118,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4 destination-item">
                                         <div class="destination-img">
                                             <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-8.jpg')}}" alt="">
                                             <div class="destination-overlay p-4">
@@ -131,22 +131,220 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4">
-                                <div class="destination-img h-100">
-                                    <img class="img-fluid rounded w-100 h-100" src="{{asset('frontend/images/destination-9.jpg')}}" style="object-fit: cover; min-height: 300px;" alt="">
-                                    <div class="destination-overlay p-4">
-                                        <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
-                                        <h4 class="text-white mb-2 mt-3">Singapore</h4>
-                                        <a data-toggle-tab="singapore" href="#" data-bs-toggle="pill" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
+                                    <div class="col-lg-4 destination-item">
+                                        <div class="destination-img">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-8.jpg')}}" alt="">
+                                            <div class="destination-overlay p-4">
+                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                                <h4 class="text-white mb-2 mt-3">Singapore</h4>
+                                                <a data-toggle-tab="singapore" href="#" data-bs-toggle="pill" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
+                                            </div>
+                                            <div class="search-icon">
+                                                <a href="{{asset('frontend/images/destination-9.jpg')}}" data-lightbox="destination-4"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="search-icon">
-                                        <a href="{{asset('frontend/images/destination-9.jpg')}}" data-lightbox="destination-4"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                    <div class="col-lg-4 destination-item">
+                                        <div class="destination-img">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-1.jpg')}}" alt="">
+                                            <div class="destination-overlay p-4">
+                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                                <h4 class="text-white mb-2 mt-3">USA</h4>
+                                                <a data-toggle-tab="usa" href="#" data-bs-toggle="pill" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
+                                            </div>
+                                            <div class="search-icon">
+                                                <a href="{{asset("frontend/images/destination-1.jpg")}}" data-lightbox="destination-1"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 destination-item">
+                                        <div class="destination-img">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-2.jpg')}}" alt="">
+                                            <div class="destination-overlay p-4">
+                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                                <h4 class="text-white mb-2 mt-3">Canada</h4>
+                                                <a data-toggle-tab="canada" href="#" data-bs-toggle="pill" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
+                                            </div>
+                                            <div class="search-icon">
+                                                <a href="{{asset("frontend/images/destination-2.jpg")}}" data-lightbox="destination-2"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 destination-item">
+                                        <div class="destination-img">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-7.jpg')}}" alt="">
+                                            <div class="destination-overlay p-4">
+                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                                <h4 class="text-white mb-2 mt-3">Europe</h4>
+                                                <a data-toggle-tab="europe" href="#" data-bs-toggle="pill" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
+                                            </div>
+                                            <div class="search-icon">
+                                                <a href="{{asset("frontend/images/destination-7.jpg")}}" data-lightbox="destination-7"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 destination-item">
+                                        <div class="destination-img">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-8.jpg')}}" alt="">
+                                            <div class="destination-overlay p-4">
+                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                                <h4 class="text-white mb-2 mt-3">China</h4>
+                                                <a data-toggle-tab="china" href="#" data-bs-toggle="pill" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
+                                            </div>
+                                            <div class="search-icon">
+                                                <a href="{{asset('frontend/images/destination-8.jpg')}}" data-lightbox="destination-8"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 destination-item">
+                                        <div class="destination-img">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-8.jpg')}}" alt="">
+                                            <div class="destination-overlay p-4">
+                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                                <h4 class="text-white mb-2 mt-3">Singapore</h4>
+                                                <a data-toggle-tab="singapore" href="#" data-bs-toggle="pill" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
+                                            </div>
+                                            <div class="search-icon">
+                                                <a href="{{asset('frontend/images/destination-9.jpg')}}" data-lightbox="destination-4"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 destination-item">
+                                        <div class="destination-img">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-1.jpg')}}" alt="">
+                                            <div class="destination-overlay p-4">
+                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                                <h4 class="text-white mb-2 mt-3">USA</h4>
+                                                <a data-toggle-tab="usa" href="#" data-bs-toggle="pill" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
+                                            </div>
+                                            <div class="search-icon">
+                                                <a href="{{asset("frontend/images/destination-1.jpg")}}" data-lightbox="destination-1"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 destination-item">
+                                        <div class="destination-img">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-2.jpg')}}" alt="">
+                                            <div class="destination-overlay p-4">
+                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                                <h4 class="text-white mb-2 mt-3">Canada</h4>
+                                                <a data-toggle-tab="canada" href="#" data-bs-toggle="pill" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
+                                            </div>
+                                            <div class="search-icon">
+                                                <a href="{{asset("frontend/images/destination-2.jpg")}}" data-lightbox="destination-2"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 destination-item">
+                                        <div class="destination-img">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-7.jpg')}}" alt="">
+                                            <div class="destination-overlay p-4">
+                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                                <h4 class="text-white mb-2 mt-3">Europe</h4>
+                                                <a data-toggle-tab="europe" href="#" data-bs-toggle="pill" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
+                                            </div>
+                                            <div class="search-icon">
+                                                <a href="{{asset("frontend/images/destination-7.jpg")}}" data-lightbox="destination-7"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 destination-item">
+                                        <div class="destination-img">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-8.jpg')}}" alt="">
+                                            <div class="destination-overlay p-4">
+                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                                <h4 class="text-white mb-2 mt-3">China</h4>
+                                                <a data-toggle-tab="china" href="#" data-bs-toggle="pill" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
+                                            </div>
+                                            <div class="search-icon">
+                                                <a href="{{asset('frontend/images/destination-8.jpg')}}" data-lightbox="destination-8"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 destination-item">
+                                        <div class="destination-img">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-8.jpg')}}" alt="">
+                                            <div class="destination-overlay p-4">
+                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                                <h4 class="text-white mb-2 mt-3">Singapore</h4>
+                                                <a data-toggle-tab="singapore" href="#" data-bs-toggle="pill" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
+                                            </div>
+                                            <div class="search-icon">
+                                                <a href="{{asset('frontend/images/destination-9.jpg')}}" data-lightbox="destination-4"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 destination-item">
+                                        <div class="destination-img">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-1.jpg')}}" alt="">
+                                            <div class="destination-overlay p-4">
+                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                                <h4 class="text-white mb-2 mt-3">USA</h4>
+                                                <a data-toggle-tab="usa" href="#" data-bs-toggle="pill" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
+                                            </div>
+                                            <div class="search-icon">
+                                                <a href="{{asset("frontend/images/destination-1.jpg")}}" data-lightbox="destination-1"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 destination-item">
+                                        <div class="destination-img">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-2.jpg')}}" alt="">
+                                            <div class="destination-overlay p-4">
+                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                                <h4 class="text-white mb-2 mt-3">Canada</h4>
+                                                <a data-toggle-tab="canada" href="#" data-bs-toggle="pill" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
+                                            </div>
+                                            <div class="search-icon">
+                                                <a href="{{asset("frontend/images/destination-2.jpg")}}" data-lightbox="destination-2"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 destination-item">
+                                        <div class="destination-img">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-7.jpg')}}" alt="">
+                                            <div class="destination-overlay p-4">
+                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                                <h4 class="text-white mb-2 mt-3">Europe</h4>
+                                                <a data-toggle-tab="europe" href="#" data-bs-toggle="pill" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
+                                            </div>
+                                            <div class="search-icon">
+                                                <a href="{{asset("frontend/images/destination-7.jpg")}}" data-lightbox="destination-7"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 destination-item">
+                                        <div class="destination-img">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-8.jpg')}}" alt="">
+                                            <div class="destination-overlay p-4">
+                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                                <h4 class="text-white mb-2 mt-3">China</h4>
+                                                <a data-toggle-tab="china" href="#" data-bs-toggle="pill" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
+                                            </div>
+                                            <div class="search-icon">
+                                                <a href="{{asset('frontend/images/destination-8.jpg')}}" data-lightbox="destination-8"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 destination-item">
+                                        <div class="destination-img">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-8.jpg')}}" alt="">
+                                            <div class="destination-overlay p-4">
+                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                                <h4 class="text-white mb-2 mt-3">Singapore</h4>
+                                                <a data-toggle-tab="singapore" href="#" data-bs-toggle="pill" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
+                                            </div>
+                                            <div class="search-icon">
+                                                <a href="{{asset('frontend/images/destination-9.jpg')}}" data-lightbox="destination-4"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <nav aria-label="Page navigation">
+                            <ul id="pagination" class="pagination justify-content-center mt-4"></ul>
+                        </nav>
                     </div>
                     <div id="tab-usa" class="tab-pane fade show p-0">
                         <div class="row g-4">
@@ -391,71 +589,129 @@
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary btn-primary-outline-0 btn-md-square back-to-top"><i class="fa fa-arrow-up"></i></a>
     <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const defaultTab = 'all';
-    const urlParams = new URLSearchParams(window.location.search);
-    let currentTab = urlParams.get('tab');
+document.addEventListener('DOMContentLoaded', () => {
+  const defaultTab = 'all';
+  const url = new URL(window.location.href);
+  const urlParams = url.searchParams;
 
-    // ✅ LUÔN về tab "all" khi reload/F5
-    if (performance.navigation.type === performance.navigation.TYPE_RELOAD || !currentTab) {
-        currentTab = defaultTab;
-        const newUrl = new URL(window.location.href);
-        newUrl.searchParams.set('tab', defaultTab);
-        newUrl.searchParams.set('page', 1);
-        window.history.replaceState(null, '', newUrl.toString());
-    }
+  // ─── 1) XỬ LÝ TAB ───────────────────────────────────
+  let currentTab = urlParams.get('tab');
+  if (performance.navigation.type === performance.navigation.TYPE_RELOAD || !currentTab) {
+    currentTab = defaultTab;
+    urlParams.set('tab', defaultTab);
+    urlParams.set('page', '1');
+    window.history.replaceState(null, '', url.toString());
+  }
+  // show đúng tab
+  const activeTab = document.querySelector(`.nav-pills a[data-tab="${currentTab}"]`);
+  if (activeTab) new bootstrap.Tab(activeTab).show();
 
-    // ✅ Hiển thị đúng tab dựa trên currentTab
-    const activeTab = document.querySelector(`.nav-pills a[data-tab="${currentTab}"]`);
-    if (activeTab) {
-        new bootstrap.Tab(activeTab).show();
-    }
+  // click tab, reset page→1
+  document.querySelectorAll('.nav-pills a[data-tab]').forEach(tab => {
+    tab.addEventListener('click', e => {
+      e.preventDefault();
+      const t = tab.getAttribute('data-tab');
+      urlParams.set('tab', t);
+      urlParams.set('page', '1');
+      window.location.href = url.toString();
+    });
+  });
+  // “View All Place” overlay cũng tương tự
+  document.querySelectorAll('[data-toggle-tab]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const t = btn.getAttribute('data-toggle-tab');
+      urlParams.set('tab', t);
+      urlParams.set('page', '1');
+      window.location.href = url.toString();
+    });
+  });
+  window.addEventListener('popstate', () => {
+    const p = new URLSearchParams(window.location.search);
+    const t = p.get('tab') || defaultTab;
+    const link = document.querySelector(`.nav-pills a[data-tab="${t}"]`);
+    if (link) new bootstrap.Tab(link).show();
+  });
 
-    // ✅ Khi click các tab (All, USA, Canada...)
-    document.querySelectorAll('.nav-pills a[data-tab]').forEach(tab => {
-        tab.addEventListener('click', function (e) {
-            e.preventDefault();
-            const selectedTab = tab.getAttribute('data-tab');
-            const url = new URL(window.location.href);
-            url.searchParams.set('tab', selectedTab);
-            url.searchParams.set('page', 1); // Reset page về 1 khi chuyển tab
-            window.location.href = url.toString();
+  // ─── 2) XỬ LÝ PAGINATION ─────────────────────────────
+  const container    = document.getElementById('destination-container');
+  const items        = Array.from(container.querySelectorAll('.destination-item'));
+  const paginationEl = document.getElementById('pagination');
+  const itemsPerPage = 9;
+  const totalPages   = Math.ceil(items.length / itemsPerPage);
+
+  // Lấy page hiện tại từ URL, mặc định 1
+  let currentPage = parseInt(urlParams.get('page')) || 1;
+  currentPage = Math.min(Math.max(currentPage, 1), totalPages);
+
+  function showPage(page) {
+    currentPage = page;
+    // Ẩn/hiện item
+    const start = (page - 1) * itemsPerPage;
+    const end   = start + itemsPerPage;
+    items.forEach((el, i) => {
+      el.style.display = (i >= start && i < end) ? '' : 'none';
+    });
+    // Cập nhật URL mà không reload
+    urlParams.set('page', page);
+    window.history.replaceState(null, '', url.toString());
+    renderPagination();
+  }
+
+  function renderPagination() {
+    paginationEl.innerHTML = '';
+    const makeLi = (p, label, opts={active:false,disabled:false}) => {
+      const li = document.createElement('li');
+      li.className = 'page-item' + (opts.active? ' active':'') + (opts.disabled?' disabled':'');
+      const a = document.createElement('a');
+      a.className = 'page-link';
+      a.href = '#';
+      a.textContent = label;
+      if (!opts.active && !opts.disabled) {
+        a.addEventListener('click', e => {
+          e.preventDefault();
+          showPage(p);
         });
-    });
+      }
+      li.appendChild(a);
+      return li;
+    };
+    // Prev
+    paginationEl.appendChild(makeLi(currentPage-1, '‹', {disabled: currentPage===1}));
+    // Các nút số (tối đa 9 nút hiển thị)
+    const maxButtons = 9;
+    if (totalPages <= maxButtons) {
+      for (let i=1; i<= totalPages; i++) {
+        paginationEl.appendChild(makeLi(i, i, {active: i===currentPage}));
+      }
+    } else {
+      const half = Math.floor(maxButtons/2);
+      let start = Math.max(1, currentPage - half);
+      let end   = Math.min(totalPages, currentPage + half);
+      if (currentPage <= half)       end = maxButtons;
+      else if (currentPage + half > totalPages) start = totalPages - maxButtons + 1;
 
-    // ✅ Khi click nút "View All Place" trong overlay
-    document.querySelectorAll('[data-toggle-tab]').forEach(btn => {
-        btn.addEventListener('click', e => {
-            e.preventDefault();
-            const target = btn.getAttribute('data-toggle-tab'); // ví dụ: 'usa'
-            const url = new URL(window.location.href);
-            url.searchParams.set('tab', target);
-            url.searchParams.set('page', 1);
-            window.location.href = url.toString();
-        });
-    });
+      if (start > 1) {
+        paginationEl.appendChild(makeLi(1, '1'));
+        if (start > 2) paginationEl.appendChild(makeLi(null, '…', {disabled: true}));
+      }
+      for (let i=start; i<=end; i++) {
+        paginationEl.appendChild(makeLi(i, i, {active: i===currentPage}));
+      }
+      if (end < totalPages) {
+        if (end < totalPages -1) paginationEl.appendChild(makeLi(null, '…', {disabled: true}));
+        paginationEl.appendChild(makeLi(totalPages, totalPages));
+      }
+    }
+    // Next
+    paginationEl.appendChild(makeLi(currentPage+1, '›', {disabled: currentPage===totalPages}));
+  }
 
-    // ✅ Khi bấm vào phân trang
-    document.querySelector('.tab-content').addEventListener('click', e => {
-        const a = e.target.closest('.pagination a');
-        if (a) {
-            e.preventDefault();
-            const pageUrl = new URL(a.href, window.location.origin);
-            const tab = urlParams.get('tab') || defaultTab;
-            pageUrl.searchParams.set('tab', tab); // giữ nguyên tab
-            window.location.href = pageUrl.toString();
-        }
-    });
-
-    // ✅ Khi bấm nút Back/Forward trình duyệt
-    window.addEventListener('popstate', () => {
-        const p = new URLSearchParams(window.location.search);
-        const t = p.get('tab') || defaultTab;
-        const link = document.querySelector(`.nav-pills a[data-tab="${t}"]`);
-        if (link) new bootstrap.Tab(link).show();
-    });
+  // Khởi tạo hiển thị
+  showPage(currentPage);
 });
 </script>
+
 
 
 

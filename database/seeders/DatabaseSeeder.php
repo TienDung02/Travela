@@ -25,9 +25,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            UserSeeder::class,
             RoleSeeder::class,
             PlaceSeeder::class,
             PlaceMediaSeeder::class,
+            ReviewSeeder::class,
         ]);
         // Tạo dữ liệu cho bảng Role
 //        Role::factory(5)->create();
