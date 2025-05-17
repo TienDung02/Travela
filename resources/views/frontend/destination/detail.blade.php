@@ -538,67 +538,94 @@
         }
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const thumbs = document.getElementById('gallery-thumbs');
-            const prevBtn = document.getElementById('thumb-prev');
-            const nextBtn = document.getElementById('thumb-next');
+document.addEventListener('DOMContentLoaded', () => {
+    const thumbs    = document.getElementById('gallery-thumbs');
+    const prevBtn   = document.getElementById('thumb-prev');
+    const nextBtn   = document.getElementById('thumb-next');
 
-            const thumbVisible = 6;
-            const thumbWidth = 80;
-            const thumbGap = 8; // = 0.5rem
-            let currentIndex = 0;
+    const thumbWidth = 80; // px
+    const thumbGap   = 8;  // px
 
-            function updateButtons() {
-                const visibleThumbs = Array.from(document.querySelectorAll('.thumb-btn'))
-                    .filter(btn => btn.offsetParent !== null); // Chỉ tính thumbnail hiển thị
+    const minVisible = 3;  // ít nhất 3 thumb (trên các màn rất nhỏ)
+    const maxVisible = 6;  // nhiều nhất 6 thumb (trên laptop)
 
-                prevBtn.disabled = currentIndex === 0;
-                nextBtn.disabled = currentIndex + thumbVisible >= visibleThumbs.length;
+    let currentIndex = 0;
+    let thumbVisible = 0;
 
-                // Nếu số thumbnail còn lại nhỏ hơn hoặc bằng 6 thì ẩn nút điều hướng
-                if (visibleThumbs.length <= thumbVisible) {
-                    prevBtn.style.display = 'none';
-                    nextBtn.style.display = 'none';
-                    thumbs.style.justifyContent = 'center'; // Căn giữa thumbnail
-                } else {
-                    prevBtn.style.display = '';
-                    nextBtn.style.display = '';
-                    thumbs.style.justifyContent = 'start'; // Trở về bình thường
-                }
-            }
+    function calcVisibleCount() {
+        const containerWidth = thumbs.clientWidth + thumbGap;
+        return Math.floor(containerWidth / (thumbWidth + thumbGap));
+    }
 
-            prevBtn.addEventListener('click', () => {
-                if (currentIndex > 0) {
-                    currentIndex--;
-                    thumbs.scrollBy({ left: -(thumbWidth + thumbGap), behavior: 'smooth' });
-                }
-                updateButtons();
-            });
+    function updateButtons() {
+        const allThumbs = Array.from(document.querySelectorAll('.thumb-btn'))
+            .filter(btn => btn.offsetParent !== null);
+        const total = allThumbs.length;
 
-            nextBtn.addEventListener('click', () => {
-                const visibleThumbs = Array.from(document.querySelectorAll('.thumb-btn'))
-                    .filter(btn => btn.offsetParent !== null);
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex + thumbVisible >= total;
 
-                if (currentIndex + thumbVisible < visibleThumbs.length) {
-                    currentIndex++;
-                    thumbs.scrollBy({ left: thumbWidth + thumbGap, behavior: 'smooth' });
-                }
-                updateButtons();
-            });
+        if (total <= thumbVisible) {
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+            thumbs.style.justifyContent = 'center';
+        } else {
+            prevBtn.style.display = '';
+            nextBtn.style.display = '';
+            thumbs.style.justifyContent = 'start';
+        }
+    }
 
-            // Ẩn thumbnail nếu ảnh/video bị lỗi
-            const mediaItems = document.querySelectorAll('.thumb-btn img, .thumb-btn video');
-            mediaItems.forEach(media => {
-                media.onerror = function () {
-                    this.parentElement.style.display = 'none';
-                    updateButtons();
-                };
-            });
+    function onPrev() {
+        if (currentIndex > 0) {
+            currentIndex = Math.max(0, currentIndex - 1);
+            thumbs.scrollBy({ left: -(thumbWidth + thumbGap), behavior: 'smooth' });
+        }
+        updateButtons();
+    }
 
-            // Lần đầu cập nhật
-            updateButtons();
+    function onNext() {
+        const allThumbs = Array.from(document.querySelectorAll('.thumb-btn'))
+            .filter(btn => btn.offsetParent !== null);
+        if (currentIndex + thumbVisible < allThumbs.length) {
+            currentIndex = Math.min(allThumbs.length - thumbVisible, currentIndex + 1);
+            thumbs.scrollBy({ left: thumbWidth + thumbGap, behavior: 'smooth' });
+        }
+        updateButtons();
+    }
+
+    function onResize() {
+        // Tính bao nhiêu thumbnail có thể hiện thị, rồi giới hạn trong khoảng min–max
+        const count = calcVisibleCount();
+        thumbVisible = Math.min(Math.max(count, minVisible), maxVisible);
+
+        // Đảm bảo currentIndex không vượt
+        const allThumbs = document.querySelectorAll('.thumb-btn');
+        const maxIndex = Math.max(0, allThumbs.length - thumbVisible);
+        if (currentIndex > maxIndex) currentIndex = maxIndex;
+
+        updateButtons();
+    }
+
+    // Gán sự kiện
+    prevBtn.addEventListener('click', onPrev);
+    nextBtn.addEventListener('click', onNext);
+    window.addEventListener('resize', onResize);
+
+    // Ẩn thumbnail nếu load lỗi
+    document.querySelectorAll('.thumb-btn img, .thumb-btn video')
+        .forEach(media => {
+            media.onerror = () => {
+                media.parentElement.style.display = 'none';
+                onResize();
+            };
         });
-    </script>
+
+    // Khởi tạo
+    onResize();
+});
+</script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('reviews-container')

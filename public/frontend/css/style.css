@@ -1384,7 +1384,7 @@
     width: 100%;
     border: none;
     outline: none;
-    background: none;
+    /* background: none; */
     padding: 0;
     margin: 0;
 }
@@ -1404,7 +1404,7 @@
 
 .gallery > .gallery-main-img{
     position: relative;
-    aspect-ratio: 6/4;
+    /* aspect-ratio: 6/4; */
     background-color: rgba(from var(--clr-secondary) r g b / .5);
     border-radius: 10px;
 }
@@ -1608,7 +1608,7 @@ h2 {
 
 .rating-bars {
     flex-grow: 1;
-    margin-left: 20px;
+    /* margin-left: 20px; */
 }
 
 .rating-row {
@@ -2816,9 +2816,7 @@ input[type=number]::-webkit-outer-spin-button
 /* Reset padding/border cho button chứa media */
 button.gallery-main-img,
 button.thumb-btn {
-    padding: 0;
-    border: none;
-    background: transparent;
+    height: fit-content;
 }
 
 /* Đảm bảo container không bị tràn */
@@ -2840,8 +2838,8 @@ button.thumb-btn {
 .gallery-thumbs {
     display: flex;
     overflow: hidden;
-    max-width: calc(6 * 80px + 5 * 0.5rem); /* 6 thumbnails + 5 gaps*/
-    gap: 0.5rem;
+    max-width: calc(6 * 80px + 5 * 0.4rem); /* 6 thumbnails + 5 gaps*/
+    gap: 0.4rem;
     width: auto;
     scroll-behavior: smooth;
 }
@@ -2850,7 +2848,7 @@ button.thumb-btn {
     width: 80px;
     height: 80px;
     object-fit: cover;
-    border-radius: 4px;
+    border-radius: 20%;
 }
 /* Nút chuyển trái/phải */
 .thumb-nav-btn {
@@ -2874,10 +2872,14 @@ button.thumb-btn {
   #thumb-prev { 
     left: -1.5rem; 
     width: 100px;
+    background-color: transparent;
+    border-radius: 20%;
 }
   #thumb-next { 
     right: -1.5rem; 
     width: 100px;
+    background-color: transparent;
+    border-radius: 20%;
 }
 /* === Responsive: Mobile (<= 600px) show 3 thumbnails === */
 @media (max-width: 600px) {
@@ -2896,16 +2898,16 @@ button.thumb-btn {
     }
     .thumb-nav-btn {
       width: 20px;
-      height: 50px;
+      height: 40px;
       font-size: 0.5rem;
     }
     #thumb-prev { 
         left: -0.5rem; 
-        width: 50px;
+        width: 40px;
     }
       #thumb-next { 
         right: -0.5rem; 
-        width: 50px;
+        width: 40px;
     }
   }
   .packages .packages-carousel .owl-nav .owl-next:hover i {
