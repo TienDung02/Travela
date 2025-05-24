@@ -19,4 +19,12 @@ class Tour extends Model
 
     ];
 
+    public function packages()
+    {
+        return $this->hasMany(Package::class);
+    }
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
 }

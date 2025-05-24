@@ -35,14 +35,14 @@
         <!-- Packages Start -->
         <div class="container-fluid packages py-5">
             <div class="container py-5">
-                <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+                <div class="mx-auto text-center mb-5 px-3 w-100">
                     <h5 class="section-title px-3">Packages</h5>
                     <h1 class="mb-0">Awesome Packages</h1>
                 </div>
         <div class="row justify-content-center mb-5">
             <div class="col-md-8">
                 <form action="{{ route('packages.index') }}" method="GET" class="search-form">
-                    <div class="input-group shadow-lg rounded-pill overflow-hidden"
+                    <div class="input-group shadow-lg rounded-pill overflow-hidden w-100 flex-nowrap"
                         style="background: var(--bg-color); border: 1px solid var(--border-color); transition: all 0.3s ease;">
                         <input type="text"
                            name="search"
@@ -61,11 +61,12 @@
 
         <div class="packages-carousel owl-carousel">
             @if(isset($packages) && $packages->count() > 0)
+            <div class="row">
                 @foreach($packages as $package)
-{{--                    {{dd($package)}}--}}
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                     <div class="packages-item">
                         <div class="packages-img">
-                            <img src="{{ asset($package->image_path ?? 'frontend/images/default-package.jpg') }}" class="img-fluid w-100 rounded-top" alt="{{ $package->name }}">
+                                <img src="{{ asset($package->image_path ?? 'frontend/images/default-package.jpg') }}" class="img-fluid w-100" style="object-fit: cover; height: 200px;"alt="{{ $package->name }}">
                             <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
                                 <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>{{ $package->location }} </small>
                                 <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>{{ $package->duration }} days</small>
@@ -94,7 +95,9 @@
                             </div>
                         </div>
                     </div>
+                    </div>
                 @endforeach
+            </div>
         @else
             <div class="col-12 text-center py-5">
                 <h4 class="text-muted">No packages found</h4>
