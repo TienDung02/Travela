@@ -38,7 +38,7 @@
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6">
                         <h5 class="section-booking-title pe-3">Booking</h5>
-                        <h1 class="text-white mb-4">Online Booking</h1>
+                        <h1 class="text-white mb-4">Online Booking {{ isset($package) ? 'for ' . $package->name : '' }}</h1>
                         <p class="text-white mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur maxime ullam esse fuga blanditiis accusantium pariatur quis sapiente, veniam doloribus praesentium? Repudiandae iste voluptatem fugiat doloribus quasi quo iure officia.
                         </p>
                         <p class="text-white mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur maxime ullam esse fuga blanditiis accusantium pariatur quis sapiente, veniam doloribus praesentium? Repudiandae iste voluptatem fugiat doloribus quasi quo iure officia.
@@ -70,11 +70,20 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <select class="form-select bg-white border-0" id="select1">
-                                            <option value="1">Destination 1</option>
-                                            <option value="2">Destination 2</option>
-                                            <option value="3">Destination 3</option>
-                                        </select>
+                                        @if(isset($package))
+                                            <div class="form-floating">
+                                                <input type="text" readonly class="form-control bg-white border-0" value="{{ $package->location }}">
+                                                <label>Destination</label>
+                                            </div>
+                                        @else
+                                            <div class="form-floating">
+                                                <select class="form-select bg-white border-0" id="select1">
+                                                    <option value="1">Destination 1</option>
+                                                    <option value="2">Destination 2</option>
+                                                </select>
+                                                <label for="select1">Destination</label>
+                                            </div>
+                                        @endif
                                         <label for="select1">Destination</label>
                                     </div>
                                 </div>
