@@ -2869,37 +2869,6 @@ button.thumb-btn {
     width: 100px;
 }
 /* === Responsive: Mobile (<= 600px) show 3 thumbnails === */
-@media (max-width: 600px) {
-    .gallery-main-img img,
-    .gallery-main-img video {
-      max-height: 100%;
-    }
-  
-    .gallery-thumbs {
-      width: calc(3 * 50px + 2 * 0.3rem);
-    }
-    .thumb-btn img,
-    .thumb-btn video {
-      width: 50px;
-      height: 50px;
-    }
-    .thumb-nav-btn {
-      width: 20px;
-      height: 50px;
-      font-size: 0.5rem;
-    }
-    #thumb-prev { 
-        left: -0.5rem; 
-        width: 50px;
-    }
-      #thumb-next { 
-        right: -0.5rem; 
-        width: 50px;
-    }
-  }
-  .packages .packages-carousel .owl-nav .owl-next:hover i {
-    color: var(--bs-white);
-}
 
 
 /* -----------------------------------------*/
