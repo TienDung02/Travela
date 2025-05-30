@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             PlaceSeeder::class,
             PlaceMediaSeeder::class,
+            TourSeeder::class,
             ReviewSeeder::class,
         ]);
         // Tạo dữ liệu cho bảng Role
@@ -49,7 +50,7 @@ class DatabaseSeeder extends Seeder
         Blog::factory(10)->create();
 
         // Tạo dữ liệu cho bảng Tour
-        Tour::factory(5)->create();
+//        Tour::factory(5)->create();
 
         // Tạo dữ liệu cho bảng Package
         Package::factory(10)->create();

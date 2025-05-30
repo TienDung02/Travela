@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Review;
 use App\Models\User;
 use App\Models\Place;
+use App\Models\Tour;
 
 class ReviewSeeder extends Seeder
 {
@@ -14,9 +15,10 @@ class ReviewSeeder extends Seeder
         // Lấy tất cả user và place
         $users = User::all();
         $places = Place::all();
+        $tours = Tour::all();
 
         foreach ($places as $place) {
-            $reviewCount = rand(10, 20);
+            $reviewCount = rand(40, 50);
 
             for ($i = 0; $i < $reviewCount; $i++) {
                 // Lấy ngẫu nhiên 1 user làm người review
@@ -28,6 +30,23 @@ class ReviewSeeder extends Seeder
                     'reviewable_type' => Place::class,
                     'rating' => rand(3, 5),
                     'comment' => 'Địa điểm rất đẹp, tôi rất hài lòng.',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
+        foreach ($tours as $tour) {
+            $reviewCount = rand(20, 30);
+    
+            for ($i = 0; $i < $reviewCount; $i++) {
+                $user = $users->random();
+    
+                Review::create([
+                    'user_id' => $user->id,
+                    'reviewable_id' => $tour->id,
+                    'reviewable_type' => Tour::class,
+                    'rating' => rand(3, 5),
+                    'comment' => 'Tour rất tuyệt vời, hướng dẫn viên thân thiện.',
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
