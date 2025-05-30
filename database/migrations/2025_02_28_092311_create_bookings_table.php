@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::dropIfExists('bookings');
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->string('location_id')->constrained('locations')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('location_id');
+            $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
             $table->integer('pickup_time');
             $table->timestamps();
             $table->softDeletes();
