@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('place_media');
         Schema::create('place_media', function (Blueprint $table) {
             $table->id();
             $table->foreignId('place_id')->constrained()->onDelete('cascade');
