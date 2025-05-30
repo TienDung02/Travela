@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('tour_places');
         Schema::create('tour_places', function (Blueprint $table) {
             $table->id();
             $table->string('tour_id')->constrained('tours')->onDelete('cascade');
