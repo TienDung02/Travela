@@ -664,4 +664,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     </script>
 
+<style>
+.col-lg-7 {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+</style>
+
+
+
+
+
+
+
 @endsection

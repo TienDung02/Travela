@@ -2816,8 +2816,7 @@ button.thumb-btn {
 /* Đảm bảo container không bị tràn */
 .destination-img,
 .wrapper,
-.gallery,
-.col-lg-7 {
+.gallery {
     width: 100%;
     max-width: 100%;
     overflow: hidden;
