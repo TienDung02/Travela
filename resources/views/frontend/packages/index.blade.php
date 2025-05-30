@@ -35,68 +35,59 @@
         <!-- Packages Start -->
         <div class="container-fluid packages py-5">
             <div class="container-fluid py-5">
-                <div class="mx-auto text-center mb-5 px-3 w-100">
-                    <h5 class="section-title px-3">Packages</h5>
-                    <h1 class="mb-0">Awesome Packages</h1>
-                </div>
-        <div class="row justify-content-center mb-5">
-            <div class="col-md-8">
-                <form action="{{ route('packages.index') }}" method="GET" class="search-form">
-                    <div class="input-group shadow-lg rounded-pill overflow-hidden w-100 flex-nowrap"
-                        style="background: var(--bg-color); border: 1px solid var(--border-color); transition: all 0.3s ease;">
-                        <input type="text"
-                           name="search"
-                           value="{{ request('search') }}"
-                           class="form-control form-control-lg border-0 bg-transparent ps-4 py-3"
-                           placeholder="Search packages..."
-                           style="color: var(--text-primary); outline: none; box-shadow: none;">
-                        <button type="submit" class="btn btn-primary rounded-0 px-4"
-                            style="background: var(--primary-gradient); border: none; transition: all 0.3s ease;">
-                        <i class="fa fa-search me-2"></i> Search
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
+                                <div class="mx-auto text-center mb-5 px-3 w-100">
+                                    <h5 class="section-title px-3">Packages</h5>
+                                    <h1 class="mb-0">Awesome Packages</h1>
+                                </div>
+                        <div class="row justify-content-center mb-5">
+                            <div class="col-md-8">
+                                <form action="{{ route('packages.index') }}" method="GET" class="search-form">
+                                    <div class="input-group shadow-lg rounded-pill overflow-hidden w-100 flex-nowrap"
+                                        style="background: var(--bg-color); border: 1px solid var(--border-color); transition: all 0.3s ease;">
+                                        <input type="text"
+                                        name="search"
+                                        value="{{ request('search') }}"
+                                        class="form-control form-control-lg border-0 bg-transparent ps-4 py-3"
+                                        placeholder="Search packages..."
+                                        style="color: var(--text-primary); outline: none; box-shadow: none;">
+                                        <button type="submit" class="btn btn-primary rounded-0 px-4"
+                                            style="background: var(--primary-gradient); border: none; transition: all 0.3s ease;">
+                                        <i class="fa fa-search me-2"></i> Search
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
 
-        <div class="packages-carousel owl-carousel">
-            @if(isset($packages) && $packages->count() > 0)
-            <div class="row">
-                @foreach($packages as $package)
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                    <div class="packages-item">
-                        <div class="packages-img">
-                                <img src="{{ asset($package->image_path ?? 'frontend/images/default-package.jpg') }}" class="img-fluid w-100" style="object-fit: cover; height: 200px;"alt="{{ $package->name }}">
-                            <div class="packages-info d-flex border border-start-0 border-end-0 position-absolute" style="width: 100%; bottom: 0; left: 0; z-index: 5;">
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt me-2"></i>{{ $package->location }} </small>
-                                <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt me-2"></i>{{ $package->duration }} days</small>
-                                <small class="flex-fill text-center py-2"><i class="fa fa-user me-2"></i>{{ $package->people }} Person </small>
-                            </div>
-                            <div class="packages-price py-2 px-4">${{ number_format($package->price, 2) }}</div>
+                        <div class="container-fluid">
+                            @if(isset($packages) && $packages->count() > 0)
+                            <div class="row">
+                                        <!-- Filter Sidebar (chỉ desktop) -->
+                        <div class="col-lg-2 d-none d-lg-block pe-4">
+                            @include('frontend.component.filter')
                         </div>
-                        <div class="packages-content bg-light">
-                            <div class="p-4 pb-0">
-                                <h5 class="mb-0">{{ $package->name }}</h5>
-                                <small class="text-uppercase">{{ $package->type }}</small>
-                                <div class="mb-3">
-                                    @for ($i = 0; $i < 5; $i++)
-                                        <small class="fa fa-star {{ $i < ($package->rating ?? 0) ? 'text-primary' : 'text-secondary' }}"></small>
-                                    @endfor
-                                </div>
-                                <p class="mb-4">{{ Str::limit($package->desc ?? 'No description', 100) }}</p>
-                            </div>
-                            <div class="row bg-primary rounded-bottom mx-0">
-                                <div class="col-6 text-start px-0">
-                                    <a href="{{ route('package.show', $package->id) }}" class="btn-hover btn text-white py-2 px-4">Read More</a>
-                                </div>
-                                <div class="col-6 text-end px-0">
-                                    <a href="{{ route('booking.create', ['id' => $package->id]) }}" class="btn-hover btn text-white py-2 px-4">Book Now</a>
-                                </div>
+
+                        <!-- Filter Toggle (mobile) -->
+                        <div class="d-block d-lg-none mb-3 text-end">
+                            <button class="btn btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#mobileFilter">
+                                Show Filters
+                            </button>
+                            <div class="collapse mt-2" id="mobileFilter">
+                                @include('frontend.component.filter')
                             </div>
                         </div>
-                    </div>
-                    </div>
-                @endforeach
+
+                        <!-- Packages List -->
+                        <div class="col-lg-10 col-12">
+                        <div class="row g-3 justify-content-start">
+                            @foreach($packages as $package)
+                                @include('frontend.component.card', ['package' => $package])
+                            @endforeach
+                        </div>
+                            <div class="mt-4">
+                                {{ $packages->links() }}
+                            </div>
+                        </div>
             </div>
         @else
             <div class="col-12 text-center py-5">
