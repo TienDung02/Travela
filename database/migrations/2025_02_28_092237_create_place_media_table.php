@@ -15,9 +15,9 @@ return new class extends Migration
         Schema::create('place_media', function (Blueprint $table) {
             $table->id();
             $table->foreignId('place_id')->constrained()->onDelete('cascade');
-            $table->text('media'); // đường dẫn ảnh/video
-            $table->string('media_type'); // image/video
-            $table->boolean('is_primary')->default(false); // Thêm cột đánh dấu ảnh/video chính
+            $table->text('media');
+            $table->string('media_type');
+            $table->boolean('is_primary')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('item_id');
-            $table->string('item_type'); // kiểu polymorphic
+            $table->string('item_type');
             $table->integer('quantity');
             $table->decimal('price', 10, 2);
             $table->timestamps();
