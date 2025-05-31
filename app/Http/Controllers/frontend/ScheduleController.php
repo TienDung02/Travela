@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Promise;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\DB;
 class ScheduleController
 {
     protected $goMapsService;
@@ -99,8 +99,11 @@ class ScheduleController
     }
     public function index()
     {
-        $currencies = Currency::query()->get();
-        $preferences = Preference::query()->get();
+
+        $currencies = DB::table('currencies')->get();
+        $preferences = DB::table('preferences')->get();
+
+
         return view('frontend.schedule.index', compact('currencies', 'preferences'));
     }
     public function testMap($placeName)

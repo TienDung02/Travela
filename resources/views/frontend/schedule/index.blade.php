@@ -1,4 +1,4 @@
-@extends('frontend.layouts.layout')
+@extends('frontend.layouts.layout_schedule')
 @section('content')
     <!-- Navbar & Hero Start -->
     <div class="container-fluid position-relative p-0">
@@ -813,26 +813,7 @@ $(document).on('click', '.show-place-modal', function(e) {
   .navbar-brand {
     font-size: 1.5rem;
   }
-  .bg-breadcrumb {
-      height: 40vh !important; 
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-
-    .bg-breadcrumb .container {
-    padding: 0 !important;
-  }
-
-  .bg-breadcrumb h1 {
-    font-size: 1.4rem !important;
-    margin-bottom: 0.5rem !important;
-  }
-
-  .breadcrumb {
-    font-size: 0.75rem;
-    justify-content: center;
-  }
+ 
 
   .image-left-schedule {
     display: none !important;

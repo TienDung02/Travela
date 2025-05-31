@@ -10,10 +10,10 @@ class PackageController extends Controller
 {
     public function index(Request $request)
     {
-            // [MOD] Thêm điều kiện filter vào query
+
             $query = Package::query();
 
-            // Tìm kiếm theo từ khóa (giữ lại như bạn có)
+
             if ($request->has('search') && $request->search != '') {
                 $query->where(function($q) use ($request){
                     $q->where('name', 'like', '%' . $request->search .'%')
@@ -22,7 +22,7 @@ class PackageController extends Controller
                 });
             }
 
-            // Lọc theo khoảng giá
+
             if ($request->filled('min_price')) {
                 $query->where('price', '>=', $request->min_price);
             }
@@ -31,7 +31,7 @@ class PackageController extends Controller
                 $query->where('price', '<=', $request->max_price);
             }
 
-            // Lọc theo đánh giá sao (nếu có cột star)
+
             if ($request->filled('rating')) {
                 $query->whereIn('star', $request->rating);
             }
