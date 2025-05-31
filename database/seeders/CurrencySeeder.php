@@ -3,10 +3,15 @@
 namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Currency;
+use Illuminate\Support\Facades\DB;
 class CurrencySeeder extends Seeder
 {
     public function run()
     {
+
+
+        DB::table('currencies')->truncate();
+
         Currency::insert ([
             ['name' => 'US Dollar', 'code' => 'USD', 'symbol' => '$', 'country' => 'United States'],
             ['name' => 'Euro', 'code' => 'EUR', 'symbol' => '€', 'country' => 'European Union'],
