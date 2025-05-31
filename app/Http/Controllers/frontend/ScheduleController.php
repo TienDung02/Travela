@@ -85,7 +85,8 @@ class ScheduleController
     {
         $currencies = Currency::query()->get();
         $preferences = Preference::query()->get();
-
+        print_r($currencies);
+        print_r($preferences);
         return view('frontend.schedule.index', compact('currencies', 'preferences'));
     }
     public function testMap($placeName)
