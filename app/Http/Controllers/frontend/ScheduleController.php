@@ -83,29 +83,10 @@ class ScheduleController
     }
     public function index()
     {
-        $currencies = DB::table('currencies')->get();
-        $preferences = DB::table('preferences')->get();
-        print_r($currencies);
-        print_r($preferences);
-        DB::table('currencies')->insert([
-            'name' => 'US Dollar',
-            'code' => 'USD',
-            'symbol' => '$',
-            'country' => 'United States',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
 
-        DB::table('preferences')->insert([
-            'name' => 'dark_mode',
-            'description' => 'Enable dark mode UI',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
         $currencies = DB::table('currencies')->get();
         $preferences = DB::table('preferences')->get();
-        print_r($currencies);
-        print_r($preferences);
+
 
         return view('frontend.schedule.index', compact('currencies', 'preferences'));
     }
