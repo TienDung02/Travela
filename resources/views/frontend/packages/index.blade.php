@@ -35,6 +35,7 @@
         <!-- Packages Start -->
         <div class="container-fluid packages py-5">
             <div class="container-fluid py-5">
+
                                 <div class="mx-auto text-center mb-5 px-3 w-100">
                                     <h5 class="section-title px-3">Packages</h5>
                                     <h1 class="mb-0">Awesome Packages</h1>
@@ -56,6 +57,7 @@
                                         </button>
                                     </div>
                                 </form>
+
                             </div>
                         </div>
 
