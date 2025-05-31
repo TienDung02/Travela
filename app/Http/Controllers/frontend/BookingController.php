@@ -1,12 +1,14 @@
 <?php
 namespace App\Http\Controllers\frontend;
 use App\Http\Controllers\Controller;
+use App\Models\Package;
+
 class BookingController extends Controller
 {
     public function create($id)
     {
-        $package = Package::findOrFail($id);
-        return view('frontend.booking.create', compact('package'));
+        $package = \App\Models\Package::findOrFail($id);
+        return view('frontend.booking.index', compact('package'));
     }
 
 

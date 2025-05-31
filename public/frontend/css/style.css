@@ -2875,6 +2875,8 @@ button.thumb-btn {
     border-radius: 20%;
 }
 /* === Responsive: Mobile (<= 600px) show 3 thumbnails === */
+
+
 @media (max-width: 600px) {
     .gallery-main-img img,
     .gallery-main-img video {

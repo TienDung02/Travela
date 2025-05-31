@@ -39,3 +39,5 @@
     <!-- Chart JS -->
 {{--    <script src="../../../../../../../HK10/NT208/FE/template/js/dashboard1.js"></script>--}}
     <script src="{{asset('/backend/js/dashboard1.js')}}"></script>
+    <!-- Bootstrap 5 JS and Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

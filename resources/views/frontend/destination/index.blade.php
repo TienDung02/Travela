@@ -348,12 +348,12 @@
                     </div>
                     <div id="tab-usa" class="tab-pane fade show p-0">
                         <div class="row g-4">
-                            @foreach($Places['USA'] as $Place) <!-- Chỉ hiển thị địa điểm của USA -->
+                            @foreach($Places['USA'] as $Place)
                                 <div class="col-lg-4">
                                     <div class="destination-img">
                                         <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-6.jpg')}}" alt="Image of {{$Place->name}}">
                                         <div class="destination-overlay p-4">
-                                            <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                            <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photosssssssssssssssssss</a>
                                             <h4 class="text-white mb-2 mt-3">{{$Place->name}}</h4>
                                             <a href="{{route('destination.detail', $Place->id)}}" class="btn-hover text-white">View detail<i class="fa fa-arrow-right ms-2"></i></a>
                                         </div>
