@@ -41,6 +41,22 @@ class ScheduleController
         $this->map4DService = $map4DService;
 
     }
+    public function getThumbnail($query)
+    {
+        $thumbnail = $this->wikipediaService->getPlaceInfo($query);
+        if (!$thumbnail) {
+            return response()->json(['error' => 'Không tìm thấy thông tin địa điểm'], 404);
+        }
+        return response()->json($thumbnail);
+    }
+    public function getSummary($query)
+    {
+        $summary = $this->wikipediaService->getPlaceInfo($query);
+        if (!$summary) {
+            return response()->json(['error' => 'Không tìm thấy thông tin địa điểm'], 404);
+        }
+        return response()->json($summary);
+    }
 
     public function showRoute(Request $request)
     {
@@ -110,8 +126,8 @@ class ScheduleController
 //        $map = $this->rapidApiService->fetchData($params);
 //        $address = "Chùa minh thành";
         if ($address) {
-            $result = $this->map4DService->geocode($address);
-
+            //$result = $this->map4DService->geocode($address);
+            $result = null;
             if (!$result || empty($result)) {
                 $error = 'Không tìm thấy địa điểm.';
             } else {
@@ -130,8 +146,50 @@ class ScheduleController
 //        dd($lon);
 
         $currencies = Currency::query()->get();
-        $weather = $this->weatherService->getWeatherByCity($address);
-
+       // $weather = $this->weatherService->getWeatherByCity($address);
+        $weather = [
+            'location' => [
+                'name' => 'Hà Nội',
+                'country' => 'Việt Nam',
+            ],
+            'forecast' => [
+                'forecastday' => [
+                    [
+                        'date' => now()->toDateString(),
+                        'day' => [
+                            'avgtemp_c' => 28,
+                            'avghumidity' => 65,
+                            'maxwind_kph' => 15,
+                            'condition' => [
+                                'text' => 'Trời nắng nhẹ'
+                            ]
+                        ]
+                    ],
+                    [
+                        'date' => now()->addDay()->toDateString(),
+                        'day' => [
+                            'avgtemp_c' => 30,
+                            'avghumidity' => 60,
+                            'maxwind_kph' => 12,
+                            'condition' => [
+                                'text' => 'Có mây'
+                            ]
+                        ]
+                    ],
+                    [
+                        'date' => now()->addDays(2)->toDateString(),
+                        'day' => [
+                            'avgtemp_c' => 27,
+                            'avghumidity' => 70,
+                            'maxwind_kph' => 10,
+                            'condition' => [
+                                'text' => 'Có mưa nhẹ'
+                            ]
+                        ]
+                    ],
+                ]
+            ]
+        ];
         if (!$weather) {
             return view('frontend.weather', [
                 'error' => "Không thể lấy thông tin thời tiết của thành phố: {$address}. Vui lòng thử lại!"
@@ -153,13 +211,36 @@ class ScheduleController
         $children_2 = $request->input('children-2');
         $transportation = $request->input('transportation');
 
-        $interest = $request->input('interest');
+        //$interest = $request->input('interest');
+        $interest = ['cảnh đẹp', 'lịch sử', 'kiến trúc'];
         $interest = implode(', ', $interest);
 
         $preferences = $request->input('interest');
 
-        $places = $this->geminiService->getTourismInfo($address, $preferences);
+       // $places = $this->geminiService->getTourismInfo($address, $preferences);
+       
+$places = [
+    'Hồ Hoàn Kiếm' => [
+        'Tên' => 'Hồ Hoàn Kiếm',
+        'Loại' => 'Hồ nước',
+        'Giờ hoạt động' => 'Cả ngày',
+        'Tag' => ['cảnh đẹp', 'trung tâm', 'lịch sử']
+    ],
+    'Chùa Một Cột' => [
+        'Tên' => 'Chùa Một Cột',
+        'Loại' => 'Chùa',
+        'Giờ hoạt động' => '07:00 - 18:00',
+        'Tag' => ['tâm linh', 'kiến trúc', 'lịch sử']
+    ],
+    'Nhà thờ Đức Bà' => [
+        'Tên' => 'Nhà thờ Đức Bà',
+        'Loại' => 'Nhà thờ',
+        'Giờ hoạt động' => '06:00 - 20:00',
+        'Tag' => ['kiến trúc', 'tôn giáo', 'du lịch']
+    ]
+];
         $placeNames = array_keys($places);
+
 
         $placeNames = implode(", ", $placeNames);
 
@@ -170,7 +251,36 @@ class ScheduleController
         $query = http_build_query($params);
         $finalUrl = url('/build-schedule') . '?' . $query;
 
+        $thumbnails = [];
+        $summaries = [];
+        $fullcontents = [];
+        foreach ($places as $placeName => $thong_tin) {
+            // Determine the display name for the thumbnail
+            if (is_array($thong_tin)) {
+            if (isset($thong_tin['Tên'])) {
+                $displayName = $thong_tin['Tên'];
+            } elseif (isset($thong_tin['Tên địa điểm'])) {
+                $displayName = $thong_tin['Tên địa điểm'];
+            } elseif (isset($thong_tin[0])) {
+                $displayName = $thong_tin[0];
+            } else {
+                $displayName = $placeName;
+            }
+            } else {
+            $displayName = $placeName;
+            }
 
+            $wiki = $this->wikipediaService->getPlaceInfo($placeName);
+            // Lấy đường dẫn ảnh thumbnail từ Wikipedia, nếu không có thì để null
+            
+            //dd($placeName);
+            //dd($wiki);
+            $thumbnails[$placeName] = $wiki['image'] ?? asset('frontend/images/destination-3.jpg');
+            $summaries[$placeName] = $wiki['summary'] ?? '';
+            $fullcontents[$placeName] = $wiki['fullcontent'] ?? '';
+        }
+       // dd($thumbnails);
+        //dd($fullcontents);
         $data = [
             'map' => $map,
             'currencies' => $currencies,
@@ -183,6 +293,9 @@ class ScheduleController
             'address_old' => $address_old,
             'places' => $places,
             'finalUrl' => $finalUrl,
+            'thumbnails' => $thumbnails,
+            'summaries' => $summaries,
+            'fullcontents' => $fullcontents,
             'for_schedule' => [
                 'address' => $address,
                 'start_date' => $startDate,

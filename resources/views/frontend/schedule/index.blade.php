@@ -181,9 +181,14 @@
                                             @foreach($places as $place => $thong_tin)
                                                 <div class="w-100 h-30 border me-1 mb-2">
                                                     <div class="row h-100 w-100 ms-1">
-                                                        <a href="#" class="h-100 col-lg-11 p-0 d-flex">
+                                                        <a href="#" class="h-100 col-lg-11 p-0 d-flex show-place-modal"
+                                                                    data-title="{{ $place }}"
+                                                                    data-summary="{{ $summaries[$place] ?? '' }}"
+                                                                    data-fullcontent = "{{ $fullcontents[$place] ?? '' }}"
+                                                                    >
                                                             <div class="w-35 align-content-center position-relative h-100 p-0">
-                                                                <img class="w-75 h-90 ms-2 rounded  " src="{{asset('frontend/images/destination-3.jpg')}}">
+                                            
+                                                                <img class="w-75 h-90 ms-2 rounded  " src="{{ $thumbnails[$place] }}">
                                                                 <img class="w-65 h-80 ms-2 rounded position-absolute sec-image" src="{{asset('frontend/images/destination-3.jpg')}}">
                                                             </div>
                                                             <div class="w-65 h-60 m-auto p-0">
@@ -420,6 +425,20 @@
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary btn-primary-outline-0 btn-md-square back-to-top"><i class="fa fa-arrow-up"></i></a>
+    <!-- Modal -->
+        <div class="modal fade m-5" id="placeModal" tabindex="-1" aria-labelledby="placeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" style="max-width: 90vw;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="placeModalLabel"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body" id="placeModalBody"></div>
+                </div>
+            </div>
+        </div>
+
+
 
     @if(isset($map))
 
@@ -740,6 +759,24 @@
 
 @endsection
 
+
+
+
+@push('extra_scripts')
+<script>
+$(document).on('click', '.show-place-modal', function(e) {
+    e.preventDefault();
+    var title = $(this).data('title');
+    var summary = $(this).data('summary');
+    var fullcontent = $(this).data('fullcontent');
+    summary = summary ? summary.replace(/\n/g, '<br>') : '';
+    fullcontent = fullcontent ? fullcontent.replace(/\n/g, '<br>') : '';
+    $('#placeModalLabel').text(title);
+    $('#placeModalBody').html('<p>' + summary + '</p><div>' + fullcontent + '</div>');
+    $('#placeModal').modal('show');
+});
+</script>
+@endpush
 @push('styles')
 <style>
 
@@ -978,15 +1015,5 @@ order: 8;
 </style>
 @endpush
 
-
-
-@push('extra_scripts')
-    <script>
-        console.log("Hello from view con!");
-        $(document).on('click' , '.requestAndDisplayRoute', function() {
-
-        })
-    </script>
-@endpush
 
 
