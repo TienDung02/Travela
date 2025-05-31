@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
             PlaceSeeder::class,
             PlaceMediaSeeder::class,
             ReviewSeeder::class,
+            CurrencySeeder::class,
+            PreferencesSeeder::class,
         ]);
         // Tạo dữ liệu cho bảng Role
 //        Role::factory(5)->create();
