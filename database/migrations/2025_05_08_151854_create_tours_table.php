@@ -19,6 +19,9 @@ return new class extends Migration
             $table->date('start_date'); // Start date of the tour
             $table->date('end_date'); // End date of the tour
             $table->decimal('price', 10, 2); // Price of the tour
+            $table->boolean('is_featured'); // Tour nổi bật
+            $table->json('types')->nullable(); // Type of tour, e.g., adventure, cultural, etc.
+            $table->float('avg_rating')->default(0); // Average rating of the tour
             $table->timestamps(); // Created and updated timestamps
             $table->softDeletes(); // Deleted at timestamp for soft deletes
         });

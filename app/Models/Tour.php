@@ -10,7 +10,10 @@ class Tour extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'desc', 'location', 'start_date', 'end_date', 'price'];
-
+    protected $casts = [
+        'types' => 'array',
+        'start_date' => 'date',
+    ];
     public function packages()
     {
         return $this->hasMany(Package::class);

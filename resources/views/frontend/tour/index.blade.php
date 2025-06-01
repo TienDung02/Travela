@@ -45,6 +45,7 @@
                 <!-- Cột filter bên trái -->
                 <div class="col-lg-3 mb-4">
                     <div class="card p-3">
+                        <form id="filterForm" method="GET" action="{{ route('tour.index') }}">
                         @php
                             $filterGroups = [
                                 [
@@ -61,46 +62,51 @@
                                     'type' => 'checkbox',
                                     'choices' => [
                                         ['id' => 'filter1', 'label' => 'Tour nổi bật'],
-                                        ['id' => 'filter2', 'label' => 'Giảm giá'],
-                                        ['id' => 'filter3', 'label' => 'Mới nhất'],
                                         ['id' => 'filter4', 'label' => 'Được yêu thích'],
-                                        ['id' => 'filter5', 'label' => 'Khuyến mãi'],
                                     ],
                                     'showLimit' => 3,
                                 ],
                                 [
-                                    'title' => 'Country',
+                                    'title' => 'Duration',
                                     'type' => 'checkbox',
                                     'choices' => [
-                                        ['id' => 'country1', 'label' => 'Việt Nam'],
-                                        ['id' => 'country2', 'label' => 'Thái Lan'],
-                                        ['id' => 'country3', 'label' => 'Singapore'],
-                                        ['id' => 'country4', 'label' => 'Hàn Quốc'],
-                                        ['id' => 'country5', 'label' => 'Nhật Bản'],
+                                        ['id' => 'dura1', 'label' => '1-3 ngày'],
+                                        ['id' => 'dura2', 'label' => '4-7 ngày'],
+                                        ['id' => 'dura3', 'label' => '8-14 ngày'],
+                                        ['id' => 'dura4', 'label' => 'Trên 14 ngày'],
                                     ],
-                                    'showLimit' => 3,
+                                    'showLimit' => 4,
                                 ],
                                 [
-                                    'title' => 'Time',
+                                    'title' => 'Rating',
                                     'type' => 'checkbox',
                                     'choices' => [
-                                        ['id' => 'time1', 'label' => '1-3 ngày'],
-                                        ['id' => 'time2', 'label' => '4-7 ngày'],
-                                        ['id' => 'time3', 'label' => '8-14 ngày'],
-                                        ['id' => 'time4', 'label' => 'Trên 14 ngày'],
+                                        ['id' => 'rate1', 'label' => '4-5⭐', 'value' => '4-5'],
+                                        ['id' => 'rate2', 'label' => '3-4⭐', 'value' => '3-4'],
+                                        ['id' => 'rate3', 'label' => '2-3⭐', 'value' => '2-3'],
+                                        ['id' => 'rate4', 'label' => '1-2⭐', 'value' => '1-2'],
                                     ],
-                                    'showLimit' => 3,
+                                    'showLimit' => 4,
                                 ],
                                 [
-                                    'title' => 'Đánh giá',
+                                    'title' => 'Tour Type',
                                     'type' => 'checkbox',
                                     'choices' => [
-                                        ['id' => 'time1', 'label' => '4-5⭐'],
-                                        ['id' => 'time2', 'label' => '3-4⭐'],
-                                        ['id' => 'time3', 'label' => '2-3⭐'],
-                                        ['id' => 'time4', 'label' => '1-2⭐'],
+                                        ['id' => 'type1', 'label' => 'Tour trong nước'],
+                                        ['id' => 'type2', 'label' => 'Tour nước ngoài'],
+                                        ['id' => 'type3', 'label' => 'Tour mạo hiểm'],
+                                        ['id' => 'type4', 'label' => 'Tour nghỉ dưỡng'],
+                                        ['id' => 'type5', 'label' => 'Tour khám phá'],
+                                        ['id' => 'type6', 'label' => 'Tour văn hóa'],
+                                        ['id' => 'type7', 'label' => 'Tour ẩm thực'],
+                                        ['id' => 'type8', 'label' => 'Tour thiên nhiên'],
+                                        ['id' => 'type9', 'label' => 'Tour trekking'],
+                                        ['id' => 'type10', 'label' => 'Tour du thuyền'],
+                                        ['id' => 'type11', 'label' => 'Tour lịch sử'],
+                                        ['id' => 'type12', 'label' => 'Tour giải trí'],
+                                        ['id' => 'type13', 'label' => 'Tour sinh thái'],
                                     ],
-                                    'showLimit' => 3,
+                                    'showLimit' => 4,
                                 ],
                             ];
                         @endphp
@@ -113,15 +119,22 @@
                                 @endif
                             </div>
                             @if($group['type'] === 'range')
-                                <form>
-                                    <div class="mb-3">
-                                        <input type="range" class="form-range" min="{{ $group['min'] }}" max="{{ $group['max'] }}" step="{{ $group['step'] ?? 1 }}" value="{{ $group['min'] }}" id="{{ $group['id'] }}" oninput="updatePriceLabels()">
-                                        <div class="d-flex justify-content-between mt-2">
-                                            <div id="minPrice">0₫</div>
-                                            <div id="maxPrice">24.000.000₫</div>
-                                        </div>
+                                <div class="mb-3">
+                                    <input 
+                                        type="range" 
+                                        class="form-range" 
+                                        min="{{ $group['min'] }}" 
+                                        max="{{ $group['max'] }}" 
+                                        step="{{ $group['step'] ?? 1 }}" 
+                                        value="{{ request('price', $group['min']) }}" 
+                                        id="{{ $group['id'] }}" 
+                                        name="price"
+                                        oninput="updatePriceLabels()">
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <div id="minPrice">0₫</div>
+                                        <div id="maxPrice">24.000.000₫</div>
                                     </div>
-                                </form>
+                                </div>
                             @elseif($group['type'] === 'checkbox')
                                 @php
                                     $choices = $group['choices'];
@@ -132,7 +145,14 @@
                                 <ul class="list-group mb-3" id="{{ $listId }}">
                                     @foreach($choices as $i => $choice)
                                         <li class="list-group-item {{ $group['title'] }}-item{{ $i >= $showLimit ? ' d-none' : '' }}">
-                                            <input class="form-check-input me-1" type="checkbox" value="" id="{{ $choice['id'] }}">
+                                        @if($group['title'] === 'Rating')
+                                            @php $inputName = 'rating'; @endphp
+                                        @elseif($group['title'] === 'Tour Type')
+                                            @php $inputName = 'tour_type'; @endphp
+                                        @else
+                                            @php $inputName = Str::slug($group['title'], '_') ; @endphp
+                                        @endif
+                                            <input class="form-check-input me-1" type="checkbox" name="{{ $inputName }}[]" value="{{ $group['title'] === 'Tour Type' ? $choice['label'] : $choice['value'] ?? $choice['id'] }}" id="{{ $choice['id'] }}">
                                             <label class="form-check-label" for="{{ $choice['id'] }}">{{ $choice['label'] }}</label>
                                         </li>
                                     @endforeach
@@ -146,10 +166,24 @@
                             @endif
                         @endforeach
                         <button type="submit" class="btn btn-primary w-100 mt-2">Apply</button>
+                        </form>
                     </div>
                 </div>
                 <!-- Cột danh sách tour bên phải -->
                 <div class="col-lg-9">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <span class="fw-semibold">{{ isset($tours) ? $tours->total() : 0 }}</span> kết quả
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="me-2">Sắp xếp theo:</span>
+                            <select class="form-select" name="sort" style="width:auto;display:inline-block;">
+                                <option value="">Mặc định</option>
+                                <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Giá thấp nhất</option>
+                                <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Giá cao nhất</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="row g-4 flex-column">
                         @if(isset($tours) && count($tours))
                             @foreach($tours as $tour)
@@ -162,9 +196,6 @@
                                             @if($tour->is_featured)
                                                 <span class="badge bg-primary position-absolute top-0 start-0 m-2">Nổi bật</span>
                                             @endif
-                                            @if($tour->discount_percent)
-                                                <span class="badge bg-danger position-absolute top-0 end-0 m-2">-{{ $tour->discount_percent }}%</span>
-                                            @endif
                                         </div>
                                         <div class="card-body d-flex flex-column flex-grow-1">
                                             <h5 class="card-title mb-2">
@@ -175,12 +206,25 @@
                                             </div>
                                             <div class="mb-2">
                                                 <span class="fw-bold text-primary">{{ number_format($tour->price, 0, ',', '.') }}₫</span>
-                                                @if($tour->old_price && $tour->old_price > $tour->price)
-                                                    <span class="text-muted text-decoration-line-through ms-2">{{ number_format($tour->old_price, 0, ',', '.') }}₫</span>
-                                                @endif
                                             </div>
+                                            @php
+                                                $minDuration = $tour->packages->min('duration');
+                                                $maxDuration = $tour->packages->max('duration');
+                                            @endphp
+                                            {{-- Hiển thị khoảng thời gian --}}                             
                                             <div class="mb-2">
-                                                <span class="badge bg-light text-dark">{{ $tour->duration ?? 'N/A' }}</span>
+                                                <span class="badge bg-light text-dark">
+                                                    @if($minDuration && $maxDuration && $minDuration != $maxDuration)
+                                                        {{ $minDuration }} - {{ $maxDuration }} ngày
+                                                    @elseif($minDuration)
+                                                        {{ $minDuration }} ngày
+                                                    @else
+                                                        N/A
+                                                    @endif
+                                                </span>
+                                                @foreach($tour->types as $type)
+                                                    <span class="badge bg-info">{{ $type }}</span>
+                                                @endforeach
                                             </div>
                                             <div class="mb-2 d-flex align-items-center flex-wrap gap-1">
                                                 @php
@@ -188,7 +232,6 @@
                                                     $fullStars = floor($avgRating);
                                                     $halfStar = ($avgRating - $fullStars) >= 0.5;
                                                 @endphp
-
                                                 {{-- Hiển thị 5 sao --}}
                                                 @for($i = 1; $i <= 5; $i++)
                                                     @if($i <= $fullStars)
@@ -396,5 +439,92 @@ function toggleFilterChoices(listId, btnId, showLimit) {
     });
     btn.textContent = hidden ? 'Hide' : 'See all';
 }
+</script>
+<script>
+function updateTourList(html) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    // Cập nhật danh sách tour
+    const newTourList = doc.querySelector('.row.g-4.flex-column');
+    if (newTourList) {
+        document.querySelector('.row.g-4.flex-column').innerHTML = newTourList.innerHTML;
+    }
+    // Cập nhật phân trang
+    const newPagination = doc.querySelector('.mt-4.d-flex.justify-content-center');
+    const oldPagination = document.querySelector('.mt-4.d-flex.justify-content-center');
+    if (oldPagination && newPagination) {
+        oldPagination.innerHTML = newPagination.innerHTML;
+    } else if (oldPagination) {
+        oldPagination.innerHTML = '';
+    }
+    // Cập nhật số kết quả
+    const newResultCount = doc.querySelector('.fw-semibold');
+    const oldResultCount = document.querySelector('.fw-semibold');
+    if (newResultCount && oldResultCount) {
+        oldResultCount.innerHTML = newResultCount.innerHTML;
+    }
+}
+
+// Xử lý filter AJAX
+document.getElementById('filterForm').onsubmit = function(e) {
+    e.preventDefault();
+    const form = this;
+    const params = new URLSearchParams(new FormData(form)).toString();
+
+    fetch(form.action + '?' + params)
+        .then(response => response.text())
+        .then(html => updateTourList(html));
+};
+
+// Xử lý phân trang AJAX
+document.addEventListener('click', function(e) {
+    const link = e.target.closest('.mt-4.d-flex.justify-content-center a');
+    if (link) {
+        e.preventDefault();
+        fetch(link.href)
+            .then(response => response.text())
+            .then(html => updateTourList(html));
+    }
+});
+
+// Xử lý sort giữ filter (nếu muốn AJAX cho sort)
+document.getElementById('sortForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const form = this;
+    // Lấy các filter hiện tại từ filterForm
+    const filterForm = document.getElementById('filterForm');
+    const filterData = new FormData(filterForm);
+    // Thêm sort vào filterData
+    const sortSelect = form.querySelector('select[name="sort"]');
+    if (sortSelect) filterData.set('sort', sortSelect.value);
+    const params = new URLSearchParams(filterData).toString();
+
+    fetch(filterForm.action + '?' + params)
+        .then(response => response.text())
+        .then(html => updateTourList(html));
+});
+//Xử lý reset filter
+document.querySelectorAll('.btn-link.p-0').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const filterForm = document.getElementById('filterForm');
+        filterForm.reset(); // Reset form fields
+        updatePriceLabels(); // Cập nhật nhãn giá
+        // Gửi yêu cầu AJAX để cập nhật danh sách tour
+        fetch(filterForm.action)
+            .then(response => response.text())
+            .then(html => updateTourList(html));
+    });
+});
+//Xử lý sắp xếp
+document.querySelector('.form-select[name="sort"]')?.addEventListener('change', function() {
+    const filterForm = document.getElementById('filterForm');
+    const formData = new FormData(filterForm);
+    formData.set('sort', this.value); // Đảm bảo giá trị sort được cập nhật
+    const params = new URLSearchParams(formData).toString();
+    fetch(filterForm.action + '?' + params)
+        .then(response => response.text())
+        .then(html => updateTourList(html));
+});
 </script>
 @endsection

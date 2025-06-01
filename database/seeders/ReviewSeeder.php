@@ -28,7 +28,7 @@ class ReviewSeeder extends Seeder
                     'user_id' => $user->id,
                     'reviewable_id' => $place->id,
                     'reviewable_type' => Place::class,
-                    'rating' => rand(3, 5),
+                    'rating' => rand(1, 5),
                     'comment' => 'Địa điểm rất đẹp, tôi rất hài lòng.',
                     'created_at' => now(),
                     'updated_at' => now(),
@@ -45,12 +45,17 @@ class ReviewSeeder extends Seeder
                     'user_id' => $user->id,
                     'reviewable_id' => $tour->id,
                     'reviewable_type' => Tour::class,
-                    'rating' => rand(3, 5),
+                    'rating' => rand(1, 5),
                     'comment' => 'Tour rất tuyệt vời, hướng dẫn viên thân thiện.',
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
             }
+        }
+        // Cập nhật avg_rating cho từng tour dựa trên reviews
+        foreach (\App\Models\Tour::with('reviews')->get() as $tour) {
+            $tour->avg_rating = $tour->reviews->avg('rating') ?? 0;
+            $tour->save(['avg_rating']);
         }
     }
 }
