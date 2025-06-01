@@ -33,6 +33,7 @@
         <!-- Header End -->
 
     <!-- Explore Tour Start -->
+    <div class="filter-overlay"></div>
     <div class="container-fluid ExploreTour py-5">
         <div class="container py-5">
             <div class="mx-auto text-center mb-5" style="max-width: 900px; margin-top: 10rem;">
@@ -43,7 +44,10 @@
             </div>
             <div class="row">
                 <!-- Cột filter bên trái -->
-                <div class="col-lg-3 mb-4">
+                <button class="btn btn-outline-primary filter-toggle-btn d-lg-none mb-3" type="button" onclick="toggleFilterSidebar()">
+                    <i class="fa fa-bars"></i> Filter
+                </button>
+                <div class="col-lg-3 mb-4 filter-sidebar">
                     <div class="card p-3">
                         <form id="filterForm" method="GET" action="{{ route('tour.index') }}">
                         @php
@@ -188,8 +192,9 @@
                         @if(isset($tours) && count($tours))
                             @foreach($tours as $tour)
                                 <div class="col-12">
-                                    <div class="card h-100 shadow-sm border-0 flex-row align-items-center">
-                                        <div class="position-relative" style="min-width:220px;max-width:220px;">
+                                    <div class="card h-100 shadow-sm border-0 flex-row align-items-center tour-card">
+                                        {{-- Hình ảnh tour --}}
+                                        <div class="position-relative tour-img-col" style="min-width:220px;max-width:220px;">
                                             <a href="#">
                                                 <img src="{{ $tour->image_url ?? asset('frontend/images/explore-tour-1.jpg') }}" class="img-fluid rounded-start w-100" alt="{{ $tour->name }}">
                                             </a>
@@ -197,7 +202,8 @@
                                                 <span class="badge bg-primary position-absolute top-0 start-0 m-2">Nổi bật</span>
                                             @endif
                                         </div>
-                                        <div class="card-body d-flex flex-column flex-grow-1">
+                                        <div class="card-body d-flex flex-column flex-grow-1 tour-info-col">
+                                            {{-- Tên tour, địa điểm, giá --}}
                                             <h5 class="card-title mb-2">
                                                 <a href="#" class="text-decoration-none text-dark">{{ $tour->name }}</a>
                                             </h5>
@@ -205,7 +211,9 @@
                                                 <i class="fa fa-map-marker-alt me-1"></i> {{ $tour->location ?? 'Địa điểm không xác định' }}
                                             </div>
                                             <div class="mb-2">
-                                                <span class="fw-bold text-primary">{{ number_format($tour->price, 0, ',', '.') }}₫</span>
+                                                <span class="fw-bold" style="font-size: 1.5rem; color: #dc3545;">
+                                                    {{ number_format($tour->price, 0, ',', '.') }}₫
+                                                </span>
                                             </div>
                                             @php
                                                 $minDuration = $tour->packages->min('duration');
@@ -222,9 +230,18 @@
                                                         N/A
                                                     @endif
                                                 </span>
-                                                @foreach($tour->types as $type)
+                                                @php
+                                                    $maxShow = 2;
+                                                    $types = $tour->types ?? [];
+                                                    $showTypes = array_slice($types, 0, $maxShow);
+                                                    $hiddenCount = count($types) - $maxShow;
+                                                @endphp
+                                                @foreach($showTypes as $type)
                                                     <span class="badge bg-info">{{ $type }}</span>
                                                 @endforeach
+                                                @if($hiddenCount > 0)
+                                                    <span class="badge bg-secondary">+{{ $hiddenCount }}</span>
+                                                @endif
                                             </div>
                                             <div class="mb-2 d-flex align-items-center flex-wrap gap-1">
                                                 @php
@@ -473,7 +490,14 @@ document.getElementById('filterForm').onsubmit = function(e) {
 
     fetch(form.action + '?' + params)
         .then(response => response.text())
-        .then(html => updateTourList(html));
+        .then(html => {
+            updateTourList(html);
+            // Đóng filter-sidebar trên mobile
+            if (window.innerWidth < 992) {
+                document.querySelector('.filter-sidebar').classList.remove('open');
+                document.querySelector('.filter-overlay').classList.remove('active');
+            }
+        });
 };
 
 // Xử lý phân trang AJAX
@@ -513,7 +537,14 @@ document.querySelectorAll('.btn-link.p-0').forEach(function(btn) {
         // Gửi yêu cầu AJAX để cập nhật danh sách tour
         fetch(filterForm.action)
             .then(response => response.text())
-            .then(html => updateTourList(html));
+            .then(html => {
+                updateTourList(html);
+                // Đóng filter-sidebar trên mobile
+                if (window.innerWidth < 992) {
+                    document.querySelector('.filter-sidebar').classList.remove('open');
+                    document.querySelector('.filter-overlay').classList.remove('active');
+                }
+            });
     });
 });
 //Xử lý sắp xếp
@@ -525,6 +556,21 @@ document.querySelector('.form-select[name="sort"]')?.addEventListener('change', 
     fetch(filterForm.action + '?' + params)
         .then(response => response.text())
         .then(html => updateTourList(html));
+});
+function toggleFilterSidebar() {
+    const sidebar = document.querySelector('.filter-sidebar');
+    const overlay = document.querySelector('.filter-overlay');
+    sidebar.classList.toggle('open');
+    if (sidebar.classList.contains('open')) {
+        overlay.classList.add('active');
+    } else {
+        overlay.classList.remove('active');
+    }
+}
+// Đóng filter khi click overlay
+document.querySelector('.filter-overlay').addEventListener('click', function() {
+    document.querySelector('.filter-sidebar').classList.remove('open');
+    this.classList.remove('active');
 });
 </script>
 @endsection

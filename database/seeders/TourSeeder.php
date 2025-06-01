@@ -18,7 +18,7 @@ class TourSeeder extends Seeder
                 'end_date' => '2025-06-05',
                 'price' => 500.00,
                 'is_featured' => true,
-                'types' => json_encode(['Tour trong nước', 'Tour mạo hiểm']),
+                'types' => json_encode(['Tour trong nước', 'Tour mạo hiểm', 'Tour thiên nhiên']),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
