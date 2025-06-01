@@ -183,12 +183,13 @@
                                                     <div class="row h-100 w-100 ms-1">
                                                         <a href="#" class="h-100 col-lg-11 p-0 d-flex show-place-modal"
                                                                     data-title="{{ $place }}"
-                                                                    data-summary="{{ $summaries[$place] ?? '' }}"
-                                                                    data-fullcontent = "{{ $fullcontents[$place] ?? '' }}"
+                                                                    data-summary="{{ $wikicontent[$place]['summary'] ?? '' }}"
+                                                                    data-fullcontent = "{{ $wikicontent[$place]['fullcontent'] ?? '' }}"
+                                                                    data-url = "{{ $wikicontent[$place]['url'] ?? '' }}"
                                                                     >
                                                             <div class="w-35 align-content-center position-relative h-100 p-0">
                                             
-                                                                <img class="w-75 h-90 ms-2 rounded  " src="{{ $thumbnails[$place] }}">
+                                                                <img class="w-75 h-90 ms-2 rounded  " src="{{ $wikicontent[$place]['image'] }}">
                                                                 <img class="w-65 h-80 ms-2 rounded position-absolute sec-image" src="{{asset('frontend/images/destination-3.jpg')}}">
                                                             </div>
                                                             <div class="w-65 h-60 m-auto p-0">
@@ -769,9 +770,10 @@ $(document).on('click', '.show-place-modal', function(e) {
     var title = $(this).data('title');
     var summary = $(this).data('summary');
     var fullcontent = $(this).data('fullcontent');
+    var url = $(this).data('url');
     summary = summary ? summary.replace(/\n/g, '<br>') : '';
     fullcontent = fullcontent ? fullcontent.replace(/\n/g, '<br>') : '';
-    $('#placeModalLabel').text(title);
+    $('#placeModalLabel').html( '<a href = ' + url + ' target="_blank">' + title + '</a>');
     $('#placeModalBody').html('<p>' + summary + '</p><div>' + fullcontent + '</div>');
     $('#placeModal').modal('show');
 });

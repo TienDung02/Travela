@@ -254,33 +254,17 @@ $places = [
         $query = http_build_query($params);
         $finalUrl = url('/build-schedule') . '?' . $query;
 
-        $thumbnails = [];
-        $summaries = [];
-        $fullcontents = [];
+        $wikicontent = [];
         foreach ($places as $placeName => $thong_tin) {
             // Determine the display name for the thumbnail
-            if (is_array($thong_tin)) {
-            if (isset($thong_tin['Tên'])) {
-                $displayName = $thong_tin['Tên'];
-            } elseif (isset($thong_tin['Tên địa điểm'])) {
-                $displayName = $thong_tin['Tên địa điểm'];
-            } elseif (isset($thong_tin[0])) {
-                $displayName = $thong_tin[0];
-            } else {
-                $displayName = $placeName;
-            }
-            } else {
-            $displayName = $placeName;
-            }
-
+           
             $wiki = $this->wikipediaService->getPlaceInfo($placeName);
             // Lấy đường dẫn ảnh thumbnail từ Wikipedia, nếu không có thì để null
             
             //dd($placeName);
             //dd($wiki);
-            $thumbnails[$placeName] = $wiki['image'] ?? asset('frontend/images/destination-3.jpg');
-            $summaries[$placeName] = $wiki['summary'] ?? '';
-            $fullcontents[$placeName] = $wiki['fullcontent'] ?? '';
+           
+            $wikicontent[$placeName] = $wiki;
         }
        // dd($thumbnails);
         //dd($fullcontents);
@@ -296,9 +280,7 @@ $places = [
             'address_old' => $address_old,
             'places' => $places,
             'finalUrl' => $finalUrl,
-            'thumbnails' => $thumbnails,
-            'summaries' => $summaries,
-            'fullcontents' => $fullcontents,
+            'wikicontent' => $wikicontent,
             'for_schedule' => [
                 'address' => $address,
                 'start_date' => $startDate,
@@ -322,29 +304,112 @@ $places = [
     }
     public function build_schedule(Request $request)
     {
-        $placeNames = $request->input('placeNames');
-//        dd($request->all());
-        $data = [
-            'address' => $placeNames['address'],
-            'start_date' => $placeNames['start_date'],
-            'end_date' => $placeNames['end_date'],
-            'placeName' => $placeNames['placeNames'],
-            'budget' => $placeNames['budget'],
-            'currency' => $placeNames['currency'],
-            'adults' => $placeNames['adults'],
-            'children_1' => $placeNames['children_1'],
-            'children_2' => $placeNames['children_2'],
-            'transportation' => $placeNames['transportation'],
-            'interest' => $placeNames['interest'],
-        ];
+//         $placeNames = $request->input('placeNames');
+// //        dd($request->all());
+//         $data = [
+//             'address' => $placeNames['address'],
+//             'start_date' => $placeNames['start_date'],
+//             'end_date' => $placeNames['end_date'],
+//             'placeName' => $placeNames['placeNames'],
+//             'budget' => $placeNames['budget'],
+//             'currency' => $placeNames['currency'],
+//             'adults' => $placeNames['adults'],
+//             'children_1' => $placeNames['children_1'],
+//             'children_2' => $placeNames['children_2'],
+//             'transportation' => $placeNames['transportation'],
+//             'interest' => $placeNames['interest'],
+//         ];
 
 
 
         $currencies = Currency::query()->get();
         $preferences = Preference::query()->get();
 
-        $plans = $this->geminiService->generateItinerary($data);
+        //$plans = $this->geminiService->generateItinerary($data);
 
+        $plans = [
+            'Ngày 1' => [
+            'Sáng' => [
+                [
+                'type' => 'Ăn sáng',
+                'details' => 'Phở Bát Đàn'
+                ],
+                [
+                'type' => 'Địa điểm tham quan',
+                'details' => [
+                    'Tên địa điểm' => 'Hồ Hoàn Kiếm',
+                    'Thời gian' => '08:00 - 10:00'
+                ]
+                ]
+            ],
+            'Trưa' => [
+                [
+                'type' => 'Ăn trưa',
+                'details' => 'Bún chả Hàng Mành'
+                ]
+            ],
+            'Chiều' => [
+                [
+                'type' => 'Địa điểm tham quan',
+                'details' => [
+                    'Tên địa điểm' => 'Chùa Một Cột',
+                    'Thời gian' => '14:00 - 16:00'
+                ]
+                ]
+            ],
+            'Tối' => [
+                [
+                'type' => 'Ăn tối',
+                'details' => 'Nhà hàng Quán Ăn Ngon'
+                ],
+                [
+                'type' => 'Chỗ ngủ',
+                'details' => 'Khách sạn Melia Hà Nội'
+                ]
+            ]
+            ],
+            'Ngày 2' => [
+            'Sáng' => [
+                [
+                'type' => 'Ăn sáng',
+                'details' => 'Bánh cuốn Thanh Trì'
+                ],
+                [
+                'type' => 'Địa điểm tham quan',
+                'details' => [
+                    'Tên địa điểm' => 'Nhà thờ Đức Bà',
+                    'Thời gian' => '09:00 - 11:00'
+                ]
+                ]
+            ],
+            'Trưa' => [
+                [
+                'type' => 'Ăn trưa',
+                'details' => 'Cơm tấm Sài Gòn'
+                ]
+            ],
+            'Chiều' => [
+                [
+                'type' => 'Địa điểm tham quan',
+                'details' => [
+                    'Tên địa điểm' => 'Bảo tàng Lịch sử Quốc gia',
+                    'Thời gian' => '14:00 - 16:00'
+                ]
+                ]
+            ],
+            'Tối' => [
+                [
+                'type' => 'Ăn tối',
+                'details' => 'Nhà hàng Sen Tây Hồ'
+                ],
+                [
+                'type' => 'Chỗ ngủ',
+                'details' => 'Khách sạn Melia Hà Nội'
+                ]
+            ]
+            ]
+        ];
+        $wikicontent = [];
         foreach ($plans as $day => &$dailyPlan) {
             foreach ($dailyPlan as $partOfDay => &$activities) {
                 if (is_array($activities)) {
@@ -369,6 +434,8 @@ $places = [
                                 if (is_array($activity['details'])) {
                                     if (isset($activity['details']['Tên địa điểm']) && is_string($activity['details']['Tên địa điểm'])) {
                                         $activity['details']['Tên địa điểm'] = cleanLocationString($activity['details']['Tên địa điểm']);
+                                        $wikicontent[$activity['details']['Tên địa điểm']] = $this->wikipediaService->getPlaceInfo($activity['details']['Tên địa điểm']);
+
                                     }
                                 }
                             }
@@ -397,7 +464,7 @@ $places = [
         }
 
 
-        return view('frontend.schedule.ajax.schedule-built', compact('plans', 'currencies', 'preferences'));
+        return view('frontend.schedule.ajax.schedule-built', compact('plans', 'currencies', 'preferences', 'wikicontent'));
 
     }
     public function getToaDo($location){

@@ -66,26 +66,22 @@ class WikipediaService
         $fullContent = null;
         $contentApiUrl = "https://vi.wikipedia.org/w/api.php";
         $contentResponse = Http::withOptions(['verify' => false])->get($contentApiUrl, [
-            'action' => 'query',
-            'prop' => 'extracts',
-            'explaintext' => true,
-            'titles' => $firstTitle,
+            'action' => 'parse',
+            'page' => $firstTitle,
             'format' => 'json',
+            'prop' => 'text',
             'redirects' => 1,
         ]);
         if ($contentResponse->successful()) {
             $contentData = $contentResponse->json();
-            if (!empty($contentData['query']['pages'])) {
-            $page = array_values($contentData['query']['pages'])[0];
-            if (isset($page['extract'])) {
-                $fullContent = $page['extract'];
-            }
+            if (isset($contentData['parse']['text']['*'])) {
+            $fullContent = $contentData['parse']['text']['*'];
             }
         }
         return [
             'title' => $data['title'] ?? $firstTitle,
             'summary' => $data['extract'] ?? '',
-            'image' => $data['thumbnail']['source'] ?? $image,
+            'image' => $data['thumbnail']['source'] ?? $image ?? asset("frontend/images/destination-3.jpg") ,
             'url' => $data['content_urls']['desktop']['page'] ?? null,
             'fullcontent' => $fullContent ?: '',
         ];
