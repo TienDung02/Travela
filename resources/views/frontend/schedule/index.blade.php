@@ -20,7 +20,7 @@
     <!-- Header End -->
 
     <!-- Contact Start -->
-    <div class="container-fluid contact bg-light py-5">
+    <div class="container-fluid contact bg-light py-5 scale-75">
         <div class="container-fluid py-5">
             <div class="mx-auto text-center mb-5" style="max-width: 900px;">
                 <h5 class="section-title px-3">Build schedule</h5>
@@ -746,7 +746,9 @@
 .hamburger-menu {
   display: none;
 }
-
+.scale-75 {
+    transform: scale(0.85) !important;
+}
 
 </style>
 @endpush
