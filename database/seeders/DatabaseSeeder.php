@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Preference;
+use Database\Seeders\RoleSeeder;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Role;
@@ -19,15 +20,19 @@ use App\Models\Review;
 use App\Models\Contact;
 use App\Models\ActivityLog;
 use App\Models\TourPlace;
-use Database\Seeders\RoleSeeder;
+//use Database\Seeders\RoleSeeder;
 class DatabaseSeeder extends Seeder
 {
     public function run()
     {
         $this->call([
+            UserSeeder::class,
             RoleSeeder::class,
             PlaceSeeder::class,
             PlaceMediaSeeder::class,
+            ReviewSeeder::class,
+            CurrencySeeder::class,
+            PreferencesSeeder::class,
         ]);
         // Tạo dữ liệu cho bảng Role
 //        Role::factory(5)->create();

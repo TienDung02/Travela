@@ -21,7 +21,7 @@
 
         <!-- Header Start -->
         <div class="container-fluid bg-breadcrumb" style="background: linear-gradient(rgba(19, 53, 123, 0.5), rgba(19, 53, 123, 0.5)), url({{ asset('frontend/images/breadcrumb-bg.jpg') }});">
-            <div class="container text-center py-5" style="max-width: 900px;">
+            <div class="container-fluid text-center py-5" style="max-width: 900px;">
                 <h3 class="text-white display-3 mb-4">Tour Category</h1>
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -33,188 +33,260 @@
         <!-- Header End -->
 
     <!-- Explore Tour Start -->
-    <div class="container-fluid ExploreTour py-5">
-        <div class="container py-5">
-            <div class="mx-auto text-center mb-5" style="max-width: 900px; margin-top: 10rem;">
+    <div class="filter-overlay"></div>
+    <div class="container-fluid ExploreTour  py-5">
+        <div class="container-fluid py-5">
+            <div class="mx-auto text-center mb-5" style="max-width: 900px;">
                 <h5 class="section-title px-3">Explore Tour</h5>
                 <h1 class="mb-4">The World</h1>
                 <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum tempore nam, architecto doloremque velit explicabo? Voluptate sunt eveniet fuga eligendi! Expedita laudantium fugiat corrupti eum cum repellat a laborum quasi.
                 </p>
             </div>
-            <div class="tab-class text-center">
-                <ul class="nav nav-pills d-inline-flex justify-content-center mb-5">
-                    <li class="nav-item">
-                        <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill active" data-bs-toggle="pill" href="#NationalTab-1">
-                            <span class="text-dark" style="width: 250px;">National Tour Category</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="d-flex py-2 mx-3 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#InternationalTab-2">
-                            <span class="text-dark" style="width: 250px;">International tour Category</span>
-                        </a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div id="NationalTab-1" class="tab-pane fade show p-0 active">
-                        <div class="row g-4">
-                            <div class="col-md-6 col-lg-4">
-                                <div class="national-item">
-                                    <img src="{{asset("frontend/images/explore-tour-1.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                    <div class="national-content">
-                                        <div class="national-info">
-                                            <h5 class="text-white text-uppercase mb-2">Weekend Tour</h5>
-                                            <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
+            <div class="row">
+                <div class="col-lg-9 col-xl-9 col-xxl-7 mx-auto">
+                    <!-- Cột filter bên trái -->
+                    <button class="btn btn-outline-primary filter-toggle-btn d-lg-none mb-3" type="button" onclick="toggleFilterSidebar()">
+                        <i class="fa fa-bars"></i> Filter
+                    </button>
+                    <div class="row">
+                        <div class="col-lg-3 mb-4 filter-sidebar">
+                            <div class="card p-3">
+                                <form id="filterForm" method="GET" action="{{ route('tour.index') }}">
+                                    @php
+                                        $filterGroups = [
+                                            [
+                                                'title' => 'Price Range',
+                                                'type' => 'range',
+                                                'min' => 0,
+                                                'max' => 24000000,
+                                                'step' => 1000000,
+                                                'id' => 'priceRange',
+                                                'reset' => true,
+                                            ],
+                                            [
+                                                'title' => 'Public Choice',
+                                                'type' => 'checkbox',
+                                                'choices' => [
+                                                    ['id' => 'filter1', 'label' => 'Tour nổi bật'],
+                                                    ['id' => 'filter4', 'label' => 'Được yêu thích'],
+                                                ],
+                                                'showLimit' => 3,
+                                            ],
+                                            [
+                                                'title' => 'Duration',
+                                                'type' => 'checkbox',
+                                                'choices' => [
+                                                    ['id' => 'dura1', 'label' => '1-3 ngày'],
+                                                    ['id' => 'dura2', 'label' => '4-7 ngày'],
+                                                    ['id' => 'dura3', 'label' => '8-14 ngày'],
+                                                    ['id' => 'dura4', 'label' => 'Trên 14 ngày'],
+                                                ],
+                                                'showLimit' => 4,
+                                            ],
+                                            [
+                                                'title' => 'Rating',
+                                                'type' => 'checkbox',
+                                                'choices' => [
+                                                    ['id' => 'rate1', 'label' => '4-5⭐', 'value' => '4-5'],
+                                                    ['id' => 'rate2', 'label' => '3-4⭐', 'value' => '3-4'],
+                                                    ['id' => 'rate3', 'label' => '2-3⭐', 'value' => '2-3'],
+                                                    ['id' => 'rate4', 'label' => '1-2⭐', 'value' => '1-2'],
+                                                ],
+                                                'showLimit' => 4,
+                                            ],
+                                            [
+                                                'title' => 'Tour Type',
+                                                'type' => 'checkbox',
+                                                'choices' => [
+                                                    ['id' => 'type1', 'label' => 'Tour trong nước'],
+                                                    ['id' => 'type2', 'label' => 'Tour nước ngoài'],
+                                                    ['id' => 'type3', 'label' => 'Tour mạo hiểm'],
+                                                    ['id' => 'type4', 'label' => 'Tour nghỉ dưỡng'],
+                                                    ['id' => 'type5', 'label' => 'Tour khám phá'],
+                                                    ['id' => 'type6', 'label' => 'Tour văn hóa'],
+                                                    ['id' => 'type7', 'label' => 'Tour ẩm thực'],
+                                                    ['id' => 'type8', 'label' => 'Tour thiên nhiên'],
+                                                    ['id' => 'type9', 'label' => 'Tour trekking'],
+                                                    ['id' => 'type10', 'label' => 'Tour du thuyền'],
+                                                    ['id' => 'type11', 'label' => 'Tour lịch sử'],
+                                                    ['id' => 'type12', 'label' => 'Tour giải trí'],
+                                                    ['id' => 'type13', 'label' => 'Tour sinh thái'],
+                                                ],
+                                                'showLimit' => 4,
+                                            ],
+                                        ];
+                                    @endphp
+
+                                    @foreach($filterGroups as $groupIdx => $group)
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <h5 class="mb-0">{{ $group['title'] }}</h5>
+                                            @if(!empty($group['reset']))
+                                                <button type="button" class="btn btn-link p-0" style="font-size: 0.95rem;">Reset</button>
+                                            @endif
                                         </div>
-                                    </div>
-                                    <div class="national-plus-icon">
-                                        <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-4">
-                                <div class="national-item">
-                                    <img src="{{asset("frontend/images/explore-tour-2.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                    <div class="national-content">
-                                        <div class="national-info">
-                                            <h5 class="text-white text-uppercase mb-2">Holiday Tour</h5>
-                                            <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="national-plus-icon">
-                                        <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-4">
-                                <div class="national-item">
-                                    <img src="{{asset("frontend/images/explore-tour-3.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                    <div class="national-content">
-                                        <div class="national-info">
-                                            <h5 class="text-white text-uppercase mb-2">Road Trip</h5>
-                                            <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="tour-offer bg-info">15% Off</div>
-                                    <div class="national-plus-icon">
-                                        <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-4">
-                                <div class="national-item">
-                                    <img src="{{asset("frontend/images/explore-tour-4.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                    <div class="national-content">
-                                        <div class="national-info">
-                                            <h5 class="text-white text-uppercase mb-2">Historical Trip</h5>
-                                            <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="national-plus-icon">
-                                        <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-4">
-                                <div class="national-item">
-                                    <img src="{{asset("frontend/images/explore-tour-5.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                    <div class="national-content">
-                                        <div class="national-info">
-                                            <h5 class="text-white text-uppercase mb-2">Family Tour</h5>
-                                            <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="tour-offer bg-warning">50% Off</div>
-                                    <div class="national-plus-icon">
-                                        <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-4">
-                                <div class="national-item">
-                                    <img src="{{asset("frontend/images/explore-tour-6.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                    <div class="national-content">
-                                        <div class="national-info">
-                                            <h5 class="text-white text-uppercase mb-2">Beach Tour</h5>
-                                            <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="national-plus-icon">
-                                        <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                    </div>
-                                </div>
+                                        @if($group['type'] === 'range')
+                                            <div class="mb-3">
+                                                <input
+                                                    type="range"
+                                                    class="form-range"
+                                                    min="{{ $group['min'] }}"
+                                                    max="{{ $group['max'] }}"
+                                                    step="{{ $group['step'] ?? 1 }}"
+                                                    value="{{ request('price', $group['min']) }}"
+                                                    id="{{ $group['id'] }}"
+                                                    name="price"
+                                                    oninput="updatePriceLabels()">
+                                                <div class="d-flex justify-content-between mt-2">
+                                                    <div id="minPrice">0₫</div>
+                                                    <div id="maxPrice">24.000.000₫</div>
+                                                </div>
+                                            </div>
+                                        @elseif($group['type'] === 'checkbox')
+                                            @php
+                                                $choices = $group['choices'];
+                                                $showLimit = $group['showLimit'] ?? 3;
+                                                $listId = 'filterList_' . $groupIdx;
+                                                $btnId = 'seeAllBtn_' . $groupIdx;
+                                            @endphp
+                                            <ul class="list-group mb-3" id="{{ $listId }}">
+                                                @foreach($choices as $i => $choice)
+                                                    <li class="list-group-item {{ $group['title'] }}-item{{ $i >= $showLimit ? ' d-none' : '' }}">
+                                                        @if($group['title'] === 'Rating')
+                                                            @php $inputName = 'rating'; @endphp
+                                                        @elseif($group['title'] === 'Tour Type')
+                                                            @php $inputName = 'tour_type'; @endphp
+                                                        @else
+                                                            @php $inputName = Str::slug($group['title'], '_') ; @endphp
+                                                        @endif
+                                                        <input class="form-check-input me-1" type="checkbox" name="{{ $inputName }}[]" value="{{ $group['title'] === 'Tour Type' ? $choice['label'] : $choice['value'] ?? $choice['id'] }}" id="{{ $choice['id'] }}">
+                                                        <label class="form-check-label" for="{{ $choice['id'] }}">{{ $choice['label'] }}</label>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                            @if(count($choices) > $showLimit)
+                                                <button type="button" class="btn btn-link p-0" id="{{ $btnId }}" onclick="toggleFilterChoices('{{ $listId }}', '{{ $btnId }}', {{ $showLimit }})" style="font-size: 0.95rem;">See all</button>
+                                            @endif
+                                        @endif
+                                        @if(!$loop->last)
+                                            <hr class="my-4">
+                                        @endif
+                                    @endforeach
+                                    <button type="submit" class="btn btn-primary w-100 mt-2">Apply</button>
+                                </form>
                             </div>
                         </div>
-                    </div>
-                    <div id="InternationalTab-2" class="tab-pane fade show p-0">
-                        <div class="InternationalTour-carousel owl-carousel">
-                            <div class="international-item">
-                                <img src="{{asset("frontend/images/explore-tour-1.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                <div class="international-content">
-                                    <div class="international-info">
-                                        <h5 class="text-white text-uppercase mb-2">Australia</h5>
-                                        <a href="#" class="btn-hover text-white me-4"><i class="fas fa-map-marker-alt me-1"></i> 8 Cities</a>
-                                        <a href="#" class="btn-hover text-white"><i class="fa fa-eye ms-2"></i> <span>143+ Tour Places</span></a>
-                                    </div>
+                        <div class="col-lg-9">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <div>
+                                    <span class="fw-semibold">{{ isset($tours) ? $tours->total() : 0 }}</span> kết quả
                                 </div>
-                                <div class="tour-offer bg-success">30% Off</div>
-                                <div class="international-plus-icon">
-                                    <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
+                                <div class="d-flex align-items-center">
+                                    <span class="me-2">Sắp xếp theo:</span>
+                                    <select class="form-select" name="sort" style="width:auto;display:inline-block;">
+                                        <option value="">Mặc định</option>
+                                        <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Giá thấp nhất</option>
+                                        <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Giá cao nhất</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="international-item">
-                                <img src="{{asset("frontend/images/explore-tour-2.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                <div class="international-content">
-                                    <div class="international-info">
-                                        <h5 class="text-white text-uppercase mb-2">Germany</h5>
-                                        <a href="#" class="btn-hover text-white me-4"><i class="fas fa-map-marker-alt me-1"></i> 12 Cities</a>
-                                        <a href="#" class="btn-hover text-white"><i class="fa fa-eye ms-2"></i> <span>21+ Tour Places</span></a>
+                            <div class="row g-4 flex-column">
+                                @if(isset($tours) && count($tours))
+                                    @foreach($tours as $tour)
+                                        <div class="col-12">
+                                            <div class="card h-100 shadow-sm border-0 flex-row align-items-center tour-card">
+                                                {{-- Hình ảnh tour --}}
+                                                <div class="position-relative tour-img-col" style="min-width:220px;max-width:220px;">
+                                                    <a href="#">
+                                                        <img src="{{ $tour->image_url ?? asset('frontend/images/explore-tour-1.jpg') }}" class="img-fluid rounded-start w-100" alt="{{ $tour->name }}">
+                                                    </a>
+                                                    @if($tour->is_featured)
+                                                        <span class="badge bg-primary position-absolute top-0 start-0 m-2">Nổi bật</span>
+                                                    @endif
+                                                </div>
+                                                <div class="card-body d-flex flex-column flex-grow-1 tour-info-col">
+                                                    {{-- Tên tour, địa điểm, giá --}}
+                                                    <h5 class="card-title mb-2">
+                                                        <a href="#" class="text-decoration-none text-dark">{{ $tour->name }}</a>
+                                                    </h5>
+                                                    <div class="mb-2 text-muted small">
+                                                        <i class="fa fa-map-marker-alt me-1"></i> {{ $tour->location ?? 'Địa điểm không xác định' }}
+                                                    </div>
+                                                    <div class="mb-2">
+                                                <span class="fw-bold" style="font-size: 1.5rem; color: #dc3545;">
+                                                    {{ number_format($tour->price, 0, ',', '.') }}₫
+                                                </span>
+                                                    </div>
+                                                    @php
+                                                        $minDuration = $tour->packages->min('duration');
+                                                        $maxDuration = $tour->packages->max('duration');
+                                                    @endphp
+                                                    {{-- Hiển thị khoảng thời gian --}}
+                                                    <div class="mb-2">
+                                                <span class="badge bg-light text-dark">
+                                                    @if($minDuration && $maxDuration && $minDuration != $maxDuration)
+                                                        {{ $minDuration }} - {{ $maxDuration }} ngày
+                                                    @elseif($minDuration)
+                                                        {{ $minDuration }} ngày
+                                                    @else
+                                                        N/A
+                                                    @endif
+                                                </span>
+                                                        @php
+                                                            $maxShow = 2;
+                                                            $types = $tour->types ?? [];
+                                                            $showTypes = array_slice($types, 0, $maxShow);
+                                                            $hiddenCount = count($types) - $maxShow;
+                                                        @endphp
+                                                        @foreach($showTypes as $type)
+                                                            <span class="badge bg-info">{{ $type }}</span>
+                                                        @endforeach
+                                                        @if($hiddenCount > 0)
+                                                            <span class="badge bg-secondary">+{{ $hiddenCount }}</span>
+                                                        @endif
+                                                    </div>
+                                                    <div class="mb-2 d-flex align-items-center flex-wrap gap-1">
+                                                        @php
+                                                            $avgRating = $tour->avg_rating ?? 0;
+                                                            $fullStars = floor($avgRating);
+                                                            $halfStar = ($avgRating - $fullStars) >= 0.5;
+                                                        @endphp
+                                                        {{-- Hiển thị 5 sao --}}
+                                                        @for($i = 1; $i <= 5; $i++)
+                                                            @if($i <= $fullStars)
+                                                                <i class="fas fa-star text-warning"></i>
+                                                            @elseif($halfStar && $i == $fullStars + 1)
+                                                                <i class="fas fa-star-half-alt text-warning"></i>
+                                                            @else
+                                                                <i class="far fa-star text-warning"></i>
+                                                            @endif
+                                                        @endfor
+
+                                                        {{-- Số lượng đánh giá --}}
+                                                        <span class="ms-2 text-muted">({{ $tour->reviews_count ?? 0 }} đánh giá)</span>
+
+                                                        {{-- Trung bình rating --}}
+                                                        @if($tour->avg_rating !== null)
+                                                            <span class="ms-2 fw-semibold text-primary">{{ number_format($tour->avg_rating, 1) }}/5</span>
+                                                        @endif
+                                                    </div>
+                                                    <p class="card-text flex-grow-1">{{ Str::limit($tour->description, 80) }}</p>
+                                                    <a href="#" class="btn btn-primary w-100 mt-auto">Xem chi tiết</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <div class="col-12">
+                                        <div class="alert alert-info text-center">Không có tour nào để hiển thị.</div>
                                     </div>
-                                </div>
-                                <div class="international-plus-icon">
-                                    <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                </div>
+                                @endif
                             </div>
-                            <div class="international-item">
-                                <img src="{{asset("frontend/images/explore-tour-3.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                <div class="international-content">
-                                    <div class="tour-offer bg-warning">45% Off</div>
-                                    <div class="international-info">
-                                        <h5 class="text-white text-uppercase mb-2">Spain</h5>
-                                        <a href="#" class="btn-hover text-white me-4"><i class="fas fa-map-marker-alt me-1"></i> 9 Cities</a>
-                                        <a href="#" class="btn-hover text-white"><i class="fa fa-eye ms-2"></i> <span>133+ Tour Places</span></a>
-                                    </div>
+                            {{-- PHÂN TRANG --}}
+                            @if(isset($tours) && method_exists($tours, 'links'))
+                                <div class="mt-4 d-flex justify-content-center">
+                                    {{ $tours->links('pagination::bootstrap-4') }}
                                 </div>
-                                <div class="international-plus-icon">
-                                    <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                </div>
-                            </div>
-                            <div class="international-item">
-                                <img src="{{asset("frontend/images/explore-tour-4.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                <div class="international-content">
-                                    <div class="international-info">
-                                        <h5 class="text-white text-uppercase mb-2">Japan</h5>
-                                        <a href="#" class="btn-hover text-white me-4"><i class="fas fa-map-marker-alt me-1"></i> 8 Cities</a>
-                                        <a href="#" class="btn-hover text-white"><i class="fa fa-eye ms-2"></i> <span>137+ Tour Places</span></a>
-                                    </div>
-                                </div>
-                                <div class="international-plus-icon">
-                                    <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                </div>
-                            </div>
-                            <div class="international-item">
-                                <img src="{{asset("frontend/images/explore-tour-5.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                <div class="international-content">
-                                    <div class="tour-offer bg-info">70% Off</div>
-                                    <div class="international-info">
-                                        <h5 class="text-white text-uppercase mb-2">London</h5>
-                                        <a href="#" class="btn-hover text-white me-4"><i class="fas fa-map-marker-alt me-1"></i> 17 Cities</a>
-                                        <a href="#" class="btn-hover text-white"><i class="fa fa-eye ms-2"></i> <span>26+ Tour Places</span></a>
-                                    </div>
-                                </div>
-                                <div class="international-plus-icon">
-                                    <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -225,7 +297,7 @@
 
         <!-- Subscribe Start -->
         <div class="container-fluid subscribe py-5">
-            <div class="container text-center py-5">
+            <div class="container-fluid text-center py-5">
                 <div class="mx-auto text-center" style="max-width: 900px;">
                     <h5 class="subscribe-title px-3">Subscribe</h5>
                     <h1 class="text-white mb-4">Our Newsletter</h1>
@@ -242,7 +314,7 @@
 
         <!-- Footer Start -->
         <div class="container-fluid footer py-5">
-            <div class="container py-5">
+            <div class="container-fluid py-5">
                 <div class="row g-5">
                     <div class="col-md-6 col-lg-6 col-xl-3">
                         <div class="footer-item d-flex flex-column">
@@ -330,7 +402,7 @@
 
         <!-- Copyright Start -->
         <div class="container-fluid copyright text-body py-4">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row g-4 align-items-center">
                     <div class="col-md-6 text-center text-md-end mb-md-0">
                         <i class="fas fa-copyright me-2"></i><a class="text-white" href="#">Your Site Name</a>, All right reserved.
@@ -349,4 +421,159 @@
         <!-- Back to Top -->
         <a href="#" class="btn btn-primary btn-primary-outline-0 btn-md-square back-to-top"><i class="fa fa-arrow-up"></i></a>
 
+    <script>
+    function formatNumber(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    function updatePriceLabels() {
+        var range = document.getElementById('priceRange');
+        document.getElementById('minPrice').innerText = formatNumber(range.value) + '₫';
+        document.getElementById('maxPrice').innerText = '24.000.000₫'; // Assuming max price is 24.000.000₫
+    }
+    // Initialize on page load
+    updatePriceLabels();
+    </script>
+    <script>
+        function togglePublicChoices() {
+            var items = document.querySelectorAll('.public-choice-item');
+            var btn = document.getElementById('seeAllBtn');
+            var hidden = Array.from(items).some(item => item.classList.contains('d-none'));
+            items.forEach(function(item, idx) {
+                if(idx >= {{ $showLimit }}) {
+                    item.classList.toggle('d-none');
+                }
+            });
+            btn.textContent = hidden ? 'Hide' : 'See all';
+        }
+    </script>
+    <script>
+function toggleFilterChoices(listId, btnId, showLimit) {
+    var items = document.querySelectorAll('#' + listId + ' li');
+    var btn = document.getElementById(btnId);
+    var hidden = Array.from(items).some((item, idx) => idx >= showLimit && item.classList.contains('d-none'));
+    items.forEach(function(item, idx) {
+        if(idx >= showLimit) {
+            item.classList.toggle('d-none');
+        }
+    });
+    btn.textContent = hidden ? 'Hide' : 'See all';
+}
+</script>
+<script>
+function updateTourList(html) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    // Cập nhật danh sách tour
+    const newTourList = doc.querySelector('.row.g-4.flex-column');
+    if (newTourList) {
+        document.querySelector('.row.g-4.flex-column').innerHTML = newTourList.innerHTML;
+    }
+    // Cập nhật phân trang
+    const newPagination = doc.querySelector('.mt-4.d-flex.justify-content-center');
+    const oldPagination = document.querySelector('.mt-4.d-flex.justify-content-center');
+    if (oldPagination && newPagination) {
+        oldPagination.innerHTML = newPagination.innerHTML;
+    } else if (oldPagination) {
+        oldPagination.innerHTML = '';
+    }
+    // Cập nhật số kết quả
+    const newResultCount = doc.querySelector('.fw-semibold');
+    const oldResultCount = document.querySelector('.fw-semibold');
+    if (newResultCount && oldResultCount) {
+        oldResultCount.innerHTML = newResultCount.innerHTML;
+    }
+}
+
+// Xử lý filter AJAX
+document.getElementById('filterForm').onsubmit = function(e) {
+    e.preventDefault();
+    const form = this;
+    const params = new URLSearchParams(new FormData(form)).toString();
+
+    fetch(form.action + '?' + params)
+        .then(response => response.text())
+        .then(html => {
+            updateTourList(html);
+            // Đóng filter-sidebar trên mobile
+            if (window.innerWidth < 992) {
+                document.querySelector('.filter-sidebar').classList.remove('open');
+                document.querySelector('.filter-overlay').classList.remove('active');
+            }
+        });
+};
+
+// Xử lý phân trang AJAX
+document.addEventListener('click', function(e) {
+    const link = e.target.closest('.mt-4.d-flex.justify-content-center a');
+    if (link) {
+        e.preventDefault();
+        fetch(link.href)
+            .then(response => response.text())
+            .then(html => updateTourList(html));
+    }
+});
+
+// Xử lý sort giữ filter (nếu muốn AJAX cho sort)
+document.getElementById('sortForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const form = this;
+    // Lấy các filter hiện tại từ filterForm
+    const filterForm = document.getElementById('filterForm');
+    const filterData = new FormData(filterForm);
+    // Thêm sort vào filterData
+    const sortSelect = form.querySelector('select[name="sort"]');
+    if (sortSelect) filterData.set('sort', sortSelect.value);
+    const params = new URLSearchParams(filterData).toString();
+
+    fetch(filterForm.action + '?' + params)
+        .then(response => response.text())
+        .then(html => updateTourList(html));
+});
+//Xử lý reset filter
+document.querySelectorAll('.btn-link.p-0').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const filterForm = document.getElementById('filterForm');
+        filterForm.reset(); // Reset form fields
+        updatePriceLabels(); // Cập nhật nhãn giá
+        // Gửi yêu cầu AJAX để cập nhật danh sách tour
+        fetch(filterForm.action)
+            .then(response => response.text())
+            .then(html => {
+                updateTourList(html);
+                // Đóng filter-sidebar trên mobile
+                if (window.innerWidth < 992) {
+                    document.querySelector('.filter-sidebar').classList.remove('open');
+                    document.querySelector('.filter-overlay').classList.remove('active');
+                }
+            });
+    });
+});
+//Xử lý sắp xếp
+document.querySelector('.form-select[name="sort"]')?.addEventListener('change', function() {
+    const filterForm = document.getElementById('filterForm');
+    const formData = new FormData(filterForm);
+    formData.set('sort', this.value); // Đảm bảo giá trị sort được cập nhật
+    const params = new URLSearchParams(formData).toString();
+    fetch(filterForm.action + '?' + params)
+        .then(response => response.text())
+        .then(html => updateTourList(html));
+});
+function toggleFilterSidebar() {
+    const sidebar = document.querySelector('.filter-sidebar');
+    const overlay = document.querySelector('.filter-overlay');
+    sidebar.classList.toggle('open');
+    if (sidebar.classList.contains('open')) {
+        overlay.classList.add('active');
+    } else {
+        overlay.classList.remove('active');
+    }
+}
+// Đóng filter khi click overlay
+document.querySelector('.filter-overlay').addEventListener('click', function() {
+    document.querySelector('.filter-sidebar').classList.remove('open');
+    this.classList.remove('active');
+});
+</script>
 @endsection

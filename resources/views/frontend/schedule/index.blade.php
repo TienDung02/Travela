@@ -1,4 +1,4 @@
-@extends('frontend.layouts.layout')
+@extends('frontend.layouts.layout_schedule')
 @section('content')
     <!-- Navbar & Hero Start -->
     <div class="container-fluid position-relative p-0">
@@ -20,7 +20,7 @@
     <!-- Header End -->
 
     <!-- Contact Start -->
-    <div class="container-fluid contact bg-light py-5">
+    <div class="container-fluid contact bg-light py-5 scale-75">
         <div class="container-fluid py-5">
             <div class="mx-auto text-center mb-5" style="max-width: 900px;">
                 <h5 class="section-title px-3">Build schedule</h5>
@@ -256,6 +256,9 @@
                                             <div class="card border-start-0 border-0">
                                                 <div class="card-body pt-0">
                                                     <div id="mapmobile" style="width: 100%; height: 70rem;">
+                                                        <div class="menu">
+                                                            <button id="routeButtonMobile">Chỉ đường từ A đến B</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -278,7 +281,9 @@
                         <div class="card border-start-0 border-0">
                             <div class="card-body pt-0">
                                 <div id="map" style="width: 100%; height: 61rem;">
-
+                                    <div class="menu">
+                                        <button id="routeButton">Chỉ đường từ A đến B</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -741,7 +746,9 @@
 .hamburger-menu {
   display: none;
 }
-
+.scale-75 {
+    transform: scale(0.85) !important;
+}
 
 </style>
 @endpush
@@ -771,26 +778,7 @@
   .navbar-brand {
     font-size: 1.5rem;
   }
-  .bg-breadcrumb {
-      height: 40vh !important; 
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-
-    .bg-breadcrumb .container {
-    padding: 0 !important;
-  }
-
-  .bg-breadcrumb h1 {
-    font-size: 1.4rem !important;
-    margin-bottom: 0.5rem !important;
-  }
-
-  .breadcrumb {
-    font-size: 0.75rem;
-    justify-content: center;
-  }
+ 
 
   .image-left-schedule {
     display: none !important;
@@ -848,7 +836,7 @@ order: 8;
     width: 50% !important;
     flex: 0 0 50% !important;
     max-width: 50% !important;
-    padding: 0.5rem;
+    padding: 0.5rem !important;
     box-sizing: border-box;
   }
  #budget-input {
@@ -877,17 +865,18 @@ order: 8;
   .form-floating > textarea {
     height: auto !important;
     padding: 1.8rem 1rem 0.5rem !important;
+     font-size: 0.9rem !important;
   }
 
   .form-floating > label {
     font-size: 0.9rem !important;
-      padding: 1rem 1.5rem !important;
+      padding: 1rem 1.5rem 1rem 0.5rem !important;
     pointer-events: none;
   }
   /* Giảm cỡ nút */
   .btn.w-100 {
     padding: 0.75rem !important;
-    font-size: 1rem;
+    font-size: 0.9rem !important;
   }
 
   /* Tiêu đề và spacing */
@@ -895,6 +884,10 @@ order: 8;
     font-size: 1.2rem !important;
     text-align: center;
   }
+
+
+
+
   .subscribe,
   .footer,
   .copyright {

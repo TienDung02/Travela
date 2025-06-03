@@ -4,11 +4,15 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Preference;
+use Illuminate\Support\Facades\DB;
 
 class PreferencesSeeder extends Seeder
 {
     public function run()
     {
+
+        DB::table('preferences')->truncate();
+
         Preference::insert([
             ['name' => 'Ẩm thực', 'description' => 'Khám phá các món ăn đặc sản và ẩm thực địa phương.'],
             ['name' => 'Thể thao & Phiêu lưu', 'description' => 'Trải nghiệm các hoạt động thể thao mạo hiểm như leo núi, nhảy dù, lướt sóng.'],

@@ -22,7 +22,7 @@
 
         <!-- Header Start -->
         <div class="container-fluid bg-breadcrumb" style="background: linear-gradient(rgba(19, 53, 123, 0.5), rgba(19, 53, 123, 0.5)), url({{ asset('frontend/images/breadcrumb-bg.jpg') }});">
-            <div class="container text-center py-5" style="max-width: 900px;">
+            <div class="container-fluid text-center py-5" style="max-width: 900px;">
                 <h3 class="text-white display-3 mb-4">Our Blog</h1>
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -35,7 +35,7 @@
 
         <!-- Blog Start -->
         <div class="container-fluid blog py-5">
-            <div class="container py-5">
+            <div class="container-fluid py-5">
                 <div class="mx-auto text-center mb-5" style="max-width: 900px;">
                     <h5 class="section-title px-3">Our Blog</h5>
                     <h1 class="mb-4">Popular Travel Blogs</h1>
@@ -119,7 +119,7 @@
 
         <!-- Subscribe Start -->
         <div class="container-fluid subscribe py-5">
-            <div class="container text-center py-5">
+            <div class="container-fluid text-center py-5">
                 <div class="mx-auto text-center" style="max-width: 900px;">
                     <h5 class="subscribe-title px-3">Subscribe</h5>
                     <h1 class="text-white mb-4">Our Newsletter</h1>
@@ -136,7 +136,7 @@
 
         <!-- Footer Start -->
         <div class="container-fluid footer py-5">
-            <div class="container py-5">
+            <div class="container-fluid py-5">
                 <div class="row g-5">
                     <div class="col-md-6 col-lg-6 col-xl-3">
                         <div class="footer-item d-flex flex-column">
@@ -224,7 +224,7 @@
 
         <!-- Copyright Start -->
         <div class="container-fluid copyright text-body py-4">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row g-4 align-items-center">
                     <div class="col-md-6 text-center text-md-end mb-md-0">
                         <i class="fas fa-copyright me-2"></i><a class="text-white" href="#">Your Site Name</a>, All right reserved.

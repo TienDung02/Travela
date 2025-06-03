@@ -13,10 +13,12 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\FacebookLoginController;
 use App\Http\Controllers\frontend\ContactController;
 use App\Http\Controllers\frontend\PlaceController;
+use App\Http\Controllers\frontend\ReviewController;
 use App\Http\Controllers\frontend\ExploreTourController;
 use App\Http\Controllers\frontend\GalleryController;
 use App\Http\Controllers\frontend\GuideController;
 use App\Http\Controllers\frontend\TestimonialController;
+use App\Http\Controllers\frontend\TourController;
 use App\Http\Controllers\frontend\ErrorController;
 use App\Http\Controllers\frontend\ScheduleController;
 use App\Http\Controllers\frontend\ChatbotController;
@@ -86,6 +88,10 @@ Route::get('/404', [ErrorController::class, 'index'])->name('404');
 //---------------Destination---------------//
 Route::get('/destination', [PlaceController::class, 'index'])->name('destination.index');
 Route::get('/destination-detail/{id}', [PlaceController::class, 'detail'])->name('destination.detail');
+Route::post('places/{id}/reviews',  [ReviewController::class, 'store'])->name('reviews.store');
+
+Route::get('tour', [TourController::class, 'index'])->name('tour.index');
+Route::post('tour/{id}/reviews', [ReviewController::class, 'storeTourReview'])->name('tour.reviews.store');
 
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 

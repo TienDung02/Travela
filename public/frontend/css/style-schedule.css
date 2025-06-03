@@ -426,10 +426,11 @@
 
 /*** Single Page Hero Header Start ***/
 .bg-breadcrumb {
+
     background-position: center center;
-    background-repeat: no-repeat !important;
-    background-size: cover !important;
-    background-attachment: fixed ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
     padding: 150px 0 50px 0;
 }
 
@@ -484,10 +485,6 @@
 
 
 /*** Destination Start ***/
-.container-fluid.destination {
-    overflow: auto;
-}
-
 .destination .tab-class .tab-content .tab-pane .destination-img {
     position: relative;
     overflow: hidden;
@@ -1282,12 +1279,7 @@
     background: var(--bs-dark) !important;
 }
 /*** copyright end ***/
-@media (max-width: 768px) {
-    .subscribe {
-      background-attachment: scroll !important;
-    }
-}
-  
+
 
 
 /*Tour box*/
@@ -1384,7 +1376,7 @@
     width: 100%;
     border: none;
     outline: none;
-    /* background: none; */
+    background: none;
     padding: 0;
     margin: 0;
 }
@@ -1404,7 +1396,7 @@
 
 .gallery > .gallery-main-img{
     position: relative;
-    /* aspect-ratio: 6/4; */
+    aspect-ratio: 6/4;
     background-color: rgba(from var(--clr-secondary) r g b / .5);
     border-radius: 10px;
 }
@@ -1608,7 +1600,7 @@ h2 {
 
 .rating-bars {
     flex-grow: 1;
-    /* margin-left: 20px; */
+    margin-left: 20px;
 }
 
 .rating-row {
@@ -1919,8 +1911,6 @@ input[type=number]::-webkit-outer-spin-button
 .slick-track{
     opacity: 1;
     width: 4032px !important;
-    height: 24px;
-    overflow-y: hidden;
 }
 
 
@@ -2411,6 +2401,12 @@ input[type=number]::-webkit-outer-spin-button
 
 /* ----------------------------End Detail Schedule--------------------------------------- */
 
+
+
+
+
+
+
 /* ----------------------------Chat bot--------------------------------------- */
 
 .ai-chatbot{
@@ -2761,207 +2757,6 @@ input[type=number]::-webkit-outer-spin-button
     color: #FFFFFF;
     background-color: #0b204a;
 }
-/* Căn giữa toàn bộ nav */
-.pagination {
-    display: flex !important;
-    justify-content: center;
-    margin: 1.5rem 0;
-  }
-  
-  /* Thay đổi style cho từng item */
-  .pagination .page-item .page-link {
-    border-radius: 0.25rem;
-    padding: 0.5rem 0.75rem;
-    margin: 0 0.25rem;
-    background-color: #f8f9fa;
-    color: #007bff;
-    border: 1px solid #dee2e6;
-    transition: background-color .2s;
-  }
-  
-  .pagination .page-item .page-link:hover {
-    background-color: #e2e6ea;
-  }
-  
-  /* Active */
-  .pagination .page-item.active .page-link {
-    background-color: #007bff;
-    color: #fff;
-    border-color: #007bff;
-  }
-  
-  /* Disabled */
-  .pagination .page-item.disabled .page-link {
-    color: #6c757d;
-    pointer-events: none;
-    background-color: #fff;
-  }
-/* === Main media === */
-.gallery-main-img img,
-.gallery-main-img video {
-    width: 100%;           /* Lấp đầy chiều ngang container */
-    max-height: 100%;     /* Giới hạn chiều cao (bạn có thể thay 400px thành giá trị mong muốn) */
-    object-fit: contain;   /* Giữ tỉ lệ, không cắt nội dung, chạm ít nhất một cạnh */
-    display: block;
-    margin: auto;
-    border-radius: 8px;
-}
-
-/* Reset padding/border cho button chứa media */
-button.gallery-main-img,
-button.thumb-btn {
-    height: fit-content;
-}
-
-/* Đảm bảo container không bị tràn */
-.destination-img,
-.wrapper,
-.gallery {
-    width: 100%;
-    max-width: 100%;
-    overflow: hidden;
-}
-.thumbs-container-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: nowrap;
-}
-/* === Thumbnails === */
-.gallery-thumbs {
-    display: flex;
-    overflow: hidden;
-    max-width: calc(6 * 80px + 5 * 0.4rem); /* 6 thumbnails + 5 gaps*/
-    gap: 0.4rem;
-    width: auto;
-    scroll-behavior: smooth;
-}
-.thumb-btn img,
-.thumb-btn video {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 20%;
-}
-/* Nút chuyển trái/phải */
-.thumb-nav-btn {
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-    border: none;
-    cursor: pointer;
-    
-}
-
-.thumb-nav-btn:disabled {
-    opacity: 0.3;
-    cursor: default;
-}
-.thumb-nav-btn:hover {
-    background-color: #e0e0e0;
-  }
-  #thumb-prev { 
-    left: -1.5rem; 
-    width: 100px;
-    background-color: transparent;
-    border-radius: 20%;
-}
-  #thumb-next { 
-    right: -1.5rem; 
-    width: 100px;
-    background-color: transparent;
-    border-radius: 20%;
-}
-/* === Responsive: Mobile (<= 600px) show 3 thumbnails === */
-
-
-@media (max-width: 600px) {
-    .gallery-main-img img,
-    .gallery-main-img video {
-      max-height: 100%;
-    }
-  
-    .gallery-thumbs {
-      width: calc(3 * 50px + 2 * 0.3rem);
-    }
-    .thumb-btn img,
-    .thumb-btn video {
-      width: 50px;
-      height: 50px;
-    }
-    .thumb-nav-btn {
-      width: 20px;
-      height: 40px;
-      font-size: 0.5rem;
-    }
-    #thumb-prev { 
-        left: -0.5rem; 
-        width: 40px;
-    }
-      #thumb-next { 
-        right: -0.5rem; 
-        width: 40px;
-    }
-  }
-  .packages .packages-carousel .owl-nav .owl-next:hover i {
-    color: var(--bs-white);
-}
-.container-fluid.ExploreTour {
-    overflow: auto;
-}
-/* Ẩn filter sidebar trên tablet/mobile */
-@media (max-width: 991.98px) {
-    .filter-sidebar {
-        display: none;
-        position: fixed;
-        top: 0; left: 0; bottom: 0;
-        width: 80vw;
-        max-width: 320px;
-        background: #fff;
-        z-index: 1050;
-        overflow-y: auto;
-        box-shadow: 2px 0 8px rgba(0,0,0,0.1);
-        transition: transform 0.3s;
-        transform: translateX(-100%);
-    }
-    .filter-sidebar.open {
-        display: block; /* <-- Thêm dòng này */
-        z-index: 1051;
-        transform: translateX(+15%);
-    }
-    .filter-toggle-btn {
-        display: inline-block !important;
-    }
-    .filter-sidebar.open ~ .filter-overlay,
-    .filter-overlay.active {
-        display: block;
-        opacity: 1;
-    }
-    .tour-card {
-        flex-direction: column !important;
-        align-items: stretch !important;
-    }
-    .tour-img-col {
-        min-width: 0 !important;
-        max-width: 100% !important;
-        width: 100% !important;
-        margin-bottom: 1rem;
-    }
-    .tour-info-col {
-        width: 100% !important;
-    }
-}
-.filter-overlay {
-    display: none;
-    position: fixed;
-    z-index: 1049;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.4); /* Độ mờ */
-    transition: opacity 0.3s;
-}
-
 /* -----------------------------------------*/
 /*  End Event And Activity
 /*------------------------------------------*/

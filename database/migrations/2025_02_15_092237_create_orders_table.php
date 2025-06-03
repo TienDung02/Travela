@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Illuminate\Support\Facades\DB;
 return new class extends Migration
 {
     /**
@@ -11,12 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Schema::dropIfExists('orders');
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('fullname');
-            $table->string('gender');
-            $table->date('birth_date');
+            $table->unsignedBigInteger('customer_id');
+            $table->decimal('total_price', 10, 2);
+            $table->string('status');
+            $table->text('note')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
