@@ -41,6 +41,22 @@ class ScheduleController
         $this->map4DService = $map4DService;
 
     }
+    public function getThumbnail($query)
+    {
+        $thumbnail = $this->wikipediaService->getPlaceInfo($query);
+        if (!$thumbnail) {
+            return response()->json(['error' => 'Không tìm thấy thông tin địa điểm'], 404);
+        }
+        return response()->json($thumbnail);
+    }
+    public function getSummary($query)
+    {
+        $summary = $this->wikipediaService->getPlaceInfo($query);
+        if (!$summary) {
+            return response()->json(['error' => 'Không tìm thấy thông tin địa điểm'], 404);
+        }
+        return response()->json($summary);
+    }
 
     public function showRoute(Request $request)
     {
@@ -110,11 +126,11 @@ class ScheduleController
             'query' => $address,
         ];
 
-//        $map = $this->rapidApiService->fetchData($params);
+        $map = $this->rapidApiService->fetchData($params);
 //        $address = "Chùa minh thành";
         if ($address) {
             $result = $this->map4DService->geocode($address);
-
+            $result = null;
             if (!$result || empty($result)) {
                 $error = 'Không tìm thấy địa điểm.';
             } else {
@@ -134,7 +150,49 @@ class ScheduleController
 
         $currencies = Currency::query()->get();
         $weather = $this->weatherService->getWeatherByCity($address);
-
+        // $weather = [
+        //     'location' => [
+        //         'name' => 'Hà Nội',
+        //         'country' => 'Việt Nam',
+        //     ],
+        //     'forecast' => [
+        //         'forecastday' => [
+        //             [
+        //                 'date' => now()->toDateString(),
+        //                 'day' => [
+        //                     'avgtemp_c' => 28,
+        //                     'avghumidity' => 65,
+        //                     'maxwind_kph' => 15,
+        //                     'condition' => [
+        //                         'text' => 'Trời nắng nhẹ'
+        //                     ]
+        //                 ]
+        //             ],
+        //             [
+        //                 'date' => now()->addDay()->toDateString(),
+        //                 'day' => [
+        //                     'avgtemp_c' => 30,
+        //                     'avghumidity' => 60,
+        //                     'maxwind_kph' => 12,
+        //                     'condition' => [
+        //                         'text' => 'Có mây'
+        //                     ]
+        //                 ]
+        //             ],
+        //             [
+        //                 'date' => now()->addDays(2)->toDateString(),
+        //                 'day' => [
+        //                     'avgtemp_c' => 27,
+        //                     'avghumidity' => 70,
+        //                     'maxwind_kph' => 10,
+        //                     'condition' => [
+        //                         'text' => 'Có mưa nhẹ'
+        //                     ]
+        //                 ]
+        //             ],
+        //         ]
+        //     ]
+        // ];
         if (!$weather) {
             return view('frontend.weather', [
                 'error' => "Không thể lấy thông tin thời tiết của thành phố: {$address}. Vui lòng thử lại!"
@@ -157,12 +215,35 @@ class ScheduleController
         $transportation = $request->input('transportation');
 
         $interest = $request->input('interest');
+      //  $interest = ['cảnh đẹp', 'lịch sử', 'kiến trúc'];
         $interest = implode(', ', $interest);
 
         $preferences = $request->input('interest');
 
         $places = $this->geminiService->getTourismInfo($address, $preferences);
+       
+// $places = [
+//     'Hồ Hoàn Kiếm' => [
+//         'Tên' => 'Hồ Hoàn Kiếm',
+//         'Loại' => 'Hồ nước',
+//         'Giờ hoạt động' => 'Cả ngày',
+//         'Tag' => ['cảnh đẹp', 'trung tâm', 'lịch sử']
+//     ],
+//     'Chùa Một Cột' => [
+//         'Tên' => 'Chùa Một Cột',
+//         'Loại' => 'Chùa',
+//         'Giờ hoạt động' => '07:00 - 18:00',
+//         'Tag' => ['tâm linh', 'kiến trúc', 'lịch sử']
+//     ],
+//     'Nhà thờ Đức Bà' => [
+//         'Tên' => 'Nhà thờ Đức Bà',
+//         'Loại' => 'Nhà thờ',
+//         'Giờ hoạt động' => '06:00 - 20:00',
+//         'Tag' => ['kiến trúc', 'tôn giáo', 'du lịch']
+//     ]
+// ];
         $placeNames = array_keys($places);
+
 
         $placeNames = implode(", ", $placeNames);
 
@@ -173,7 +254,20 @@ class ScheduleController
         $query = http_build_query($params);
         $finalUrl = url('/build-schedule') . '?' . $query;
 
-
+        $wikicontent = [];
+        foreach ($places as $placeName => $thong_tin) {
+            // Determine the display name for the thumbnail
+           
+            $wiki = $this->wikipediaService->getPlaceInfo($placeName);
+            // Lấy đường dẫn ảnh thumbnail từ Wikipedia, nếu không có thì để null
+            
+            //dd($placeName);
+            //dd($wiki);
+           
+            $wikicontent[$placeName] = $wiki;
+        }
+       // dd($thumbnails);
+        //dd($fullcontents);
         $data = [
             'map' => $map,
             'currencies' => $currencies,
@@ -186,6 +280,7 @@ class ScheduleController
             'address_old' => $address_old,
             'places' => $places,
             'finalUrl' => $finalUrl,
+            'wikicontent' => $wikicontent,
             'for_schedule' => [
                 'address' => $address,
                 'start_date' => $startDate,
@@ -232,6 +327,89 @@ class ScheduleController
 
         $plans = $this->geminiService->generateItinerary($data);
 
+        // $plans = [
+        //     'Ngày 1' => [
+        //     'Sáng' => [
+        //         [
+        //         'type' => 'Ăn sáng',
+        //         'details' => 'Phở Bát Đàn'
+        //         ],
+        //         [
+        //         'type' => 'Địa điểm tham quan',
+        //         'details' => [
+        //             'Tên địa điểm' => 'Hồ Hoàn Kiếm',
+        //             'Thời gian' => '08:00 - 10:00'
+        //         ]
+        //         ]
+        //     ],
+        //     'Trưa' => [
+        //         [
+        //         'type' => 'Ăn trưa',
+        //         'details' => 'Bún chả Hàng Mành'
+        //         ]
+        //     ],
+        //     'Chiều' => [
+        //         [
+        //         'type' => 'Địa điểm tham quan',
+        //         'details' => [
+        //             'Tên địa điểm' => 'Chùa Một Cột',
+        //             'Thời gian' => '14:00 - 16:00'
+        //         ]
+        //         ]
+        //     ],
+        //     'Tối' => [
+        //         [
+        //         'type' => 'Ăn tối',
+        //         'details' => 'Nhà hàng Quán Ăn Ngon'
+        //         ],
+        //         [
+        //         'type' => 'Chỗ ngủ',
+        //         'details' => 'Khách sạn Melia Hà Nội'
+        //         ]
+        //     ]
+        //     ],
+        //     'Ngày 2' => [
+        //     'Sáng' => [
+        //         [
+        //         'type' => 'Ăn sáng',
+        //         'details' => 'Bánh cuốn Thanh Trì'
+        //         ],
+        //         [
+        //         'type' => 'Địa điểm tham quan',
+        //         'details' => [
+        //             'Tên địa điểm' => 'Nhà thờ Đức Bà',
+        //             'Thời gian' => '09:00 - 11:00'
+        //         ]
+        //         ]
+        //     ],
+        //     'Trưa' => [
+        //         [
+        //         'type' => 'Ăn trưa',
+        //         'details' => 'Cơm tấm Sài Gòn'
+        //         ]
+        //     ],
+        //     'Chiều' => [
+        //         [
+        //         'type' => 'Địa điểm tham quan',
+        //         'details' => [
+        //             'Tên địa điểm' => 'Bảo tàng Lịch sử Quốc gia',
+        //             'Thời gian' => '14:00 - 16:00'
+        //         ]
+        //         ]
+        //     ],
+        //     'Tối' => [
+        //         [
+        //         'type' => 'Ăn tối',
+        //         'details' => 'Nhà hàng Sen Tây Hồ'
+        //         ],
+        //         [
+        //         'type' => 'Chỗ ngủ',
+        //         'details' => 'Khách sạn Melia Hà Nội'
+        //         ]
+        //     ]
+        //     ]
+        // ];
+        $wikicontent = [];
         foreach ($plans as $day => &$dailyPlan) {
             foreach ($dailyPlan as $partOfDay => &$activities) {
                 if (is_array($activities)) {
@@ -256,6 +434,8 @@ class ScheduleController
                                 if (is_array($activity['details'])) {
                                     if (isset($activity['details']['Tên địa điểm']) && is_string($activity['details']['Tên địa điểm'])) {
                                         $activity['details']['Tên địa điểm'] = cleanLocationString($activity['details']['Tên địa điểm']);
+                                        $wikicontent[$activity['details']['Tên địa điểm']] = $this->wikipediaService->getPlaceInfo($activity['details']['Tên địa điểm']);
+
                                     }
                                 }
                             }
@@ -284,7 +464,7 @@ class ScheduleController
         }
 
 
-        return view('frontend.schedule.ajax.schedule-built', compact('plans', 'currencies', 'preferences'));
+        return view('frontend.schedule.ajax.schedule-built', compact('plans', 'currencies', 'preferences', 'wikicontent'));
 
     }
     public function getToaDo($location){
