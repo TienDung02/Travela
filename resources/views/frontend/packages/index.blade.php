@@ -36,60 +36,58 @@
         <div class="container-fluid packages py-5">
             <div class="container-fluid py-5">
 
-                                <div class="mx-auto text-center mb-5 px-3 w-100">
-                                    <h5 class="section-title px-3">Packages</h5>
-                                    <h1 class="mb-0">Awesome Packages</h1>
-                                </div>
-                        <div class="row justify-content-center mb-5">
-                            <div class="col-md-8">
-                                <form action="{{ route('packages.index') }}" method="GET" class="search-form">
-                                    <div class="input-group shadow-lg rounded-pill overflow-hidden w-100 flex-nowrap"
-                                        style="background: var(--bg-color); border: 1px solid var(--border-color); transition: all 0.3s ease;">
-                                        <input type="text"
-                                        name="search"
-                                        value="{{ request('search') }}"
-                                        class="form-control form-control-lg border-0 bg-transparent ps-4 py-3"
-                                        placeholder="Search packages..."
-                                        style="color: var(--text-primary); outline: none; box-shadow: none;">
-                                        <button type="submit" class="btn btn-primary rounded-0 px-4"
-                                            style="background: var(--primary-gradient); border: none; transition: all 0.3s ease;">
-                                        <i class="fa fa-search me-2"></i> Search
-                                        </button>
-                                    </div>
-                                </form>
-
+                <div class="mx-auto text-center mb-5 px-3 w-100">
+                    <h5 class="section-title px-3">Packages</h5>
+                    <h1 class="mb-0">Awesome Packages</h1>
+                </div>
+                <div class="row justify-content-center mb-5">
+                    <div class="col-lg-9 col-xl-9 col-xxl-7 mx-auto">
+                        <form action="{{ route('packages.index') }}" method="GET" class="search-form">
+                            <div class="input-group shadow-lg rounded-pill overflow-hidden w-100 flex-nowrap"
+                                style="background: var(--bg-color); border: 1px solid var(--border-color); transition: all 0.3s ease;">
+                                <input type="text"
+                                name="search"
+                                value="{{ request('search') }}"
+                                class="form-control form-control-lg border-0 bg-transparent ps-4 py-3"
+                                placeholder="Search packages..."
+                                style="color: var(--text-primary); outline: none; box-shadow: none;">
+                                <button type="submit" class="btn btn-primary rounded-0 px-4"
+                                    style="background: var(--primary-gradient); border: none; transition: all 0.3s ease;">
+                                <i class="fa fa-search me-2"></i> Search
+                                </button>
                             </div>
-                        </div>
+                        </form>
 
-                        <div class="container-fluid">
-                            @if(isset($packages) && $packages->count() > 0)
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    @if(isset($packages) && $packages->count() > 0)
+                    <div class="row">
+                        <div class="col-lg-9 col-xl-9 col-xxl-7 mx-auto">
                             <div class="row">
-                                        <!-- Filter Sidebar (chỉ desktop) -->
-                        <div class="col-lg-2 d-none d-lg-block pe-4">
-                            @include('frontend.component.filter')
+                                <div class="col-lg-2 d-none d-lg-block pe-4">
+                                    @include('frontend.component.filter')
+                                </div>
+                                <div class="d-block d-lg-none mb-3 text-end">
+                                    <button class="btn btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#mobileFilter">
+                                        Show Filters
+                                    </button>
+                                    <div class="collapse mt-2" id="mobileFilter">
+                                        @include('frontend.component.filter')
+                                    </div>
+                                </div>
+                                <div class="col-lg-10 col-12">
+                                    <div class="row g-3 justify-content-start">
+                                        @foreach($packages as $package)
+                                            @include('frontend.component.card', ['package' => $package])
+                                        @endforeach
+                                    </div>
+                                    <div class="mt-4">
+                                        {{ $packages->links() }}
+                                    </div>
+                                </div>
                         </div>
-
-                        <!-- Filter Toggle (mobile) -->
-                        <div class="d-block d-lg-none mb-3 text-end">
-                            <button class="btn btn-outline-primary" data-bs-toggle="collapse" data-bs-target="#mobileFilter">
-                                Show Filters
-                            </button>
-                            <div class="collapse mt-2" id="mobileFilter">
-                                @include('frontend.component.filter')
-                            </div>
-                        </div>
-
-                        <!-- Packages List -->
-                        <div class="col-lg-10 col-12">
-                        <div class="row g-3 justify-content-start">
-                            @foreach($packages as $package)
-                                @include('frontend.component.card', ['package' => $package])
-                            @endforeach
-                        </div>
-                            <div class="mt-4">
-                                {{ $packages->links() }}
-                            </div>
-                        </div>
+                    </div>
             </div>
         @else
             <div class="col-12 text-center py-5">
