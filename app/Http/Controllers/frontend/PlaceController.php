@@ -9,24 +9,48 @@ class PlaceController
 {
     public function index(Request $request)
     {
-        $countries = ['USA','Canada','Europe','China','Singapore'];
+        $provinces = [
+            'An Giang', 'Bà Rịa - Vũng Tàu', 'Bạc Liêu', 'Bắc Giang', 'Bắc Kạn', 'Bắc Ninh',
+            'Bến Tre', 'Bình Dương', 'Bình Định', 'Bình Phước', 'Bình Thuận', 'Cà Mau',
+            'Cao Bằng', 'Cần Thơ', 'Đà Nẵng', 'Đắk Lắk', 'Đắk Nông', 'Điện Biên',
+            'Đồng Nai', 'Đồng Tháp', 'Gia Lai', 'Hà Giang', 'Hà Nam', 'Hà Nội', 'Hà Tĩnh',
+            'Hải Dương', 'Hải Phòng', 'Hậu Giang', 'Hòa Bình', 'Hưng Yên', 'Khánh Hòa',
+            'Kiên Giang', 'Kon Tum', 'Lai Châu', 'Lâm Đồng', 'Lạng Sơn', 'Lào Cai',
+            'Long An', 'Nam Định', 'Nghệ An', 'Ninh Bình', 'Ninh Thuận', 'Phú Thọ',
+            'Phú Yên', 'Quảng Bình', 'Quảng Nam', 'Quảng Ngãi', 'Quảng Ninh', 'Quảng Trị',
+            'Sóc Trăng', 'Sơn La', 'Tây Ninh', 'Thái Bình', 'Thái Nguyên', 'Thanh Hóa',
+            'Thừa Thiên Huế', 'Tiền Giang', 'TP. Hồ Chí Minh', 'Trà Vinh', 'Tuyên Quang',
+            'Vĩnh Long', 'Vĩnh Phúc', 'Yên Bái'
+        ];
+        
         $tab    = $request->query('tab', 'all');
         $page   = $request->query('page', 1);
 
         // build mảng Places['all'], Places['usa'], ...
         $Places = [];
-        foreach ($countries as $c) {
+        foreach ($provinces as $c) {
             if ($c === 'all') {
                 $Places['all'] = Place::paginate(9, ['*'], 'page', $page);
             } else {
-                // lưu ý: ở đây `country` trong DB có thể viết HOA, 
-                // nên bạn map lại, ví dụ ucfirst():
-                $Places[$c] = Place::where('country', $c)
+                $Places[$c] = Place::where('provinces', $c)
                    ->paginate(9, ['*'], 'page', $page);
             }
         }
-
-        return view('frontend.destination.index', compact('Places','tab'));
+        $provinceRatings = [];
+        foreach ($provinces as $province) {
+            $placeIds = Place::where('provinces', $province)->pluck('id');
+            $avg = Review::whereIn('reviewable_id', $placeIds)
+                ->where('reviewable_type', Place::class)
+                ->avg('rating');
+            $provinceRatings[$province] = $avg ?? 0;
+        }
+        arsort($provinceRatings); // Sắp xếp giảm dần
+        $topProvinces = array_slice(array_keys($provinceRatings), 0, 6); // Tỉnh có rating cao nhất
+        return view('frontend.destination.index', [
+            'topProvinces' => $topProvinces,
+            'provinces' => $provinces,
+            'showAll' => false,
+        ]);
     }
     public function detail(Request $request, $id)
     {
@@ -74,6 +98,39 @@ class PlaceController
             'Place','primaryMedia','otherMedia',
             'reviews','totalReviews','averageRating','percentages'
         ));
+    }
+    public function all(Request $request)
+    {
+        $provinces = [
+            'An Giang', 'Bà Rịa - Vũng Tàu', 'Bạc Liêu', 'Bắc Giang', 'Bắc Kạn', 'Bắc Ninh',
+            'Bến Tre', 'Bình Dương', 'Bình Định', 'Bình Phước', 'Bình Thuận', 'Cà Mau',
+            'Cao Bằng', 'Cần Thơ', 'Đà Nẵng', 'Đắk Lắk', 'Đắk Nông', 'Điện Biên',
+            'Đồng Nai', 'Đồng Tháp', 'Gia Lai', 'Hà Giang', 'Hà Nam', 'Hà Nội', 'Hà Tĩnh',
+            'Hải Dương', 'Hải Phòng', 'Hậu Giang', 'Hòa Bình', 'Hưng Yên', 'Khánh Hòa',
+            'Kiên Giang', 'Kon Tum', 'Lai Châu', 'Lâm Đồng', 'Lạng Sơn', 'Lào Cai',
+            'Long An', 'Nam Định', 'Nghệ An', 'Ninh Bình', 'Ninh Thuận', 'Phú Thọ',
+            'Phú Yên', 'Quảng Bình', 'Quảng Nam', 'Quảng Ngãi', 'Quảng Ninh', 'Quảng Trị',
+            'Sóc Trăng', 'Sơn La', 'Tây Ninh', 'Thái Bình', 'Thái Nguyên', 'Thanh Hóa',
+            'Thừa Thiên Huế', 'Tiền Giang', 'TP. Hồ Chí Minh', 'Trà Vinh', 'Tuyên Quang',
+            'Vĩnh Long', 'Vĩnh Phúc', 'Yên Bái'
+        ];
+        $query = Place::where('status', true);
+
+        if ($request->filled('province')) {
+            $query->where('provinces', $request->province);
+        }
+
+        $allPlaces = $query->paginate(9);
+        $places = Place::where('status', true)->get();
+        // Có thể truyền thêm các biến khác nếu view index cần
+        $Places = []; // hoặc null, hoặc build như trên
+        $places = Place::where('status', true)->get();
+        return view('frontend.destination.index', [
+            'allPlaces' => $allPlaces,
+            'provinces' => $provinces,
+            'showAll' => true,
+            'selectedProvince' => $request->province,
+        ]);
     }
 
 }
