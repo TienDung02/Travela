@@ -434,7 +434,7 @@
                         <h5 class="modal-title" id="placeModalLabel"></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                    <div class="modal-body" id="placeModalBody"></div>
+                    <div class="modal-body p-0 max-h-2/3 overflow-auto" id="placeModalBody"></div>
                 </div>
             </div>
         </div>
@@ -771,10 +771,10 @@ $(document).on('click', '.show-place-modal', function(e) {
     var summary = $(this).data('summary');
     var fullcontent = $(this).data('fullcontent');
     var url = $(this).data('url');
-    summary = summary ? summary.replace(/\n/g, '<br>') : '';
-    fullcontent = fullcontent ? fullcontent.replace(/\n/g, '<br>') : '';
-    $('#placeModalLabel').html( '<a href = ' + url + ' target="_blank">' + title + '</a>');
-    $('#placeModalBody').html('<p>' + summary + '</p><div>' + fullcontent + '</div>');
+  //  summary = summary ? summary.replace(/\n/g, '<br>') : '';
+   // fullcontent = fullcontent ? fullcontent.replace(/\n/g, '<br>') : '';
+  //  $('#placeModalLabel').html( '<a href = ' + url + ' target="_blank">' + title + '</a>');
+    $('#placeModalBody').html( fullcontent);
     $('#placeModal').modal('show');
 });
 </script>
