@@ -60,9 +60,16 @@ class WikipediaService
         }
 
         // Title and summary
+        $summary = '';
         $title = $entity['labels']['vi']['value'] ?? $entity['labels']['en']['value'] ?? $firstTitle;
-        $summary = $entity['descriptions']['vi']['value'] ?? $entity['descriptions']['en']['value'] ?? '';
-
+        //short desc
+        $desc = $entity['descriptions']['vi']['value'] ?? $entity['descriptions']['en']['value'] ?? '';
+        // Use Wikipedia summary API for a better summary
+        $summaryApiUrl = "https://vi.wikipedia.org/api/rest_v1/page/summary/" . ($firstTitle);
+        $summaryApiResponse = Http::withOptions(['verify' => false])->get($summaryApiUrl);
+        if ($summaryApiResponse->successful() && isset($summaryApiResponse['extract'])) {
+            $summary = $summaryApiResponse['extract'];
+        }
         // Wikipedia URL
         $url = null;
         if (isset($entity['sitelinks']['viwiki']['url'])) {
@@ -74,9 +81,10 @@ class WikipediaService
 $fullContent = '
 <div class="card border-0 shadow-sm mb-0">
   <div class="card-body pb-0">
-    <h4 class="card-title text-primary mb-2">' . e($title) . '</h4>
-    <p class="card-text mb-3">' . e($summary) . '</p>
-    <ul class="list-group list-group-flush mb-3">';
+    <h4 class="card-title text-primary mb-2">' . e(ucfirst($title)) . '</h4>
+    <ul class="list-group list-group-flush mb-3">'.
+    (isset($desc) && $desc !== '' ? '<li class="list-group-item mb-3"><span class="fw-semibold d-block mb-1">Mô tả:</span>' . e(ucfirst($desc)) . '</li>' : '') .
+    (isset($summary) && $summary !== '' ? '<li class="list-group-item mb-3"><span class="fw-semibold d-block mb-1">Tổng quan:</span>' . e(ucfirst($summary)) . '</li>' : '');
 
 // Coordinates (P625) with map inside the list-group-item
 $lat = $lon = null;
@@ -93,7 +101,7 @@ if (isset($entity['claims']['P625'][0]['mainsnak']['datavalue']['value'])) {
         $fullContent .= '
         <div class="text-center">
           <iframe width="100%" height="200" frameborder="0" style="border:1px solid #ccc;border-radius:8px;" 
-            src="https://www.openstreetmap.org/export/embed.html?bbox=' . ($lon-0.01) . '%2C' . ($lat-0.01) . '%2C' . ($lon+0.01) . '%2C' . ($lat+0.01) . '&amp;layer=mapnik&amp;marker=' . $lat . ',' . $lon . '" allowfullscreen></iframe>
+            src="https://www.openstreetmap.org/export/embed.html?bbox=' . ($lon-0.01) . '%2C' . ($lat-0.01) . '%2C' . ($lon+0.01) . '%2C' . ($lat+0.01) . '&amp;layer=mapnik&amp;marker=' . $lat . ',' . $lon . '&amp;zoom=15" allowfullscreen></iframe>
           <div class="small mt-1">
             <a href="https://www.openstreetmap.org/?mlat=' . $lat . '&amp;mlon=' . $lon . '" target="_blank" rel="noopener">Xem bản đồ lớn hơn</a>
           </div>
