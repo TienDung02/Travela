@@ -10,9 +10,7 @@ class PackageController extends Controller
 {
     public function index(Request $request)
     {
-
             $query = Package::query();
-
 
             if ($request->has('search') && $request->search != '') {
                 $query->where(function($q) use ($request){
@@ -22,7 +20,6 @@ class PackageController extends Controller
                 });
             }
 
-
             if ($request->filled('min_price')) {
                 $query->where('price', '>=', $request->min_price);
             }
@@ -31,12 +28,11 @@ class PackageController extends Controller
                 $query->where('price', '<=', $request->max_price);
             }
 
-
             if ($request->filled('rating')) {
                 $query->whereIn('star', $request->rating);
             }
 
-            $packages = $query->paginate(10);
+            $packages = $query->paginate(9);
 
             return view('frontend.packages.index', compact('packages'));
         }

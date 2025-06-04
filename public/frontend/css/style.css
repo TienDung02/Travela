@@ -2908,6 +2908,60 @@ button.thumb-btn {
   .packages .packages-carousel .owl-nav .owl-next:hover i {
     color: var(--bs-white);
 }
+.container-fluid.ExploreTour {
+    overflow: auto;
+}
+/* Ẩn filter sidebar trên tablet/mobile */
+@media (max-width: 991.98px) {
+    .filter-sidebar {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; bottom: 0;
+        width: 80vw;
+        max-width: 320px;
+        background: #fff;
+        z-index: 1050;
+        overflow-y: auto;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+        transition: transform 0.3s;
+        transform: translateX(-100%);
+    }
+    .filter-sidebar.open {
+        display: block; /* <-- Thêm dòng này */
+        z-index: 1051;
+        transform: translateX(+15%);
+    }
+    .filter-toggle-btn {
+        display: inline-block !important;
+    }
+    .filter-sidebar.open ~ .filter-overlay,
+    .filter-overlay.active {
+        display: block;
+        opacity: 1;
+    }
+    .tour-card {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+    .tour-img-col {
+        min-width: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        margin-bottom: 1rem;
+    }
+    .tour-info-col {
+        width: 100% !important;
+    }
+}
+.filter-overlay {
+    display: none;
+    position: fixed;
+    z-index: 1049;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4); /* Độ mờ */
+    transition: opacity 0.3s;
+}
+
 /* -----------------------------------------*/
 /*  End Event And Activity
 /*------------------------------------------*/

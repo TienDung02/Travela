@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Preference;
+use Database\Seeders\RoleSeeder;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Role;
@@ -19,7 +20,7 @@ use App\Models\Review;
 use App\Models\Contact;
 use App\Models\ActivityLog;
 use App\Models\TourPlace;
-use Database\Seeders\RoleSeeder;
+//use Database\Seeders\RoleSeeder;
 class DatabaseSeeder extends Seeder
 {
     public function run()
