@@ -485,7 +485,7 @@
 
 /*** Destination Start ***/
 .container-fluid.destination {
-    overflow: auto;
+    overflow: unset;
 }
 
 .destination .tab-class .tab-content .tab-pane .destination-img {
@@ -2796,6 +2796,11 @@ input[type=number]::-webkit-outer-spin-button
     pointer-events: none;
     background-color: #fff;
   }
+  @media (max-width: 576px) {
+    .pagination li:not(.active):not(.page-item:first-child):not(.page-item:last-child):not(.disabled) {
+        display: none;
+    }
+}
 /* === Main media === */
 .gallery-main-img img,
 .gallery-main-img video {
