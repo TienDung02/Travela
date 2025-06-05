@@ -19,7 +19,7 @@ class ReviewController
     public function store(Request $request, string $type, int $id)
     {
         if (! Auth::check()) {
-            return redirect()->route('login');
+            return redirect()->route('login.index');
         }
         $data = $request->validate([
             'rating'  => 'required|integer|min:1|max:5',

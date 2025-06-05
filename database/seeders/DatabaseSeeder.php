@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             PlaceSeeder::class,
             PlaceMediaSeeder::class,
+            TourSeeder::class,
             ReviewSeeder::class,
             CurrencySeeder::class,
             PreferencesSeeder::class,
@@ -53,7 +54,7 @@ class DatabaseSeeder extends Seeder
         Blog::factory(10)->create();
 
         // Tạo dữ liệu cho bảng Tour
-        Tour::factory(10)->create();
+        //Tour::factory(10)->create();
 
         // Tạo dữ liệu cho bảng Package
         Package::factory(50)->create();

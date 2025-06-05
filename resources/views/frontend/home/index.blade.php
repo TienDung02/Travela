@@ -80,306 +80,113 @@
                 <h5 class="section-title px-3">Destination</h5>
                 <h1 class="mb-0">Popular Destination</h1>
             </div>
-            <div class="tab-class text-center">
-                <ul class="nav nav-pills d-inline-flex justify-content-center mb-5">
-                    <li class="nav-item">
-                        <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill active" data-bs-toggle="pill" href="#tab-1">
-                            <span class="text-dark" style="width: 150px;">All</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="d-flex py-2 mx-3 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#tab-2">
-                            <span class="text-dark" style="width: 150px;">USA</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#tab-3">
-                            <span class="text-dark" style="width: 150px;">Canada</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#tab-4">
-                            <span class="text-dark" style="width: 150px;">Europe</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#tab-5">
-                            <span class="text-dark" style="width: 150px;">China</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="d-flex mx-3 py-2 border border-primary bg-light rounded-pill" data-bs-toggle="pill" href="#tab-6">
-                            <span class="text-dark" style="width: 150px;">Singapore</span>
-                        </a>
-                    </li>
-                </ul>
+            <div class="tab-class text-center col-lg-11 col-xl-11 col-xxl-9 mx-auto">
+                <div class="w-100 d-flex justify-content-between align-items-center mb-4">
+                    <div class="text-start">
+                        <h5 class="mb-0" id="destination-title">
+                            @if(!empty($showAll))
+                                {{ isset($selectedProvince) && $selectedProvince ? $selectedProvince : 'All Place' }}
+                            @else
+                                Most Rating
+                            @endif
+                        </h5>
+                    </div>
+                    @if(!empty($showAll))
+                    <div class="text-end">
+                        <form method="get">
+                            <select id="destination-select" name="province" class="form-select" style="width: 220px;" onchange="this.form.submit()">
+                                <option value="">Tất cả tỉnh thành</option>
+                                @foreach($provinces as $province)
+                                    <option value="{{ $province }}" {{ (isset($selectedProvince) && $selectedProvince == $province) ? 'selected' : '' }}>{{ $province }}</option>
+                                @endforeach
+                            </select>
+                        </form>
+                    </div>
+                    @endif
+                </div>
                 <div class="tab-content">
-                    <div id="tab-1" class="tab-pane fade show p-0 active">
-                        <div class="row g-4">
-                            <div class="col-xl-8">
-                                <div class="row g-4">
-                                    <div class="col-12 col-lg-6">
-                                        <div class="destination-img">
-                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-1.jpg')}}" alt="">
-                                            <div class="destination-overlay p-4">
-                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
-                                                <h4 class="text-white mb-2 mt-3">New York City</h4>
-                                                <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                            </div>
-                                            <div class="search-icon">
-                                                <a href="{{asset("frontend/images/destination-1.jpg")}}" data-lightbox="destination-1"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary position-relative"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-lg-6">
-                                        <div class="destination-img">
-                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-2.jpg')}}" alt="">
-                                            <div class="destination-overlay p-4">
-                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
-                                                <h4 class="text-white mb-2 mt-3">Las vegas</h4>
-                                                <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                            </div>
-                                            <div class="search-icon">
-                                                <a href="{{asset("frontend/images/destination-2.jpg")}}" data-lightbox="destination-2"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary position-relative"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-lg-6">
-                                        <div class="destination-img">
-                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-7.jpg')}}" alt="">
-                                            <div class="destination-overlay p-4">
-                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
-                                                <h4 class="text-white mb-2 mt-3">Los angelas</h4>
-                                                <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                            </div>
-                                            <div class="search-icon">
-                                                <a href="{{asset("frontend/images/destination-7.jpg")}}" data-lightbox="destination-7"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary position-relative"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-lg-6">
-                                        <div class="destination-img">
-                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-8.jpg')}}" alt="">
-                                            <div class="destination-overlay p-4">
-                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
-                                                <h4 class="text-white mb-2 mt-3">Los angelas</h4>
-                                                <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                            </div>
-                                            <div class="search-icon">
-                                                <a href="{{asset('frontend/images/destination-8.jpg')}}" data-lightbox="destination-8"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary position-relative"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-xl-4">
-                                <div class="destination-img h-100">
-                                    <img class="img-fluid rounded w-100 h-100" src="{{asset('frontend/images/destination-9.jpg')}}" style="object-fit: cover; min-height: 300px;" alt="">
-                                    <div class="destination-overlay p-4">
-                                        <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
-                                        <h4 class="text-white mb-2 mt-3">San francisco</h4>
-                                        <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                    </div>
-                                    <div class="search-icon">
-                                        <a href="{{asset('frontend/images/destination-9.jpg')}}" data-lightbox="destination-4"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary position-relative"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-4">
-                                <div class="destination-img">
-                                    <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-4.jpg')}}" alt="">
-                                    <div class="destination-overlay p-4">
-                                        <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
-                                        <h4 class="text-white mb-2 mt-3">Los angelas</h4>
-                                        <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                    </div>
-                                    <div class="search-icon">
-                                        <a href="{{asset('frontend/images/destination-4.jpg')}}" data-lightbox="destination-4"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary position-relative"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-4">
-                                <div class="destination-img">
-                                    <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-5.jpg')}}" alt="">
-                                    <div class="destination-overlay p-4">
-                                        <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
-                                        <h4 class="text-white mb-2 mt-3">Los angelas</h4>
-                                        <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                    </div>
-                                    <div class="search-icon">
-                                        <a href="{{asset('frontend/images/destination-5.jpg')}}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary position-relative"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-4">
-                                <div class="destination-img">
-                                    <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-6.jpg')}}" alt="">
-                                    <div class="destination-overlay p-4">
-                                        <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
-                                        <h4 class="text-white mb-2 mt-3">Los angelas</h4>
-                                        <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                    </div>
-                                    <div class="search-icon">
-                                        <a href="{{asset('frontend/images/destination-6.jpg')}}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary position-relative"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                
-                    <div id="tab-2" class="tab-pane fade show p-0">
-                        <div class="row g-4">
-                            <div class="col-12 col-lg-6">
-                                <div class="destination-img">
-                                    <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-5.jpg")}}" alt="">
-                                    <div class="destination-overlay p-4">
-                                        <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
-                                        <h4 class="text-white mb-2 mt-3">San francisco</h4>
-                                        <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                    </div>
-                                    <div class="search-icon">
-                                        <a href="{{asset("frontend/images/destination-5.jpg")}}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary position-relative"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                                <div class="destination-img">
-                                    <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-6.jpg")}}" alt="">
-                                    <div class="destination-overlay p-4">
-                                        <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
-                                        <h4 class="text-white mb-2 mt-3">San francisco</h4>
-                                        <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                    </div>
-                                    <div class="search-icon">
-                                        <a href="{{asset("frontend/images/destination-6.jpg")}}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary position-relative"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            
-                    <div id="tab-3" class="tab-pane fade show p-0">
-                        <div class="row g-4">
-                            <div class="col-12 col-lg-6">
-                                <div class="destination-img">
-                                    <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-5.jpg")}}" alt="">
-                                    <div class="destination-overlay p-4">
-                                        <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
-                                        <h4 class="text-white mb-2 mt-3">San francisco</h4>
-                                        <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                    </div>
-                                    <div class="search-icon">
-                                        <a href="{{asset("frontend/images/destination-5.jpg")}}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary position-relative"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                                <div class="destination-img">
-                                    <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-6.jpg")}}" alt="">
-                                    <div class="destination-overlay p-4">
-                                        <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
-                                        <h4 class="text-white mb-2 mt-3">San francisco</h4>
-                                        <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                    </div>
-                                    <div class="search-icon">
-                                        <a href="{{asset("frontend/images/destination-6.jpg")}}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary position-relative"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-        
-                    <div id="tab-4" class="tab-pane fade show p-0">
-                        <div class="row g-4">
-                            <div class="col-12 col-lg-6">
-                                <div class="destination-img">
-                                    <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-5.jpg")}}" alt="">
-                                    <div class="destination-overlay p-4">
-                                        <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
-                                        <h4 class="text-white mb-2 mt-3">San francisco</h4>
-                                        <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                    </div>
-                                    <div class="search-icon">
-                                        <a href="{{asset("frontend/images/destination-5.jpg")}}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary position-relative"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="destination-img">
-                                        <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-6.jpg")}}" alt="">
-                                        <div class="destination-overlay p-4">
-                                            <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
-                                            <h4 class="text-white mb-2 mt-3">San francisco</h4>
-                                            <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                        </div>
-                                        <div class="search-icon">
-                                            <a href="{{asset("frontend/images/destination-6.jpg")}}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary position-relative"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        
-                    
-                        <div id="tab-5" class="tab-pane fade show p-0">
+                    <div id="tab-all" class="tab-pane fade show p-0 active">
+                        @if(!empty($showAll) && isset($allPlaces))
                             <div class="row g-4">
-                                <div class="col-12 col-lg-6">
-                                    <div class="destination-img">
-                                        <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-5.jpg")}}" alt="">
-                                        <div class="destination-overlay p-4">
-                                            <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
-                                            <h4 class="text-white mb-2 mt-3">San francisco</h4>
-                                            <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                        </div>
-                                        <div class="search-icon">
-                                            <a href="{{asset("frontend/images/destination5.jpg")}}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary position-relative"></i></a>
+                                @foreach($allPlaces as $place)
+                                    <div class="col-lg-4">
+                                        <div class="destination-img">
+                                            <img class="img-fluid rounded w-100" src="{{ asset('frontend/images/destination-1.jpg') }}" alt="{{ $place->name }}">
+                                            <div class="destination-overlay p-4">
+                                                <h4 class="text-white mb-2 mt-3">{{ $place->name }}</h4>
+                                                <div class="text-white">{{ $place->provinces }}</div>
+                                                <a href="{{ route('destination.detail', $place->id) }}" class="btn btn-primary mt-2">View Detail</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="destination-img">
-                                        <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-6.jpg")}}" alt="">
-                                        <div class="destination-overlay p-4">
-                                            <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
-                                            <h4 class="text-white mb-2 mt-3">San francisco</h4>
-                                            <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                        </div>
-                                        <div class="search-icon">
-                                            <a href="{{asset("frontend/images/destination-6.jpg")}}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary position-relative"></i></a>
-                                        </div>
+                                @endforeach
+                            </div>
+                            <div class="mt-4">
+                                {{ $allPlaces->withQueryString()->links() }}
+                            </div>
+                        @else
+                            <div id="destination-container" class="row g-4">
+                                <div class="col-xl-12">
+                                    <div class="row g-4">
+                                        @foreach($topProvinces as $province)
+                                            @php
+                                                $topPlace = \App\Models\Place::where('provinces', $province)->first();
+                                            @endphp
+                                            <div class="col-lg-4 destination-item">
+                                                <div class="destination-img">
+                                                    <img class="img-fluid rounded w-100"
+                                                        src="{{ $topPlace ? asset('frontend/images/destination-1.jpg') : asset('frontend/images/no-image.jpg') }}"
+                                                        alt="">
+                                                    <div class="destination-overlay p-4">
+                                                        <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">
+                                                            {{ $topPlace ? $topPlace->reviews()->count() : 0 }} Photos
+                                                        </a>
+                                                        <h4 class="text-white mb-2 mt-3">{{ $province }}</h4>
+                                                            <a href="{{ route('destination.all', ['province' => $province]) }}" class="btn-hover text-white">
+                                                                View All Place <i class="fa fa-arrow-right ms-2"></i>
+                                                            </a>
+                                                        </a>
+                                                    </div>
+                                                    <div class="search-icon">
+                                                        <a href="{{ $topPlace ? asset('frontend/images/destination-1.jpg') : '#' }}" data-lightbox="destination-1">
+                                                            <i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
+                            <div class="text-center mt-4">
+                                <a href="{{ route('destination.all') }}" class="btn btn-primary px-4 py-2">See All Place</a>
+                            </div>
+                        @endif
+                    </div>
+                    <div id="tab-usa" class="tab-pane fade show p-0">
+                        <div class="row g-4">
+                            @if(isset($Places['TP. Hồ Chí Minh']))
+                                @foreach($Places['TP. Hồ Chí Minh'] as $Place)
+                                    <div class="col-lg-4">
+                                        <div class="destination-img">
+                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-6.jpg')}}" alt="Image of {{$Place->name}}">
+                                            <div class="destination-overlay p-4">
+                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
+                                                <h4 class="text-white mb-2 mt-3">{{$Place->name}}</h4>
+                                                <a href="{{route('destination.detail', $Place->id)}}" class="btn-hover text-white">View detail<i class="fa fa-arrow-right ms-2"></i></a>
+                                            </div>
+                                            <div class="search-icon">
+                                                <a href="{{asset('frontend/images/destination-6.jpg')}}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
                         </div>
-    
-                        <div id="tab-6" class="tab-pane fade show p-0">
-                            <div class="row g-4">
-                                <div class="col-12 col-lg-6">
-                                    <div class="destination-img">
-                                        <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-5.jpg")}}" alt="">
-                                        <div class="destination-overlay p-4">
-                                            <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
-                                            <h4 class="text-white mb-2 mt-3">San francisco</h4>
-                                            <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                        </div>
-                                        <div class="search-icon">
-                                            <a href="{{asset("frontend/images/destination-5.jpg")}}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary position-relative"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-                                    <div class="destination-img">
-                                        <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-6.jpg")}}" alt="">
-                                        <div class="destination-overlay p-4">
-                                            <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
-                                            <h4 class="text-white mb-2 mt-3">San francisco</h4>
-                                            <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                        </div>
-                                        <div class="search-icon">
-                                            <a href="{{asset("img/destination-6.jpg")}}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary position-relative"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="mt-4">
+                        @if(isset($Places['TP. Hồ Chí Minh']))
+                            {{ $Places['TP. Hồ Chí Minh']->appends(['tab' => 'usa'])->links() }} <!-- Phân trang chỉ áp dụng cho USA -->
+                        @endif
                         </div>
                     </div>
                 </div>
@@ -397,97 +204,39 @@
                     <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum tempore nam, architecto doloremque velit explicabo? Voluptate sunt eveniet fuga eligendi! Expedita laudantium fugiat corrupti eum cum repellat a laborum quasi.
                     </p>
                 </div>
-                <div class="tab-class text-center">
-
+                <div class="tab-class text-center col-lg-11 col-xl-11 col-xxl-9 mx-auto">
                     <div class="tab-content">
+                        <div class="text-start">
+                            <h5 class="mb-0" id="destination-title">
+                                Most Rating
+                            </h5>
+                        </div>
                         <div id="NationalTab-1" class="tab-pane fade show p-0 active">
                             <div class="row g-4">
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="national-item">
-                                        <img src="{{asset("frontend/images/explore-tour-1.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                        <div class="national-content">
-                                            <div class="national-info">
-                                                <h5 class="text-white text-uppercase mb-2">Weekend Tour</h5>
-                                                <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
+                                @foreach($topTours as $tour)
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="national-item">
+                                            <img src="{{ $tour->image ? asset($tour->image) : asset('frontend/images/explore-tour-1.jpg') }}" class="img-fluid w-100 rounded" alt="{{ $tour->name }}">
+                                            <div class="national-content">
+                                                <div class="national-info">
+                                                    <h5 class="text-white text-uppercase mb-2">{{ $tour->name }}</h5>
+                                                    <a href="{{ route('tour.detail', $tour->id) }}" class="btn-hover text-white">View Detail <i class="fa fa-arrow-right ms-2"></i></a>
+                                                </div>
+                                            </div>
+                                            @if($tour->discount)
+                                                <div class="tour-offer bg-info">{{ $tour->discount }}% Off</div>
+                                            @endif
+                                            <div class="national-plus-icon">
+                                                <a href="{{ route('tour.detail', $tour->id) }}" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
                                             </div>
                                         </div>
-                                        <div class="national-plus-icon">
-                                            <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="national-item">
-                                        <img src="{{asset("frontend/images/explore-tour-2.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                        <div class="national-content">
-                                            <div class="national-info">
-                                                <h5 class="text-white text-uppercase mb-2">Holiday Tour</h5>
-                                                <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="national-plus-icon">
-                                            <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                        </div>
+                                @endforeach
+                                @if($topTours->isEmpty())
+                                    <div class="col-12">
+                                        <p class="text-center text-muted">No tours found.</p>
                                     </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="national-item">
-                                        <img src="{{asset("frontend/images/explore-tour-3.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                        <div class="national-content">
-                                            <div class="national-info">
-                                                <h5 class="text-white text-uppercase mb-2">Road Trip</h5>
-                                                <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="tour-offer bg-info">15% Off</div>
-                                        <div class="national-plus-icon">
-                                            <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="national-item">
-                                        <img src="{{asset("frontend/images/explore-tour-4.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                        <div class="national-content">
-                                            <div class="national-info">
-                                                <h5 class="text-white text-uppercase mb-2">Historical Trip</h5>
-                                                <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="national-plus-icon">
-                                            <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="national-item">
-                                        <img src="{{asset("frontend/images/explore-tour-5.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                        <div class="national-content">
-                                            <div class="national-info">
-                                                <h5 class="text-white text-uppercase mb-2">Family Tour</h5>
-                                                <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="tour-offer bg-warning">50% Off</div>
-                                        <div class="national-plus-icon">
-                                            <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="national-item">
-                                        <img src="{{asset("frontend/images/explore-tour-6.jpg")}}" class="img-fluid w-100 rounded" alt="Image">
-                                        <div class="national-content">
-                                            <div class="national-info">
-                                                <h5 class="text-white text-uppercase mb-2">Beach Tour</h5>
-                                                <a href="#" class="btn-hover text-white">View All Place <i class="fa fa-arrow-right ms-2"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="national-plus-icon">
-                                            <a href="#" class="my-auto"><i class="fas fa-link fa-2x text-white"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>

@@ -11,53 +11,90 @@ class TourController extends Controller
     // Hiển thị danh sách tất cả các tour
     public function index(Request $request)
     {
-        $query = Tour::with(['reviews', 'packages']);
+        $query = Tour::with(['reviews', 'packages', 'places']);
+
+        // Lọc giá
         if ($request->filled('price')) {
-            $query->where('price', '>=', $request->price);
+            $query->whereRaw('CAST(price AS DECIMAL(10,2)) >= ?', [(float)$request->price]);
         }
-        if ($request->filled('public_choice') && in_array('filter1', $request->public_choice)) {
-            $query->where('is_featured', true);
-        }
-        if ($request->filled('rating')) {
-            $query->where(function ($q) use ($request) {
-                foreach ($request->rating as $i => $range) {
-                    [$min, $max] = explode('-', $range);
-                    if ($i === 0) {
-                        $q->whereBetween('avg_rating', [(float)$min, (float)$max]);
-                    } else {
-                        $q->orWhereBetween('avg_rating', [(float)$min, (float)$max]);
-                    }
-                }
+        // Lọc duration
+        if ($request->filled('duration') && (int)$request->duration > 0) {
+            $query->whereHas('places', function($q) use ($request) {
+                $q->selectRaw('tour_places.tour_id, SUM(tour_places.duration_days) as total_days')
+                ->groupBy('tour_places.tour_id')
+                ->havingRaw('SUM(tour_places.duration_days) = ?', [(int)$request->duration]);
             });
         }
-        if ($request->filled('tour_type')){
-            $query->where(function($q) use ($request) {
-                foreach ($request->tour_type as $type) {
-                    $q->orWhereJsonContains('types', $type);
-                }
-            });
-        }
+
+        // Sắp xếp
         if ($request->filled('sort')) {
             if ($request->sort == 'price_asc') {
                 $query->orderBy('price', 'asc');
             } elseif ($request->sort == 'price_desc') {
                 $query->orderBy('price', 'desc');
             } else {
-                $query->latest(); // Mặc định
+                $query->latest();
             }
         } else {
             $query->latest();
         }
-        $tours = $query->latest()->paginate(4);
+
+        // Lấy tất cả tour sau khi đã filter
+        $tours = $query->get();
+
+        // Lọc rating bằng PHP
+        if ($request->filled('rating')) {
+            $tours = $tours->filter(function ($tour) use ($request) {
+                foreach ($request->rating as $range) {
+                    [$min, $max] = explode('-', $range);
+                    $avg = $tour->reviews->avg('rating');
+                    if ($avg >= (float)$min && $avg <= (float)$max) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+        }
+
+        // Phân trang thủ công
+        $page = $request->input('page', 1);
+        $perPage = 4;
+        $paged = $tours->slice(($page - 1) * $perPage, $perPage)->values();
+        $tours = new \Illuminate\Pagination\LengthAwarePaginator(
+            $paged,
+            $tours->count(),
+            $perPage,
+            $page,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+
+        // Tính toán lại các trường hiển thị
         $tours->getCollection()->transform(function ($tour) {
             $reviews = $tour->reviews;
             $tour->reviews_count = $reviews->count();
-            $avgRating = $reviews->count() ? round($reviews->avg('rating'), 1) : null;
-            $tour->avg_rating = $avgRating;
-
+            $tour->avg_rating = $reviews->count() ? round($reviews->avg('rating'), 1) : null;
+            $tour->total_duration = $tour->places->sum(function($place) {
+                return $place->pivot->duration_days ?? 0;
+            });
             return $tour;
         });
-
+        
         return view('frontend.tour.index', compact('tours'));
+    }
+    public function detail($id)
+    {
+        $tour = Tour::with(['reviews.user', 'packages', 'places'])->findOrFail($id);
+        $reviews = $tour->reviews()->latest()->paginate(5);
+        $tour->reviews_count = $reviews->total();
+        $tour->avg_rating = $reviews->count() ? round($reviews->avg('rating'), 1) : null;
+        // Tính tổng thời gian
+        $tour->total_duration = $tour->places->sum(function($place) {
+            return $place->pivot->duration_days ?? 0;
+        });
+        $otherTours = \App\Models\Tour::where('id', '!=', $tour->id)
+            ->inRandomOrder()
+            ->limit(3)
+            ->get();
+        return view('frontend.tour.detail', compact('tour', 'reviews', 'otherTours'));
     }
 }

@@ -37,6 +37,18 @@
             <div class="mx-auto text-center mb-5" style="max-width: 900px;">
                 <h5 class="section-title px-3">Destination</h5>
             </div>
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-9 col-xl-9 col-xxl-7 mx-auto">
+                    <form action="{{ route('destination.all') }}" method="GET" class="search-form">
+                        <div class="input-group shadow-lg rounded-pill overflow-hidden w-100 flex-nowrap" style="background: var(--bg-color); border: 1px solid var(--border-color); transition: all 0.3s ease;">
+                            <input type="text" name="search" value="" class="form-control form-control-lg border-0 bg-transparent ps-4 py-3" placeholder="Search destination..." style="color: var(--text-primary); outline: none; box-shadow: none;">
+                            <button type="submit" class="btn btn-primary rounded-0 px-4" style="background: var(--primary-gradient); border: none; transition: all 0.3s ease;">
+                            <i class="fa fa-search me-2"></i> Search
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <div class="tab-class text-center col-lg-10 col-xl-10 col-xxl-8 mx-auto">
                 <div class="w-100 d-flex justify-content-between align-items-center mb-4">
                     <div class="text-start">

@@ -27,4 +27,9 @@ class Tour extends Model
     {
         return $this->morphMany(Review::class, 'reviewable');
     }
+    public function places()
+    {
+        return $this->belongsToMany(Place::class, 'tour_places')
+        ->withPivot(['duration_days', 'day_number']);
+    }
 }

@@ -119,8 +119,37 @@ class PlaceController
         if ($request->filled('province')) {
             $query->where('provinces', $request->province);
         }
-
-        $allPlaces = $query->paginate(9);
+        $places = $query->get();
+        // Nếu có tìm kiếm, lọc danh sách
+        if ($request->filled('search')) {
+            $search = strtolower(convertVietnameseToLatin($request->search));
+            $selectedProvince = null;
+            foreach ($provinces as $province) {
+                $provinceLatin = strtolower(convertVietnameseToLatin($province));
+                if (str_contains($provinceLatin, $search) && strlen($search) >= 4) {
+                    $selectedProvince = $province;
+                    break;
+                }
+            }
+            $places = $places->filter(function($place) use ($search) {
+                return str_contains(strtolower(convertVietnameseToLatin($place->name)), $search)
+                    || str_contains(strtolower(convertVietnameseToLatin($place->provinces)), $search);
+            });
+            // Phân trang thủ công...
+            $page = $request->get('page', 1);
+            $perPage = 9;
+            $allPlaces = new \Illuminate\Pagination\LengthAwarePaginator(
+                $places->forPage($page, $perPage),
+                $places->count(),
+                $perPage,
+                $page,
+                ['path' => $request->url(), 'query' => $request->query()]
+            );
+        } else {
+            $selectedProvince = $request->province ?? null;
+            $allPlaces = $query->paginate(9);
+        }
+        
         $places = Place::where('status', true)->get();
         // Có thể truyền thêm các biến khác nếu view index cần
         $Places = []; // hoặc null, hoặc build như trên
@@ -129,7 +158,7 @@ class PlaceController
             'allPlaces' => $allPlaces,
             'provinces' => $provinces,
             'showAll' => true,
-            'selectedProvince' => $request->province,
+            'selectedProvince' => $selectedProvince,
         ]);
     }
 

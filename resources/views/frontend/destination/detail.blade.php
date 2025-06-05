@@ -40,7 +40,7 @@
                     <div class="row g-4">
                         <div class="row d-flex">
                             <div class="col-lg-7">
-                                <div class="destination-img">
+                                <div class="destination-detail-img">
                                     <div class="wrapper">
                                         <section class="gallery">
                                             {{-- ẢNH CHÍNH --}}
@@ -194,6 +194,28 @@
                                                     {{ $reviews->onEachSide(1)->links('pagination::bootstrap-4') }}
                                                 </div>
                                             @endif
+                                        </div>
+                                        <div class="my-4"></div>
+                                        <div class="card mb-4">
+                                            <div class="card-body">
+                                                <form action="{{ route('reviews.store', ['type' => 'place', 'id' => $Place->id]) }}" method="POST">
+                                                    @csrf
+                                                    <div class="mb-2">
+                                                        <label for="rating" class="form-label">Đánh giá:</label>
+                                                        <select name="rating" id="rating" class="form-select" required>
+                                                            <option value="">Chọn số sao</option>
+                                                            @for($i = 5; $i >= 1; $i--)
+                                                                <option value="{{ $i }}">{{ $i }} ★</option>
+                                                            @endfor
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-2">
+                                                        <label for="comment" class="form-label">Bình luận:</label>
+                                                        <textarea name="comment" id="comment" class="form-control" rows="3" required placeholder="Viết bình luận của bạn..."></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-5"></div>

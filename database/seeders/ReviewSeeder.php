@@ -52,10 +52,5 @@ class ReviewSeeder extends Seeder
                 ]);
             }
         }
-        // Cập nhật avg_rating cho từng tour dựa trên reviews
-        foreach (\App\Models\Tour::with('reviews')->get() as $tour) {
-            $tour->avg_rating = $tour->reviews->avg('rating') ?? 0;
-            $tour->save(['avg_rating']);
-        }
     }
 }
