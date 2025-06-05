@@ -233,7 +233,7 @@ class GeminiService
             *   **Tag:** tag1, tag2, ...
         - Không cần mở bài kết bài, tôi chỉ cần như mẫu trên";
 
-        do {
+//        do {
             $response = Http::post($this->apiUrl . "?key=" . $this->apiKey, [
                 'contents' => [
                     [
@@ -245,7 +245,7 @@ class GeminiService
             ]);
 
             $places = $response->json();
-        } while (!isset($places['candidates']));
+//        } while (!isset($places['candidates']));
 
         $places = $places['candidates'][0]['content']['parts'][0]['text'];
 

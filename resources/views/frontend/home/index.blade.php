@@ -75,7 +75,7 @@
 
     <!-- Destination Start -->
     <div class="container-fluid destination py-5">
-        <div class="container-fluid py-5">
+        <div class="container py-5">
             <div class="mx-auto text-center mb-5" style="max-width: 900px; margin-top: 10rem;">
                 <h5 class="section-title px-3">Destination</h5>
                 <h1 class="mb-0">Popular Destination</h1>
@@ -118,7 +118,7 @@
                         <div class="row g-4">
                             <div class="col-xl-8">
                                 <div class="row g-4">
-                                    <div class="col-12 col-lg-6">
+                                    <div class="col-lg-6">
                                         <div class="destination-img">
                                             <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-1.jpg')}}" alt="">
                                             <div class="destination-overlay p-4">
@@ -131,7 +131,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-lg-6">
+                                    <div class="col-lg-6">
                                         <div class="destination-img">
                                             <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-2.jpg')}}" alt="">
                                             <div class="destination-overlay p-4">
@@ -144,7 +144,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-lg-6">
+                                    <div class="col-lg-6">
                                         <div class="destination-img">
                                             <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-7.jpg')}}" alt="">
                                             <div class="destination-overlay p-4">
@@ -157,7 +157,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-lg-6">
+                                    <div class="col-lg-6">
                                         <div class="destination-img">
                                             <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-8.jpg')}}" alt="">
                                             <div class="destination-overlay p-4">
@@ -172,7 +172,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-xl-4">
+                            <div class="col-xl-4">
                                 <div class="destination-img h-100">
                                     <img class="img-fluid rounded w-100 h-100" src="{{asset('frontend/images/destination-9.jpg')}}" style="object-fit: cover; min-height: 300px;" alt="">
                                     <div class="destination-overlay p-4">
@@ -185,7 +185,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-4">
+                            <div class="col-lg-4">
                                 <div class="destination-img">
                                     <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-4.jpg')}}" alt="">
                                     <div class="destination-overlay p-4">
@@ -198,7 +198,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-4">
+                            <div class="col-lg-4">
                                 <div class="destination-img">
                                     <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-5.jpg')}}" alt="">
                                     <div class="destination-overlay p-4">
@@ -211,7 +211,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-4">
+                            <div class="col-lg-4">
                                 <div class="destination-img">
                                     <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-6.jpg')}}" alt="">
                                     <div class="destination-overlay p-4">
@@ -226,10 +226,9 @@
                             </div>
                         </div>
                     </div>
-                
                     <div id="tab-2" class="tab-pane fade show p-0">
                         <div class="row g-4">
-                            <div class="col-12 col-lg-6">
+                            <div class="col-lg-6">
                                 <div class="destination-img">
                                     <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-5.jpg")}}" alt="">
                                     <div class="destination-overlay p-4">
@@ -242,7 +241,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-6">
+                            <div class="col-lg-6">
                                 <div class="destination-img">
                                     <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-6.jpg")}}" alt="">
                                     <div class="destination-overlay p-4">
@@ -257,10 +256,9 @@
                             </div>
                         </div>
                     </div>
-            
                     <div id="tab-3" class="tab-pane fade show p-0">
                         <div class="row g-4">
-                            <div class="col-12 col-lg-6">
+                            <div class="col-lg-6">
                                 <div class="destination-img">
                                     <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-5.jpg")}}" alt="">
                                     <div class="destination-overlay p-4">
@@ -273,7 +271,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-6">
+                            <div class="col-lg-6">
                                 <div class="destination-img">
                                     <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-6.jpg")}}" alt="">
                                     <div class="destination-overlay p-4">
@@ -288,10 +286,9 @@
                             </div>
                         </div>
                     </div>
-        
                     <div id="tab-4" class="tab-pane fade show p-0">
                         <div class="row g-4">
-                            <div class="col-12 col-lg-6">
+                            <div class="col-lg-6">
                                 <div class="destination-img">
                                     <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-5.jpg")}}" alt="">
                                     <div class="destination-overlay p-4">
@@ -303,8 +300,7 @@
                                         <a href="{{asset("frontend/images/destination-5.jpg")}}" data-lightbox="destination-5"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary position-relative"></i></a>
                                     </div>
                                 </div>
-                            </div>
-                                <div class="col-12 col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="destination-img">
                                         <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-6.jpg")}}" alt="">
                                         <div class="destination-overlay p-4">
@@ -318,11 +314,10 @@
                                     </div>
                                 </div>
                             </div>
-                        
-                    
+                        </div>
                         <div id="tab-5" class="tab-pane fade show p-0">
                             <div class="row g-4">
-                                <div class="col-12 col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="destination-img">
                                         <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-5.jpg")}}" alt="">
                                         <div class="destination-overlay p-4">
@@ -335,7 +330,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="destination-img">
                                         <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-6.jpg")}}" alt="">
                                         <div class="destination-overlay p-4">
@@ -350,10 +345,9 @@
                                 </div>
                             </div>
                         </div>
-    
                         <div id="tab-6" class="tab-pane fade show p-0">
                             <div class="row g-4">
-                                <div class="col-12 col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="destination-img">
                                         <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-5.jpg")}}" alt="">
                                         <div class="destination-overlay p-4">
@@ -366,7 +360,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="destination-img">
                                         <img class="img-fluid rounded w-100" src="{{asset("frontend/images/destination-6.jpg")}}" alt="">
                                         <div class="destination-overlay p-4">
@@ -385,12 +379,11 @@
                 </div>
             </div>
         </div>
-    </div>    
         <!-- Destination End -->
 
         <!-- Explore Tour Start -->
         <div class="container-fluid ExploreTour py-5">
-            <div class="container-fluid py-5">
+            <div class="container py-5">
                 <div class="mx-auto text-center mb-5" style="max-width: 900px; margin-top: 10rem;">
                     <h5 class="section-title px-3">Explore Tour</h5>
                     <h1 class="mb-4">The World</h1>
@@ -804,7 +797,7 @@
 
         <!-- Tour Booking Start -->
         <div class="container-fluid booking py-5">
-            <div class="container-fluid py-5">
+            <div class="container py-5">
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6">
                         <h5 class="section-booking-title pe-3">Booking</h5>
@@ -888,7 +881,7 @@
 
         <!-- Travel Guide Start -->
         <div class="container-fluid guide py-5">
-            <div class="container-fluid py-5">
+            <div class="container py-5">
                 <div class="mx-auto text-center mb-5" style="max-width: 900px; margin-top: 10rem;">
                     <h5 class="section-title px-3">Travel Guide</h5>
                     <h1 class="mb-0">Meet Our Guide</h1>
@@ -984,101 +977,101 @@
         <!-- Travel Guide End -->
 
         <!-- Testimonial Start -->
-        <div class="container-fluid testimonial py-5">
-            <div class="container-fluid py-5">
-                <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-                    <h5 class="section-title px-3">Testimonial</h5>
-                    <h1 class="mb-0">Our Clients Say!!!</h1>
-                </div>
-                <div class="testimonial-carousel owl-carousel">
-                    <div class="testimonial-item text-center rounded pb-4">
-                        <div class="testimonial-comment bg-light rounded p-4">
-                            <p class="text-center mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis nostrum cupiditate, eligendi repellendus saepe illum earum architecto dicta quisquam quasi porro officiis. Vero reiciendis,
-                            </p>
-                        </div>
-                        <div class="testimonial-img p-1">
-                            <img src="{{asset("frontend/images/testimonial-1.jpg")}}" class="img-fluid rounded-circle" alt="Image">
-                        </div>
-                        <div style="margin-top: -35px;">
-                            <h5 class="mb-0">John Abraham</h5>
-                            <p class="mb-0">New York, USA</p>
-                            <div class="d-flex justify-content-center">
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item text-center rounded pb-4">
-                        <div class="testimonial-comment bg-light rounded p-4">
-                            <p class="text-center mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis nostrum cupiditate, eligendi repellendus saepe illum earum architecto dicta quisquam quasi porro officiis. Vero reiciendis,
-                            </p>
-                        </div>
-                        <div class="testimonial-img p-1">
-                            <img src="{{asset("frontend/images/testimonial-2.jpg")}}" class="img-fluid rounded-circle" alt="Image">
-                        </div>
-                        <div style="margin-top: -35px;">
-                            <h5 class="mb-0">John Abraham</h5>
-                            <p class="mb-0">New York, USA</p>
-                            <div class="d-flex justify-content-center">
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item text-center rounded pb-4">
-                        <div class="testimonial-comment bg-light rounded p-4">
-                            <p class="text-center mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis nostrum cupiditate, eligendi repellendus saepe illum earum architecto dicta quisquam quasi porro officiis. Vero reiciendis,
-                            </p>
-                        </div>
-                        <div class="testimonial-img p-1">
-                            <img src="{{asset("frontend/images/testimonial-3.jpg")}}" class="img-fluid rounded-circle" alt="Image">
-                        </div>
-                        <div style="margin-top: -35px;">
-                            <h5 class="mb-0">John Abraham</h5>
-                            <p class="mb-0">New York, USA</p>
-                            <div class="d-flex justify-content-center">
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item text-center rounded pb-4">
-                        <div class="testimonial-comment bg-light rounded p-4">
-                            <p class="text-center mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis nostrum cupiditate, eligendi repellendus saepe illum earum architecto dicta quisquam quasi porro officiis. Vero reiciendis,
-                            </p>
-                        </div>
-                        <div class="testimonial-img p-1">
-                            <img src="{{asset("frontend/images/testimonial-4.jpg")}}" class="img-fluid rounded-circle" alt="Image">
-                        </div>
-                        <div style="margin-top: -35px;">
-                            <h5 class="mb-0">John Abraham</h5>
-                            <p class="mb-0">New York, USA</p>
-                            <div class="d-flex justify-content-center">
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+{{--        <div class="container-fluid testimonial py-5">--}}
+{{--            <div class="container py-5">--}}
+{{--                <div class="mx-auto text-center mb-5" style="max-width: 900px;">--}}
+{{--                    <h5 class="section-title px-3">Testimonial</h5>--}}
+{{--                    <h1 class="mb-0">Our Clients Say!!!</h1>--}}
+{{--                </div>--}}
+{{--                <div class="testimonial-carousel owl-carousel">--}}
+{{--                    <div class="testimonial-item text-center rounded pb-4">--}}
+{{--                        <div class="testimonial-comment bg-light rounded p-4">--}}
+{{--                            <p class="text-center mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis nostrum cupiditate, eligendi repellendus saepe illum earum architecto dicta quisquam quasi porro officiis. Vero reiciendis,--}}
+{{--                            </p>--}}
+{{--                        </div>--}}
+{{--                        <div class="testimonial-img p-1">--}}
+{{--                            <img src="{{asset("frontend/images/testimonial-1.jpg")}}" class="img-fluid rounded-circle" alt="Image">--}}
+{{--                        </div>--}}
+{{--                        <div style="margin-top: -35px;">--}}
+{{--                            <h5 class="mb-0">John Abraham</h5>--}}
+{{--                            <p class="mb-0">New York, USA</p>--}}
+{{--                            <div class="d-flex justify-content-center">--}}
+{{--                                <i class="fas fa-star text-primary"></i>--}}
+{{--                                <i class="fas fa-star text-primary"></i>--}}
+{{--                                <i class="fas fa-star text-primary"></i>--}}
+{{--                                <i class="fas fa-star text-primary"></i>--}}
+{{--                                <i class="fas fa-star text-primary"></i>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="testimonial-item text-center rounded pb-4">--}}
+{{--                        <div class="testimonial-comment bg-light rounded p-4">--}}
+{{--                            <p class="text-center mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis nostrum cupiditate, eligendi repellendus saepe illum earum architecto dicta quisquam quasi porro officiis. Vero reiciendis,--}}
+{{--                            </p>--}}
+{{--                        </div>--}}
+{{--                        <div class="testimonial-img p-1">--}}
+{{--                            <img src="{{asset("frontend/images/testimonial-2.jpg")}}" class="img-fluid rounded-circle" alt="Image">--}}
+{{--                        </div>--}}
+{{--                        <div style="margin-top: -35px;">--}}
+{{--                            <h5 class="mb-0">John Abraham</h5>--}}
+{{--                            <p class="mb-0">New York, USA</p>--}}
+{{--                            <div class="d-flex justify-content-center">--}}
+{{--                                <i class="fas fa-star text-primary"></i>--}}
+{{--                                <i class="fas fa-star text-primary"></i>--}}
+{{--                                <i class="fas fa-star text-primary"></i>--}}
+{{--                                <i class="fas fa-star text-primary"></i>--}}
+{{--                                <i class="fas fa-star text-primary"></i>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="testimonial-item text-center rounded pb-4">--}}
+{{--                        <div class="testimonial-comment bg-light rounded p-4">--}}
+{{--                            <p class="text-center mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis nostrum cupiditate, eligendi repellendus saepe illum earum architecto dicta quisquam quasi porro officiis. Vero reiciendis,--}}
+{{--                            </p>--}}
+{{--                        </div>--}}
+{{--                        <div class="testimonial-img p-1">--}}
+{{--                            <img src="{{asset("frontend/images/testimonial-3.jpg")}}" class="img-fluid rounded-circle" alt="Image">--}}
+{{--                        </div>--}}
+{{--                        <div style="margin-top: -35px;">--}}
+{{--                            <h5 class="mb-0">John Abraham</h5>--}}
+{{--                            <p class="mb-0">New York, USA</p>--}}
+{{--                            <div class="d-flex justify-content-center">--}}
+{{--                                <i class="fas fa-star text-primary"></i>--}}
+{{--                                <i class="fas fa-star text-primary"></i>--}}
+{{--                                <i class="fas fa-star text-primary"></i>--}}
+{{--                                <i class="fas fa-star text-primary"></i>--}}
+{{--                                <i class="fas fa-star text-primary"></i>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="testimonial-item text-center rounded pb-4">--}}
+{{--                        <div class="testimonial-comment bg-light rounded p-4">--}}
+{{--                            <p class="text-center mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis nostrum cupiditate, eligendi repellendus saepe illum earum architecto dicta quisquam quasi porro officiis. Vero reiciendis,--}}
+{{--                            </p>--}}
+{{--                        </div>--}}
+{{--                        <div class="testimonial-img p-1">--}}
+{{--                            <img src="{{asset("frontend/images/testimonial-4.jpg")}}" class="img-fluid rounded-circle" alt="Image">--}}
+{{--                        </div>--}}
+{{--                        <div style="margin-top: -35px;">--}}
+{{--                            <h5 class="mb-0">John Abraham</h5>--}}
+{{--                            <p class="mb-0">New York, USA</p>--}}
+{{--                            <div class="d-flex justify-content-center">--}}
+{{--                                <i class="fas fa-star text-primary"></i>--}}
+{{--                                <i class="fas fa-star text-primary"></i>--}}
+{{--                                <i class="fas fa-star text-primary"></i>--}}
+{{--                                <i class="fas fa-star text-primary"></i>--}}
+{{--                                <i class="fas fa-star text-primary"></i>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
         <!-- Testimonial End -->
 
         <!-- Subscribe Start -->
         <div class="container-fluid subscribe py-5">
-            <div class="container-fluid text-center py-5">
+            <div class="container text-center py-5">
                 <div class="mx-auto text-center" style="max-width: 900px; margin-top: 10rem;">
                     <h5 class="subscribe-title px-3">Subscribe</h5>
                     <h1 class="text-white mb-4">Our Newsletter</h1>
@@ -1095,7 +1088,7 @@
 
         <!-- Footer Start -->
         <div class="container-fluid footer py-5">
-            <div class="container-fluid py-5">
+            <div class="container py-5">
                 <div class="row g-5">
                     <div class="col-md-6 col-lg-6 col-xl-3">
                         <div class="footer-item d-flex flex-column">
@@ -1188,7 +1181,7 @@
 
         <!-- Copyright Start -->
         <div class="container-fluid copyright text-body py-4">
-            <div class="container-fuild py-5">
+            <div class="container">
                 <div class="row g-4 align-items-center">
                     <div class="col-md-6 text-center text-md-end mb-md-0">
                         <i class="fas fa-copyright me-2"></i><a class="text-white" href="#">Your Site Name</a>, All right reserved.
@@ -1209,7 +1202,3 @@
         <a href="#" class="btn btn-primary btn-primary-outline-0 btn-md-square back-to-top"><i class="fa fa-arrow-up"></i></a>
 
 @endsection
-
-@push('style')
-    
-@endpush
