@@ -1287,7 +1287,7 @@
       background-attachment: scroll !important;
     }
 }
-  
+
 
 
 /*Tour box*/
@@ -1926,7 +1926,7 @@ input[type=number]::-webkit-outer-spin-button
 
 .schedule-item{
     max-height: 2rem;
-    width: 252px !important;
+    width: 236px !important;
 }
 .schedule-day{
     width: 8rem;
@@ -2682,7 +2682,7 @@ input[type=number]::-webkit-outer-spin-button
 
 @media (max-width: 768px) {
     .container {
-        height: 100dvh;
+        /*height: 100dvh;*/
     }
 
     .header-title h1 {
@@ -2767,7 +2767,7 @@ input[type=number]::-webkit-outer-spin-button
     justify-content: center;
     margin: 1.5rem 0;
   }
-  
+
   /* Thay đổi style cho từng item */
   .pagination .page-item .page-link {
     border-radius: 0.25rem;
@@ -2778,18 +2778,18 @@ input[type=number]::-webkit-outer-spin-button
     border: 1px solid #dee2e6;
     transition: background-color .2s;
   }
-  
+
   .pagination .page-item .page-link:hover {
     background-color: #e2e6ea;
   }
-  
+
   /* Active */
   .pagination .page-item.active .page-link {
     background-color: #007bff;
     color: #fff;
     border-color: #007bff;
   }
-  
+
   /* Disabled */
   .pagination .page-item.disabled .page-link {
     color: #6c757d;
@@ -2857,7 +2857,7 @@ button.thumb-btn {
     background-color: #fff;
     border: none;
     cursor: pointer;
-    
+
 }
 
 .thumb-nav-btn:disabled {
@@ -2867,14 +2867,14 @@ button.thumb-btn {
 .thumb-nav-btn:hover {
     background-color: #e0e0e0;
   }
-  #thumb-prev { 
-    left: -1.5rem; 
+  #thumb-prev {
+    left: -1.5rem;
     width: 100px;
     background-color: transparent;
     border-radius: 20%;
 }
-  #thumb-next { 
-    right: -1.5rem; 
+  #thumb-next {
+    right: -1.5rem;
     width: 100px;
     background-color: transparent;
     border-radius: 20%;
@@ -2887,7 +2887,7 @@ button.thumb-btn {
     .gallery-main-img video {
       max-height: 100%;
     }
-  
+
     .gallery-thumbs {
       width: calc(3 * 50px + 2 * 0.3rem);
     }
@@ -2901,12 +2901,12 @@ button.thumb-btn {
       height: 40px;
       font-size: 0.5rem;
     }
-    #thumb-prev { 
-        left: -0.5rem; 
+    #thumb-prev {
+        left: -0.5rem;
         width: 40px;
     }
-      #thumb-next { 
-        right: -0.5rem; 
+      #thumb-next {
+        right: -0.5rem;
         width: 40px;
     }
   }

@@ -126,11 +126,12 @@ class ScheduleController
             'query' => $address,
         ];
 
-        $map = $this->rapidApiService->fetchData($params);
+//        $map = $this->rapidApiService->fetchData($params);
+//        dd($map);
 //        $address = "Chùa minh thành";
         if ($address) {
             $result = $this->map4DService->geocode($address);
-            $result = null;
+//            $result = null;
             if (!$result || empty($result)) {
                 $error = 'Không tìm thấy địa điểm.';
             } else {
@@ -221,7 +222,7 @@ class ScheduleController
         $preferences = $request->input('interest');
 
         $places = $this->geminiService->getTourismInfo($address, $preferences);
-       
+
 // $places = [
 //     'Hồ Hoàn Kiếm' => [
 //         'Tên' => 'Hồ Hoàn Kiếm',
@@ -255,17 +256,18 @@ class ScheduleController
         $finalUrl = url('/build-schedule') . '?' . $query;
 
         $wikicontent = [];
-        foreach ($places as $placeName => $thong_tin) {
-            // Determine the display name for the thumbnail
-           
-            $wiki = $this->wikipediaService->getPlaceInfo($placeName);
-            // Lấy đường dẫn ảnh thumbnail từ Wikipedia, nếu không có thì để null
-            
-            //dd($placeName);
-            //dd($wiki);
-           
-            $wikicontent[$placeName] = $wiki;
-        }
+//        foreach ($places as $placeName => $thong_tin) {
+//            // Determine the display name for the thumbnail
+//
+//            $wiki = $this->wikipediaService->getPlaceInfo($placeName);
+//            // Lấy đường dẫn ảnh thumbnail từ Wikipedia, nếu không có thì để null
+//
+//            //dd($placeName);
+//            //dd($wiki);
+//
+//            $wikicontent[$placeName] = $wiki;
+//        }
+//        dd($wikicontent);
        // dd($thumbnails);
         //dd($fullcontents);
         $data = [
