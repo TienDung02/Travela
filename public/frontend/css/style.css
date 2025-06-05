@@ -1800,6 +1800,7 @@ input[type=number]::-webkit-outer-spin-button
 .weather ul li{
     list-style-type: none;
     text-align: center;
+    font-size: 11px;
 }
 .weather ul li p{
     margin-bottom: 0;
@@ -1926,8 +1927,11 @@ input[type=number]::-webkit-outer-spin-button
 
 .schedule-item{
     max-height: 2rem;
-    width: 236px !important;
+    width: 135px;
 }
+
+
+
 .schedule-day{
     width: 8rem;
     max-height: 2rem;
@@ -1955,6 +1959,45 @@ input[type=number]::-webkit-outer-spin-button
     left: 0 !important;
 }
 
+@media (min-width: 1400px) {
+    .schedule-item{
+        width: 236px;
+    }
+    .weather ul li, .time, .requestAndDisplayRoute {
+        font-size: 13px;
+    }
+}
+@media (max-width: 1200px) {
+    .schedule-item{
+        width: 200px;
+        font-size: 1.125rem;
+    }
+}
+@media (max-width: 992px) {
+    .schedule-item{
+        width: 166px;
+    }
+    .weather ul li, .time, .requestAndDisplayRoute {
+        font-size: 13px;
+    }
+}
+@media (max-width: 768px) {
+    .schedule-item{
+        width: 219px;
+    }
+    .weather ul li, .time, .requestAndDisplayRoute {
+        font-size: 11px;
+    }
+    .slick-prev, .slick-next
+    {
+        display: none !important;
+    }
+}
+@media (max-width: 576px) {
+    .schedule-item {
+        width: 159px;
+    }
+}
 /* ------------------------------------------------------------------- */
 /* Chosen Plugin
 ---------------------------------------------------------------------- */

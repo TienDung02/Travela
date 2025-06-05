@@ -564,6 +564,7 @@
                             ]
                         });
                         $('#spinner2').removeClass('d-flex').addClass('d-none');
+                        initScheduleScrollHandler();
                     },
                     error: function (xhr, status, error) {
                         console.error("Lỗi status:", status);  // Lỗi HTTP (404, 500, v.v.)
@@ -620,6 +621,7 @@
             isManualClick = false;
             console.log(isManualClick)
         }
+
         $(document).on('click', '.target-day', function(event) {
 
             var targetId = $(this).data('target');
@@ -648,45 +650,62 @@
         });
 
         let lastVisibleDay = null;
-        $(document).on('scroll', '.detailed-schedule', function (event) {
-            console.log('aaaaaa')
-            if (isManualClick) return;
+        let isSlickAnimating = false;
+        function initScheduleScrollHandler() {
 
-            console.log('bbbbbb')
+            $('#schedule-content').off('scroll');
 
-            const scrollContainer = this;
-            let newVisibleDay = null;
+            $('#schedule-content').on('scroll', function () {
+                if (isManualClick) return;
 
-            $('.day-content', scrollContainer).each(function () {
-                const rect = this.getBoundingClientRect();
-                const containerRect = scrollContainer.getBoundingClientRect();
 
-                const isVisible =
-                    rect.top >= containerRect.top &&
-                    rect.bottom <= containerRect.bottom;
+                const scrollContainer = this;
+                // let newVisibleDay = null;
+                let currentVisibleDay = null;
+                let minDistanceFromTop = Infinity;
 
-                if (isVisible) {
-                        newVisibleDay = $(this).data('day');
+                $('.day-content', scrollContainer).each(function () {
+                    const rect = this.getBoundingClientRect();
+                    const containerRect = scrollContainer.getBoundingClientRect();
+
+                    const distanceFromContainerTop = rect.top - containerRect.top;
+
+                    if (rect.bottom > containerRect.top && rect.top < containerRect.bottom) {
+                        if (distanceFromContainerTop < minDistanceFromTop) {
+                            minDistanceFromTop = distanceFromContainerTop;
+                            currentVisibleDay = $(this).data('day');
+                        }
+                    }
+                });
+
+                if (currentVisibleDay !== null && currentVisibleDay !== lastVisibleDay) {
+                    // console.log('Before scroll (x):', lastVisibleDay);
+                    // console.log('After scroll (y):', currentVisibleDay);
+
+                    let newSlideIndex = -1;
+                    const slickInstance = $('.schedule-carousel').slick('getSlick');
+
+                    if (slickInstance) { // Đảm bảo Slick đã được khởi tạo
+                        slickInstance.$slides.each(function(index) {
+                            if ($(this).data('target') === ('myTarget' + currentVisibleDay)) {
+                                newSlideIndex = index;
+                                return false;
+                            }
+                        });
+
+                        const currentSlickSlideIndex = slickInstance.slickCurrentSlide();
+
+                        if (newSlideIndex !== -1 && newSlideIndex !== currentSlickSlideIndex) {
+                            console.log(newSlideIndex)
+                            isSlickAnimating = true;
+                            slickInstance.slickGoTo(newSlideIndex);
+                        }
+                    }
+                    lastVisibleDay = currentVisibleDay;
                 }
             });
-
-            if (newVisibleDay !== null && newVisibleDay !== lastVisibleDay) {
-                console.log('Before scroll (x):', lastVisibleDay);
-                console.log('After scroll (y):', newVisibleDay);
-
-                if (lastVisibleDay !== null) {
-                    if (newVisibleDay > lastVisibleDay) {
-                        console.log('Scroll xuống → slickNext');
-                        $('.schedule-carousel').slick('slickNext');
-                    } else {
-                        console.log('Scroll lên → slickPrev');
-                        $('.schedule-carousel').slick('slickPrev');
-                    }
-                }
-
-                lastVisibleDay = newVisibleDay;
-            }
-        });
+            console.log('Sự kiện scroll cho #schedule-content đã được gắn lại.');
+        }
 
         /*----------------------------------------------------*/
         /*  End Smooth Scroll To Detail Schedule

@@ -43,14 +43,11 @@
                                                     >
                                         <div class="w-35 align-content-center position-relative h-100 p-0">
                                             @if ($type == 'Địa điểm tham quan' && is_array($detailInfo))
-{{--                                                                <img class="w-75 h-90 ms-2 rounded" src="{{ $wikicontent[$detailInfo['Tên địa điểm']]['image'] }}">--}}
-{{--                                                                <img class="w-65 h-80 ms-2 rounded position-absolute sec-image" src="{{ $wikicontent[$detailInfo['Tên địa điểm']]['image'] }}">--}}
+                                                <img class="w-75 h-90 ms-2 rounded mt-0" src="{{ asset('frontend/images/meal.jpg') }}">
                                             @elseif ($type == 'Ăn sáng' || $type == 'Ăn trưa' || $type == 'Ăn tối')
-                                                <img class="w-75 h-90 ms-2 rounded" src="{{ asset('frontend/images/meal.jpg') }}">
-                                                <img class="w-65 h-80 ms-2 rounded position-absolute sec-image" src="{{ asset('frontend/images/meal.jpg') }}">
+                                                <img class="w-75 h-90 ms-2 rounded mt-0" src="{{ asset('frontend/images/meal.jpg') }}">
                                             @elseif ($type == 'Chỗ ngủ')
-                                                <img class="w-75 h-90 ms-2 rounded" src="{{ asset('frontend/images/hotel.jpg') }}">
-                                                <img class="w-65 h-80 ms-2 rounded position-absolute sec-image" src="{{ asset('frontend/images/hotel.jpg') }}">
+                                                <img class="w-75 h-90 ms-2 rounded mt-0" src="{{ asset('frontend/images/hotel.jpg') }}">
                                             @endif
                                         </div>
                                         <div class="w-65 h-60 m-auto p-0">
@@ -67,17 +64,17 @@
                                 </div>
                             </div>
                         @elseif($type == 'Di chuyển' && is_array($detailInfo))
-                            <div class="w-100 position-relative h-5 mt-2">
-                                <div class="row w-10 h-100 position-absolute start-0 d-flex flex-wrap align-content-center">
+                            <div class="w-100 position-relative h-auto mt-2 d-flex justify-content-between align-items-center">
+                                <div class="row w-10 start-0 d-flex flex-wrap align-content-center">
                                     <div class="time">
                                         {{ $type }}
                                     </div>
                                 </div>
-                                <div class="row h-100 w-90 ms-1 position-absolute end-0 border me-1 mb-2 rounded">
+                                <div class="row h-100 w-90 ms-1 end-0 border me-1 rounded align-items-center">
                                     <div class="h-100 w-85">
                                         <div class="w-100 h-100 p-0 d-flex align-content-center">
                                             @php
-                    $vehicle = $detailInfo['Phương tiện di chuyển'] ?? '';
+                                                $vehicle = $detailInfo['Phương tiện di chuyển'] ?? '';
                                             @endphp
                                             @if($vehicle == 'Motorbike')
                                                 <i class="fa-solid fa-motorcycle" style="font-size: 1.25rem; align-content: center; margin-right: 1rem;"></i>
