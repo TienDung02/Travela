@@ -20,8 +20,10 @@
     <!-- Header End -->
 
     <!-- Contact Start -->
-    <div class="container-fluid contact bg-light py-5 scale-75">
+    <div class="container-fluid contact bg-light py-5">
         <div class="container-fluid py-5">
+            <div class="scale-content" style="transform: scale(0.8); transform-origin: top center;">
+
             <div class="mx-auto text-center mb-5" style="max-width: 900px;">
                 <h5 class="section-title px-3">Build schedule</h5>
                 <h1 class="mb-0">Build Your Schedule</h1>
@@ -292,6 +294,7 @@
             </div>
             @endif
         </div>
+    </div>
     </div>
     <!-- Contact End -->
 
@@ -746,9 +749,6 @@
 .hamburger-menu {
   display: none;
 }
-.scale-75 {
-    transform: scale(0.85) !important;
-}
 
 </style>
 @endpush
@@ -954,6 +954,28 @@ order: 8;
 .routeButton {
     display: none;
 }
+.schedule-page,
+  .schedule-page * {
+    font-size: 0.75rem !important;
+    line-height: 1.2;
+  }
+
+
+ .schedule-page .fw-bold {
+    font-size: 0.8rem !important;
+  }
+
+ 
+
+  .slick-track {
+        width: auto !important; /* Cho slick tự tính width phù hợp */
+   
+    }
+
+
+
+
+
 
 }
 
@@ -971,5 +993,3 @@ order: 8;
         })
     </script>
 @endpush
-
-

@@ -1,5 +1,5 @@
 <div class="container-fluid h-5 mt-2">
-    <div id="schedule-response" class="container h-100 text-center">
+    <div id="schedule-response" class="containe-fluid h-100 text-center">
         <div class="schedule-carousel h-100">
             @foreach($plans as $dayKey => $dayDetails)
                 @php $dayKey_id = str_replace('Ngày ', '', $dayKey); @endphp
@@ -12,6 +12,8 @@
         </div>
     </div>
 </div>
+
+
 <div class="carousel-item active h-100 detailed-schedule mt-2" id="schedule-content">
     @foreach($plans as $day => $activities)
         @php $day_id = str_replace('Ngày ', '', $day); @endphp
@@ -51,16 +53,20 @@
                                 </a>
                             </div>
                         </div>
+
+
                     @elseif($type == 'Di chuyển' && is_array($detailInfo))
-                        <div class="w-100 position-relative h-5 mt-2">
-                            <div class="row w-10 h-100 position-absolute start-0 d-flex flex-wrap align-content-center">
+                        <div class="w-100 position-relative h-10 mt-2 ">
+                            <div class="row w-10 h-90 position-absolute start-0 d-flex flex-wrap align-content-start ">
                                 <div class="time">
-                                    {{ $type }}
+                                  @if($type != 'Di chuyển')
+        {{ $type }}
+    @endif
                                 </div>
                             </div>
-                            <div class="row h-100 w-90 ms-1 position-absolute end-0 border me-1 mb-2 rounded">
+                            <div class="row w-90 ms-auto me-1 border  rounded">
                                 <div class="h-100 w-85">
-                                    <div class="w-100 h-100 p-0 d-flex align-content-center">
+                                    <div class="w-100 h-100 p-0 d-flex align-content-center ">
                                         @php
                                             $vehicle = $detailInfo['Phương tiện di chuyển'] ?? '';
                                         @endphp
@@ -82,8 +88,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="h-100 w-15 p-0">
-                                    <div class="btn w-100 btn-primary h-100 p-0 align-content-center white text-center requestAndDisplayRoute" data-ori-lat="{{$detailInfo['origin_lat'] ?? ''}}" data-ori-lon="{{$detailInfo['origin_lon'] ?? ''}}" data-de-lat="{{$detailInfo['destination_lat'] ?? ''}}" data-de-lon="{{$detailInfo['destination_lon'] ?? ''}}">Xem đường đi</div>
+                                <div class=" w-15 p-0 d-flex align-items-center justify-content-center">
+                                    <div class="btn w-100 btn-primary p-0 white text-center requestAndDisplayRoute" data-ori-lat="{{$detailInfo['origin_lat'] ?? ''}}" data-ori-lon="{{$detailInfo['origin_lon'] ?? ''}}" data-de-lat="{{$detailInfo['destination_lat'] ?? ''}}" data-de-lon="{{$detailInfo['destination_lon'] ?? ''}}">Xem đường</div>
+                                 <!-- Nút ngắn gọn chỉ hiện trên mobile & tablet -->
+   
+
                                 </div>
                             </div>
                         </div>
