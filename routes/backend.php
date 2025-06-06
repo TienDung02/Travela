@@ -17,7 +17,19 @@ Route::get('/admin-dashboard', [DashboardController::class, 'index'])->name('adm
 
 Route::get('/admin-booking', [BookingManagementController::class, 'index'])->name('admin.booking.index');
 Route::get('/admin-contact', [ContactManagementController::class, 'index'])->name('admin.contact.index');
-Route::get ('/admin-information', [InformationManagementController::class, 'index'])->name('admin.information.index');
+
+
+
+
+
+Route::get('/admin-information', [InformationManagementController::class, 'index'])->name('admin.information.index');
+Route::get('/admin-information/create', [InformationManagementController::class, 'create'])->name('admin.information.create');
+Route::post('/admin-information', [InformationManagementController::class, 'store'])->name('admin.information.store');
+Route::get('/admin-information/{id}/edit', [InformationManagementController::class, 'edit'])->name('admin.information.edit');
+Route::put('/admin-information/{id}', [InformationManagementController::class, 'update'])->name('admin.information.update');
+Route::delete('/admin-information/{id}', [InformationManagementController::class, 'destroy'])->name('admin.information.destroy');
+
+
 Route::get('/admin-statistic', [StatisticManagementController::class, 'index'])->name('admin.statistic.index');
 
 
