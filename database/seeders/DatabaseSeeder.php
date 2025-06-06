@@ -30,7 +30,6 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             PlaceSeeder::class,
             PlaceMediaSeeder::class,
-            ReviewSeeder::class,
             CurrencySeeder::class,
             PreferencesSeeder::class,
         ]);
