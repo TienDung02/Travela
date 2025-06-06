@@ -10,13 +10,15 @@ class PackageController extends Controller
 {
     public function index(Request $request)
     {
-            $query = Package::query();
+            $query = Package::with(['tour.place']);
 
             if ($request->has('search') && $request->search != '') {
                 $query->where(function($q) use ($request){
                     $q->where('name', 'like', '%' . $request->search .'%')
-                    ->orWhere('location', 'like', '%' . $request->search . '%')
-                    ->orWhere('desc', 'like', '%' . $request->search . '%');
+                      ->orWhere('desc', 'like', '%' . $request->search . '%')
+                      ->orWhereHas('tour.place', function($subQuery) use ($request) {
+                          $subQuery->where('address', 'like', '%' . $request->search . '%');
+                      });
                 });
             }
 
@@ -28,8 +30,12 @@ class PackageController extends Controller
                 $query->where('price', '<=', $request->max_price);
             }
 
-            if ($request->filled('rating')) {
-                $query->whereIn('star', $request->rating);
+            if ($request->filled('rating')){
+                $query->whereHas('reviews', function ($q) use ($request) {
+                    $q->select('reviewable_id')
+                      ->where('reviewable_type', Package::class)
+                      ->whereIn('rating', $request->rating);
+                });
             }
 
             $packages = $query->paginate(9);
@@ -39,7 +45,7 @@ class PackageController extends Controller
 
     public function show($id)
     {
-        $package = Package::findOrFail($id);
+        $package = Package::with(['tour.place'])->findOrFail($id);
         return view('frontend.packages.show', compact('package'));
     }
 

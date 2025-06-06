@@ -17,4 +17,8 @@ class Package extends Model
     {
         return $this->belongsTo(Tour::class);
     }
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
 }
