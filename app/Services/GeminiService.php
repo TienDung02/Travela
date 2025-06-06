@@ -162,9 +162,22 @@ class GeminiService
             - Mỗi đối tượng hoạt động trong mảng phải có 2 key chính:
                 1. 'type': Chuỗi cho biết loại hoạt động (ví dụ: 'Ăn sáng', 'Di chuyển', 'Địa điểm tham quan', 'Ăn trưa', 'Ăn tối', 'Chỗ ngủ').
                 2. 'details': Giá trị của key này phụ thuộc vào loại hoạt động:
-                    - Đối với 'Ăn sáng', 'Ăn trưa', 'Ăn tối', 'Chỗ ngủ': Giá trị là một CHUỖI (JSON string) mô tả địa điểm/chi tiết. **Chuỗi này CHỈ được chứa TÊN THUẦN TÚY của địa điểm ăn uống/lưu trú. TUYỆT ĐỐI KHÔNG bao gồm bất kỳ ghi chú hay ký tự bổ sung nào trong ngoặc đơn () hay các ký tự tương tự.** (ví dụ: 'Phở khô Gia Lai', 'Khách sạn XYZ')
-                    - Đối với 'Di chuyển': Giá trị là MỘT ĐỐI TƯỢNG (JSON object) chứa các key sau: 'Điểm đi' (chuỗi), 'Điểm đến' (chuỗi), 'Khoảng cách' (chuỗi, ví dụ: '2 km'), 'Thời gian' (chuỗi, ví dụ: '5 phút'), 'Phương tiện di chuyển' (chuỗi). **Giá trị của key 'Điểm đi' và 'Điểm đến' CHỈ được chứa TÊN THUẦN TÚY của địa điểm di chuyển (nơi xuất phát/nơi đến). TUYỆT ĐỐI KHÔNG bao gồm bất kỳ ghi chú hay ký tự bổ sung nào trong ngoặc đơn () hay các ký tự tương tự.** Hãy cung cấp ước tính khoảng cách và thời gian cụ thể, không dùng các cụm từ chung chung như 'tùy thuộc vào...'.
-                    - Đối với 'Địa điểm tham quan': Giá trị là MỘT ĐỐI TƯỢNG (JSON object) chứa các key sau: 'Tên địa điểm' (chuỗi) và 'Thời gian tham quan' (chuỗi, ví dụ: '8:00 -> 10:00'). **Giá trị của key 'Tên địa điểm' CHỈ được chứa TÊN THUẦN TÚY của địa điểm tham quan. TUYỆT ĐỐI KHÔNG bao gồm bất kỳ ghi chú hay ký tự bổ sung nào trong ngoặc đơn () hay các ký tự tương tự.**
+                    - Đối với 'Ăn sáng', 'Ăn trưa', 'Ăn tối', 'Chỗ ngủ': Giá trị là MỘT ĐỐI TƯỢNG (JSON object) chứa các key sau:
+                        - 'Tên địa điểm': CHUỖI (string) mô tả tên thuần túy của địa điểm ăn uống/lưu trú. TUYỆT ĐỐI KHÔNG bao gồm bất kỳ ghi chú hay ký tự bổ sung nào trong ngoặc đơn () hay các ký tự tương tự. (ví dụ: 'Phở khô Gia Lai', 'Khách sạn XYZ')
+                        - 'Địa chỉ': CHUỖI (string) mô tả địa chỉ cụ thể của địa điểm.
+                    - Đối với 'Di chuyển': Giá trị là MỘT ĐỐI TƯỢNG (JSON object) chứa các key sau:
+                            - 'Điểm đi': CHUỖI (string) chứa TÊN THUẦN TÚY của địa điểm xuất phát. TUYỆT ĐỐI KHÔNG bao gồm bất kỳ ghi chú hay ký tự bổ sung nào trong ngoặc đơn () hay các ký tự tương tự.
+                            - 'Địa chỉ điểm đi': CHUỖI (string) mô tả địa chỉ đầy đủ và chi tiết của điểm xuất phát, bao gồm số nhà, tên đường, phường/xã (nếu có), quận/huyện (nếu có) và thành phố/tỉnh.
+                            - 'Điểm đến': CHUỖI (string) chứa TÊN THUẦN TÚY của địa điểm đến. TUYỆT ĐỐI KHÔNG bao gồm bất kỳ ghi chú hay ký tự bổ sung nào trong ngoặc đơn () hay các ký tự tương tự.
+                            - 'Địa chỉ điểm đến': CHUỖI (string) mô tả địa chỉ đầy đủ và chi tiết của điểm đến, bao gồm số nhà, tên đường, phường/xã (nếu có), quận/huyện (nếu có) và thành phố/tỉnh.
+                            - 'Khoảng cách': CHUỖI (string, ví dụ: '2 km').
+                            - 'Thời gian': CHUỖI (string, ví dụ: '5 phút').
+                            - 'Phương tiện di chuyển': CHUỖI (string).
+                        Hãy cung cấp ước tính khoảng cách và thời gian cụ thể, không dùng các cụm từ chung chung như 'tùy thuộc vào...'.
+                    - Đối với 'Địa điểm tham quan': Giá trị là MỘT ĐỐI TƯỢNG (JSON object) chứa các key sau:
+                        - 'Tên địa điểm': CHUỖI (string) mô tả tên thuần túy của địa điểm tham quan. TUYỆT ĐỐI KHÔNG bao gồm bất kỳ ghi chú hay ký tự bổ sung nào trong ngoặc đơn () hay các ký tự tương tự.
+                        - 'Địa chỉ': CHUỖI (string) mô tả địa chỉ cụ thể của địa điểm.
+                        - 'Thời gian tham quan': CHUỖI (string, ví dụ: '8:00 -> 10:00').
 
             Lập kế hoạch chi tiết cho từng buổi (Sáng, trưa, chiều, tối) bao gồm các hoạt động ăn uống, tham quan, nghỉ ngơi và ĐẦY ĐỦ các bước di chuyển giữa các địa điểm. Đảm bảo tính logic về thời gian và lộ trình.
 
@@ -203,7 +216,7 @@ class GeminiService
             echo htmlspecialchars($cleanedString);
             echo "\n---------------------------------\n";
         }
-
+        print_r('AAAAAAAAAAAAAAAAAA');
         Cache::put($cacheKey, $planArray, now()->addMinutes(60));
         return $planArray;
     }
@@ -233,7 +246,7 @@ class GeminiService
             *   **Tag:** tag1, tag2, ...
         - Không cần mở bài kết bài, tôi chỉ cần như mẫu trên";
 
-        do {
+//        do {
             $response = Http::post($this->apiUrl . "?key=" . $this->apiKey, [
                 'contents' => [
                     [
@@ -245,7 +258,7 @@ class GeminiService
             ]);
 
             $places = $response->json();
-        } while (!isset($places['candidates']));
+//        } while (!isset($places['candidates']));
 
         $places = $places['candidates'][0]['content']['parts'][0]['text'];
 

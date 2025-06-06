@@ -52,5 +52,21 @@ class ReviewSeeder extends Seeder
                 ]);
             }
         }
+        $packages = \App\Models\Package::all();
+
+        foreach ($packages as $package) {
+        // Kiểm tra nếu package chưa có review nào thì tạo ít nhất 1
+        if ($package->reviews()->count() === 0) {
+            Review::create([
+                'user_id' => $users->random()->id,
+                'reviewable_id' => $package->id,
+                'reviewable_type' => \App\Models\Package::class,
+                'rating' => rand(1, 5),
+                'comment' => 'Đánh giá khởi tạo cho gói tour.',
+                'created_at' => now(),
+                'updated_at' => now(),
+        ]);
+    }}
+
     }
 }

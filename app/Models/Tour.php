@@ -32,4 +32,15 @@ class Tour extends Model
         return $this->belongsToMany(Place::class, 'tour_places')
         ->withPivot(['duration_days', 'day_number']);
     }
+    public function place()
+    {
+        return $this->hasOneThrough(
+            \App\Models\Place::class,
+            \App\Models\TourPlace::class,
+            'tour_id',     // tour_places.tour_id
+            'id',          // places.id
+            'id',          // tours.id
+            'place_id'     // tour_places.place_id
+        );
+    }
 }
