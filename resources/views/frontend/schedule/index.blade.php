@@ -28,7 +28,7 @@
                 <h1 class="mb-0">Build Your Schedule</h1>
             </div>
             <div class="row g-5 align-items-stretch">
-                <div class="col-lg-4 image-left-schedule">
+                <div class="col-xl-4 col-md-0 image-left-schedule">
                     <div class="rounded h-100 p-4 position-relative d-flex flex-column">
                         <div class="text-start w-75 position-absolute top-0 start-0">
                             <img src="{{asset('frontend/images/destination-1.jpg')}}" alt="">
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-8">
+                <div class="col-xl-8 col-md-12">
                     <h3 class="mb-2">Enter trip information</h3>
                     <form action="{{ route('map') }}" method="GET" class="">
                         <div class="row g-3">
@@ -54,19 +54,19 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-4">
                                 <div class="form-floating">
                                     <input type="date" class="form-control border-0" id="start_date" name="start_date" placeholder="">
                                     <label for="start_date">Departure date</label>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-4">
                                 <div class="form-floating">
                                     <input type="date" class="form-control border-0" id="end_date" name="end_date" placeholder="">
                                     <label for="end_date">Return date</label>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-4">
                                 <div class="form-floating">
                                     <select class="form-control bg-white border-0" name="transportation" id="currency">
                                         <option value="Motorbike (Personal)">Motorbike (Personal)</option>
@@ -81,13 +81,13 @@
                                     <label for="end_date">transportation</label>
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-8">
                                 <div class="form-floating">
                                     <input type="number" class="form-control border-0" id="budget" name="budget" placeholder="">
                                     <label for="budget">Budget</label>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-4">
                                 <div class="form-floating">
                                     <select class="form-control bg-white border-0" name="currency" id="currency">
                                         @foreach($currencies as $currency)
@@ -97,21 +97,21 @@
                                     <label for="currency">Currency</label>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-4">
                                         <div class="form-floating">
                                             <input type="number" class="form-control border-0" name="adults" id="adults" placeholder="">
                                             <label for="adults">Adults > 10 years old</label>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-4">
                                         <div class="form-floating">
                                             <input type="number" class="form-control border-0" name="children-2" id="children-2" placeholder="">
                                             <label for="children-2">Children 2 - 10 years old</label>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-4">
                                         <div class="form-floating">
                                             <input type="number" class="form-control border-0" name="children-1" id="children-1" placeholder="">
                                             <label for="children-1">Children < 2 years old </label>
@@ -171,9 +171,10 @@
                             <div class="carousel-header h-95">
                                 <div id="carouselId" class="carousel slide h-100 mb-0 mt-2 ps-0" data-bs-ride="carousel" data-bs-interval="false">
                                     <ol class="carousel-indicators menu-schedule mb-1">
-                                        <li data-bs-target="#carouselId" data-bs-slide-to="0" class="border-0 m-0 p-0 active col-lg-4">List of locations</li>
-                                        <li data-bs-target="#carouselId" data-bs-slide-to="1" class="border-0 m-0 p-0 col-lg-4 Schedule-tab">Schedule</li>
-                                        <li data-bs-target="#carouselId" data-bs-slide-to="2" class="border-0 m-0 p-0  col-lg-4 Event-tab">Event/Activity</li>
+                                        <li data-bs-target="#carouselId" data-bs-slide-to="0" class="border-0 m-0 p-0 active col-4 col-sm-3">List of locations</li>
+                                        <li data-bs-target="#carouselId" data-bs-slide-to="1" class="border-0 m-0 p-0 col-4 col-sm-3 Schedule-tab">Schedule</li>
+                                        <li data-bs-target="#carouselId" data-bs-slide-to="2" class="border-0 m-0 p-0  col-4 col-sm-3 Event-tab">Event/Activity</li>
+                                        <li data-bs-target="#carouselId" data-bs-slide-to="3" class="border-0 button-show-map m-0 p-0  col-lg-4 col-sm-3 Event-tab">Map</li>
                                     </ol>
                                     <div class="carousel-inner border-top h-95 mb-2" role="listbox">
                                         <div class="carousel-item active h-100 list-of-locations mt-2">
@@ -181,30 +182,38 @@
                                                 @foreach($places as $place => $thong_tin)
                                                     <div class="w-100 h-30 border me-1 mb-2">
                                                         <div class="row h-100 w-100 ms-1">
-                                                            <a href="#" class="h-100 col-11 p-0 d-flex">
+                                                            <div class="h-100 col-11 p-0 d-flex" >
                                                                 <div class="w-35 align-content-center position-relative h-100 p-0">
-                                                                    <img class="w-85 h-90 ms-2 rounded mt-0 " src="{{asset('frontend/images/destination-3.jpg')}}">
+                                                                    <img class="w-85 h-90 ms-2 rounded mt-0 " src="{{asset('frontend/images/image-coming-soon.jpg')}}">
 {{--                                                                    <img class="w-65 h-80 ms-2 rounded position-absolute sec-image" src="{{asset('frontend/images/destination-3.jpg')}}">--}}
                                                                 </div>
                                                                 <div class="w-65 h-60 m-auto p-0">
                                                                     @foreach ($thong_tin as $key => $value)
                                                                         @if($key == "Tên" || $key == "Tên địa điểm" || $key == 0)
-                                                                            <p class="fw-bold">{{$value}}</p>
-                                                                        @else
-                                                                            <p class="">
-                                                                                @if(is_array($value))
-                                                                                    @foreach($value as $tag)
-                                                                                        <span class="btn">{{ $tag }}</span>
-                                                                                    @endforeach
-                                                                                @else
-                                                                                    {{$key}} : {{$value}}
-                                                                                @endif
+                                                                            <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo"><p class="fw-bold" >{{$value}}</p></a>
+                                                                        @elseif($key != "lat" && $key != "lon")
+                                                                            @if(is_array($value))
+                                                                                <div id="scroll-tag" class="overflow-x-scroll d-flex w-95">
+                                                                                        @foreach($value as $tag)
+                                                                                            <a class="me-2" href="" style="flex-shrink: 0;"><span class="btn mb-1">{{ $tag }}</span></a>
+                                                                                        @endforeach
+                                                                                </div>
+                                                                            @else
+                                                                            <p>
+                                                                                {{$key}} : {{$value}}
                                                                             </p>
+                                                                            @endif
                                                                         @endif
                                                                     @endforeach
                                                                 </div>
+                                                            </div>
+                                                            <a href="#" class="col-1 p-0">
+                                                                <div class=" h-100 p-0 border-start align-content-center white" >
+                                                                    <div class="h-33 d-flex align-items-center justify-content-center comment border-bottom"><i class="fa-solid fa-comment"></i></div>
+                                                                    <div class="h-33 d-flex align-items-center justify-content-center delete border-bottom"><i class="fa-solid fa-trash"></i></div>
+                                                                    <div class="h-33 d-flex align-items-center justify-content-center redirect" data-lat="{{$thong_tin['lat'] ?? ''}}" data-lon="{{$thong_tin['lon'] ?? ''}}"><i class="fa-solid fa-diamond-turn-right"></i></div>
+                                                                </div>
                                                             </a>
-                                                            <a href="#" class="col-1 p-0"><div class=" h-100 p-0 delete align-content-center white"><i class="bi bi-trash"></i></div></a>
                                                         </div>
                                                     </div>
                                                 @endforeach
@@ -233,7 +242,7 @@
                                         </div>
                                         <div id="event-response" class="carousel-item h-100 eventAndActivity mt-2">
                                             <div id="btn-get-event" class="container-fluid h-50 mt-2">
-                                                <div id="schedule-response" class="container h-100 text-center">
+                                                <div id="schedule-response" class="container text-center">
                                                     <button id="getEvent" class="rounded btn btn-primary p-3 m-t-100" data-address="{{ json_encode($for_event) }}">
                                                         <span class="d-none" id="get-url-event" data-url="{{route('get-event')}}"></span>
                                                         <span class="d-block"><i class="bi bi-stars"></i>&nbsp; Check out current events and activities &nbsp;<i class="bi bi-stars"></i></span>
@@ -251,6 +260,10 @@
                                             <!-- Spinner End -->
 
                                         </div>
+                                        <div id="map-response" class="carousel-item h-100 eventAndActivity mt-2">
+
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -258,19 +271,19 @@
                         </div>
                     </div>
                     <div class="col-lg-5 p-0">
-                        @if(isset($error))
-                            <div class="alert alert-danger">{{ $error }}</div>
-                        @elseif(isset($map))
-                            <div class="card border-start-0 border-0">
-                                <div class="card-body pt-0">
-                                    <div id="map" style="width: 100%; height: 61rem;">
-                                        <div class="menu">
-                                            <button id="routeButton">Chỉ đường từ A đến B</button>
+                        <div id="result-map">
+                            @if(isset($error))
+                                <div  class="alert alert-danger">{{ $error }}</div>
+                            @elseif(isset($map))
+                                <div class="card border-start-0 border-0">
+                                    <div class="card-body pt-0">
+                                        <div id="map" style="width: 100%; height: 61rem;">
+
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endif
+                            @endif
+                        </div>
                     </div>
                 </div>
             @endif
@@ -401,17 +414,65 @@
     </div>
     <!-- Copyright End -->
 
+
+    <!-- Modal Dialog-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Explore the place</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body h-100">
+                   <div class="row h-100">
+                       <div class="col-6 h-100">
+                           <div id="carouselExample" class="carousel slide">
+                               <div class="carousel-inner">
+                                   <div class="carousel-item active">
+                                       <img src="{{ asset('frontend/images/image-coming-soon.jpg') }}" class="d-block w-100" alt="...">
+                                   </div>
+                                   <div class="carousel-item">
+                                       <img src="{{ asset('frontend/images/image-coming-soon.jpg') }}" class="d-block w-100" alt="...">
+                                   </div>
+                                   <div class="carousel-item">
+                                       <img src="{{ asset('frontend/images/image-coming-soon.jpg') }}" class="d-block w-100" alt="...">
+                                   </div>
+                               </div>
+                               <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                   <span class="visually-hidden">Previous</span>
+                               </button>
+                               <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                   <span class="visually-hidden">Next</span>
+                               </button>
+                           </div>
+                       </div>
+                       <div class="col-6 h-100"></div>
+                   </div>
+                </div>
+                <!-- Spinner Start -->
+{{--                <div class="position-relative h-50">--}}
+{{--                    <div id="spinner4" class="show bg-white position-absolute translate-middle w-100 top-50 start-50 align-items-center justify-content-center d-flex">--}}
+{{--                        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">--}}
+{{--                            <span class="sr-only">Loading...</span>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+                <!-- Spinner End -->
+            </div>
+        </div>
+    </div>
+    <!-- End Modal Dialog -->
+
+
+
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary btn-primary-outline-0 btn-md-square back-to-top"><i class="fa fa-arrow-up"></i></a>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     @if(isset($map))
-
-
-
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-
-
         <script>
             const initialLat = {{ $lat }};
             const initialLon = {{ $lon }};
@@ -421,10 +482,6 @@
             let rawProvinceName = "{{ $address_old }}";
             let provinceNameToDraw = rawProvinceName.replace(/^(Tỉnh|Thành phố|TP\.?|Tp\.?|tp\.?|thành phố|tỉnh)\s+/i, "").trim();
             console.log(provinceNameToDraw)
-
-
-
-
             function initMap() {
                 console.log("Map4D SDK đã tải xong. Bắt đầu khởi tạo bản đồ.");
                 map = new map4d.Map(document.getElementById("map"), {
@@ -433,7 +490,6 @@
                     controls: true,
                     mapType: "satellite"
                 });
-
                 let marker = new map4d.Marker({
                     position: {lat: initialLat, lng:initialLon},
                 })
@@ -444,9 +500,6 @@
                 } else {
                     console.warn("Không có tên tỉnh được chỉ định để vẽ.");
                 }
-
-
-
 
                 const routeButton = document.getElementById('routeButton');
                 if (routeButton) {
@@ -678,7 +731,40 @@
                 }
             }
 
+            let clickedMarker = null; // Biến để lưu marker hiện tại
 
+            $(document).ready(function() {
+                console.log('aaaaaaa'); // Đảm bảo dòng này nằm trong đây
+
+                let clickedMarker = null;
+
+                $('.redirect').click(function () {
+                    const lat = parseFloat($(this).data('lat'));
+                    const lon = parseFloat($(this).data('lon'));
+
+                    console.log(lat)
+                    console.log(lon)
+                    if (!isNaN(lat) && !isNaN(lon)) {
+                        // Xóa marker cũ
+                        if (clickedMarker) {
+                            clickedMarker.setMap(null);
+                        }
+
+                        // Tạo marker mới
+                        clickedMarker = new map4d.Marker({
+                            position: { lat: lat, lng: lon },
+                            title: "Vị trí",
+                            label: { text: "!", color: "white" }
+                        });
+                        clickedMarker.setMap(map);
+
+                        // Di chuyển bản đồ đến vị trí
+                        map.setCenter({ lat: lat, lng: lon });
+                    } else {
+                        console.warn("Toạ độ không hợp lệ.");
+                    }
+                });
+            });
 
         </script>
         <script src="https://api.map4d.vn/sdk/map/js?version=2.6&key=320fdc09342c67c6879c20e64e1475c0&mapId=680393095d65bdb7b81fdcaf&callback=initMap"></script>

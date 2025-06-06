@@ -408,7 +408,7 @@
     }
 
     .carousel-header {
-        height: 700px !important;
+        /*height: 700px !important;*/
     }
 
     .carousel-header .carousel-control-prev .carousel-control-prev-icon,
@@ -1873,6 +1873,25 @@ input[type=number]::-webkit-outer-spin-button
     background: #555;
 }
 
+#scroll-tag::-webkit-scrollbar {
+    height: 4px;
+}
+/* Màu nền của thanh scrollbar */
+#scroll-tag::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 1px;
+}
+
+/* Phần cuộn di chuyển */
+#scroll-tag::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 1px;
+}
+
+/* Khi hover vào scrollbar */
+#scroll-tag::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
 
 
 .list-of-locations i {
@@ -1949,6 +1968,7 @@ input[type=number]::-webkit-outer-spin-button
     color: #FFFFFF;
 }
 
+
 .slick-prev:before, .slick-next:before{
     color: #13357b !important;
 }
@@ -1972,7 +1992,11 @@ input[type=number]::-webkit-outer-spin-button
         width: 200px;
         font-size: 1.125rem;
     }
+    .image-left-schedule{
+        display: none;
+    }
 }
+
 @media (max-width: 992px) {
     .schedule-item{
         width: 166px;
@@ -1980,22 +2004,37 @@ input[type=number]::-webkit-outer-spin-button
     .weather ul li, .time, .requestAndDisplayRoute {
         font-size: 13px;
     }
+
 }
 @media (max-width: 768px) {
     .schedule-item{
         width: 219px;
     }
-    .weather ul li, .time, .requestAndDisplayRoute {
+    .weather ul li, .time, .requestAndDisplayRoute, .form-floating>label {
         font-size: 11px;
     }
     .slick-prev, .slick-next
     {
         display: none !important;
     }
+
 }
 @media (max-width: 576px) {
     .schedule-item {
         width: 159px;
+    }
+}
+
+
+
+@media (min-width: 1200px) {
+    .button-show-map{
+        display: none !important;
+    }
+}
+@media (min-width: 992px) {
+    .button-show-map{
+        display: none !important;
     }
 }
 /* ------------------------------------------------------------------- */
@@ -2752,8 +2791,6 @@ input[type=number]::-webkit-outer-spin-button
 /*------------------------------------------*/
 .eventAndActivity {
     min-height: unset !important;
-    overflow-y: scroll;
-    overflow-x: hidden;
 }
 
 .eventAndActivity::-webkit-scrollbar {
@@ -3013,3 +3050,103 @@ button.thumb-btn {
 /* -----------------------------------------*/
 /*  End Event And Activity
 /*------------------------------------------*/
+
+
+
+
+
+
+
+/* -----------------------------------------*/
+/*  Modal Dialog
+/*------------------------------------------*/
+@media (max-width: 576px) {
+    .modal-dialog{
+        max-width: 365px;
+        margin: 1.75rem auto;
+        height: 480px;
+        margin-top: 10rem;
+    }
+    .modal-dialog .modal-content{
+        height: 100%;
+    }
+}
+
+@media (min-width: 576px) {
+    .modal-dialog{
+        max-width: 500px;
+        margin: 1.75rem auto;
+        height: 400px;
+        margin-top: 10rem;
+    }
+    .modal-dialog .modal-content{
+        height: 100%;
+    }
+}
+@media (min-width: 768px) {
+    .modal-dialog{
+        max-width: 550px;
+        margin: 1.75rem auto;
+        height: 450px;
+        margin-top: 10rem;
+    }
+    .modal-dialog .modal-content{
+        height: 100%;
+    }
+}
+@media (min-width: 992px) {
+    .modal-dialog{
+        max-width: 700px;
+        margin: 1.75rem auto;
+        height: 600px;
+        margin-top: 10rem;
+    }
+    .modal-dialog .modal-content{
+        height: 100%;
+    }
+}
+@media (min-width: 1200px) {
+    .modal-dialog{
+        max-width: 1000px;
+        margin: 1.75rem auto;
+        height: 700px;
+        margin-top: 10rem;
+    }
+    .modal-dialog .modal-content{
+        height: 100%;
+    }
+}
+@media (min-width: 1400px) {
+    .modal-dialog{
+        max-width: 1000px;
+        margin: 1.75rem auto;
+        height: 500px;
+        margin-top: 10rem;
+    }
+    .modal-dialog .modal-content{
+        height: 100%;
+    }
+}
+
+#exampleModal .carousel-control-prev, .carousel-control-next {
+    background: #00000096;
+    height: 30px;
+    width: 30px;
+    border-radius: 20px;
+    top: 50% !important;
+}
+#exampleModal .carousel-control-prev{
+    transform: translate(10px, -50%);
+}
+
+#exampleModal .carousel-control-next{
+    transform: translate(-10px, -50%);
+}
+
+
+/* -----------------------------------------*/
+/*  End Modal Dialog
+/*------------------------------------------*/
+
+
+
