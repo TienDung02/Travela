@@ -140,7 +140,6 @@ class Map4DService
                 ];
 
                 Cache::put($cacheKey, $result, now()->addHours(12));
-
                 return $result;
             } else {
                 Log::warning("Map4D API did not return expected data for address '{$address}'. Response: " . json_encode($responseData));

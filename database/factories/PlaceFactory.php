@@ -18,6 +18,7 @@ class PlaceFactory extends Factory
             'name' => $this->faker->city,
             'desc' => $this->faker->sentence,
             'address' => $this->faker->address,
+            'provinces' => $this->faker->address,
             'tag' => $this->faker->word,
             'lat' => $this->faker->latitude,
             'lon' => $this->faker->longitude,

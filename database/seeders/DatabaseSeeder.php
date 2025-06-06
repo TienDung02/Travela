@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             RoleSeeder::class,
-            PlaceSeeder::class,
+//            PlaceSeeder::class,
             PlaceMediaSeeder::class,
             CurrencySeeder::class,
             PreferencesSeeder::class,
