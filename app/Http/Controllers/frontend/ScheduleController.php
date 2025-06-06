@@ -133,13 +133,13 @@ class ScheduleController
         $params = [
             'query' => $address,
         ];
+        if ($address_old) {
+            $result = $this->map4DService->geocode($address_old);
 
-        if ($address) {
-            $result = $this->map4DService->geocode($address);
             if (!$result || empty($result)) {
                 $error = 'Không tìm thấy địa điểm.';
             } else {
-                $map = $result[0];
+                $map = $result;
             }
         }
         if (!empty($map)) {

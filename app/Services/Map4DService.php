@@ -106,6 +106,7 @@ class Map4DService
 
     public function geocode($address)
     {
+
         $cacheKey = 'geo_' . md5($address);
 
         if (Cache::has($cacheKey)) {
@@ -130,14 +131,12 @@ class Map4DService
 
             $responseData = $response->json();
 
-            if (is_array($responseData) && !empty($responseData) &&
-                Arr::has($responseData[0], ['lat', 'lon']) &&
-                !empty($responseData[0]['lat']) && !empty($responseData[0]['lon'])
-            ) {
+            if (is_array($responseData['result']) && !empty($responseData['result'])) {
+
                 $result = [
-                    'lat' => (float) $responseData['data'][0]['location']['lat'],
-                    'lon' => (float) $responseData['data'][0]['location']['lng'],
-                    'raw' => $responseData['data'][0]
+                    'lat' => (float) $responseData['result'][0]['location']['lat'],
+                    'lon' => (float) $responseData['result'][0]['location']['lng'],
+                    'raw' => $responseData['result'][0]
                 ];
 
                 Cache::put($cacheKey, $result, now()->addHours(12));
