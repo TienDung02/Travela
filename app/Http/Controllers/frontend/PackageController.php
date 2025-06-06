@@ -30,8 +30,12 @@ class PackageController extends Controller
                 $query->where('price', '<=', $request->max_price);
             }
 
-            if ($request->filled('rating')) {
-                $query->whereIn('star', $request->rating);
+            if ($request->filled('rating')){
+                $query->whereHas('reviews', function ($q) use ($request) {
+                    $q->select('reviewable_id')
+                      ->where('reviewable_type', Package::class)
+                      ->whereIn('rating', $request->rating);
+                });
             }
 
             $packages = $query->paginate(9);
