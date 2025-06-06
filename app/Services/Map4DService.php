@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Http; // Sử dụng Laravel HTTP Client
 use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Client\RequestException; // Để bắt lỗi HTTP
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 class Map4DService
 {
     protected $apiKey;
@@ -111,31 +112,86 @@ class Map4DService
             return Cache::get($cacheKey);
         }
 
-
-        $apiData = null;
-
-        $response = Http::withHeaders([
-            'User-Agent' => 'YourAppName/1.0 (nongtiendugn2309@gmail.com)'
-        ])->get("https://nominatim.openstreetmap.org/search", [
-            'q' => $address,
-            'format' => 'json'
-        ]);
-
-        $responseData = $response->json();
-
-        if (is_array($responseData) && !empty($responseData) &&
-            Arr::has($responseData[0], ['lat', 'lon']) &&
-            !empty($responseData[0]['lat']) && !empty($responseData[0]['lon'])
-        ) {
-            $apiData = $responseData;
+        if (empty($this->apiKey)) {
+            Log::warning("Không thể geocode địa chỉ '{$address}': MAP4D_API_KEY không có.");
+            return null;
         }
 
+        try {
+            $response = Http::get('https://api.map4d.vn/sdk/place/text-search', [
+                'key'  => $this->apiKey,
+                'text' => $address,
+            ]);
+
+            if (!$response->successful()) {
+                Log::error("Map4D API request failed for address '{$address}'. Status: {$response->status()}, Response: {$response->body()}");
+                return null;
+            }
+
+            $responseData = $response->json();
+
+            if (is_array($responseData) && !empty($responseData) &&
+                Arr::has($responseData[0], ['lat', 'lon']) &&
+                !empty($responseData[0]['lat']) && !empty($responseData[0]['lon'])
+            ) {
+                $result = [
+                    'lat' => (float) $responseData['data'][0]['location']['lat'],
+                    'lon' => (float) $responseData['data'][0]['location']['lng'],
+                    'raw' => $responseData['data'][0]
+                ];
+
+                Cache::put($cacheKey, $result, now()->addHours(12));
+
+                return $result;
+            } else {
+                Log::warning("Map4D API did not return expected data for address '{$address}'. Response: " . json_encode($responseData));
+                return null;
+            }
 
 
-        if ($apiData !== null) {
-            Cache::put($cacheKey, $apiData, now()->addHours(12));
-            return $apiData;
-        } else {
+        } catch (\Exception $e) {
+            Log::error("Exception during geocoding for address '{$address}': " . $e->getMessage());
+            return null;
+        }
+    }
+    public function geocode2($address)
+    {
+        $cacheKey = 'geo_' . md5($address);
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
+        }
+        if (empty($this->apiKey)) {
+            Log::warning("Không thể geocode địa chỉ '{$address}': MAP4D_API_KEY không có.");
+            return null;
+        }
+        try {
+            $response = Http::get('https://api.map4d.vn/sdk/place/text-search', [
+                'key'  => $this->apiKey,
+                'text' => $address,
+            ]);
+            if (!$response->successful()) {
+                return null;
+            }
+            $responseData = $response->json();
+            if (is_array($responseData['result']) && !empty($responseData['result'])) {
+
+                $result = [
+                    'lat' => (float) $responseData['result'][0]['location']['lat'],
+                    'lon' => (float) $responseData['result'][0]['location']['lng'],
+                    'raw' => $responseData['result'][0]
+                ];
+
+                Cache::put($cacheKey, $result, now()->addHours(12));
+
+                return $result;
+            } else {
+                Log::warning("Map4D API did not return expected data for address '{$address}'. Response: " . json_encode($responseData));
+                return null;
+            }
+
+
+        } catch (\Exception $e) {
+            Log::error("Exception during geocoding for address '{$address}': " . $e->getMessage());
             return null;
         }
     }

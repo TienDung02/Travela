@@ -43,21 +43,21 @@
                                                     >
                                         <div class="w-35 align-content-center position-relative h-100 p-0">
                                             @if ($type == 'Địa điểm tham quan' && is_array($detailInfo))
-                                                <img class="w-75 h-90 ms-2 rounded mt-0" src="{{ asset('frontend/images/meal.jpg') }}">
+                                                <img class="w-75 h-90 ms-2 rounded mt-0" src="{{ asset('frontend/images/image-coming-soon.jpg') }}">
                                             @elseif ($type == 'Ăn sáng' || $type == 'Ăn trưa' || $type == 'Ăn tối')
-                                                <img class="w-75 h-90 ms-2 rounded mt-0" src="{{ asset('frontend/images/meal.jpg') }}">
+                                                <img class="w-75 h-90 ms-2 rounded mt-0" src="{{ asset('frontend/images/image-coming-soon.jpg') }}">
                                             @elseif ($type == 'Chỗ ngủ')
-                                                <img class="w-75 h-90 ms-2 rounded mt-0" src="{{ asset('frontend/images/hotel.jpg') }}">
+                                                <img class="w-75 h-90 ms-2 rounded mt-0" src="{{ asset('frontend/images/image-coming-soon.jpg') }}">
                                             @endif
                                         </div>
                                         <div class="w-65 h-60 m-auto p-0">
                                             @if($type == 'Địa điểm tham quan' && is_array($detailInfo))
                                                 <p class="fw-bold">{{ $detailInfo['Tên địa điểm'] ?? '' }}</p>
-                                                <p><span class="btn">Rating</span></p>
                                                 <p><span class="btn">{{ $detailInfo['Thời gian tham quan'] ?? '' }}</span></p>
+                                                <p class="fw-normal">Địa chỉ: {{ $detailInfo['Địa chỉ'] ?? '' }}</p>
                                             @else
-                                                <p class="fw-bold">{{ is_string($detailInfo) ? $detailInfo : '' }}</p>
-                                                <p><span class="btn">Rating</span></p>
+                                                <p class="fw-bold">{{ $detailInfo['Tên địa điểm'] ?? '' }}</p>
+                                                <p class="fw-normal">Địa chỉ: {{ $detailInfo['Địa chỉ'] ?? '' }}</p>
                                             @endif
                                         </div>
                                     </a>
@@ -78,8 +78,12 @@
                                             @endphp
                                             @if($vehicle == 'Motorbike')
                                                 <i class="fa-solid fa-motorcycle" style="font-size: 1.25rem; align-content: center; margin-right: 1rem;"></i>
-                                            @elseif(in_array($vehicle, ['Car', 'Taxi']))
+                                            @elseif(in_array($vehicle, ['Car', 'Unknown']))
                                                 <i class="fa-solid fa-car-side" style="font-size: 1.25rem; align-content: center; margin-right: 1rem;"></i>
+                                            @elseif(in_array($vehicle, ['Bicycle']))
+                                                <i class="fa-solid fa-bicycle" style="font-size: 1.25rem; align-content: center; margin-right: 1rem;"></i>
+                                            @elseif(in_array($vehicle, ['Public transport']))
+                                                <i class="fa-solid fa-bus" style="font-size: 1.25rem; align-content: center; margin-right: 1rem;"></i>
                                             @endif
                                             <div class="d-flex flex-wrap align-items-center h-75 m-auto mx-0 pe-2">
                                                 {{ $detailInfo['Điểm đi'] ?? '' }}

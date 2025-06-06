@@ -716,6 +716,9 @@
 
 
 
+
+
+
         /*----------------------------------------------------*/
         /*  Ajax Get Event And Activity
         /*----------------------------------------------------*/
@@ -893,11 +896,43 @@
 
 
         /*----------------------------------------------------*/
-        /*  Map
+        /*  Map Responsive
         /*----------------------------------------------------*/
+        $(document).ready(function () {
+            const originalParent = $('#result-map').parent();
+            const mapElement = $('#result-map');
 
+            function handleResponsiveMap() {
+                if (window.innerWidth < 992) {
+                    if (!$('#map-response').find('#result-map').length) {
+                        $('#map-response').append(mapElement);
+                    }
+
+                    $('#map').css({
+                        height: '580px',
+                        width: '100%'
+                    });
+                } else {
+                    $('#map').css({
+                        height: '61rem',
+                        width: '100%'
+                    });
+                    if (!originalParent.find('#result-map').length) {
+                        originalParent.append(mapElement);
+                    }
+                }
+            }
+
+            // Gọi lúc đầu
+            handleResponsiveMap();
+
+            // Gọi khi resize
+            $(window).on('resize', function () {
+                handleResponsiveMap();
+            });
+        });
         /*----------------------------------------------------*/
-        /*  End Map
+        /*  End Map Responsive
         /*----------------------------------------------------*/
 
         /*----------------------------------------------------*/
