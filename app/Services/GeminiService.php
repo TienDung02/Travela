@@ -216,7 +216,6 @@ class GeminiService
             echo htmlspecialchars($cleanedString);
             echo "\n---------------------------------\n";
         }
-        print_r('AAAAAAAAAAAAAAAAAA');
         Cache::put($cacheKey, $planArray, now()->addMinutes(60));
         return $planArray;
     }

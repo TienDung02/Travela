@@ -20,7 +20,7 @@
             <div class="middle-border"></div>
             <div class="time fw-bold day-content ps-0" data-day="{{$day_id}}">{{ $activity }}</div>
             @php
-    $lastTransport = null; // 🔁 lưu thông tin di chuyển gần nhất
+             $lastTransport = null; // 🔁 lưu thông tin di chuyển gần nhất
 @endphp
 
             @foreach($details as $detail)
@@ -29,10 +29,10 @@
                 $detailInfo = $detail['details'] ?? [];
                         @endphp
                         @if($type === 'Di chuyển' && is_array($detailInfo))
-    @php
-        $lastTransport = $detailInfo; // lưu để sử dụng cho hoạt động tiếp theo
-    @endphp
-@endif
+                            @php
+                                $lastTransport = $detailInfo; // lưu để sử dụng cho hoạt động tiếp theo
+                            @endphp
+                        @endif
 
                         @if(in_array($type, ['Ăn sáng', 'Ăn trưa', 'Ăn tối', 'Địa điểm tham quan', 'Chỗ ngủ']))
                             <div class="w-100 position-relative h-25 mt-2">
@@ -72,7 +72,7 @@
                                     </a>
                                 </div>
                             </div>
-                         
+
    <div class="d-flex w-100 position-relative h-15 mt-2">
     <div class="w-85 d-flex">
     </div>
