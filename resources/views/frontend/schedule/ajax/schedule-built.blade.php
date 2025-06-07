@@ -14,16 +14,25 @@
 </div>
 <div class="carousel-item active h-100 detailed-schedule mt-2" id="schedule-content">
     @foreach($plans as $day => $activities)
-        @php $day_id = str_replace('Ngày ', '', $day); @endphp
+        @php $day_id = str_replace('Ngày ', '', $day)  ; @endphp
         <h4 id="myTarget{{$day_id}}">{{ $day }}</h4>
         @foreach($activities as $activity => $details)
             <div class="middle-border"></div>
             <div class="time fw-bold day-content ps-0" data-day="{{$day_id}}">{{ $activity }}</div>
+            @php
+    $lastTransport = null; // 🔁 lưu thông tin di chuyển gần nhất
+@endphp
+
             @foreach($details as $detail)
                         @php
                 $type = $detail['type'] ?? '';
                 $detailInfo = $detail['details'] ?? [];
                         @endphp
+                        @if($type === 'Di chuyển' && is_array($detailInfo))
+    @php
+        $lastTransport = $detailInfo; // lưu để sử dụng cho hoạt động tiếp theo
+    @endphp
+@endif
 
                         @if(in_array($type, ['Ăn sáng', 'Ăn trưa', 'Ăn tối', 'Địa điểm tham quan', 'Chỗ ngủ']))
                             <div class="w-100 position-relative h-25 mt-2">
@@ -63,6 +72,36 @@
                                     </a>
                                 </div>
                             </div>
+                         
+   <div class="d-flex w-100 position-relative h-15 mt-2">
+    <div class="w-85 d-flex">
+    </div>
+    <div class="w-15 p-0 d-flex align-items-center justify-content-center me-2"  >
+   @php
+    $moTa = '📍 Lịch trình từ Travela';
+    if ($lastTransport) {
+        $moTa .= ' | 🚗 Di chuyển từ: ' . ($lastTransport['Điểm đi'] ?? '') .
+                 ' → ' . ($lastTransport['Điểm đến'] ?? '') .
+                 ' | 🕒 ' . ($lastTransport['Thời gian'] ?? '') .
+                 ' | 📏 ' . ($lastTransport['Khoảng cách'] ?? '');
+        $lastTransport = null; // ✅ dùng xong thì xóa
+    }
+@endphp
+
+<form class="add-calendar-form">
+    @csrf
+    <input type="hidden" name="title" value="{{ $detailInfo['Tên địa điểm'] ?? 'Hoạt động' }}">
+    <input type="hidden" name="location" value="{{ $detailInfo['Địa chỉ'] ?? '' }}">
+    <input type="hidden" name="description" value="{{ $moTa }}">
+    <input type="hidden" name="time_range" value="{{ $detailInfo['Thời gian tham quan'] ?? '08:00 -> 10:00' }}">
+    <input type="hidden" name="day_index" value="{{ ((int)$day_id) - 1 }}">
+      <input type="hidden" name="type" value="{{ $activity }}"> {{-- ✅ Đây mới là đúng "Sáng/Trưa/Chiều/Tối" --}}
+    <button type="submit" class="btn btn-sm btn-outline-success">+ Google Calendar</button>
+</form>
+
+
+    </div>
+</div>
                         @elseif($type == 'Di chuyển' && is_array($detailInfo))
                             <div class="w-100 position-relative h-auto mt-2 d-flex justify-content-between align-items-center">
                                 <div class="row w-10 start-0 d-flex flex-wrap align-content-center">
@@ -109,3 +148,64 @@
         @endforeach
     @endforeach
 </div>
+
+@include('frontend.schedule.ajax.calendar-preview')
+<script>
+$(document).ready(function () {
+    let previewModal = new bootstrap.Modal(document.getElementById('previewModal'));
+
+    // ✅ Khi bấm nút Google Calendar → mở modal và đổ dữ liệu
+    $('.add-calendar-form').on('submit', function (e) {
+        e.preventDefault();
+
+        let form = $(this);
+        let formData = form.serializeArray();
+        let modal = $('#previewModal');
+
+        // Reset các input trong modal
+        modal.find('input, textarea').val('');
+
+        // Gán lại dữ liệu vào modal
+        formData.forEach(item => {
+            modal.find(`[name="${item.name}"]`).val(item.value);
+        });
+
+        // Lưu lại formData tạm (nếu cần dùng sau)
+        window._currentFormData = formData;
+
+        previewModal.show();
+    });
+
+    // ✅ Khi nhấn "Xác nhận thêm"
+    $('#confirmAddForm').on('submit', function (e) {
+        e.preventDefault();
+
+        let data = $(this).serialize();
+
+        $.ajax({
+            url: "{{ route('calendar.add') }}",
+            type: 'POST',
+            data: data,
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            success: function (res) {
+                alert('✅ Đã thêm sự kiện vào Google Calendar!');
+                previewModal.hide();
+            },
+            error: function (xhr) {
+                let res = xhr.responseJSON;
+                let msg = res?.message || '❌ Lỗi khi thêm lịch!';
+                alert(msg);
+
+                if (xhr.status === 401 && res?.redirect) {
+                    let currentUrl = window.location.href;
+                    let redirectBack = encodeURIComponent(currentUrl);
+                    let finalRedirect = res.redirect + '?redirect_back=' + redirectBack;
+                    window.location.href = finalRedirect;
+                }
+            }
+        });
+    });
+});
+</script>

@@ -233,64 +233,82 @@ class ScheduleController
         ];
         return view('frontend.schedule.index', $data);
     }
-    public function build_schedule(Request $request)
-    {
-        $placeNames = $request->input('placeNames');
-//        dd($request->all());
-        $data = [
-            'address' => $placeNames['address'],
-            'start_date' => $placeNames['start_date'],
-            'end_date' => $placeNames['end_date'],
-            'placeName' => $placeNames['placeNames'],
-            'budget' => $placeNames['budget'],
-            'currency' => $placeNames['currency'],
-            'adults' => $placeNames['adults'],
-            'children_1' => $placeNames['children_1'],
-            'children_2' => $placeNames['children_2'],
-            'transportation' => $placeNames['transportation'],
-            'interest' => $placeNames['interest'],
-        ];
+     public function build_schedule(Request $request)
+{
+    $placeNames = $request->input('placeNames');
 
+    $data = [
+        'address' => $placeNames['address'] ?? '',
+        'start_date' => $placeNames['start_date'] ?? '',
+        'end_date' => $placeNames['end_date'] ?? '',
+        'placeName' => $placeNames['placeNames'] ?? '',
+        'budget' => $placeNames['budget'] ?? '',
+        'currency' => $placeNames['currency'] ?? '',
+        'adults' => $placeNames['adults'] ?? 0,
+        'children_1' => $placeNames['children_1'] ?? 0,
+        'children_2' => $placeNames['children_2'] ?? 0,
+        'transportation' => $placeNames['transportation'] ?? '',
+        'interest' => $placeNames['interest'] ?? [],
+    ];
 
-        $transportation = $data['transportation'];
+    $currencies = Currency::query()->get();
+    $preferences = Preference::query()->get();
 
-        $result = preg_replace('/\s*\(.*?\)/', '', $transportation);
+    $plans = $this->geminiService->generateItinerary($data);
+    $wikicontent = [];
 
-        $currencies = Currency::query()->get();
-        $preferences = Preference::query()->get();
+    foreach ($plans as $day => &$activities) {
+        foreach ($activities as &$session_key) {
+            foreach ($session_key as &$session_active) {
+                $type = $session_active['type'] ?? '';
+                $details = $session_active['details'] ?? [];
 
-        $plans = $this->geminiService->generateItinerary($data);
+                if (!is_array($details)) continue;
 
+                if (in_array($type, ['Ăn sáng', 'Ăn trưa', 'Ăn tối', 'Chỗ ngủ'])) {
+                    if (is_string($details)) {
+                        $session_active['details'] = cleanLocationString($details);
+                    }
+                }
 
-        $wikicontent = [];
-        foreach ($plans as $day => &$activities){
-            foreach ($activities as &$session_key){
-                foreach ($session_key as &$session_active){
-                    $type = $session_active['type'];
-                    if($type == 'Di chuyển'){
-                        $from = str_replace(" (tự tìm)", "", $session_active['details']['Địa chỉ điểm đi']);
-                        $to = str_replace(" (tự tìm)", "", $session_active['details']['Địa chỉ điểm đến']);
-                        $origin = $this->map4DService->geocode2($from);
-                        $destination = $this->map4DService->geocode2($to);
-//                        print_r($origin);
-//                        dd($destination);
-                        $session_active['details']['origin_lat'] = $origin['lat'] ?? '';
-                        $session_active['details']['origin_lon'] = $origin['lon'] ?? '';
-                        $session_active['details']['destination_lat'] = $destination['lat'] ?? '';
-                        $session_active['details']['destination_lon'] = $destination['lon'] ?? '';
-                    }  else if (in_array($type, ['Ăn sáng', 'Ăn trưa', 'Ăn tối', 'Chỗ ngủ', 'Địa điểm tham quan'])) {
-                        $geocode = str_replace(" (tự tìm)", "", $session_active['details']['Địa chỉ']);
-                        $geocode = $this->map4DService->geocode2($geocode);
-                        $session_active['details']['lat'] = $geocode['lat'];
-                        $session_active['details']['lon'] = $geocode['lon'];
+                if ($type === 'Di chuyển') {
+                    $from = cleanLocationString($details['Địa chỉ điểm đi'] ?? '');
+                    $to = cleanLocationString($details['Địa chỉ điểm đến'] ?? '');
+
+                    $origin = $this->map4DService->geocode2($from);
+                    $destination = $this->map4DService->geocode2($to);
+
+                    $session_active['details']['origin_lat'] = $origin['lat'] ?? '';
+                    $session_active['details']['origin_lon'] = $origin['lon'] ?? '';
+                    $session_active['details']['destination_lat'] = $destination['lat'] ?? '';
+                    $session_active['details']['destination_lon'] = $destination['lon'] ?? '';
+                }
+
+                if ($type === 'Địa điểm tham quan') {
+                    $placeName = cleanLocationString($details['Tên địa điểm'] ?? '');
+                    $session_active['details']['Tên địa điểm'] = $placeName;
+
+                    if ($placeName) {
+                        $wikicontent[$placeName] = $this->wikipediaService->getPlaceInfo($placeName);
+                    }
+
+                    $address = cleanLocationString($details['Địa chỉ'] ?? '');
+                    if ($address) {
+                        $geocode = $this->map4DService->geocode2($address);
+                        $session_active['details']['lat'] = $geocode['lat'] ?? '';
+                        $session_active['details']['lon'] = $geocode['lon'] ?? '';
                     }
                 }
             }
         }
-
-        return view('frontend.schedule.ajax.schedule-built', compact('plans', 'currencies', 'preferences', 'wikicontent'));
-
     }
+  session([
+    'plans' => $plans,
+    'start_date' => $placeNames['start_date'],
+]);
+
+    return view('frontend.schedule.ajax.schedule-built', compact('plans', 'currencies', 'preferences', 'wikicontent'));
+}
     public function getToaDo($location){
 
     }
