@@ -256,48 +256,26 @@ class ScheduleController
 
     $plans = $this->geminiService->generateItinerary($data);
     $wikicontent = [];
-
-    foreach ($plans as $day => &$activities) {
-        foreach ($activities as &$session_key) {
-            foreach ($session_key as &$session_active) {
-                $type = $session_active['type'] ?? '';
-                $details = $session_active['details'] ?? [];
-
-                if (!is_array($details)) continue;
-
-                if (in_array($type, ['Ăn sáng', 'Ăn trưa', 'Ăn tối', 'Chỗ ngủ'])) {
-                    if (is_string($details)) {
-                        $session_active['details'] = cleanLocationString($details);
-                    }
-                }
-
-                if ($type === 'Di chuyển') {
-                    $from = cleanLocationString($details['Địa chỉ điểm đi'] ?? '');
-                    $to = cleanLocationString($details['Địa chỉ điểm đến'] ?? '');
-
+    foreach ($plans as $day => &$activities){
+        foreach ($activities as &$session_key){
+            foreach ($session_key as &$session_active){
+                $type = $session_active['type'];
+                if($type == 'Di chuyển'){
+                    $from = str_replace(" (tự tìm)", "", $session_active['details']['Địa chỉ điểm đi']);
+                    $to = str_replace(" (tự tìm)", "", $session_active['details']['Địa chỉ điểm đến']);
                     $origin = $this->map4DService->geocode2($from);
                     $destination = $this->map4DService->geocode2($to);
-
+//                        print_r($origin);
+//                        dd($destination);
                     $session_active['details']['origin_lat'] = $origin['lat'] ?? '';
                     $session_active['details']['origin_lon'] = $origin['lon'] ?? '';
                     $session_active['details']['destination_lat'] = $destination['lat'] ?? '';
                     $session_active['details']['destination_lon'] = $destination['lon'] ?? '';
-                }
-
-                if ($type === 'Địa điểm tham quan') {
-                    $placeName = cleanLocationString($details['Tên địa điểm'] ?? '');
-                    $session_active['details']['Tên địa điểm'] = $placeName;
-
-                    if ($placeName) {
-                        $wikicontent[$placeName] = $this->wikipediaService->getPlaceInfo($placeName);
-                    }
-
-                    $address = cleanLocationString($details['Địa chỉ'] ?? '');
-                    if ($address) {
-                        $geocode = $this->map4DService->geocode2($address);
-                        $session_active['details']['lat'] = $geocode['lat'] ?? '';
-                        $session_active['details']['lon'] = $geocode['lon'] ?? '';
-                    }
+                }  else if (in_array($type, ['Ăn sáng', 'Ăn trưa', 'Ăn tối', 'Chỗ ngủ', 'Địa điểm tham quan'])) {
+                    $geocode = str_replace(" (tự tìm)", "", $session_active['details']['Địa chỉ']);
+                    $geocode = $this->map4DService->geocode2($geocode);
+                    $session_active['details']['lat'] = '';
+                    $session_active['details']['lon'] = '';
                 }
             }
         }
