@@ -16,8 +16,8 @@ class Map4DService
     public function __construct()
     {
         // Lấy key và url từ file config/services.php
-        $this->apiKey = Config::get('services.map4d.key');
-        $this->baseUrl = Config::get('services.map4d.base_url');
+        $this->apiKey = env('MAP4D_API_KEY');
+        $this->baseUrl = 'https://api.map4d.vn/sdk';
 
         if (!$this->apiKey) {
             // Có thể throw exception hoặc log lỗi nếu không có API key
