@@ -17,10 +17,8 @@ Route::get('/admin-dashboard', [DashboardController::class, 'index'])->name('adm
 
 Route::get('/admin-booking', [BookingManagementController::class, 'index'])->name('admin.booking.index');
 Route::get('/admin-contact', [ContactManagementController::class, 'index'])->name('admin.contact.index');
-
-
-
-
+Route::put('/admin-contact/{id}', [ContactManagementController::class, 'update'])->name('admin.contact.update');
+Route::delete('/admin-contact/{id}', [ContactManagementController::class, 'destroy'])->name('admin.contact.destroy');
 
 Route::get('/admin-information', [InformationManagementController::class, 'index'])->name('admin.information.index');
 Route::get('/admin-information/create', [InformationManagementController::class, 'create'])->name('admin.information.create');

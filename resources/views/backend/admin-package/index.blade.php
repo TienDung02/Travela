@@ -6,7 +6,7 @@
     <!-- PLACES -->
     <div class="mb-10">
         <div class="flex justify-between items-center mb-3">
-            <h3 class="text-xl font-bold">Destinations</h3>
+            <h2 class="">Destinations</h2>
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#placeModal" onclick="openPlaceModal()">Add Destination</button>
         </div>
         <div class="overflow-x-auto rounded shadow">
