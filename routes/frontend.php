@@ -88,6 +88,7 @@ Route::get('/404', [ErrorController::class, 'index'])->name('404');
 //---------------Destination---------------//
 Route::get('/destination', [PlaceController::class, 'index'])->name('destination.index');
 Route::get('/destination-detail/{id}', [PlaceController::class, 'detail'])->name('destination.detail');
+Route::get('/destination/all', [PlaceController::class, 'all'])->name('destination.all');
 Route::post('places/{id}/reviews',  [ReviewController::class, 'store'])->name('reviews.store');
 
 Route::get('tour', [TourController::class, 'index'])->name('tour.index');

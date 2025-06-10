@@ -130,19 +130,9 @@
                 }
             }
         });
-        // $(document).on('init','.schedule-carousel', function(event, slick) {
-        //     $('.slick-prev').on('click', function () {
-        //         console.log('Prev clicked');
-        //         slickAfterChange();
-        //     });
-        //
-        //     $('.slick-next').on('click', function () {
-        //         console.log('Next clicked');
-        //         slickAfterChange();
-        //     });
-        // });
-       
-      
+
+
+
 
         /*----------------------------------------------------*/
         /*  Check Password Confirm
@@ -530,163 +520,201 @@
         }, 500);
 
      /*----------------------------------------------------*/
-/*  Ajax Build Schedule
-/*----------------------------------------------------*/
-$('#generateSchedule').click(function () {
-    let placeNames = $(this).data('place-names');
-    let url = $('#get-url-schedule').attr('data-url');
+        /*  Ajax Build Schedule
+        /*----------------------------------------------------*/
+            $('#generateSchedule').click(function () {
+                let placeNames = $(this).data('place-names');
+                var url = $('#get-url-schedule').attr('data-url');
+                $('#btn-build-schedule').remove();
+                $('#spinner2').removeClass('d-none').addClass('d-flex');
 
-    $('#btn-build-schedule').remove();
-    $('#spinner2').removeClass('d-none').addClass('d-flex');
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    data: { placeNames: placeNames },
+                    success: function (data) {
+                        // $('.schedule-carousel').html(response.html);
 
-    $.ajax({
-        url: url,
-        type: "GET",
-        data: { placeNames: placeNames },
-        success: function (data) {
-            const $data = $(data);
-            $('#schedule-response').html($data);
-            updateRouteButtons();
+                        var $data = $(data);
+                        $('#schedule-response').html($data);
+                        updateRouteButtons();
+                        $('.schedule-carousel').slick({
+                            centerMode: true,
+                            centerPadding: '0px',
+                            slidesToShow: 3,
+                            responsive: [
+                                {
+                                    breakpoint: 768,
+                                    settings: {
+                                        arrows: true,
+                                        centerMode: true,
+                                        centerPadding: '0px',
+                                        slidesToShow: 3
+                                    }
+                                },
+                                {
+                                    breakpoint: 480,
+                                    settings: {
+                                        arrows: true,
+                                        centerMode: true,
+                                        centerPadding: '0px',
+                                        slidesToShow: 1
+                                    }
+                                }
+                            ]
+                        });
+                        $('#spinner2').removeClass('d-flex').addClass('d-none');
+                        initScheduleScrollHandler();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Lỗi status:", status);  // Lỗi HTTP (404, 500, v.v.)
+                        console.error("Lỗi từ server:", xhr.responseText);  // Nội dung lỗi
+                        console.error("Chi tiết lỗi:", error);  // Mô tả lỗi
 
-            // ✅ Đợi DOM cập nhật chắc chắn rồi xử lý slick
-            setTimeout(() => {
-                const $carousel = $('.schedule-carousel');
-
-                if ($carousel.length === 0) {
-                    console.warn('⚠ Không tìm thấy .schedule-carousel sau khi AJAX render');
-                    $('#spinner2').removeClass('d-flex').addClass('d-none');
-                    return;
-                }
-
-                const slideCount = $carousel.find('.schedule-item').length;
-                const enableCenterMode = slideCount >= 4;
-
-                console.log('🔍 Số lượng ngày (slide):', slideCount);
-                console.log('🎯 centerMode:', enableCenterMode);
-
-                // Hủy slick cũ nếu có
-                if ($carousel.hasClass('slick-initialized')) {
-                    $carousel.slick('unslick');
-                }
-
-                $carousel.slick({
-                    centerMode: enableCenterMode,
-                    centerPadding: '0px',
-                    slidesToShow: 3,
-                    arrows: true,
-                   
-                      
+                        alert("Có lỗi xảy ra: " + xhr.status + " - " + error);
+                    }
                 });
-                if (enableCenterMode) {
-   $carousel.on('afterChange', function(event, slick, currentSlide) {
-    const $current = $(slick.$slides[currentSlide]);
-    const targetId = $current.data('target');
+            });
+            let isManualClick = false;
+            $(document).on('init','.schedule-carousel', function(event, slick) {
+                $('.slick-prev').on('click', function () {
+                    isManualClick = true;
+                    slickAfterChange();
+                    console.log(isManualClick)
+                });
 
-    const $parent = $('#schedule-content');
-    const targetSelector = '#' + targetId;
-
-    if ($(targetSelector).length) {
-        const offsetTop = $(targetSelector).offset().top - $parent.offset().top + $parent.scrollTop();
-        $parent.animate({
-            scrollTop: offsetTop
-        }, 500);
-    } else {
-        console.warn('Không tìm thấy nội dung chi tiết của:', targetId);
-    }
-
-    // ✅ Đổi màu cho slide đang active
-    $('.target-day .schedule-day').removeClass('bg-primary text-white').addClass('bg-light text-dark');
-    $current.find('.schedule-day').removeClass('bg-light text-dark').addClass('bg-primary text-white');
-});
-
-}
+                $('.slick-next').on('click', function () {
+                    isManualClick = true;
+                    slickAfterChange();
+                    console.log(isManualClick)
+                });
+            });
+        /*----------------------------------------------------*/
+        /*  End Ajax Build Schedule
+        /*----------------------------------------------------*/
 
 
-                // ✅ Gán active ngày đầu tiên
-             // ✅ Gán active ngày đầu tiên
-$('.target-day .schedule-day').removeClass('bg-primary text-white').addClass('bg-light text-dark');
-$('.target-day').first().find('.schedule-day').removeClass('bg-light text-dark').addClass('bg-primary text-white');
 
-            }, 10);
-        },
-        error: function (xhr, status, error) {
-            console.error("❌ Lỗi status:", status);
-            console.error("❌ Lỗi từ server:", xhr.responseText);
-            console.error("❌ Chi tiết lỗi:", error);
-            alert("Có lỗi xảy ra: " + xhr.status + " - " + error);
+        /*----------------------------------------------------*/
+        /*  Smooth Scroll To Detail Schedule
+        /*----------------------------------------------------*/
+        function slickAfterChange(){
+            var targetId = $('.slick-current').data('target');
+
+            const $parent = $('#schedule-content');
+            var targetSelector = '#' + targetId;
+
+            const offsetTop = $(targetSelector).offset().top - $parent.offset().top + $parent.scrollTop();
+
+            console.log(targetId)
+
+            if ($(targetSelector).length) {
+                console.log(offsetTop)
+
+                $parent.animate({
+                    scrollTop: offsetTop
+                }, 500);
+
+            } else {
+                console.warn('Không tìm thấy phần tử mục tiêu với ID:', targetId);
+            }
+            isManualClick = false;
+            console.log(isManualClick)
         }
-    });
-});
-/*----------------------------------------------------*/
-/*  End Ajax Build Schedule
-/*----------------------------------------------------*/
 
-/*----------------------------------------------------*/
-/*  Smooth Scroll To Detail Schedule
-/*----------------------------------------------------*/
+        $(document).on('click', '.target-day', function(event) {
 
-function slickAfterChange() {
-    var targetId = $('.slick-current').data('target');
+            var targetId = $(this).data('target');
+            var index = $(this).data('slick-index');
 
-    const $parent = $('#schedule-content');
-    var targetSelector = '#' + targetId;
+            const $parent = $('#schedule-content');
+            var targetSelector = '#' + targetId;
 
-    if ($(targetSelector).length) {
-        const offsetTop = $(targetSelector).offset().top - $parent.offset().top + $parent.scrollTop();
-        $parent.animate({
-            scrollTop: offsetTop
-        }, 500);
-    } else {
-        console.warn('Không tìm thấy phần tử mục tiêu với ID:', targetId);
-    }
-}
+            //const offsetTop = $(targetSelector).position().top;
+            const offsetTop = $(targetSelector).offset().top - $parent.offset().top + $parent.scrollTop();
 
-$(document).on('click', '.target-day', function (event) {
-    var $this = $(this);
-    var targetId = $this.data('target');
-    var index = $this.data('slick-index');
-    var $carousel = $('.schedule-carousel');
-    const $parent = $('#schedule-content');
-    var targetSelector = '#' + targetId;
+            console.log(targetId)
 
-    const slideCount = $carousel.find('.schedule-item').length;
-    const enableCenterMode = slideCount >= 4;
+            $('.schedule-carousel').slick('slickGoTo', index);
 
-    if (enableCenterMode) {
-        // Di chuyển đến slide tương ứng
-        $carousel.slick('slickGoTo', index);
+            if ($(targetSelector).length) {
+                console.log(offsetTop)
 
-        // Gọi lại slickAfterChange để cập nhật màu + scroll sau khi slickGoTo xong
-        setTimeout(() => {
-            slickAfterChange();
-        }, 10);
-    } else {
-        const $targetSlide = $carousel.find(`[data-slick-index="${index}"]`);
-    if ($targetSlide.length) {
-        $carousel.animate({
-            scrollLeft: $targetSlide.position().left + $carousel.scrollLeft()
-        }, 300);
-    }
+                $parent.animate({
+                    scrollTop: offsetTop
+                }, 500);
 
-    // ✅ Cập nhật màu thủ công khi không dùng slick
-    $('.target-day .schedule-day').removeClass('bg-primary text-white').addClass('bg-light text-dark');
-    $this.find('.schedule-day').removeClass('bg-light text-dark').addClass('bg-primary text-white');
+            } else {
+                console.warn('Không tìm thấy phần tử mục tiêu với ID:', targetId);
+            }
+        });
 
-    // Cuộn tới chi tiết
-    if ($(targetSelector).length) {
-        const offsetTop = $(targetSelector).offset().top - $parent.offset().top + $parent.scrollTop();
-        $parent.animate({
-            scrollTop: offsetTop
-        }, 500);
-    } else {
-        console.warn('Không tìm thấy phần tử mục tiêu với ID:', targetId);
-    }
-    }
-});
+        let lastVisibleDay = null;
+        let isSlickAnimating = false;
+        function initScheduleScrollHandler() {
 
-/*----------------------------------------------------*/
-/*  End Smooth Scroll To Detail Schedule
-/*----------------------------------------------------*/
+            $('#schedule-content').off('scroll');
+
+            $('#schedule-content').on('scroll', function () {
+                if (isManualClick) return;
+
+
+                const scrollContainer = this;
+                // let newVisibleDay = null;
+                let currentVisibleDay = null;
+                let minDistanceFromTop = Infinity;
+
+                $('.day-content', scrollContainer).each(function () {
+                    const rect = this.getBoundingClientRect();
+                    const containerRect = scrollContainer.getBoundingClientRect();
+
+                    const distanceFromContainerTop = rect.top - containerRect.top;
+
+                    if (rect.bottom > containerRect.top && rect.top < containerRect.bottom) {
+                        if (distanceFromContainerTop < minDistanceFromTop) {
+                            minDistanceFromTop = distanceFromContainerTop;
+                            currentVisibleDay = $(this).data('day');
+                        }
+                    }
+                });
+
+                if (currentVisibleDay !== null && currentVisibleDay !== lastVisibleDay) {
+                    // console.log('Before scroll (x):', lastVisibleDay);
+                    // console.log('After scroll (y):', currentVisibleDay);
+
+                    let newSlideIndex = -1;
+                    const slickInstance = $('.schedule-carousel').slick('getSlick');
+
+                    if (slickInstance) { // Đảm bảo Slick đã được khởi tạo
+                        slickInstance.$slides.each(function(index) {
+                            if ($(this).data('target') === ('myTarget' + currentVisibleDay)) {
+                                newSlideIndex = index;
+                                return false;
+                            }
+                        });
+
+                        const currentSlickSlideIndex = slickInstance.slickCurrentSlide();
+
+                        if (newSlideIndex !== -1 && newSlideIndex !== currentSlickSlideIndex) {
+                            console.log(newSlideIndex)
+                            isSlickAnimating = true;
+                            slickInstance.slickGoTo(newSlideIndex);
+                        }
+                    }
+                    lastVisibleDay = currentVisibleDay;
+                }
+            });
+            console.log('Sự kiện scroll cho #schedule-content đã được gắn lại.');
+        }
+
+        /*----------------------------------------------------*/
+        /*  End Smooth Scroll To Detail Schedule
+        /*----------------------------------------------------*/
+
+
+
+
+
 
 
 
@@ -753,7 +781,7 @@ $(document).on('click', '.target-day', function (event) {
         /*----------------------------------------------------*/
 
 
-        
+
 
 
 
@@ -868,11 +896,43 @@ $(document).on('click', '.target-day', function (event) {
 
 
         /*----------------------------------------------------*/
-        /*  Map
+        /*  Map Responsive
         /*----------------------------------------------------*/
+        $(document).ready(function () {
+            const originalParent = $('#result-map').parent();
+            const mapElement = $('#result-map');
 
+            function handleResponsiveMap() {
+                if (window.innerWidth < 992) {
+                    if (!$('#map-response').find('#result-map').length) {
+                        $('#map-response').append(mapElement);
+                    }
+
+                    $('#map').css({
+                        height: '580px',
+                        width: '100%'
+                    });
+                } else {
+                    $('#map').css({
+                        height: '61rem',
+                        width: '100%'
+                    });
+                    if (!originalParent.find('#result-map').length) {
+                        originalParent.append(mapElement);
+                    }
+                }
+            }
+
+            // Gọi lúc đầu
+            handleResponsiveMap();
+
+            // Gọi khi resize
+            $(window).on('resize', function () {
+                handleResponsiveMap();
+            });
+        });
         /*----------------------------------------------------*/
-        /*  End Map
+        /*  End Map Responsive
         /*----------------------------------------------------*/
 
         /*----------------------------------------------------*/

@@ -9,6 +9,7 @@
 .h-20{height:20% !important;}
 .h-25{height:25% !important;}
 .h-30{height:30% !important;}
+.h-33{height:33.33333333333333333% !important;}
 .h-33{height:33% !important;}
 .h-35{height:35% !important;}
 .h-40{height:40% !important;}
@@ -353,6 +354,18 @@
 
 .delete:hover{
     background-color: #e12335;
+    & i{
+        color: #FFFFFF;
+    }
+}
+.comment:hover{
+    background-color: #bfbfbf;
+    & i{
+        color: #FFFFFF;
+    }
+}
+.redirect:hover{
+    background-color: #234fe1;
     & i{
         color: #FFFFFF;
     }

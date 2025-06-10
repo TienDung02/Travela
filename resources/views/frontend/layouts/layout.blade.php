@@ -41,5 +41,44 @@
         @endphp
     </script>
     @endif
+        <script>
+            $(document).ready(function() {
+                console.log('aaaaaaa'); // Đảm bảo dòng này nằm trong đây
+
+                // Khai báo clickedMarker ở phạm vi mà hàm click có thể truy cập được
+                let clickedMarker = null;
+
+                $('.redirect').click(function() {
+                    const lat = parseFloat($(this).data('lat'));
+                    const lon = parseFloat($(this).data('lon'));
+                    console.log('lat ');
+                    console.log('bbbbbb ');
+
+                    if (!isNaN(lat) && !isNaN(lon) && map) {
+                        // ... (phần còn lại của code) ...
+                        // Xóa marker cũ (nếu có)
+                        if (clickedMarker) {
+                            clickedMarker.setMap(null);
+                        }
+                        // Tạo marker mới
+                        clickedMarker = new map4d.Marker({
+                            position: { lat: lat, lng: lon },
+                            title: "Vị trí",
+                            label: { text: "!", color: "white" },
+                            icon: {
+                                url: "URL_CỦA_ICON_TÙY_CHỈNH",
+                                size: { width: 32, height: 32 },
+                                anchor: { x: 16, y: 32 }
+                            }
+                        });
+                        clickedMarker.setMap(map);
+                    } else if (!map) {
+                        console.error("Map4D is not initialized yet. Click event will not work.");
+                    } else {
+                        console.warn("Invalid latitude or longitude in data attributes.");
+                    }
+                });
+            });
+        </script>
     </body>
 </html>

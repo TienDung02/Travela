@@ -58,23 +58,31 @@ class ScheduleController
         return response()->json($summary);
     }
 
+    public function searchWikidata($keyword)
+    {
+        $response = Http::get('https://www.wikidata.org/w/api.php', [
+            'action' => 'wbsearchentities',
+            'search' => $keyword,
+            'language' => 'en',
+            'format' => 'json'
+        ]);
+
+        return $response->json();
+    }
+
+
     public function showRoute(Request $request)
     {
-        $origin = $request->input('origin', '21.0285,105.8522'); // Mặc định Hồ Hoàn Kiếm
-        $destination = $request->input('destination', '21.0367,105.8347'); // Mặc định Lăng Bác
+        $origin = $request->input('origin', '21.0285,105.8522');
+        $destination = $request->input('destination', '21.0367,105.8347');
         $mode = $request->input('mode', 'car');
 
-        // Gọi phương thức getRoute từ Map4DService
         $routeData = $this->map4DService->getRoute($origin, $destination, $mode);
 
         if (!$routeData) {
-            // Xử lý khi không lấy được dữ liệu (API lỗi, ...)
-            // Ví dụ: quay lại trang trước với thông báo lỗi
             return back()->with('error', 'Không thể tìm thấy đường đi. Vui lòng thử lại.');
         }
 
-        // Nếu thành công, truyền dữ liệu routeData sang View
-        // $routeData bây giờ chứa thông tin JSON từ API (vd: các đoạn đường, thời gian, khoảng cách)
         return view('test', [
             'routeData' => $routeData,
             'origin' => $origin,
@@ -125,16 +133,13 @@ class ScheduleController
         $params = [
             'query' => $address,
         ];
+        if ($address_old) {
+            $result = $this->map4DService->geocode($address_old);
 
-        $map = $this->rapidApiService->fetchData($params);
-//        $address = "Chùa minh thành";
-        if ($address) {
-            $result = $this->map4DService->geocode($address);
-            $result = null;
             if (!$result || empty($result)) {
                 $error = 'Không tìm thấy địa điểm.';
             } else {
-                $map = $result[0];
+                $map = $result;
             }
         }
         if (!empty($map)) {
@@ -145,54 +150,8 @@ class ScheduleController
             $lon = 106.6281;
         }
 
-//        print_r($lat);
-//        dd($lon);
-
         $currencies = Currency::query()->get();
         $weather = $this->weatherService->getWeatherByCity($address);
-        // $weather = [
-        //     'location' => [
-        //         'name' => 'Hà Nội',
-        //         'country' => 'Việt Nam',
-        //     ],
-        //     'forecast' => [
-        //         'forecastday' => [
-        //             [
-        //                 'date' => now()->toDateString(),
-        //                 'day' => [
-        //                     'avgtemp_c' => 28,
-        //                     'avghumidity' => 65,
-        //                     'maxwind_kph' => 15,
-        //                     'condition' => [
-        //                         'text' => 'Trời nắng nhẹ'
-        //                     ]
-        //                 ]
-        //             ],
-        //             [
-        //                 'date' => now()->addDay()->toDateString(),
-        //                 'day' => [
-        //                     'avgtemp_c' => 30,
-        //                     'avghumidity' => 60,
-        //                     'maxwind_kph' => 12,
-        //                     'condition' => [
-        //                         'text' => 'Có mây'
-        //                     ]
-        //                 ]
-        //             ],
-        //             [
-        //                 'date' => now()->addDays(2)->toDateString(),
-        //                 'day' => [
-        //                     'avgtemp_c' => 27,
-        //                     'avghumidity' => 70,
-        //                     'maxwind_kph' => 10,
-        //                     'condition' => [
-        //                         'text' => 'Có mưa nhẹ'
-        //                     ]
-        //                 ]
-        //             ],
-        //         ]
-        //     ]
-        // ];
         if (!$weather) {
             return view('frontend.weather', [
                 'error' => "Không thể lấy thông tin thời tiết của thành phố: {$address}. Vui lòng thử lại!"
@@ -215,33 +174,12 @@ class ScheduleController
         $transportation = $request->input('transportation');
 
         $interest = $request->input('interest');
-      //  $interest = ['cảnh đẹp', 'lịch sử', 'kiến trúc'];
         $interest = implode(', ', $interest);
 
         $preferences = $request->input('interest');
 
         $places = $this->geminiService->getTourismInfo($address, $preferences);
-       
-// $places = [
-//     'Hồ Hoàn Kiếm' => [
-//         'Tên' => 'Hồ Hoàn Kiếm',
-//         'Loại' => 'Hồ nước',
-//         'Giờ hoạt động' => 'Cả ngày',
-//         'Tag' => ['cảnh đẹp', 'trung tâm', 'lịch sử']
-//     ],
-//     'Chùa Một Cột' => [
-//         'Tên' => 'Chùa Một Cột',
-//         'Loại' => 'Chùa',
-//         'Giờ hoạt động' => '07:00 - 18:00',
-//         'Tag' => ['tâm linh', 'kiến trúc', 'lịch sử']
-//     ],
-//     'Nhà thờ Đức Bà' => [
-//         'Tên' => 'Nhà thờ Đức Bà',
-//         'Loại' => 'Nhà thờ',
-//         'Giờ hoạt động' => '06:00 - 20:00',
-//         'Tag' => ['kiến trúc', 'tôn giáo', 'du lịch']
-//     ]
-// ];
+
         $placeNames = array_keys($places);
 
 
@@ -255,19 +193,12 @@ class ScheduleController
         $finalUrl = url('/build-schedule') . '?' . $query;
 
         $wikicontent = [];
-        foreach ($places as $placeName => $thong_tin) {
-            // Determine the display name for the thumbnail
-           
-            $wiki = $this->wikipediaService->getPlaceInfo($placeName);
-            // Lấy đường dẫn ảnh thumbnail từ Wikipedia, nếu không có thì để null
-            
-            //dd($placeName);
-            //dd($wiki);
-           
-            $wikicontent[$placeName] = $wiki;
+        foreach ($places as &$place){
+            $name = cleanLocationString($place['Tên']);
+            $origin = $this->map4DService->geocode2($name);
+            $place['lat'] = $origin['lat'] ?? '';
+            $place['lon'] = $origin['lon'] ?? '';
         }
-       // dd($thumbnails);
-        //dd($fullcontents);
         $data = [
             'map' => $map,
             'currencies' => $currencies,
@@ -302,180 +233,66 @@ class ScheduleController
         ];
         return view('frontend.schedule.index', $data);
     }
-    public function build_schedule(Request $request)
-    {
-        $placeNames = $request->input('placeNames');
-//        dd($request->all());
-        $data = [
-            'address' => $placeNames['address'],
-            'start_date' => $placeNames['start_date'],
-            'end_date' => $placeNames['end_date'],
-            'placeName' => $placeNames['placeNames'],
-            'budget' => $placeNames['budget'],
-            'currency' => $placeNames['currency'],
-            'adults' => $placeNames['adults'],
-            'children_1' => $placeNames['children_1'],
-            'children_2' => $placeNames['children_2'],
-            'transportation' => $placeNames['transportation'],
-            'interest' => $placeNames['interest'],
-        ];
+     public function build_schedule(Request $request)
+{
+    $placeNames = $request->input('placeNames');
 
+    $data = [
+        'address' => $placeNames['address'] ?? '',
+        'start_date' => $placeNames['start_date'] ?? '',
+        'end_date' => $placeNames['end_date'] ?? '',
+        'placeName' => $placeNames['placeNames'] ?? '',
+        'budget' => $placeNames['budget'] ?? '',
+        'currency' => $placeNames['currency'] ?? '',
+        'adults' => $placeNames['adults'] ?? 0,
+        'children_1' => $placeNames['children_1'] ?? 0,
+        'children_2' => $placeNames['children_2'] ?? 0,
+        'transportation' => $placeNames['transportation'] ?? '',
+        'interest' => $placeNames['interest'] ?? [],
+    ];
 
+    $currencies = Currency::query()->get();
+    $preferences = Preference::query()->get();
 
-        $currencies = Currency::query()->get();
-        $preferences = Preference::query()->get();
-
-        $plans = $this->geminiService->generateItinerary($data);
-
-        // $plans = [
-        //     'Ngày 1' => [
-        //     'Sáng' => [
-        //         [
-        //         'type' => 'Ăn sáng',
-        //         'details' => 'Phở Bát Đàn'
-        //         ],
-        //         [
-        //         'type' => 'Địa điểm tham quan',
-        //         'details' => [
-        //             'Tên địa điểm' => 'Hồ Hoàn Kiếm',
-        //             'Thời gian' => '08:00 - 10:00'
-        //         ]
-        //         ]
-        //     ],
-        //     'Trưa' => [
-        //         [
-        //         'type' => 'Ăn trưa',
-        //         'details' => 'Bún chả Hàng Mành'
-        //         ]
-        //     ],
-        //     'Chiều' => [
-        //         [
-        //         'type' => 'Địa điểm tham quan',
-        //         'details' => [
-        //             'Tên địa điểm' => 'Chùa Một Cột',
-        //             'Thời gian' => '14:00 - 16:00'
-        //         ]
-        //         ]
-        //     ],
-        //     'Tối' => [
-        //         [
-        //         'type' => 'Ăn tối',
-        //         'details' => 'Nhà hàng Quán Ăn Ngon'
-        //         ],
-        //         [
-        //         'type' => 'Chỗ ngủ',
-        //         'details' => 'Khách sạn Melia Hà Nội'
-        //         ]
-        //     ]
-        //     ],
-        //     'Ngày 2' => [
-        //     'Sáng' => [
-        //         [
-        //         'type' => 'Ăn sáng',
-        //         'details' => 'Bánh cuốn Thanh Trì'
-        //         ],
-        //         [
-        //         'type' => 'Địa điểm tham quan',
-        //         'details' => [
-        //             'Tên địa điểm' => 'Nhà thờ Đức Bà',
-        //             'Thời gian' => '09:00 - 11:00'
-        //         ]
-        //         ]
-        //     ],
-        //     'Trưa' => [
-        //         [
-        //         'type' => 'Ăn trưa',
-        //         'details' => 'Cơm tấm Sài Gòn'
-        //         ]
-        //     ],
-        //     'Chiều' => [
-        //         [
-        //         'type' => 'Địa điểm tham quan',
-        //         'details' => [
-        //             'Tên địa điểm' => 'Bảo tàng Lịch sử Quốc gia',
-        //             'Thời gian' => '14:00 - 16:00'
-        //         ]
-        //         ]
-        //     ],
-        //     'Tối' => [
-        //         [
-        //         'type' => 'Ăn tối',
-        //         'details' => 'Nhà hàng Sen Tây Hồ'
-        //         ],
-        //         [
-        //         'type' => 'Chỗ ngủ',
-        //         'details' => 'Khách sạn Melia Hà Nội'
-        //         ]
-        //     ]
-        //     ]
-        // ];
-        $wikicontent = [];
-        foreach ($plans as $day => &$dailyPlan) {
-            foreach ($dailyPlan as $partOfDay => &$activities) {
-                if (is_array($activities)) {
-                    foreach ($activities as &$activity) {
-                        if (isset($activity['type']) && isset($activity['details'])) {
-                            $type = $activity['type'];
-
-                            if (in_array($type, ['Ăn sáng', 'Ăn trưa', 'Ăn tối', 'Chỗ ngủ'])) {
-                                if (is_string($activity['details'])) {
-                                    $activity['details'] = cleanLocationString($activity['details']);
-                                }
-                            } elseif ($type === 'Di chuyển') {
-                                if (is_array($activity['details'])) {
-                                    if (isset($activity['details']['Điểm đi']) && is_string($activity['details']['Điểm đi'])) {
-                                        $activity['details']['Điểm đi'] = cleanLocationString($activity['details']['Điểm đi']);
-                                    }
-                                    if (isset($activity['details']['Điểm đến']) && is_string($activity['details']['Điểm đến'])) {
-                                        $activity['details']['Điểm đến'] = cleanLocationString($activity['details']['Điểm đến']);
-                                    }
-                                }
-                            } elseif ($type === 'Địa điểm tham quan') {
-                                if (is_array($activity['details'])) {
-                                    if (isset($activity['details']['Tên địa điểm']) && is_string($activity['details']['Tên địa điểm'])) {
-                                        $activity['details']['Tên địa điểm'] = cleanLocationString($activity['details']['Tên địa điểm']);
-                                        $wikicontent[$activity['details']['Tên địa điểm']] = $this->wikipediaService->getPlaceInfo($activity['details']['Tên địa điểm']);
-
-                                    }
-                                }
-                            }
-                        }
-                    }
+    $plans = $this->geminiService->generateItinerary($data);
+    $wikicontent = [];
+    foreach ($plans as $day => &$activities){
+        foreach ($activities as &$session_key){
+            foreach ($session_key as &$session_active){
+                $type = $session_active['type'];
+                if($type == 'Di chuyển'){
+                    $from = str_replace(" (tự tìm)", "", $session_active['details']['Địa chỉ điểm đi']);
+                    $to = str_replace(" (tự tìm)", "", $session_active['details']['Địa chỉ điểm đến']);
+                    $origin = $this->map4DService->geocode2($from);
+                    $destination = $this->map4DService->geocode2($to);
+//                        print_r($origin);
+//                        dd($destination);
+                    $session_active['details']['origin_lat'] = $origin['lat'] ?? '';
+                    $session_active['details']['origin_lon'] = $origin['lon'] ?? '';
+                    $session_active['details']['destination_lat'] = $destination['lat'] ?? '';
+                    $session_active['details']['destination_lon'] = $destination['lon'] ?? '';
+                }  else if (in_array($type, ['Ăn sáng', 'Ăn trưa', 'Ăn tối', 'Chỗ ngủ', 'Địa điểm tham quan'])) {
+                    $geocode = str_replace(" (tự tìm)", "", $session_active['details']['Địa chỉ']);
+                    $geocode = $this->map4DService->geocode2($geocode);
+                    $session_active['details']['lat'] = '';
+                    $session_active['details']['lon'] = '';
                 }
             }
         }
-
-        foreach ($plans as $day => &$activities){
-            foreach ($activities as &$session_key){
-                foreach ($session_key as &$session_active){
-                    $type = $session_active['type'];
-                    if($type == 'Di chuyển'){
-                        $from = str_replace(" (tự tìm)", "", $session_active['details']['Điểm đi']);
-                        $to = str_replace(" (tự tìm)", "", $session_active['details']['Điểm đến']);
-                        $origin = $this->map4DService->geocode($from);
-                        $destination = $this->map4DService->geocode($to);
-                        $session_active['details']['origin_lat'] = $origin[0]['lat'] ?? '';
-                        $session_active['details']['origin_lon'] = $origin[0]['lon'] ?? '';
-                        $session_active['details']['destination_lat'] = $destination[0]['lat'] ?? '';
-                        $session_active['details']['destination_lon'] = $destination[0]['lon'] ?? '';
-                    }
-                }
-            }
-        }
-
-
-        return view('frontend.schedule.ajax.schedule-built', compact('plans', 'currencies', 'preferences', 'wikicontent'));
-
     }
+  session([
+    'plans' => $plans,
+    'start_date' => $placeNames['start_date'],
+]);
+
+    return view('frontend.schedule.ajax.schedule-built', compact('plans', 'currencies', 'preferences', 'wikicontent'));
+}
     public function getToaDo($location){
 
     }
 
     public function cacheAllLocations($locations)
     {
-
-
-
         $locations = [
             'diem_1',
             'diem_2',
@@ -505,22 +322,16 @@ class ScheduleController
 
     public function getEventAndActivity(Request $request)
     {
-//        print_r($request->all());
         $address = $request->input('address');
-//        dd($address);
         $data = [
             'address' => $address['address'],
             'start_date' => $address['start_date'],
             'end_date' => $address['end_date']
         ];
 
-//        dd($data);
 
-//        $currencies = Currency::query()->get();
-//        $preferences = Preference::query()->get();
 
         $activities = $this->geminiService->getEvent($data);
-//        dd($activities);
         return view('frontend.schedule.ajax.eventAndActivity', compact('activities'));
 
     }

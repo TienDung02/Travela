@@ -408,7 +408,7 @@
     }
 
     .carousel-header {
-        height: 700px !important;
+        /*height: 700px !important;*/
     }
 
     .carousel-header .carousel-control-prev .carousel-control-prev-icon,
@@ -485,7 +485,7 @@
 
 /*** Destination Start ***/
 .container-fluid.destination {
-    overflow: auto;
+    overflow: unset;
 }
 
 .destination .tab-class .tab-content .tab-pane .destination-img {
@@ -1287,7 +1287,7 @@
       background-attachment: scroll !important;
     }
 }
-  
+
 
 
 /*Tour box*/
@@ -1800,6 +1800,7 @@ input[type=number]::-webkit-outer-spin-button
 .weather ul li{
     list-style-type: none;
     text-align: center;
+    font-size: 11px;
 }
 .weather ul li p{
     margin-bottom: 0;
@@ -1872,6 +1873,25 @@ input[type=number]::-webkit-outer-spin-button
     background: #555;
 }
 
+#scroll-tag::-webkit-scrollbar {
+    height: 4px;
+}
+/* Màu nền của thanh scrollbar */
+#scroll-tag::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 1px;
+}
+
+/* Phần cuộn di chuyển */
+#scroll-tag::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 1px;
+}
+
+/* Khi hover vào scrollbar */
+#scroll-tag::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
 
 
 .list-of-locations i {
@@ -1926,8 +1946,11 @@ input[type=number]::-webkit-outer-spin-button
 
 .schedule-item{
     max-height: 2rem;
-    width: 252px !important;
+    width: 135px;
 }
+
+
+
 .schedule-day{
     width: 8rem;
     max-height: 2rem;
@@ -1945,6 +1968,7 @@ input[type=number]::-webkit-outer-spin-button
     color: #FFFFFF;
 }
 
+
 .slick-prev:before, .slick-next:before{
     color: #13357b !important;
 }
@@ -1955,6 +1979,64 @@ input[type=number]::-webkit-outer-spin-button
     left: 0 !important;
 }
 
+@media (min-width: 1400px) {
+    .schedule-item{
+        width: 236px;
+    }
+    .weather ul li, .time, .requestAndDisplayRoute {
+        font-size: 13px;
+    }
+}
+@media (max-width: 1200px) {
+    .schedule-item{
+        width: 200px;
+        font-size: 1.125rem;
+    }
+    .image-left-schedule{
+        display: none;
+    }
+}
+
+@media (max-width: 992px) {
+    .schedule-item{
+        width: 166px;
+    }
+    .weather ul li, .time, .requestAndDisplayRoute {
+        font-size: 13px;
+    }
+
+}
+@media (max-width: 768px) {
+    .schedule-item{
+        width: 219px;
+    }
+    .weather ul li, .time, .requestAndDisplayRoute, .form-floating>label {
+        font-size: 11px;
+    }
+    .slick-prev, .slick-next
+    {
+        display: none !important;
+    }
+
+}
+@media (max-width: 576px) {
+    .schedule-item {
+        width: 159px;
+    }
+}
+
+
+
+@media (min-width: 1200px) {
+    .button-show-map{
+        display: none !important;
+    }
+}
+@media (min-width: 992px) {
+    .button-show-map{
+        display: none !important;
+    }
+}
 /* ------------------------------------------------------------------- */
 /* Chosen Plugin
 ---------------------------------------------------------------------- */
@@ -2682,7 +2764,7 @@ input[type=number]::-webkit-outer-spin-button
 
 @media (max-width: 768px) {
     .container {
-        height: 100dvh;
+        /*height: 100dvh;*/
     }
 
     .header-title h1 {
@@ -2709,8 +2791,6 @@ input[type=number]::-webkit-outer-spin-button
 /*------------------------------------------*/
 .eventAndActivity {
     min-height: unset !important;
-    overflow-y: scroll;
-    overflow-x: hidden;
 }
 
 .eventAndActivity::-webkit-scrollbar {
@@ -2767,7 +2847,7 @@ input[type=number]::-webkit-outer-spin-button
     justify-content: center;
     margin: 1.5rem 0;
   }
-  
+
   /* Thay đổi style cho từng item */
   .pagination .page-item .page-link {
     border-radius: 0.25rem;
@@ -2778,24 +2858,29 @@ input[type=number]::-webkit-outer-spin-button
     border: 1px solid #dee2e6;
     transition: background-color .2s;
   }
-  
+
   .pagination .page-item .page-link:hover {
     background-color: #e2e6ea;
   }
-  
+
   /* Active */
   .pagination .page-item.active .page-link {
     background-color: #007bff;
     color: #fff;
     border-color: #007bff;
   }
-  
+
   /* Disabled */
   .pagination .page-item.disabled .page-link {
     color: #6c757d;
     pointer-events: none;
     background-color: #fff;
   }
+  @media (max-width: 576px) {
+    .pagination li:not(.active):not(.page-item:first-child):not(.page-item:last-child):not(.disabled) {
+        display: none;
+    }
+}
 /* === Main media === */
 .gallery-main-img img,
 .gallery-main-img video {
@@ -2852,7 +2937,7 @@ button.thumb-btn {
     background-color: #fff;
     border: none;
     cursor: pointer;
-    
+
 }
 
 .thumb-nav-btn:disabled {
@@ -2862,14 +2947,14 @@ button.thumb-btn {
 .thumb-nav-btn:hover {
     background-color: #e0e0e0;
   }
-  #thumb-prev { 
-    left: -1.5rem; 
+  #thumb-prev {
+    left: -1.5rem;
     width: 100px;
     background-color: transparent;
     border-radius: 20%;
 }
-  #thumb-next { 
-    right: -1.5rem; 
+  #thumb-next {
+    right: -1.5rem;
     width: 100px;
     background-color: transparent;
     border-radius: 20%;
@@ -2882,7 +2967,7 @@ button.thumb-btn {
     .gallery-main-img video {
       max-height: 100%;
     }
-  
+
     .gallery-thumbs {
       width: calc(3 * 50px + 2 * 0.3rem);
     }
@@ -2896,12 +2981,12 @@ button.thumb-btn {
       height: 40px;
       font-size: 0.5rem;
     }
-    #thumb-prev { 
-        left: -0.5rem; 
+    #thumb-prev {
+        left: -0.5rem;
         width: 40px;
     }
-      #thumb-next { 
-        right: -0.5rem; 
+      #thumb-next {
+        right: -0.5rem;
         width: 40px;
     }
   }
@@ -2965,3 +3050,103 @@ button.thumb-btn {
 /* -----------------------------------------*/
 /*  End Event And Activity
 /*------------------------------------------*/
+
+
+
+
+
+
+
+/* -----------------------------------------*/
+/*  Modal Dialog
+/*------------------------------------------*/
+@media (max-width: 576px) {
+    .modal-dialog{
+        max-width: 365px;
+        margin: 1.75rem auto;
+        height: 480px;
+        margin-top: 10rem;
+    }
+    .modal-dialog .modal-content{
+        height: 100%;
+    }
+}
+
+@media (min-width: 576px) {
+    .modal-dialog{
+        max-width: 500px;
+        margin: 1.75rem auto;
+        height: 400px;
+        margin-top: 10rem;
+    }
+    .modal-dialog .modal-content{
+        height: 100%;
+    }
+}
+@media (min-width: 768px) {
+    .modal-dialog{
+        max-width: 550px;
+        margin: 1.75rem auto;
+        height: 450px;
+        margin-top: 10rem;
+    }
+    .modal-dialog .modal-content{
+        height: 100%;
+    }
+}
+@media (min-width: 992px) {
+    .modal-dialog{
+        max-width: 700px;
+        margin: 1.75rem auto;
+        height: 600px;
+        margin-top: 10rem;
+    }
+    .modal-dialog .modal-content{
+        height: 100%;
+    }
+}
+@media (min-width: 1200px) {
+    .modal-dialog{
+        max-width: 1000px;
+        margin: 1.75rem auto;
+        height: 700px;
+        margin-top: 10rem;
+    }
+    .modal-dialog .modal-content{
+        height: 100%;
+    }
+}
+@media (min-width: 1400px) {
+    .modal-dialog{
+        max-width: 1000px;
+        margin: 1.75rem auto;
+        height: 500px;
+        margin-top: 10rem;
+    }
+    .modal-dialog .modal-content{
+        height: 100%;
+    }
+}
+
+#exampleModal .carousel-control-prev, .carousel-control-next {
+    background: #00000096;
+    height: 30px;
+    width: 30px;
+    border-radius: 20px;
+    top: 50% !important;
+}
+#exampleModal .carousel-control-prev{
+    transform: translate(10px, -50%);
+}
+
+#exampleModal .carousel-control-next{
+    transform: translate(-10px, -50%);
+}
+
+
+/* -----------------------------------------*/
+/*  End Modal Dialog
+/*------------------------------------------*/
+
+
+
