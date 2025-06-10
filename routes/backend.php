@@ -16,6 +16,14 @@ use App\Http\Controllers\backend\TourManagementController;
 Route::get('/admin-dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index');
 
 Route::get('/admin-booking', [BookingManagementController::class, 'index'])->name('admin.booking.index');
+Route::get('/admin-booking/create', [BookingManagementController::class, 'create'])->name('admin.booking.create');
+Route::post('/admin-booking', [BookingManagementController::class, 'store'])->name('admin.booking.store');
+Route::get('/admin-booking/{id}/edit', [BookingManagementController::class, 'edit'])->name('admin.booking.edit');
+Route::put('/admin-booking/{id}', [BookingManagementController::class, 'update'])->name('admin.booking.update');
+Route::delete('/admin-booking/{id}', [BookingManagementController::class, 'destroy'])->name('admin.booking.destroy');
+
+
+
 Route::get('/admin-contact', [ContactManagementController::class, 'index'])->name('admin.contact.index');
 Route::put('/admin-contact/{id}', [ContactManagementController::class, 'update'])->name('admin.contact.update');
 Route::delete('/admin-contact/{id}', [ContactManagementController::class, 'destroy'])->name('admin.contact.destroy');

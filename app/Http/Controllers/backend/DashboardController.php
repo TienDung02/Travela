@@ -69,14 +69,17 @@ class DashboardController
         DB::raw('SUM(CASE WHEN rating = 1 THEN 1 ELSE 0 END) as one_star')
         )->first();
 
-        
-        // dd(
-        //     $topTours,
-        //     $topPackages,
-        //     $topPlaces,
-        //     $providerData,
-        //     $revenueData
-        // );
-        return view('backend.dashboard.index', compact('revenueData', 'timePeriod','providerData', 'topPackages', 'topTours', 'topPlaces','reviewSummary'));
+   $orderCount = \App\Models\Order::count();
+
+// Count orders by type (tour/package) via OrderDetails
+    $tourOrderCount = \App\Models\OrderDetail::where('item_type', 'tour')->count();
+    $packageOrderCount = \App\Models\OrderDetail::where('item_type', 'package')->count();
+    $totalOrderDetails = $tourOrderCount + $packageOrderCount;
+
+        // Pass to view
+        return view('backend.dashboard.index', compact(
+            'revenueData', 'timePeriod', 'providerData', 'topPackages', 'topTours', 'topPlaces', 'reviewSummary',
+            'orderCount', 'tourOrderCount', 'packageOrderCount', 'totalOrderDetails'
+        ));
     }
 }
