@@ -16,8 +16,8 @@ class Map4DService
     public function __construct()
     {
         // Lấy key và url từ file config/services.php
-        $this->apiKey = Config::get('services.map4d.key');
-        $this->baseUrl = Config::get('services.map4d.base_url');
+        $this->apiKey = env('MAP4D_API_KEY');
+        $this->baseUrl = 'https://api.map4d.vn/sdk';
 
         if (!$this->apiKey) {
             // Có thể throw exception hoặc log lỗi nếu không có API key
@@ -106,6 +106,7 @@ class Map4DService
 
     public function geocode($address)
     {
+
         $cacheKey = 'geo_' . md5($address);
 
         if (Cache::has($cacheKey)) {
@@ -130,18 +131,15 @@ class Map4DService
 
             $responseData = $response->json();
 
-            if (is_array($responseData) && !empty($responseData) &&
-                Arr::has($responseData[0], ['lat', 'lon']) &&
-                !empty($responseData[0]['lat']) && !empty($responseData[0]['lon'])
-            ) {
+            if (is_array($responseData['result']) && !empty($responseData['result'])) {
+
                 $result = [
-                    'lat' => (float) $responseData['data'][0]['location']['lat'],
-                    'lon' => (float) $responseData['data'][0]['location']['lng'],
-                    'raw' => $responseData['data'][0]
+                    'lat' => (float) $responseData['result'][0]['location']['lat'],
+                    'lon' => (float) $responseData['result'][0]['location']['lng'],
+                    'raw' => $responseData['result'][0]
                 ];
 
                 Cache::put($cacheKey, $result, now()->addHours(12));
-
                 return $result;
             } else {
                 Log::warning("Map4D API did not return expected data for address '{$address}'. Response: " . json_encode($responseData));

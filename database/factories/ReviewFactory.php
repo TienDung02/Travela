@@ -15,12 +15,10 @@ class ReviewFactory extends Factory
     {
         return [
             'user_id' => \App\Models\User::inRandomOrder()->first(),
+            'reviewable_id' => $this->faker->randomElement([\App\Models\Tour::inRandomOrder()->first(), \App\Models\Package::inRandomOrder()->first(), \App\Models\Place::inRandomOrder()->first()]),
+            'reviewable_type' => $this->faker->randomElement(['tour', 'package', 'place']),
             'reviewable_id' => rand(1, 10),
-            'reviewable_type' => $this->faker->randomElement([
-                \App\Models\Package::class,
-                \App\Models\Tour::class,
-                \App\Models\Place::class,
-            ]),
+            'reviewable_type' => $this->faker->randomElement(['tour', 'package', 'place']),
             'rating' => rand(1, 5),
             'comment' => $this->faker->sentence,
         ];
