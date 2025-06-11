@@ -533,7 +533,7 @@
                     type: "GET",
                     data: { placeNames: placeNames },
                     success: function (data) {
-                        // $('.schedule-carousel').html(response.html);
+                      //  $('.schedule-carousel').html(response.html);
 
                         var $data = $(data);
                         $('#schedule-response').html($data);
