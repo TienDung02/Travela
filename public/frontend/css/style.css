@@ -2921,6 +2921,17 @@ button.thumb-btn {
     width: auto;
     scroll-behavior: smooth;
 }
+.destination-detail-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 60%;
+    max-width: 60%;
+    margin: 0 auto;
+}
 .thumb-btn img,
 .thumb-btn video {
     width: 80px;
@@ -2947,17 +2958,24 @@ button.thumb-btn {
 .thumb-nav-btn:hover {
     background-color: #e0e0e0;
   }
-  #thumb-prev {
-    left: -1.5rem;
-    width: 100px;
+  #thumb-prev { 
+    left: -1.5rem; 
+    width: 70px;
     background-color: transparent;
     border-radius: 20%;
+    height: 70px;
 }
-  #thumb-next {
-    right: -1.5rem;
-    width: 100px;
+  #thumb-next { 
+    right: -1.5rem; 
+    width: 70px;
     background-color: transparent;
     border-radius: 20%;
+    height: 70px;
+}
+.related-tour-sidebar {
+    position: sticky;
+    top: 100px; /* hoặc khoảng cách bạn muốn */
+    z-index: 10;
 }
 /* === Responsive: Mobile (<= 600px) show 3 thumbnails === */
 
@@ -2967,7 +2985,10 @@ button.thumb-btn {
     .gallery-main-img video {
       max-height: 100%;
     }
-
+    .destination-detail-img {
+      width: 100%;
+      max-width: 100%;
+    }
     .gallery-thumbs {
       width: calc(3 * 50px + 2 * 0.3rem);
     }
@@ -2984,23 +3005,22 @@ button.thumb-btn {
     #thumb-prev {
         left: -0.5rem;
         width: 40px;
+        height: 40px;
     }
       #thumb-next {
         right: -0.5rem;
         width: 40px;
+        height: 40px;
     }
   }
   .packages .packages-carousel .owl-nav .owl-next:hover i {
     color: var(--bs-white);
 }
-.container-fluid.ExploreTour {
-    overflow: auto;
-}
+
 /* Ẩn filter sidebar trên tablet/mobile */
 @media (max-width: 991.98px) {
     .filter-sidebar {
         display: none;
-        position: fixed;
         top: 0; left: 0; bottom: 0;
         width: 80vw;
         max-width: 320px;
@@ -3009,20 +3029,15 @@ button.thumb-btn {
         overflow-y: auto;
         box-shadow: 2px 0 8px rgba(0,0,0,0.1);
         transition: transform 0.3s;
-        transform: translateX(-100%);
+        transform: translateY(-100%);
     }
     .filter-sidebar.open {
-        display: block; /* <-- Thêm dòng này */
+        display: block; 
         z-index: 1051;
         transform: translateX(+15%);
     }
     .filter-toggle-btn {
         display: inline-block !important;
-    }
-    .filter-sidebar.open ~ .filter-overlay,
-    .filter-overlay.active {
-        display: block;
-        opacity: 1;
     }
     .tour-card {
         flex-direction: column !important;
@@ -3046,7 +3061,33 @@ button.thumb-btn {
     background: rgba(0,0,0,0.4); /* Độ mờ */
     transition: opacity 0.3s;
 }
-
+/*Countdown*/
+.countdown-timer-box .countdown-item {
+    background: #fff;
+    border-radius: 8px;
+    min-width: 60px;
+    padding: 8px 0;
+    box-shadow: 0 2px 8px rgba(249, 79, 156, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.countdown-timer-box .countdown-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #f94f9c;
+    line-height: 1;
+}
+.countdown-timer-box .countdown-label {
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.countdown-header {
+    border-radius: 8px 8px 0 0;
+}
 /* -----------------------------------------*/
 /*  End Event And Activity
 /*------------------------------------------*/
