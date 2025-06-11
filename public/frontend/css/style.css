@@ -2972,6 +2972,11 @@ button.thumb-btn {
     border-radius: 20%;
     height: 70px;
 }
+.related-tour-sidebar {
+    position: sticky;
+    top: 100px; /* hoặc khoảng cách bạn muốn */
+    z-index: 10;
+}
 /* === Responsive: Mobile (<= 600px) show 3 thumbnails === */
 
 

@@ -93,10 +93,15 @@ class PlaceController
             ->with('user')
             ->orderByDesc('created_at')
             ->paginate(5);
-    
+        $relatedTours = \App\Models\Tour::whereHas('places', function($q) use ($Place) {
+            $q->where('places.id', $Place->id);
+        })
+        ->orderByDesc('price')
+        ->limit(4)
+        ->get();
         return view('frontend.destination.detail', compact(
             'Place','primaryMedia','otherMedia',
-            'reviews','totalReviews','averageRating','percentages'
+            'reviews','totalReviews','averageRating','percentages','relatedTours'
         ));
     }
     public function all(Request $request)

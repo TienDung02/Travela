@@ -34,191 +34,212 @@
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
             <h2 class="section-title px-3">{{$Place->name}}</h2>
         </div>
-        <div class="tab-class text-center col-lg-10 col-xl-10 col-xxl-8 mx-auto">
+        <div class="tab-class text-center col-lg-12 col-xl-12 col-xxl-10 mx-auto">
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade show p-0 active">
                     <div class="row g-4">
-                        <div class="row d-flex">
-                            <div class="col-lg-7">
-                                <div class="destination-detail-img">
-                                    <div class="wrapper">
-                                        <section class="gallery">
-                                            {{-- ẢNH CHÍNH --}}
-                                            <button id="gallery-main-img" type="button" class="gallery-main-img">
-                                                @if($primaryMedia->media_type === 'image')
-                                                    <img src="{{ asset($primaryMedia->media) }}" alt="Primary Media" id="main-img-preview">
-                                                @elseif($primaryMedia->media_type === 'video')
-                                                    <video src="{{ asset($primaryMedia->media) }}" controls id="main-img-preview" width="100px" height="400px"></video>
-                                                @endif
-                                            </button>
+                        <!-- Main Content (Images, Experiences, Reviews) -->
+                        <div class="col-lg-8 col-md-12">
+                            <div class="destination-detail-img">
+                                <div class="wrapper">
+                                    <section class="gallery">
+                                        {{-- ẢNH CHÍNH --}}
+                                        <button id="gallery-main-img" type="button" class="gallery-main-img">
+                                            @if($primaryMedia->media_type === 'image')
+                                                <img src="{{ asset($primaryMedia->media) }}" alt="Primary Media" id="main-img-preview">
+                                            @elseif($primaryMedia->media_type === 'video')
+                                                <video src="{{ asset($primaryMedia->media) }}" controls id="main-img-preview" width="100px" height="400px"></video>
+                                            @endif
+                                        </button>
 
-                                            {{-- THUMBNAILS --}}
-                                            <div class="thumbs-container-wrapper">
-                                                <button id="thumb-prev" class="thumb-nav-btn">&#10094;</button>
-                                                <div id="gallery-thumbs" class="gallery-thumbs">
+                                        {{-- THUMBNAILS --}}
+                                        <div class="thumbs-container-wrapper">
+                                            <button id="thumb-prev" class="thumb-nav-btn">&#10094;</button>
+                                            <div id="gallery-thumbs" class="gallery-thumbs">
+                                                <button class="thumb-btn"
+                                                    onclick="changeMainMedia('{{ asset($primaryMedia->media) }}', '{{ $primaryMedia->media_type }}')">
+                                                    @if($primaryMedia->media_type === 'image')
+                                                        <img src="{{ asset($primaryMedia->media) }}">
+                                                    @elseif($primaryMedia->media_type === 'video')
+                                                        <video src="{{ asset($primaryMedia->media) }}"></video>
+                                                    @endif
+                                                </button>
+                                                @foreach($otherMedia as $media)
                                                     <button class="thumb-btn"
-                                                        onclick="changeMainMedia('{{ asset($primaryMedia->media) }}', '{{ $primaryMedia->media_type }}')">
-                                                        @if($primaryMedia->media_type === 'image')
-                                                            <img src="{{ asset($primaryMedia->media) }}">
-                                                        @elseif($primaryMedia->media_type === 'video')
-                                                            <video src="{{ asset($primaryMedia->media) }}"></video>
+                                                        onclick="changeMainMedia('{{ asset($media->media) }}','{{ $media->media_type }}')">
+                                                        @if($media->media_type === 'image')
+                                                            <img src="{{ asset($media->media) }}" width="25%" height="25%">
+                                                        @elseif($media->media_type === 'video')
+                                                            <video src="{{ asset($media->media) }}" width="25%" height="25%"></video>
                                                         @endif
                                                     </button>
+                                                @endforeach
+                                            </div>
+                                            <button id="thumb-next" class="thumb-nav-btn">&#10095;</button>
+                                        </div>
+                                    </section>
+
+                                    {{-- SLIDESHOW --}}
+                                    <dialog id="slider-dialog">
+                                        <section class="slider-wrapper">
+                                            <button type="button" btn-slider="prev" id="btn-prev">&lsaquo;</button>
+                                            <button type="button" btn-slider="next">&rsaquo;</button>
+                                            <div class="slider-content">
+                                                <div id="slider" class="slider">
                                                     @foreach($otherMedia as $media)
-                                                        <button class="thumb-btn"
-                                                            onclick="changeMainMedia('{{ asset($media->media) }}','{{ $media->media_type }}')">
-                                                            @if($media->media_type === 'image')
-                                                                <img src="{{ asset($media->media) }}" width="25%" height="25%">
-                                                            @elseif($media->media_type === 'video')
-                                                                <video src="{{ asset($media->media) }}" width="25%" height="25%"></video>
-                                                            @endif
-                                                        </button>
+                                                        @if($media->media_type === 'image')
+                                                            <div class="slide"><img src="{{ asset($media->media) }}" alt="Media" class="slider-item"></div>
+                                                        @elseif($media->media_type === 'video')
+                                                            <div class="slide"><video src="{{ asset($media->media) }}" controls class="slider-item"></video></div>
+                                                        @endif
                                                     @endforeach
                                                 </div>
-                                                <button id="thumb-next" class="thumb-nav-btn">&#10095;</button>
                                             </div>
                                         </section>
-
-                                        {{-- SLIDESHOW --}}
-                                        <dialog id="slider-dialog">
-                                            <section class="slider-wrapper">
-                                                <button type="button" btn-slider="prev" id="btn-prev">&lsaquo;</button>
-                                                <button type="button" btn-slider="next">&rsaquo;</button>
-                                                <div class="slider-content">
-                                                    <div id="slider" class="slider">
-                                                        @foreach($otherMedia as $media)
-                                                            @if($media->media_type === 'image')
-                                                                <div class="slide"><img src="{{ asset($media->media) }}" alt="Media" class="slider-item"></div>
-                                                            @elseif($media->media_type === 'video')
-                                                                <div class="slide"><video src="{{ asset($media->media) }}" controls class="slider-item"></video></div>
-                                                            @endif
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            </section>
-                                            <button id="btn-dialog-close" class="btn-dialog-close">&#10005;</button>
-                                        </dialog>
-                                        <hr>
+                                        <button id="btn-dialog-close" class="btn-dialog-close">&#10005;</button>
+                                    </dialog>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="title">Trải nghiệm thú vị trong tour</div>
+                                    <div>
+                                        - Khám phá Tháp Eiffel và Du thuyền sông Seine – Biểu tượng nước Pháp và trải nghiệm ngắm cảnh Paris thơ mộng.<br>
+                                        - Tham quan làng Giethoorn – Venice của Hà Lan, nơi giao thông chỉ có kênh đào và thuyền.<br>
+                                        - Chiêm ngưỡng hoa tulip tại Keukenhof – Vườn hoa lớn nhất thế giới với hàng triệu bông hoa rực rỡ.<br>
+                                        - Quảng trường Grand Place – Di sản thế giới tại Brussels, trung tâm văn hóa và kiến trúc châu Âu.<br>
+                                        - Nhà thờ Cologne và các biểu tượng nước Đức – Kiến trúc Gothic và di sản UNESCO đáng kinh ngạc.
                                     </div>
                                 </div>
-                                <div class="row d-flex">
-                                    @for($i = 0; $i < 6; $i++)
-                                        <div class="col-lg-7">
-                                            <div class="title">Trải nghiệm thú vị trong tour</div>
-                                            <div>
-                                                - Khám phá Tháp Eiffel và Du thuyền sông Seine – Biểu tượng nước Pháp và trải nghiệm ngắm cảnh Paris thơ mộng.<br>
-                                                - Tham quan làng Giethoorn – Venice của Hà Lan, nơi giao thông chỉ có kênh đào và thuyền.<br>
-                                                - Chiêm ngưỡng hoa tulip tại Keukenhof – Vườn hoa lớn nhất thế giới với hàng triệu bông hoa rực rỡ.<br>
-                                                - Quảng trường Grand Place – Di sản thế giới tại Brussels, trung tâm văn hóa và kiến trúc châu Âu.<br>
-                                                - Nhà thờ Cologne và các biểu tượng nước Đức – Kiến trúc Gothic và di sản UNESCO đáng kinh ngạc.
+                                <div class="col-12 mt-4">
+                                    <hr>
+                                    <div class="title">
+                                        <h5 class="section-title px-3">Đánh giá</h5>
+                                    </div>
+                                    <div>
+                                        <div class="review-container">
+                                            <h2>Overall rating</h2>
+                                            <div class="rating-summary row d-flex">
+                                                <div class="rating-score col-lg-2">
+                                                    <span class="score">{{ $averageRating }}</span>
+                                                    <div class="stars">
+                                                        @for($i = 1; $i <= 5; $i++)
+                                                            @if($i <= floor($averageRating))
+                                                                ★
+                                                            @elseif($i - $averageRating < 1)
+                                                                ⯨
+                                                            @else
+                                                                ☆
+                                                            @endif
+                                                        @endfor
+                                                    </div>
+                                                    <div class="text-muted">{{ $totalReviews }} reviews</div>
+                                                </div>
+                                                <div class="rating-bars col-lg-4">
+                                                    @for($i = 5; $i >= 1; $i--)
+                                                        <div class="rating-row">
+                                                            <span>{{ $i }} ★</span>
+                                                            <div class="progress-bar">
+                                                                <div class="progress" style="width: {{ $percentages[$i] }}%;"></div>
+                                                            </div>
+                                                            <span>{{ $percentages[$i] }}%</span>
+                                                        </div>
+                                                    @endfor
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-5"></div>
-                                    @endfor
-                                    <div class="col-lg-7">
-                                        <hr>
-                                        <div class="title">
-                                            <h5 class="section-title px-3">Đánh giá</h5>
-                                        </div>
-                                        <div>
-                                            <div class="review-container">
-                                                <h2>Overall rating</h2>
-                                                <div class="rating-summary row d-flex">
-                                                    <div class="rating-score col-lg-2">
-                                                        <span class="score">{{ $averageRating }}</span>
-                                                        <div class="stars">
+                                    </div>
+                                    <div class="review-container" id="reviews-container">
+                                        @forelse($reviews as $review)
+                                            <div class="review mb-4">
+                                                <div class="user-info row align-items-start">
+                                                    <div class="avatar-review col-lg-1 col-2">
+                                                        <img src="{{ $review->user->avatar_url ?? asset('frontend/images/default-avatar.png') }}"
+                                                            alt="{{ $review->user->name ?? 'Người dùng' }}"
+                                                            class="img-fluid rounded-circle">
+                                                    </div>
+                                                    <div class="col-lg-11 col-10 text-start">
+                                                        <strong>{{ $review->user->name ?? 'Người dùng' }}</strong>
+                                                        <div class="text-warning d-inline-block">
                                                             @for($i = 1; $i <= 5; $i++)
-                                                                @if($i <= floor($averageRating))
+                                                                @if($i <= $review->rating)
                                                                     ★
-                                                                @elseif($i - $averageRating < 1)
-                                                                    ⯨
                                                                 @else
                                                                     ☆
                                                                 @endif
                                                             @endfor
                                                         </div>
-                                                        <div class="text-muted">{{ $totalReviews }} reviews</div>
-                                                    </div>
-                                                    <div class="rating-bars col-lg-4">
-                                                        @for($i = 5; $i >= 1; $i--)
-                                                            <div class="rating-row">
-                                                                <span>{{ $i }} ★</span>
-                                                                <div class="progress-bar">
-                                                                    <div class="progress" style="width: {{ $percentages[$i] }}%;"></div>
-                                                                </div>
-                                                                <span>{{ $percentages[$i] }}%</span>
-                                                            </div>
-                                                        @endfor
+                                                        <span class="date text-muted d-block mt-1">
+                                                            {{ $review->created_at->format('Y-m-d H:i') }}
+                                                            @if(!empty($review->variant))
+                                                                | Phân loại hàng: {{ $review->variant }}
+                                                            @endif
+                                                        </span>
+                                                        <p class="comment fw-normal mt-2">
+                                                            {{ $review->comment }}
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="review-container" id="reviews-container">
-                                            @forelse($reviews as $review)
-                                                <div class="review mb-4">
-                                                    <div class="user-info row align-items-start">
-                                                        <div class="avatar-review col-lg-1 col-2">
-                                                            <img src="{{ $review->user->avatar_url ?? asset('frontend/images/default-avatar.png') }}"
-                                                                alt="{{ $review->user->name ?? 'Người dùng' }}"
-                                                                class="img-fluid rounded-circle">
-                                                        </div>
-                                                        <div class="col-lg-11 col-10 text-start">
-                                                            <strong>{{ $review->user->name ?? 'Người dùng' }}</strong>
-                                                            <div class="text-warning d-inline-block">
-                                                                @for($i = 1; $i <= 5; $i++)
-                                                                    @if($i <= $review->rating)
-                                                                        ★
-                                                                    @else
-                                                                        ☆
-                                                                    @endif
-                                                                @endfor
-                                                            </div>
-                                                            <span class="date text-muted d-block mt-1">
-                                                                {{ $review->created_at->format('Y-m-d H:i') }}
-                                                                @if(!empty($review->variant))
-                                                                    | Phân loại hàng: {{ $review->variant }}
-                                                                @endif
-                                                            </span>
-                                                            <p class="comment fw-normal mt-2">
-                                                                {{ $review->comment }}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @empty
-                                                <p class="text-muted">Chưa có đánh giá nào. Hãy là người đầu tiên để lại nhận xét!</p>
-                                            @endforelse
+                                        @empty
+                                            <p class="text-muted">Chưa có đánh giá nào. Hãy là người đầu tiên để lại nhận xét!</p>
+                                        @endforelse
 
-                                            @if($reviews instanceof \Illuminate\Pagination\LengthAwarePaginator)
-                                                <div class="mt-4">
-                                                    {{ $reviews->onEachSide(1)->links('pagination::bootstrap-4') }}
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <div class="my-4"></div>
-                                        <div class="card mb-4">
-                                            <div class="card-body">
-                                                <form action="{{ route('reviews.store', ['type' => 'place', 'id' => $Place->id]) }}" method="POST">
-                                                    @csrf
-                                                    <div class="mb-2">
-                                                        <label for="rating" class="form-label">Đánh giá:</label>
-                                                        <select name="rating" id="rating" class="form-select" required>
-                                                            <option value="">Chọn số sao</option>
-                                                            @for($i = 5; $i >= 1; $i--)
-                                                                <option value="{{ $i }}">{{ $i }} ★</option>
-                                                            @endfor
-                                                        </select>
-                                                    </div>
-                                                    <div class="mb-2">
-                                                        <label for="comment" class="form-label">Bình luận:</label>
-                                                        <textarea name="comment" id="comment" class="form-control" rows="3" required placeholder="Viết bình luận của bạn..."></textarea>
-                                                    </div>
-                                                    <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
-                                                </form>
+                                        @if($reviews instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                                            <div class="mt-4">
+                                                {{ $reviews->onEachSide(1)->links('pagination::bootstrap-4') }}
                                             </div>
+                                        @endif
+                                    </div>
+                                    <div class="my-4"></div>
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <form action="{{ route('reviews.store', ['type' => 'place', 'id' => $Place->id]) }}" method="POST">
+                                                @csrf
+                                                <div class="mb-2">
+                                                    <label for="rating" class="form-label">Đánh giá:</label>
+                                                    <select name="rating" id="rating" class="form-select" required>
+                                                        <option value="">Chọn số sao</option>
+                                                        @for($i = 5; $i >= 1; $i--)
+                                                            <option value="{{ $i }}">{{ $i }} ★</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <label for="comment" class="form-label">Bình luận:</label>
+                                                    <textarea name="comment" id="comment" class="form-control" rows="3" required placeholder="Viết bình luận của bạn..."></textarea>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
+                                            </form>
                                         </div>
                                     </div>
-                                    <div class="col-lg-5"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Sidebar (Related Tours) -->
+                        <div class="col-lg-4 col-md-12">
+                            <div class="card mb-4 related-tour-sidebar">
+                                <div class="card-body">
+                                    <h5 class="fw-bold mb-3 px-3 py-2" style="background: #f94f9c; color: #fff; border-radius: 6px;">
+                                        Tour liên quan
+                                    </h5>
+                                    @forelse($relatedTours as $tour)
+                                        <div class="mb-3 border-bottom pb-2 d-flex flex-column align-items-center text-center">
+                                            <img src="{{ $tour->image_url ?? asset('frontend/images/gallery-1.jpg') }}"
+                                                alt="{{ $tour->name }}"
+                                                style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;">
+                                            <div>
+                                                <div class="fw-semibold mb-1">{{ $tour->name }}</div>
+                                                <div class="text-danger fw-bold mb-1" style="font-size:1.1rem;">
+                                                    {{ number_format($tour->price, 0, ',', '.') }}đ
+                                                </div>
+                                                <a href="{{ route('tour.detail', $tour->id) }}" class="btn btn-outline-primary btn-sm mt-1">Xem chi tiết</a>
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <div class="text-muted text-center">Chưa có tour liên quan.</div>
+                                    @endforelse
                                 </div>
                             </div>
                         </div>
@@ -404,72 +425,50 @@ document.addEventListener('DOMContentLoaded', () => {
     const thumbs    = document.getElementById('gallery-thumbs');
     const prevBtn   = document.getElementById('thumb-prev');
     const nextBtn   = document.getElementById('thumb-next');
-    const thumbWidth = 80;
-    const thumbGap   = 8;
-    const minVisible = 3;
-    const maxVisible = 6;
+    const thumbBtns = Array.from(document.querySelectorAll('.thumb-btn'));
     let currentIndex = 0;
-    let thumbVisible = 0;
 
-    function calcVisibleCount() {
-        const containerWidth = thumbs.clientWidth + thumbGap;
-        return Math.floor(containerWidth / (thumbWidth + thumbGap));
+    function setMainMediaByIndex(idx) {
+        const btn = thumbBtns[idx];
+        if (!btn) return;
+        const img = btn.querySelector('img');
+        const video = btn.querySelector('video');
+        if (img) {
+            changeMainMedia(img.src, 'image');
+        } else if (video) {
+            changeMainMedia(video.src, 'video');
+        }
+        currentIndex = idx;
+        // Scroll thumbnail into view if needed
+        btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        updateNavButtons();
     }
-
-    function updateButtons() {
-        const allThumbs = Array.from(document.querySelectorAll('.thumb-btn')).filter(btn => btn.offsetParent !== null);
-        const total = allThumbs.length;
+    function updateNavButtons() {
         prevBtn.disabled = currentIndex === 0;
-        nextBtn.disabled = currentIndex + thumbVisible >= total;
-        if (total <= thumbVisible) {
-            prevBtn.style.display = 'none';
-            nextBtn.style.display = 'none';
-            thumbs.style.justifyContent = 'center';
-        } else {
-            prevBtn.style.display = '';
-            nextBtn.style.display = '';
-            thumbs.style.justifyContent = 'start';
-        }
+        nextBtn.disabled = currentIndex === thumbBtns.length - 1;
     }
 
-    function onPrev() {
+    prevBtn.addEventListener('click', function() {
         if (currentIndex > 0) {
-            currentIndex = Math.max(0, currentIndex - 1);
-            thumbs.scrollBy({ left: -(thumbWidth + thumbGap), behavior: 'smooth' });
+            setMainMediaByIndex(currentIndex - 1);
         }
-        updateButtons();
-    }
-
-    function onNext() {
-        const allThumbs = Array.from(document.querySelectorAll('.thumb-btn')).filter(btn => btn.offsetParent !== null);
-        if (currentIndex + thumbVisible < allThumbs.length) {
-            currentIndex = Math.min(allThumbs.length - thumbVisible, currentIndex + 1);
-            thumbs.scrollBy({ left: thumbWidth + thumbGap, behavior: 'smooth' });
-        }
-        updateButtons();
-    }
-
-    function onResize() {
-        const count = calcVisibleCount();
-        thumbVisible = Math.min(Math.max(count, minVisible), maxVisible);
-        const allThumbs = document.querySelectorAll('.thumb-btn');
-        const maxIndex = Math.max(0, allThumbs.length - thumbVisible);
-        if (currentIndex > maxIndex) currentIndex = maxIndex;
-        updateButtons();
-    }
-
-    prevBtn.addEventListener('click', onPrev);
-    nextBtn.addEventListener('click', onNext);
-    window.addEventListener('resize', onResize);
-
-    document.querySelectorAll('.thumb-btn img, .thumb-btn video').forEach(media => {
-        media.onerror = () => {
-            media.parentElement.style.display = 'none';
-            onResize();
-        };
     });
 
-    onResize();
+    nextBtn.addEventListener('click', function() {
+        if (currentIndex < thumbBtns.length - 1) {
+            setMainMediaByIndex(currentIndex + 1);
+        }
+    });
+
+    // Khi click vào thumbnail, cập nhật currentIndex để prev/next hoạt động chính xác
+    thumbBtns.forEach((btn, idx) => {
+        btn.addEventListener('click', () => {
+            setMainMediaByIndex(idx);
+        });
+    });
+
+    // Đặt ảnh chính ban đầu
+    setMainMediaByIndex(0);
 });
 </script>
 
