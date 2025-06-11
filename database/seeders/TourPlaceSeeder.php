@@ -16,17 +16,13 @@ class TourPlaceSeeder extends Seeder
         foreach ($tours as $tour) {
             $tourDuration = $tour->start_date->diffInDays($tour->end_date);
 
-            if ($tourDuration < 3) {
-                continue;
-            }
-
             $usedDays = 0;
             $dayNumber = 1;
 
             $placesForTour = $places->random(rand(2, 4));
 
             foreach ($placesForTour as $place) {
-                $maxStay = $tourDuration - $usedDays;
+                $maxStay = max(1, $tourDuration - $usedDays);
                 if ($maxStay <= 0) break;
 
                 $duration = rand(1, min(3, $maxStay)); // mỗi nơi ở tối đa 3 ngày

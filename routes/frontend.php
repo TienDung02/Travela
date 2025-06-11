@@ -55,7 +55,7 @@ Route::get('/contact', [ContactController::class, 'index'])->name('contact.index
 Route::get('/booking', [BookingController::class, 'index'])->name('booking.index');
 
 Route::get('/tour', [ExploreTourController::class, 'index'])->name('tour.index');
-
+Route::get('tour/{id}', [TourController::class, 'detail'])->name('tour.detail');
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 
 Route::get('/guide', [GuideController::class, 'index'])->name('guide.index');
@@ -89,7 +89,7 @@ Route::get('/404', [ErrorController::class, 'index'])->name('404');
 Route::get('/destination', [PlaceController::class, 'index'])->name('destination.index');
 Route::get('/destination-detail/{id}', [PlaceController::class, 'detail'])->name('destination.detail');
 Route::get('/destination/all', [PlaceController::class, 'all'])->name('destination.all');
-Route::post('places/{id}/reviews',  [ReviewController::class, 'store'])->name('reviews.store');
+Route::post('{type}/{id}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
 Route::get('tour', [TourController::class, 'index'])->name('tour.index');
 Route::post('tour/{id}/reviews', [ReviewController::class, 'storeTourReview'])->name('tour.reviews.store');
