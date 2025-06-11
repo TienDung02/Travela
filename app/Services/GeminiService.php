@@ -136,8 +136,11 @@ class GeminiService
         $children_2     = $data['children_2'];
         $transportation = $data['transportation'];
 
+        if (is_array($interest)) {
+            $interest = implode(',', $interest);
+        }
         $dataString = $address . $startDate . $endDate . $budget . $currencyCode . $interest . $adults . $children_1 . $children_2 . $transportation;
-//        print_r($dataString);
+        //        print_r($dataString);
         $cacheKey = md5($dataString);
         if (Cache::has($cacheKey)) {
             return Cache::get($cacheKey);
@@ -183,8 +186,7 @@ class GeminiService
 
             NHẮC LẠI QUAN TRỌNG: **CHỈ** trả về đối tượng JSON hợp lệ duy nhất. **TUYỆT ĐỐI KHÔNG** bao gồm bất kỳ văn bản giới thiệu, kết thúc, markdown, hay bất kỳ loại ghi chú/giải thích nào **bên ngoài** đối tượng JSON. **Và, TUYỆT ĐỐI KHÔNG ĐƯA BẤT KỲ GHI CHÚ NÀO TRONG NGOẶC ĐƠN () HAY KÝ TỰ BỔ SUNG VÀO BÊN TRONG CÁC GIÁ TRỊ CHUỖI TÊN ĐỊA ĐIỂM ĐÃ NÊU TRÊN.**";
 
-                    // Bây giờ bạn có thể gửi $prompt này đến AI API
-                    // và xử lý kết quả trả về bằng json_decode($apiResponse, true) trong PHP
+
 
         $response = Http::post($this->apiUrl . "?key=" . $this->apiKey, [
             'contents' => [
@@ -216,7 +218,6 @@ class GeminiService
             echo htmlspecialchars($cleanedString);
             echo "\n---------------------------------\n";
         }
-        print_r('AAAAAAAAAAAAAAAAAA');
         Cache::put($cacheKey, $planArray, now()->addMinutes(60));
         return $planArray;
     }
