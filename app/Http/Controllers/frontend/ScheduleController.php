@@ -240,20 +240,20 @@ class ScheduleController
      public function build_schedule(Request $request)
 {
     
-    $for_schedule = $request->input('for_schedule', []);
+    $placeName = $request->input('placeNames', []);
     
     $data = [
-        'address' => $for_schedule['address'] ?? '',
-        'start_date' => $for_schedule['start_date'] ?? '',
-        'end_date' => $for_schedule['end_date'] ?? '',
-        'placeName' => $for_schedule['placeNames'] ?? '',
-        'budget' => $for_schedule['budget'] ?? '',
-        'currency' => $for_schedule['currency'] ?? '',
-        'adults' => $for_schedule['adults'] ?? 0,
-        'children_1' => $for_schedule['children_1'] ?? 0,
-        'children_2' => $for_schedule['children_2'] ?? 0,
-        'transportation' => $for_schedule['transportation'] ?? '',
-        'interest' => $for_schedule['interest'] ?? [],
+        'address' => $placeName['address'] ?? '',
+        'start_date' => $placeName['start_date'] ?? '',
+        'end_date' => $placeName['end_date'] ?? '',
+        'placeName' => $placeName['placeNames'] ?? '',
+        'budget' => $placeName['budget'] ?? '',
+        'currency' => $placeName['currency'] ?? '',
+        'adults' => $placeName['adults'] ?? 0,
+        'children_1' => $placeName['children_1'] ?? 0,
+        'children_2' => $placeName['children_2'] ?? 0,
+        'transportation' => $placeName['transportation'] ?? '',
+        'interest' => $placeName['interest'] ?? [],
     ];
 
     $currencies = Currency::query()->get();
@@ -270,7 +270,7 @@ class ScheduleController
 
       session([
         'plans' => $plans,
-        'start_date' => $for_schedule['start_date'] ?? '',
+        'start_date' => $placeName['start_date'],
     ]);
     return view('frontend.schedule.ajax.schedule-built', compact('plans', 'currencies', 'preferences', 'wikicontent'));
 }
