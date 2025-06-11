@@ -264,39 +264,14 @@ class ScheduleController
     if (!$plans || !is_array($plans)) {
     \Log::error('Không tạo được plans', ['plans' => $plans, 'data' => $data]);
     return response()->json(['error' => 'Không tạo được lịch trình'], 500);
-}
-    $wikicontent = [];
-    foreach ($plans as $day => &$activities){
-        foreach ($activities as &$session_key){
-            foreach ($session_key as &$session_active){
-                $type = $session_active['type'];
-                if($type == 'Di chuyển'){
-                    $from = str_replace(" (tự tìm)", "", $session_active['details']['Địa chỉ điểm đi']);
-                    $to = str_replace(" (tự tìm)", "", $session_active['details']['Địa chỉ điểm đến']);
-                    $origin = $this->map4DService->geocode2($from);
-                    $destination = $this->map4DService->geocode2($to);
-//                        print_r($origin);
-//                        dd($destination);
-                    $session_active['details']['origin_lat'] = $origin['lat'] ?? '';
-                    $session_active['details']['origin_lon'] = $origin['lon'] ?? '';
-                    $session_active['details']['destination_lat'] = $destination['lat'] ?? '';
-                    $session_active['details']['destination_lon'] = $destination['lon'] ?? '';
-                }  else if (in_array($type, ['Ăn sáng', 'Ăn trưa', 'Ăn tối', 'Chỗ ngủ', 'Địa điểm tham quan'])) {
-                    $geocode = str_replace(" (tự tìm)", "", $session_active['details']['Địa chỉ']);
-                    $geocode = $this->map4DService->geocode2($geocode);
-                    $session_active['details']['lat'] = '';
-                    $session_active['details']['lon'] = '';
-                    $wikicontent[$session_active['details']['Tên địa điểm']] = $this->wikipediaService->getPlaceInfo($session_active['details']['Tên địa điểm']);
-                
-                }
-            }
-        }
     }
-  session([
-    'plans' => $plans,
-    'start_date' => $for_schedule['start_date'] ?? '',
-]);
-    
+    $wikicontent = [];
+
+
+      session([
+        'plans' => $plans,
+        'start_date' => $placeNames['start_date'],
+    ]);
     return view('frontend.schedule.ajax.schedule-built', compact('plans', 'currencies', 'preferences', 'wikicontent'));
 }
     public function getToaDo($location){

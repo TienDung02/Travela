@@ -151,7 +151,6 @@
             var confirmPassword = $('.reg .confirm_password').val();
 
             if (new_pwd !== confirmPassword && confirmPassword != '') {
-                console.log('123')
                 $('.reg .btn-submit-update').prop('disabled', true);
                 $('.reg .notification').removeClass('d-none');
             } else {
@@ -175,7 +174,6 @@
         /*  Logout
         /*----------------------------------------------------*/
         $("#logoutBtn").click(function() {
-            console.log('123');
             var url = $(this).data('url-logout');
             $.ajax({
                 url: url,
@@ -533,7 +531,6 @@
                     type: "GET",
                     data: { placeNames: placeNames },
                     success: function (data) {
-                      //  $('.schedule-carousel').html(response.html);
 
                         var $data = $(data);
                         $('#schedule-response').html($data);
@@ -606,10 +603,8 @@
 
             const offsetTop = $(targetSelector).offset().top - $parent.offset().top + $parent.scrollTop();
 
-            console.log(targetId)
 
             if ($(targetSelector).length) {
-                console.log(offsetTop)
 
                 $parent.animate({
                     scrollTop: offsetTop
@@ -619,7 +614,6 @@
                 console.warn('Không tìm thấy phần tử mục tiêu với ID:', targetId);
             }
             isManualClick = false;
-            console.log(isManualClick)
         }
 
         $(document).on('click', '.target-day', function(event) {
@@ -633,12 +627,10 @@
             //const offsetTop = $(targetSelector).position().top;
             const offsetTop = $(targetSelector).offset().top - $parent.offset().top + $parent.scrollTop();
 
-            console.log(targetId)
 
             $('.schedule-carousel').slick('slickGoTo', index);
 
             if ($(targetSelector).length) {
-                console.log(offsetTop)
 
                 $parent.animate({
                     scrollTop: offsetTop
@@ -724,9 +716,7 @@
         /*----------------------------------------------------*/
         $('#getEvent').click(function () {
             let address = $(this).data('address');
-            console.log(address)
             var url = $('#get-url-event').attr('data-url');
-            console.log(url)
             $('#btn-get-event').remove();
             $('#spinner3').removeClass('d-none').addClass('d-flex');
 
