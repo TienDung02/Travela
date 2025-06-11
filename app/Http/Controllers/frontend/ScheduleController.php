@@ -270,7 +270,7 @@ class ScheduleController
 
       session([
         'plans' => $plans,
-        'start_date' => $for_schedule['start_date'],
+        'start_date' => $for_schedule['start_date'] ?? '',
     ]);
     return view('frontend.schedule.ajax.schedule-built', compact('plans', 'currencies', 'preferences', 'wikicontent'));
 }
