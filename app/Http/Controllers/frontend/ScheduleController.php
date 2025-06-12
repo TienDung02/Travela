@@ -110,9 +110,9 @@ class ScheduleController
 
         $currencies = DB::table('currencies')->get();
         $preferences = DB::table('preferences')->get();
+        $wikicontent = [];
 
-
-        return view('frontend.schedule.index', compact('currencies', 'preferences'));
+        return view('frontend.schedule.index', compact('currencies', 'preferences','wikicontent'));
     }
     public function testMap($placeName)
     {
@@ -179,9 +179,9 @@ class ScheduleController
         $preferences = $request->input('interest');
 
         $places = $this->geminiService->getTourismInfo($address, $preferences);
-
-        $placeNames = array_keys($places);
-
+       
+        $placeNames = array_keys($places );
+        
 
         $placeNames = implode(", ", $placeNames);
 
@@ -198,7 +198,11 @@ class ScheduleController
             $origin = $this->map4DService->geocode2($name);
             $place['lat'] = $origin['lat'] ?? '';
             $place['lon'] = $origin['lon'] ?? '';
+            
+            $wikicontent[$place['Tên']] = $this->wikipediaService->getPlaceInfo($name);
+
         }
+        //dd($placeNames);
         $data = [
             'map' => $map,
             'currencies' => $currencies,
@@ -235,33 +239,39 @@ class ScheduleController
     }
      public function build_schedule(Request $request)
 {
-    $placeNames = $request->input('placeNames');
-
+    
+    $for_schedule = $request->input('for_schedule', []);
+    
     $data = [
-        'address' => $placeNames['address'] ?? '',
-        'start_date' => $placeNames['start_date'] ?? '',
-        'end_date' => $placeNames['end_date'] ?? '',
-        'placeName' => $placeNames['placeNames'] ?? '',
-        'budget' => $placeNames['budget'] ?? '',
-        'currency' => $placeNames['currency'] ?? '',
-        'adults' => $placeNames['adults'] ?? 0,
-        'children_1' => $placeNames['children_1'] ?? 0,
-        'children_2' => $placeNames['children_2'] ?? 0,
-        'transportation' => $placeNames['transportation'] ?? '',
-        'interest' => $placeNames['interest'] ?? [],
+        'address' => $for_schedule['address'] ?? '',
+        'start_date' => $for_schedule['start_date'] ?? '',
+        'end_date' => $for_schedule['end_date'] ?? '',
+        'placeName' => $for_schedule['placeNames'] ?? '',
+        'budget' => $for_schedule['budget'] ?? '',
+        'currency' => $for_schedule['currency'] ?? '',
+        'adults' => $for_schedule['adults'] ?? 0,
+        'children_1' => $for_schedule['children_1'] ?? 0,
+        'children_2' => $for_schedule['children_2'] ?? 0,
+        'transportation' => $for_schedule['transportation'] ?? '',
+        'interest' => $for_schedule['interest'] ?? [],
     ];
 
     $currencies = Currency::query()->get();
     $preferences = Preference::query()->get();
 
     $plans = $this->geminiService->generateItinerary($data);
+
+    if (!$plans || !is_array($plans)) {
+    \Log::error('Không tạo được plans', ['plans' => $plans, 'data' => $data]);
+    return response()->json(['error' => 'Không tạo được lịch trình'], 500);
+    }
     $wikicontent = [];
+
 
       session([
         'plans' => $plans,
         'start_date' => $placeNames['start_date'],
     ]);
-
     return view('frontend.schedule.ajax.schedule-built', compact('plans', 'currencies', 'preferences', 'wikicontent'));
 }
     public function getToaDo($location){

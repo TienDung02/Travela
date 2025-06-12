@@ -136,7 +136,11 @@ class GeminiService
         $children_2     = $data['children_2'];
         $transportation = $data['transportation'];
 
+        if (is_array($interest)) {
+            $interest = implode(',', $interest);
+        }
         $dataString = $address . $startDate . $endDate . $budget . $currencyCode . $interest . $adults . $children_1 . $children_2 . $transportation;
+        //        print_r($dataString);
         $cacheKey = md5($dataString);
         if (Cache::has($cacheKey)) {
             return Cache::get($cacheKey);
@@ -184,79 +188,38 @@ class GeminiService
 
 
 
-        try {
-            $response = Http::timeout(60)->post($this->apiUrl . "?key=" . $this->apiKey, [
-                'contents' => [
-                    [
-                        'parts' => [
-                            ['text' => $prompt]
-                        ]
+        $response = Http::post($this->apiUrl . "?key=" . $this->apiKey, [
+            'contents' => [
+                [
+                    'parts' => [
+                        ['text' => $prompt]
                     ]
                 ]
-            ]);
+            ]
+        ]);
 
-            if (!$response->successful()) {
-                \Log::error('API Request Failed', [
-                    'status' => $response->status(),
-                    'body' => $response->body()
-                ]);
-                throw new \Exception("API request failed with status: " . $response->status());
-            }
-
-            $planData = $response->json();
-
-            if (!isset($planData['candidates'][0]['content']['parts'][0]['text'])) {
-                \Log::error('Unexpected API response structure', ['response' => $planData]);
-                throw new \Exception("Unexpected API response structure.");
-            }
-
-            $planText = $planData['candidates'][0]['content']['parts'][0]['text'];
-
-            $cleanedString = str_replace(['`', 'json'], '', $planText);
-
-            $cleanedString = preg_replace('/[\x00-\x07\x0B\x0E-\x1F]/', '', $cleanedString);
-
-            $cleanedString = str_replace(chr(0xC2).chr(0xA0), ' ', $cleanedString);
-
-            $cleanedString = preg_replace('/,\s*([\}\]])/', '$1', $cleanedString);
-
-            $cleanedString = mb_convert_encoding($cleanedString, 'UTF-8', 'UTF-8');
-
-            $cleanedString = trim($cleanedString);
-
-
-            $planArray = null;
-            try {
-                $planArray = json_decode($cleanedString, true, 512, JSON_THROW_ON_ERROR);
-            } catch (\JsonException $e) {
-                \Log::error("JSON parsing error: " . $e->getMessage(), [
-                    'cleaned_string' => $cleanedString, // In ra chuỗi đã làm sạch gây lỗi
-                    'json_error_code' => json_last_error(),
-                    'json_error_msg' => json_last_error_msg()
-                ]);
-                echo "\n--- Chuỗi đã làm sạch (gây lỗi) --- \n";
-                echo htmlspecialchars($cleanedString); // Dùng htmlspecialchars để hiển thị các ký tự đặc biệt
-                echo "\n---------------------------------\n";
-                throw new \Exception("Lỗi khi phân tích kế hoạch du lịch từ AI: " . $e->getMessage(), 0, $e);
-            }
-
-            Cache::put($cacheKey, $planArray, now()->addMinutes(60));
-            return $planArray;
-
-        } catch (\Illuminate\Http\Client\ConnectionException $e) {
-            \Log::error('API Connection Timeout or Error: ' . $e->getMessage(), [
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString()
-            ]);
-            throw new \Exception("Có lỗi kết nối đến máy chủ AI. Vui lòng thử lại sau.", 0, $e);
-        } catch (\Exception $e) {
-            \Log::error('Error generating itinerary: ' . $e->getMessage(), [
-                'prompt' => $prompt,
-                'data' => $data
-            ]);
-            throw $e;
+        $plan = $response->json();
+        $plan = $plan['candidates'][0]['content']['parts'][0]['text'];
+        $plan = str_replace('\n', '', $plan);
+        $plan = str_replace('`', '', $plan);
+        $plan = str_replace('json', '', $plan);
+//        dd($plan);
+        $cleanedString = str_replace(chr(0xC2).chr(0xA0), ' ', $plan);
+        $cleanedString = preg_replace('/,\s*([\}\]])/', '$1', $cleanedString);
+        $cleanedString = trim($cleanedString);
+        $planArray = null; // Khởi tạo
+        try {
+            $planArray = json_decode($cleanedString, true, 512, JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+            echo "Lỗi khi phân tích chuỗi text sau khi làm sạch (vẫn chưa phải JSON hợp lệ): " . $e->getMessage() . "\n";
+            echo "Mã lỗi JSON: " . json_last_error() . " - " . json_last_error_msg() . "\n";
+            // In ra chuỗi đã làm sạch để kiểm tra lỗi còn sót lại
+            echo "\n--- Chuỗi đã làm sạch (gây lỗi) --- \n";
+            echo htmlspecialchars($cleanedString);
+            echo "\n---------------------------------\n";
         }
+        Cache::put($cacheKey, $planArray, now()->addMinutes(60));
+        return $planArray;
     }
     public function getTourismInfo($address, $interests = [])
     {
