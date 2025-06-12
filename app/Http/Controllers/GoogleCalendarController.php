@@ -204,14 +204,25 @@ Log::info('⏰ Check sau set timezone:', [
     ]);
 
     // ✅ Gửi lên Google Calendar
-    try {
-        $service->events->insert('primary', $event);
-        Log::info('✅ Thêm sự kiện thành công lên Google Calendar');
-        return back()->with('success', '✅ Đã thêm sự kiện vào Google Calendar');
-    } catch (\Exception $e) {
-        Log::error('❌ Lỗi khi thêm sự kiện:', ['error' => $e->getMessage()]);
-        return back()->withErrors(['Không thể tạo sự kiện: ' . $e->getMessage()]);
-    }
+   try {
+    $createdEvent = $service->events->insert('primary', $event);
+
+    Log::info('✅ Tạo sự kiện thành công:', [
+        'event_id' => $createdEvent->getId(),
+        'htmlLink' => $createdEvent->getHtmlLink(), // 👈 URL xem sự kiện
+    ]);
+
+    return response()->json([
+        'message' => '✅ Đã thêm sự kiện vào Google Calendar!',
+        'link' => $createdEvent->getHtmlLink() // 👈 gửi link về cho frontend
+    ]);
+} catch (\Exception $e) {
+    return response()->json([
+        'message' => '❌ Lỗi khi thêm sự kiện',
+        'error' => $e->getMessage(),
+    ], 500);
+}
+
 }
 
 
