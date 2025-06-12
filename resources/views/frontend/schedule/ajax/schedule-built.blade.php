@@ -179,10 +179,14 @@ $(document).ready(function () {
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
             },
-            success: function (res) {
-                alert('✅ Đã thêm sự kiện vào Google Calendar!');
-                previewModal.hide();
-            },
+           success: function (res) {
+    alert(res.message);
+    if (res.link) {
+        console.log('🔗 Link sự kiện:', res.link);
+        window.open(res.link, '_blank'); // mở tab sự kiện mới
+    }
+    previewModal.hide();
+},
             error: function (xhr) {
                 let res = xhr.responseJSON;
                 let msg = res?.message || '❌ Lỗi khi thêm lịch!';
