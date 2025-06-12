@@ -58,7 +58,7 @@ return redirect($redirectUrl)->with('success', '✅ Đăng nhập Google Calenda
     // 3. Thêm sự kiện vào Google Calendar từ built-schedule
  public function addScheduleToCalendar(Request $request)
 {
-  
+      date_default_timezone_set('Asia/Ho_Chi_Minh'); // ✅ ép local timezone chỉ ở đây
     Log::info('🚀 Bắt đầu xử lý addScheduleToCalendar');
 
     // ✅ Kiểm tra token
