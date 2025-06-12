@@ -29,22 +29,3 @@ Route::get('/tz-check', function () {
     return now()->toDateTimeString();
 });
 
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Log;
-
-Route::get('/view-laravel-log', function () {
-    $logPath = storage_path('logs/laravel.log');
-
-    // Nếu file chưa tồn tại → tạo và ghi log mặc định
-    if (!File::exists($logPath)) {
-        Log::info('📄 File laravel.log vừa được tạo tự động tại ' . now());
-    }
-
-    // Đảm bảo file đã tồn tại sau khi log
-    if (!File::exists($logPath)) {
-        return "❌ Không thể tạo file log.";
-    }
-
-    $content = File::get($logPath);
-    return response('<pre>' . e($content) . '</pre>');
-});
