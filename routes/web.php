@@ -28,3 +28,16 @@ Route::get('/tz-check', function () {
     date_default_timezone_set('Asia/Ho_Chi_Minh');
     return now()->toDateTimeString();
 });
+
+use Illuminate\Support\Facades\File;
+
+Route::get('/view-laravel-log', function () {
+    $logPath = storage_path('logs/laravel.log');
+
+    if (!File::exists($logPath)) {
+        return "❌ File log không tồn tại.";
+    }
+
+    $content = File::get($logPath);
+    return response('<pre>' . e($content) . '</pre>');
+});
