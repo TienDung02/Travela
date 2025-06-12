@@ -20,6 +20,12 @@ class GoogleCalendarController extends Controller
         $client->setRedirectUri(env('GOOGLE_CALENDAR_REDIRECT_URI'));
         $client->addScope(Calendar::CALENDAR);
 
+            // ✨ Thêm 2 dòng này
+    $client->setAccessType('offline'); // yêu cầu refresh_token
+    $client->setPrompt('consent');     // ép hỏi lại dù đã cấp quyền
+
+
+
         return redirect()->away($client->createAuthUrl());
     }
 
