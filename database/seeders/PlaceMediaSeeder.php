@@ -19,7 +19,7 @@ class PlaceMediaSeeder extends Seeder
             ]);
 
             // Tạo thêm 3 media phụ
-            PlaceMedia::factory(3)->create([
+            PlaceMedia::factory(5)->create([
                 'place_id' => $place->id,
                 'is_primary' => false,
             ]);
