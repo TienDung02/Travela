@@ -15,7 +15,7 @@ class PlaceMediaFactory extends Factory
     {
         return [
             'place_id' => \App\Models\Place::inRandomOrder()->first(),
-            'media' => 'frontend/images/destination-' . $this->faker->numberBetween(1, 6) . '.jpg',
+            'media' => 'frontend/images/destination-' . $this->faker->numberBetween(1, 9) . '.jpg',
             'media_type' => 'image',
             'is_primary' => $this->faker->boolean(),
         ];
