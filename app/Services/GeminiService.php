@@ -136,11 +136,8 @@ class GeminiService
         $children_2     = $data['children_2'];
         $transportation = $data['transportation'];
 
-        if (is_array($interest)) {
-            $interest = implode(',', $interest);
-        }
         $dataString = $address . $startDate . $endDate . $budget . $currencyCode . $interest . $adults . $children_1 . $children_2 . $transportation;
-        //        print_r($dataString);
+//        print_r($dataString);
         $cacheKey = md5($dataString);
         if (Cache::has($cacheKey)) {
             return Cache::get($cacheKey);
@@ -188,7 +185,7 @@ class GeminiService
 
 
 
-        $response = Http::post($this->apiUrl . "?key=" . $this->apiKey, [
+        $response = Http::timeout(60)->post($this->apiUrl . "?key=" . $this->apiKey, [
             'contents' => [
                 [
                     'parts' => [
