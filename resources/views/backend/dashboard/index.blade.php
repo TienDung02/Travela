@@ -210,7 +210,7 @@
                                         <ul class="list-group">
                                             @foreach($topPackages as $package)
                                                 <li class="list-group-item">
-                                                    <strong>{{ $package->name }}</strong> - {{ $package->booking_count }} Bookings
+                                                    <strong>{{ $package->name }}</strong> - {{ $package->order_count }} Bookings
                                                 </li>
                                             @endforeach
                                         </ul>
@@ -226,7 +226,7 @@
                                         <ul class="list-group">
                                             @foreach($topTours as $tour)
                                                 <li class="list-group-item">
-                                                    <strong>{{ $tour->name }}</strong> - {{ $tour->booking_count }} Bookings
+                                                    <strong>{{ $tour->name }}</strong> - {{ $tour->order_count }} Bookings
                                                 </li>
                                             @endforeach
                                         </ul>
@@ -242,7 +242,7 @@
                                         <ul class="list-group">
                                             @foreach($topPlaces as $place)
                                                 <li class="list-group-item">
-                                                    <strong>{{ $place->location }}</strong> - {{ $place->visit_count }} Visits
+                                                    <strong>{{ $place->name }}</strong> - {{ $place->visit_count }} Visits
                                                 </li>
                                             @endforeach
                                         </ul>
