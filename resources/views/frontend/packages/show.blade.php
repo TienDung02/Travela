@@ -20,7 +20,9 @@
                     <li class="list-group-item"><strong>Duration:</strong> 3 days</li>
                     <li class="list-group-item"><strong>People:</strong> {{ $package->people }} 1 Person</li>
                     <li class="list-group-item"><strong>Price:</strong> 
-                        <span class="text-primary fw-bold">${{ number_format($package->price, 2) }}</span>
+                        <span class="text-danger fw-bold">
+                            {{ number_format($package->price, 0, ',', '.') }} VND
+                        </span>
                     </li>
                 </ul>
 
