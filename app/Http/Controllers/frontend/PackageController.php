@@ -32,8 +32,7 @@ class PackageController extends Controller
 
             if ($request->filled('rating')){
                 $query->whereHas('reviews', function ($q) use ($request) {
-                    $q->select('reviewable_id')
-                      ->where('reviewable_type', Package::class)
+                    $q->where('reviewable_type', Package::class)
                       ->whereIn('rating', $request->rating);
                 });
             }
