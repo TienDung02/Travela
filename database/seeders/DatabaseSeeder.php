@@ -26,8 +26,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            UserSeeder::class,
             RoleSeeder::class,
+            UserSeeder::class,
             PlaceSeeder::class,
             PlaceMediaSeeder::class,
             TourSeeder::class,
@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
             'item_type' => 'package',
         ])->create();
 
-        Review::factory(10)->create();
+        Review::factory(30)->create();
 
         Contact::factory(5)->create();
 
@@ -71,7 +71,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             TourPlaceSeeder::class,
-
             PackageImageSeeder::class,
         ]);
     }
