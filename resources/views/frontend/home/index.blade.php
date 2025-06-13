@@ -129,26 +129,36 @@
                                 <div class="col-xl-12">
                                     <div class="row g-4">
                                         @foreach($topProvinces as $province)
-                                            @php
+                                        @php
                                                 $topPlace = \App\Models\Place::where('provinces', $province)->first();
+                                                if ($topPlace) {
+                                                    $media = \App\Models\PlaceMedia::where('place_id', $topPlace->id)
+                                                        ->where('is_primary', true)
+                                                        ->first();
+                                                }
                                             @endphp
                                             <div class="col-lg-4 destination-item">
                                                 <div class="destination-img">
-                                                    <img class="img-fluid rounded w-100"
-                                                        src="{{ $topPlace ? asset('frontend/images/destination-1.jpg') : asset('frontend/images/no-image.jpg') }}"
-                                                        alt="">
+                                                    @if($media && $media->media_type === 'image')
+                                                        <img class="img-fluid rounded w-100"
+                                                            src="{{ asset($media->media) }}"
+                                                            alt="{{ $topPlace->name }}">
+                                                    @else
+                                                        <img class="img-fluid rounded w-100"
+                                                            src="{{ asset('frontend/images/destination-1.jpg') }}"
+                                                            alt="">
+                                                    @endif
                                                     <div class="destination-overlay p-4">
                                                         <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">
                                                             {{ $topPlace ? $topPlace->reviews()->count() : 0 }} Photos
                                                         </a>
                                                         <h4 class="text-white mb-2 mt-3">{{ $province }}</h4>
-                                                            <a href="{{ route('destination.all', ['province' => $province]) }}" class="btn-hover text-white">
-                                                                View All Place <i class="fa fa-arrow-right ms-2"></i>
-                                                            </a>
+                                                        <a href="#" class="btn-hover text-white view-all-place-btn" data-province="{{ $province }}">
+                                                            View All Place <i class="fa fa-arrow-right ms-2"></i>
                                                         </a>
                                                     </div>
                                                     <div class="search-icon">
-                                                        <a href="{{ $topPlace ? asset('frontend/images/destination-1.jpg') : '#' }}" data-lightbox="destination-1">
+                                                        <a href="{{ $media && $media->media_type === 'image' ? asset('storage/' . $media->media) : '#' }}" data-lightbox="destination-1">
                                                             <i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i>
                                                         </a>
                                                     </div>
@@ -162,32 +172,6 @@
                                 <a href="{{ route('destination.all') }}" class="btn btn-primary px-4 py-2">See All Place</a>
                             </div>
                         @endif
-                    </div>
-                    <div id="tab-usa" class="tab-pane fade show p-0">
-                        <div class="row g-4">
-                            @if(isset($Places['TP. Hồ Chí Minh']))
-                                @foreach($Places['TP. Hồ Chí Minh'] as $Place)
-                                    <div class="col-lg-4">
-                                        <div class="destination-img">
-                                            <img class="img-fluid rounded w-100" src="{{asset('frontend/images/destination-6.jpg')}}" alt="Image of {{$Place->name}}">
-                                            <div class="destination-overlay p-4">
-                                                <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">20 Photos</a>
-                                                <h4 class="text-white mb-2 mt-3">{{$Place->name}}</h4>
-                                                <a href="{{route('destination.detail', $Place->id)}}" class="btn-hover text-white">View detail<i class="fa fa-arrow-right ms-2"></i></a>
-                                            </div>
-                                            <div class="search-icon">
-                                                <a href="{{asset('frontend/images/destination-6.jpg')}}" data-lightbox="destination-6"><i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            @endif
-                        </div>
-                        <div class="mt-4">
-                        @if(isset($Places['TP. Hồ Chí Minh']))
-                            {{ $Places['TP. Hồ Chí Minh']->appends(['tab' => 'usa'])->links() }} <!-- Phân trang chỉ áp dụng cho USA -->
-                        @endif
-                        </div>
                     </div>
                 </div>
             </div>
@@ -215,7 +199,10 @@
                                 @foreach($topTours as $tour)
                                     <div class="col-md-6 col-lg-4">
                                         <div class="national-item">
-                                            <img src="{{ $tour->image ? asset($tour->image) : asset('frontend/images/explore-tour-1.jpg') }}" class="img-fluid w-100 rounded" alt="{{ $tour->name }}">
+                                            @php
+                                                $randomImg = asset('frontend/images/explore-tour-' . rand(1, 6) . '.jpg');
+                                            @endphp
+                                            <img src="{{ $randomImg }}" class="img-fluid rounded-start w-100" alt="{{ $tour->name }}">
                                             <div class="national-content">
                                                 <div class="national-info">
                                                     <h5 class="text-white text-uppercase mb-2">{{ $tour->name }}</h5>
