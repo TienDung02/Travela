@@ -17,11 +17,8 @@
                 </div>
 
                 <ul class="list-group list-group-flush mb-4">
-                    @if ($package->tour && $package->tour->place)
-                        <li class="list-group-item"><strong>Location:</strong> {{ $package->tour->place->address }}</li>
-                    @endif
-                    <li class="list-group-item"><strong>Duration:</strong> {{ $package->duration }} days</li>
-                    <li class="list-group-item"><strong>People:</strong> {{ $package->people }} Person</li>
+                    <li class="list-group-item"><strong>Duration:</strong> 3 days</li>
+                    <li class="list-group-item"><strong>People:</strong> {{ $package->people }} 1 Person</li>
                     <li class="list-group-item"><strong>Price:</strong> 
                         <span class="text-primary fw-bold">${{ number_format($package->price, 2) }}</span>
                     </li>
