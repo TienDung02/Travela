@@ -54,7 +54,7 @@ class UserSeeder extends Seeder
                 'name' => 'Admin',
                 'email' => 'admin@gmail.com
                 ',
-                'password' => Hash::make('123'),
+                'password' => Hash::make('password123'),
                 'provider' => 'local',
                 'provider_id' => null,
                 'role_id' => 1, // Giả sử role_id 1 là Admin
@@ -65,7 +65,7 @@ class UserSeeder extends Seeder
                 'name' => 'Booking Manager',
                 'email' => 'bookingManager@gmail.com'
                 ,
-                'password' => Hash::make('123'),
+                'password' => Hash::make('password123'),
                 'provider' => 'local',
                 'provider_id' => null,
                 'role_id' => 2, // Giả sử role_id 2 là Booking Manager
@@ -75,7 +75,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Statistics Manager',
                 'email' => 'statisticManager@gmail.com',
-                'password' => Hash::make('123'),
+                'password' => Hash::make('password123'),
                 'provider' => 'local',
                 'provider_id' => null,
                 'role_id' => 3, // Giả sử role_id 3 là Statistics Manager
@@ -86,7 +86,7 @@ class UserSeeder extends Seeder
                 'name' => 'Packages Manager',
                 'email' => 'packageManager@gmail.com'
                 ,
-                'password' => Hash::make('123'),
+                'password' => Hash::make('password123'),
                 'provider' => 'local',
                 'provider_id' => null,
                 'role_id' => 4, // Giả sử role_id 4 là Packages Manager
@@ -97,7 +97,7 @@ class UserSeeder extends Seeder
                 'name' => 'Blogs Manager',
                 'email' => 'blogManager@gmail.com'
                 ,
-                'password' => Hash::make('123'),
+                'password' => Hash::make('password123'),
                 'provider' => 'local',
                 'provider_id' => null,
                 'role_id' => 5, // Giả sử role_id 5 là Blogs Manager
@@ -108,7 +108,7 @@ class UserSeeder extends Seeder
                 'name' => 'Contact Manager',
                 'email' => 'contactManager@gmail.com'
                 ,
-                'password' => Hash::make('123'),
+                'password' => Hash::make('password123'),
                 'provider' => 'local',
                 'provider_id' => null,
                 'role_id' => 6, // Giả sử role_id 6 là Contact Manager
