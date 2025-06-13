@@ -10,14 +10,16 @@
                 <h2 class="mb-4 text-uppercase">{{ $package->name }}</h2>
 
                 <div class="mb-4">
-                    <img src="{{ asset($package->image_path ?? 'frontend/images/default-package.jpg') }}"
+                    <img src="{{ asset('frontend/images/' . ($package->main_image ?? 'default-package.jpg')) }}"
                          class="img-fluid rounded w-100" 
                          style="max-height: 400px; object-fit: cover;" 
                          alt="{{ $package->name }}">
                 </div>
 
                 <ul class="list-group list-group-flush mb-4">
-                    <li class="list-group-item"><strong>Location:</strong> {{ $package->location }}</li>
+                    @if ($package->tour && $package->tour->place)
+                        <li class="list-group-item"><strong>Location:</strong> {{ $package->tour->place->address }}</li>
+                    @endif
                     <li class="list-group-item"><strong>Duration:</strong> {{ $package->duration }} days</li>
                     <li class="list-group-item"><strong>People:</strong> {{ $package->people }} Person</li>
                     <li class="list-group-item"><strong>Price:</strong> 

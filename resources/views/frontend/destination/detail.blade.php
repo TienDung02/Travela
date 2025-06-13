@@ -426,6 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevBtn   = document.getElementById('thumb-prev');
     const nextBtn   = document.getElementById('thumb-next');
     const thumbBtns = Array.from(document.querySelectorAll('.thumb-btn'));
+    const visibleCount = 4;
     let currentIndex = 0;
 
     function setMainMediaByIndex(idx) {
@@ -439,13 +440,20 @@ document.addEventListener('DOMContentLoaded', () => {
             changeMainMedia(video.src, 'video');
         }
         currentIndex = idx;
-        // Scroll thumbnail into view if needed
-        btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        scrollThumbsToIndex(idx);
         updateNavButtons();
     }
+
+    function scrollThumbsToIndex(idx) {
+        // Tính vị trí scroll để thumbnail được chọn luôn nằm trong khung 4 ảnh
+        const scrollTo = Math.max(0, Math.min(idx - Math.floor(visibleCount/2), thumbBtns.length - visibleCount));
+        const thumbWidth = thumbBtns[0].offsetWidth + 8; // 8 là gap
+        thumbs.scrollTo({ left: scrollTo * thumbWidth, behavior: 'smooth' });
+    }
+
     function updateNavButtons() {
         prevBtn.disabled = currentIndex === 0;
-        nextBtn.disabled = currentIndex === thumbBtns.length - 1;
+        nextBtn.disabled = currentIndex >= thumbBtns.length - 1;
     }
 
     prevBtn.addEventListener('click', function() {
@@ -460,14 +468,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Khi click vào thumbnail, cập nhật currentIndex để prev/next hoạt động chính xác
     thumbBtns.forEach((btn, idx) => {
         btn.addEventListener('click', () => {
             setMainMediaByIndex(idx);
         });
     });
 
-    // Đặt ảnh chính ban đầu
     setMainMediaByIndex(0);
 });
 </script>
