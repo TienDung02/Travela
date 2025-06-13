@@ -66,10 +66,10 @@
                             </div>
                             <!-- Main Image -->
                             <div class="mb-4">
-                                <img src="{{ $tour->image_url ?? asset('frontend/images/gallery-1.jpg') }}"
-                                    alt="{{ $tour->name ?? 'Tour' }}"
-                                    class="img-fluid rounded w-100 mb-3"
-                                    style="object-fit:cover;max-height:400px;">
+                                @php
+                                    $randomImg = asset('frontend/images/explore-tour-' . rand(1,6) . '.jpg');
+                                @endphp
+                                <img src="{{ $randomImg }}" class="img-fluid rounded-start w-100" alt="{{ $tour->name }}">
                             </div>
                             <!-- Tour Experience -->
                             <div class="my-4"></div>

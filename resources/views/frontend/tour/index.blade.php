@@ -179,9 +179,10 @@
                                             <div class="card h-100 shadow-sm border-0 flex-row align-items-center tour-card">
                                                 {{-- Hình ảnh tour --}}
                                                 <div class="position-relative tour-img-col" style="min-width:220px;max-width:220px;">
-                                                    <a href="#">
-                                                        <img src="{{ $tour->image_url ?? asset('frontend/images/explore-tour-1.jpg') }}" class="img-fluid rounded-start w-100" alt="{{ $tour->name }}">
-                                                    </a>
+                                                    @php
+                                                        $randomImg = asset('frontend/images/explore-tour-' . rand(1, 6) . '.jpg');
+                                                    @endphp
+                                                    <img src="{{ $randomImg }}" class="img-fluid rounded-start w-100" alt="{{ $tour->name }}">
                                                 </div>
                                                 <div class="card-body d-flex flex-column flex-grow-1 tour-info-col">
                                                     {{-- Tên tour, địa điểm, giá --}}
