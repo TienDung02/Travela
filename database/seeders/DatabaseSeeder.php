@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
         // Tạo dữ liệu cho bảng Tour
         //Tour::factory(10)->create();
 
-        Package::factory(50)->create();
+        $this->call(PackageSeeder::class);
 
         Customer::factory(10)->create();
 

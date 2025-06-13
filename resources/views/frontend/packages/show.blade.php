@@ -17,8 +17,11 @@
                 </div>
 
                 <ul class="list-group list-group-flush mb-4">
-                    <li class="list-group-item"><strong>Duration:</strong> 3 days</li>
-                    <li class="list-group-item"><strong>People:</strong> {{ $package->people }} 1 Person</li>
+                    <li class="list-group-item">
+                        <strong>Duration:</strong> 
+                        <span class="text-danger fw-bold">{{ $package->duration }}</span> days
+                        </li>
+                    <li class="list-group-item"><strong>People:</strong> {{ $package->people }} persons</li>
                     <li class="list-group-item"><strong>Price:</strong> 
                         <span class="text-danger fw-bold">
                             {{ number_format($package->price, 0, ',', '.') }} VND
