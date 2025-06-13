@@ -10,7 +10,11 @@ class BookingController extends Controller
         $package = \App\Models\Package::findOrFail($id);
         return view('frontend.booking.index', compact('package'));
     }
-
+    public function createTour($id)
+    {
+        $tour = \App\Models\Tour::findOrFail($id);
+        return view('frontend.booking.index', compact('tour'));
+    }
 
     public function index()
     {
