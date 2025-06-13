@@ -85,6 +85,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             TourPlaceSeeder::class,
+
+            PackageImageSeeder::class,
         ]);
     }
 }
