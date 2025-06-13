@@ -29,7 +29,7 @@ class LoginController extends Controller
     public function backendLogin(Request $request)
 {
     $request->validate([
-        'email' => 'required|email',
+        'email' => 'required',
         'password' => 'required',
     ]);
 
