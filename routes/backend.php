@@ -13,20 +13,38 @@ use App\Http\Controllers\backend\PlaceManagementController;
 use App\Http\Controllers\backend\TourManagementController;
 
 
-Route::get('/admin-dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index');
+//  ['name' => 'Admin', 'desc' => 'full authority'],
+//             ['name' => 'Booking manager', 'desc' => 'Order and payment management'],
+//             ['name' => 'Statistics and reporting manager', 'desc' => 'financial reporting and marketing performance'],
+//             ['name' => 'Packages manager', 'desc' => 'Manage service packages'],
+//             ['name' => 'Blogs manager', 'desc' => 'Manage posts'],
+//             ['name' => 'Contact manager', 'desc' => 'Manage contacts and send notifications'],
+//             ['name' => 'Customer', 'desc' => 'Book tours, travel packages, use AI to create itineraries, view information about company, websites and tourist destinations'],
 
-Route::get('/admin-booking', [BookingManagementController::class, 'index'])->name('admin.booking.index');
-Route::get('/admin-booking/create', [BookingManagementController::class, 'create'])->name('admin.booking.create');
-Route::post('/admin-booking', [BookingManagementController::class, 'store'])->name('admin.booking.store');
-Route::get('/admin-booking/{id}/edit', [BookingManagementController::class, 'edit'])->name('admin.booking.edit');
-Route::put('/admin-booking/{id}', [BookingManagementController::class, 'update'])->name('admin.booking.update');
-Route::delete('/admin-booking/{id}', [BookingManagementController::class, 'destroy'])->name('admin.booking.destroy');
+Route::prefix('management')->group(function () {
+
+    Route::get('', function () {
+        return view('backend.layouts.layout');
+    });
+    Route::get('/admin-dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.index');
+    
+
+
+    Route::get('/admin-booking/create', [BookingManagementController::class, 'create'])->name('admin.booking.create');
+    Route::post('/admin-booking', [BookingManagementController::class, 'store'])->name('admin.booking.store');
+    Route::get('/admin-booking/{id}/edit', [BookingManagementController::class, 'edit'])->name('admin.booking.edit');
+    Route::put('/admin-booking/{id}', [BookingManagementController::class, 'update'])->name('admin.booking.update');
+    Route::delete('/admin-booking/{id}', [BookingManagementController::class, 'destroy'])->name('admin.booking.destroy');
+    Route::get('/admin-booking', [BookingManagementController::class, 'index'])->name('admin.booking.index');
+   
 
 
 
 Route::get('/admin-contact', [ContactManagementController::class, 'index'])->name('admin.contact.index');
 Route::put('/admin-contact/{id}', [ContactManagementController::class, 'update'])->name('admin.contact.update');
 Route::delete('/admin-contact/{id}', [ContactManagementController::class, 'destroy'])->name('admin.contact.destroy');
+
+
 
 Route::get('/admin-information', [InformationManagementController::class, 'index'])->name('admin.information.index');
 Route::get('/admin-information/create', [InformationManagementController::class, 'create'])->name('admin.information.create');
@@ -61,3 +79,5 @@ Route::get('/admin-blog', [BlogManagementController::class, 'index'])->name('adm
 Route::post('/admin-blog', [BlogManagementController::class, 'store'])->name('admin.blog.store');
 Route::put('/admin-blog/{id}', [BlogManagementController::class, 'update'])->name('admin.blog.update');
 Route::delete('/admin-blog/{id}', [BlogManagementController::class, 'destroy'])->name('admin.blog.destroy');
+
+});

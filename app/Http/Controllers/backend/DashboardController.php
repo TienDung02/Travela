@@ -17,9 +17,9 @@ class DashboardController
     // Fetch revenue data grouped by time period
         $revenueData = Tour::selectRaw("
             CASE 
-                WHEN ? = 'month' THEN strftime('%Y-%m', start_date)
-                WHEN ? = 'quarter' THEN strftime('%Y', start_date) || '-Q' || ((CAST(strftime('%m', start_date) AS INTEGER) + 2) / 3)
-                WHEN ? = 'year' THEN strftime('%Y', start_date)
+            WHEN ? = 'month' THEN DATE_FORMAT(start_date, '%Y-%m')
+            WHEN ? = 'quarter' THEN CONCAT(YEAR(start_date), '-Q', QUARTER(start_date))
+            WHEN ? = 'year' THEN YEAR(start_date)
             END AS period,
             SUM(price) AS revenue
         ", [$timePeriod, $timePeriod, $timePeriod])
@@ -34,29 +34,42 @@ class DashboardController
         ->pluck('count', 'provider')
         ->toArray();
 
-        $topPackages = Package::with('tour')
-        ->select('packages.*', DB::raw('COUNT(bookings.id) as booking_count'))
-        ->leftJoin('tours', 'packages.tour_id', '=', 'tours.id') // Join packages with tours
-        ->leftJoin('bookings', 'tours.id', '=', 'bookings.location_id') // Join tours with bookings via location_id
-        ->groupBy('packages.id')
-        ->orderByDesc('booking_count')
-        ->take(5)
-        ->get();
+        // Top packages based on orders (order_details with item_type 'package')
+        $topPackages = Package::select('packages.id', 'packages.name', DB::raw('COUNT(order_details.id) as order_count'))
+            ->leftJoin('order_details', function($join) {
+            $join->on('packages.id', '=', 'order_details.item_id')
+                 ->where('order_details.item_type', '=', 'package');
+            })
+            ->groupBy('packages.id', 'packages.name')
+            ->orderByDesc('order_count')
+            ->take(5)
+            ->get();
 
-        // Fetch top tours (e.g., most popular)
-        $topTours = Tour::select('tours.*', DB::raw('COUNT(bookings.id) as booking_count'))
-        ->leftJoin('bookings', 'tours.id', '=', 'bookings.location_id') // Join tours with bookings via location_id
-        ->groupBy('tours.id')
-        ->orderByDesc('booking_count')
-        ->take(5)
-        ->get();
+        // Fetch top tours based on orders (order_details with item_type 'tour')
+        $topTours = Tour::select('tours.id', 'tours.name', DB::raw('COUNT(order_details.id) as order_count'))
+            ->leftJoin('order_details', function($join) {
+                $join->on('tours.id', '=', 'order_details.item_id')
+                     ->where('order_details.item_type', '=', 'tour');
+            })
+            ->groupBy('tours.id', 'tours.name')
+            ->orderByDesc('order_count')
+            ->take(5)
+            ->get();
 
-        // Fetch top places (e.g., most visited)
-        $topPlaces = Tour::select('location', DB::raw('COUNT(*) as visit_count'))
-        ->groupBy('location')
-        ->orderByDesc('visit_count')
-        ->take(5)
-        ->get();
+        // Fetch top places (most visited based on orders)
+        // Top places based on tour_place and orders (order_details)
+        $topPlaces = Place::select('places.id', 'places.name', DB::raw('COUNT(order_details.id) as visit_count'))
+            ->leftJoin('tour_places', 'places.id', '=', 'tour_places.place_id')
+            ->leftJoin('tours', 'tour_places.tour_id', '=', 'tours.id')
+            ->leftJoin('order_details', function($join) {
+            $join->on('tours.id', '=', 'order_details.item_id')
+                 ->where('order_details.item_type', '=', 'tour');
+            })
+            ->groupBy('places.id', 'places.name')
+            ->orderByDesc('visit_count')
+            ->take(5)
+            ->get();
+
         
 
         $reviewSummary = Review::select(

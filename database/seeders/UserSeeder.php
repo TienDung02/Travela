@@ -45,5 +45,75 @@ class UserSeeder extends Seeder
                 'provider_id' => $faker->unique()->uuid . '_facebook',
             ]);
         }
+
+
+        //Tao 1 user cho 1 role
+        User::create(
+
+            [
+                'name' => 'Admin',
+                'email' => 'admin@gmail.com
+                ',
+                'password' => Hash::make('123'),
+                'provider' => 'local',
+                'provider_id' => null,
+                'role_id' => 1, // Giả sử role_id 1 là Admin
+            ]
+            );
+        User::create(
+            [
+                'name' => 'Booking Manager',
+                'email' => 'bookingManager@gmail.com'
+                ,
+                'password' => Hash::make('123'),
+                'provider' => 'local',
+                'provider_id' => null,
+                'role_id' => 2, // Giả sử role_id 2 là Booking Manager
+            ]
+        );
+        User::create(
+            [
+                'name' => 'Statistics Manager',
+                'email' => 'statisticManager@gmail.com',
+                'password' => Hash::make('123'),
+                'provider' => 'local',
+                'provider_id' => null,
+                'role_id' => 3, // Giả sử role_id 3 là Statistics Manager
+            ]
+        );
+        User::create(
+            [
+                'name' => 'Packages Manager',
+                'email' => 'packageManager@gmail.com'
+                ,
+                'password' => Hash::make('123'),
+                'provider' => 'local',
+                'provider_id' => null,
+                'role_id' => 4, // Giả sử role_id 4 là Packages Manager
+            ]
+        );
+        User::create(
+            [
+                'name' => 'Blogs Manager',
+                'email' => 'blogManager@gmail.com'
+                ,
+                'password' => Hash::make('123'),
+                'provider' => 'local',
+                'provider_id' => null,
+                'role_id' => 5, // Giả sử role_id 5 là Blogs Manager
+            ]
+        );
+        User::create(
+            [
+                'name' => 'Contact Manager',
+                'email' => 'contactManager@gmail.com'
+                ,
+                'password' => Hash::make('123'),
+                'provider' => 'local',
+                'provider_id' => null,
+                'role_id' => 6, // Giả sử role_id 6 là Contact Manager
+            ]
+        );
+
     }
 }
