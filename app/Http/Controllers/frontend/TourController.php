@@ -13,20 +13,22 @@ class TourController extends Controller
     {
         $query = Tour::with(['reviews', 'packages', 'places']);
 
-        // Lọc giá
+// Lọc giá
         if ($request->filled('price')) {
             $query->whereRaw('CAST(price AS DECIMAL(10,2)) >= ?', [(float)$request->price]);
         }
-        // Lọc duration
+// Lọc duration
         if ($request->filled('duration') && (int)$request->duration > 0) {
             $query->whereHas('places', function($q) use ($request) {
-                $q->selectRaw('tour_places.tour_id, SUM(tour_places.duration_days) as total_days')
+                // Đã sửa: Chỉ chọn tour_places.tour_id và cột tổng hợp total_days
+                $q->select('tour_places.tour_id') // Chọn tour_places.tour_id vì nó nằm trong GROUP BY
+                ->selectRaw('SUM(tour_places.duration_days) as total_days') // Chọn cột được tổng hợp
                 ->groupBy('tour_places.tour_id')
-                ->havingRaw('SUM(tour_places.duration_days) = ?', [(int)$request->duration]);
+                    ->havingRaw('SUM(tour_places.duration_days) = ?', [(int)$request->duration]);
             });
         }
 
-        // Sắp xếp
+// Sắp xếp
         if ($request->filled('sort')) {
             if ($request->sort == 'price_asc') {
                 $query->orderBy('price', 'asc');
@@ -38,8 +40,7 @@ class TourController extends Controller
         } else {
             $query->latest();
         }
-
-        // Lấy tất cả tour sau khi đã filter
+// Lấy tất cả tour sau khi đã filter
         $tours = $query->get();
 
         // Lọc rating bằng PHP
@@ -78,7 +79,7 @@ class TourController extends Controller
             });
             return $tour;
         });
-        
+
         return view('frontend.tour.index', compact('tours'));
     }
     public function detail($id)
