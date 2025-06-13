@@ -34,7 +34,7 @@
 
     <!-- Explore Tour Start -->
     <div class="filter-overlay"></div>
-    <div class="container-fluid ExploreTour  py-5">
+    <div class="container-fluid ExploreTour py-5">
         <div class="container-fluid py-5">
             <div class="mx-auto text-center mb-5" style="max-width: 900px;">
                 <h5 class="section-title px-3">Explore Tour</h5>
@@ -43,7 +43,7 @@
                 </p>
             </div>
             <div class="row">
-                <div class="col-lg-9 col-xl-9 col-xxl-7 mx-auto">
+                <div class="col-lg-10 col-xl-10 col-xxl-8 mx-auto">
                     <!-- Cột filter bên trái -->
                     <button class="btn btn-outline-primary filter-toggle-btn d-lg-none mb-3" type="button" onclick="toggleFilterSidebar()">
                         <i class="fa fa-bars"></i> Filter
@@ -64,24 +64,11 @@
                                                 'reset' => true,
                                             ],
                                             [
-                                                'title' => 'Public Choice',
-                                                'type' => 'checkbox',
-                                                'choices' => [
-                                                    ['id' => 'filter1', 'label' => 'Tour nổi bật'],
-                                                    ['id' => 'filter4', 'label' => 'Được yêu thích'],
-                                                ],
-                                                'showLimit' => 3,
-                                            ],
-                                            [
                                                 'title' => 'Duration',
-                                                'type' => 'checkbox',
-                                                'choices' => [
-                                                    ['id' => 'dura1', 'label' => '1-3 ngày'],
-                                                    ['id' => 'dura2', 'label' => '4-7 ngày'],
-                                                    ['id' => 'dura3', 'label' => '8-14 ngày'],
-                                                    ['id' => 'dura4', 'label' => 'Trên 14 ngày'],
-                                                ],
-                                                'showLimit' => 4,
+                                                'type' => 'number',
+                                                'min' => 1,
+                                                'max' => 30,
+                                                'id' => 'durationInput',
                                             ],
                                             [
                                                 'title' => 'Rating',
@@ -91,26 +78,6 @@
                                                     ['id' => 'rate2', 'label' => '3-4⭐', 'value' => '3-4'],
                                                     ['id' => 'rate3', 'label' => '2-3⭐', 'value' => '2-3'],
                                                     ['id' => 'rate4', 'label' => '1-2⭐', 'value' => '1-2'],
-                                                ],
-                                                'showLimit' => 4,
-                                            ],
-                                            [
-                                                'title' => 'Tour Type',
-                                                'type' => 'checkbox',
-                                                'choices' => [
-                                                    ['id' => 'type1', 'label' => 'Tour trong nước'],
-                                                    ['id' => 'type2', 'label' => 'Tour nước ngoài'],
-                                                    ['id' => 'type3', 'label' => 'Tour mạo hiểm'],
-                                                    ['id' => 'type4', 'label' => 'Tour nghỉ dưỡng'],
-                                                    ['id' => 'type5', 'label' => 'Tour khám phá'],
-                                                    ['id' => 'type6', 'label' => 'Tour văn hóa'],
-                                                    ['id' => 'type7', 'label' => 'Tour ẩm thực'],
-                                                    ['id' => 'type8', 'label' => 'Tour thiên nhiên'],
-                                                    ['id' => 'type9', 'label' => 'Tour trekking'],
-                                                    ['id' => 'type10', 'label' => 'Tour du thuyền'],
-                                                    ['id' => 'type11', 'label' => 'Tour lịch sử'],
-                                                    ['id' => 'type12', 'label' => 'Tour giải trí'],
-                                                    ['id' => 'type13', 'label' => 'Tour sinh thái'],
                                                 ],
                                                 'showLimit' => 4,
                                             ],
@@ -125,22 +92,22 @@
                                             @endif
                                         </div>
                                         @if($group['type'] === 'range')
-                                            <div class="mb-3">
-                                                <input
-                                                    type="range"
-                                                    class="form-range"
-                                                    min="{{ $group['min'] }}"
-                                                    max="{{ $group['max'] }}"
-                                                    step="{{ $group['step'] ?? 1 }}"
-                                                    value="{{ request('price', $group['min']) }}"
-                                                    id="{{ $group['id'] }}"
-                                                    name="price"
-                                                    oninput="updatePriceLabels()">
-                                                <div class="d-flex justify-content-between mt-2">
-                                                    <div id="minPrice">0₫</div>
-                                                    <div id="maxPrice">24.000.000₫</div>
-                                                </div>
+                                        <div class="mb-3">
+                                            <input
+                                                type="range"
+                                                class="form-range"
+                                                min="{{ $group['min'] }}"
+                                                max="{{ $group['max'] }}"
+                                                step="{{ $group['step'] ?? 1 }}"
+                                                value="{{ request('price', $group['min']) }}"
+                                                id="{{ $group['id'] }}"
+                                                name="price"
+                                                oninput="updatePriceLabels()">
+                                            <div class="d-flex justify-content-between mt-2">
+                                                <div id="minPrice">{{ number_format(request('price', $group['min']), 0, ',', '.') }}₫</div>
+                                                <div id="maxPrice">24.000.000₫</div>
                                             </div>
+                                        </div>
                                         @elseif($group['type'] === 'checkbox')
                                             @php
                                                 $choices = $group['choices'];
@@ -166,6 +133,22 @@
                                             @if(count($choices) > $showLimit)
                                                 <button type="button" class="btn btn-link p-0" id="{{ $btnId }}" onclick="toggleFilterChoices('{{ $listId }}', '{{ $btnId }}', {{ $showLimit }})" style="font-size: 0.95rem;">See all</button>
                                             @endif
+                                        @elseif($group['type'] === 'number')
+                                            <div class="mb-3 d-flex align-items-center gap-2">
+                                                <button type="button" class="btn btn-outline-secondary px-2" onclick="changeDuration(-1, '{{ $group['id'] }}', {{ $group['min'] }}, {{ $group['max'] }})">-</button>
+                                                <input
+                                                    type="number"
+                                                    class="form-control text-center"
+                                                    style="width: 80px;"
+                                                    min="{{ $group['min'] }}"
+                                                    max="{{ $group['max'] }}"
+                                                    id="{{ $group['id'] }}"
+                                                    name="duration"
+                                                    value="{{ request('duration', '') }}"
+                                                >
+                                                <button type="button" class="btn btn-outline-secondary px-2" onclick="changeDuration(1, '{{ $group['id'] }}', {{ $group['min'] }}, {{ $group['max'] }})">+</button>
+                                                <span class="ms-2">ngày</span>
+                                            </div>
                                         @endif
                                         @if(!$loop->last)
                                             <hr class="my-4">
@@ -199,9 +182,6 @@
                                                     <a href="#">
                                                         <img src="{{ $tour->image_url ?? asset('frontend/images/explore-tour-1.jpg') }}" class="img-fluid rounded-start w-100" alt="{{ $tour->name }}">
                                                     </a>
-                                                    @if($tour->is_featured)
-                                                        <span class="badge bg-primary position-absolute top-0 start-0 m-2">Nổi bật</span>
-                                                    @endif
                                                 </div>
                                                 <div class="card-body d-flex flex-column flex-grow-1 tour-info-col">
                                                     {{-- Tên tour, địa điểm, giá --}}
@@ -209,7 +189,12 @@
                                                         <a href="#" class="text-decoration-none text-dark">{{ $tour->name }}</a>
                                                     </h5>
                                                     <div class="mb-2 text-muted small">
-                                                        <i class="fa fa-map-marker-alt me-1"></i> {{ $tour->location ?? 'Địa điểm không xác định' }}
+                                                        <i class="fa fa-map-marker-alt me-1"></i>
+                                                        @if($tour->places && $tour->places->count())
+                                                            {{ $tour->places->pluck('name')->join(', ') }}
+                                                        @else
+                                                            Địa điểm không xác định
+                                                        @endif
                                                     </div>
                                                     <div class="mb-2">
                                                 <span class="fw-bold" style="font-size: 1.5rem; color: #dc3545;">
@@ -222,27 +207,13 @@
                                                     @endphp
                                                     {{-- Hiển thị khoảng thời gian --}}
                                                     <div class="mb-2">
-                                                <span class="badge bg-light text-dark">
-                                                    @if($minDuration && $maxDuration && $minDuration != $maxDuration)
-                                                        {{ $minDuration }} - {{ $maxDuration }} ngày
-                                                    @elseif($minDuration)
-                                                        {{ $minDuration }} ngày
-                                                    @else
-                                                        N/A
-                                                    @endif
-                                                </span>
-                                                        @php
-                                                            $maxShow = 2;
-                                                            $types = $tour->types ?? [];
-                                                            $showTypes = array_slice($types, 0, $maxShow);
-                                                            $hiddenCount = count($types) - $maxShow;
-                                                        @endphp
-                                                        @foreach($showTypes as $type)
-                                                            <span class="badge bg-info">{{ $type }}</span>
-                                                        @endforeach
-                                                        @if($hiddenCount > 0)
-                                                            <span class="badge bg-secondary">+{{ $hiddenCount }}</span>
+                                                    <span class="badge bg-light text-dark">
+                                                        @if($tour->total_duration)
+                                                            {{ $tour->total_duration }} ngày
+                                                        @else
+                                                            N/A
                                                         @endif
+                                                    </span>
                                                     </div>
                                                     <div class="mb-2 d-flex align-items-center flex-wrap gap-1">
                                                         @php
@@ -270,7 +241,7 @@
                                                         @endif
                                                     </div>
                                                     <p class="card-text flex-grow-1">{{ Str::limit($tour->description, 80) }}</p>
-                                                    <a href="#" class="btn btn-primary w-100 mt-auto">Xem chi tiết</a>
+                                                    <a href="{{ route('tour.detail', $tour->id) }}" class="btn btn-primary w-100 mt-auto">Xem chi tiết</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -575,5 +546,15 @@ document.querySelector('.filter-overlay').addEventListener('click', function() {
     document.querySelector('.filter-sidebar').classList.remove('open');
     this.classList.remove('active');
 });
+</script>
+<script>
+function changeDuration(delta, inputId, min, max) {
+    var input = document.getElementById(inputId);
+    var val = parseInt(input.value) || min;
+    val += delta;
+    if (val < min) val = min;
+    if (val > max) val = max;
+    input.value = val;
+}
 </script>
 @endsection

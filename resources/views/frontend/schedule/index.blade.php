@@ -180,42 +180,54 @@
                                         <div class="carousel-item active h-100 list-of-locations mt-2">
                                             @if(isset($places))
                                                 @foreach($places as $place => $thong_tin)
-                                                    <div class="w-100 h-30 border me-1 mb-2">
-                                                        <div class="row h-100 w-100 ms-1">
-                                                            <div class="h-100 col-11 p-0 d-flex" >
-                                                                <div class="w-35 align-content-center position-relative h-100 p-0">
-                                                                    <img class="w-85 h-90 ms-2 rounded mt-0 " src="{{asset('frontend/images/image-coming-soon.jpg')}}">
-{{--                                                                    <img class="w-65 h-80 ms-2 rounded position-absolute sec-image" src="{{asset('frontend/images/destination-3.jpg')}}">--}}
-                                                                </div>
-                                                                <div class="w-65 h-60 m-auto p-0">
-                                                                    @foreach ($thong_tin as $key => $value)
-                                                                        @if($key == "Tên" || $key == "Tên địa điểm" || $key == 0)
-                                                                            <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo"><p class="fw-bold" >{{$value}}</p></a>
-                                                                        @elseif($key != "lat" && $key != "lon")
-                                                                            @if(is_array($value))
-                                                                                <div id="scroll-tag" class="overflow-x-scroll d-flex w-95">
-                                                                                        @foreach($value as $tag)
-                                                                                            <a class="me-2" href="" style="flex-shrink: 0;"><span class="btn mb-1">{{ $tag }}</span></a>
-                                                                                        @endforeach
-                                                                                </div>
-                                                                            @else
-                                                                            <p>
-                                                                                {{$key}} : {{$value}}
-                                                                            </p>
-                                                                            @endif
-                                                                        @endif
-                                                                    @endforeach
-                                                                </div>
-                                                            </div>
-                                                            <a href="#" class="col-1 p-0">
-                                                                <div class=" h-100 p-0 border-start align-content-center white" >
-                                                                    <div class="h-33 d-flex align-items-center justify-content-center comment border-bottom"><i class="fa-solid fa-comment"></i></div>
-                                                                    <div class="h-33 d-flex align-items-center justify-content-center delete border-bottom"><i class="fa-solid fa-trash"></i></div>
-                                                                    <div class="h-33 d-flex align-items-center justify-content-center redirect" data-lat="{{$thong_tin['lat'] ?? ''}}" data-lon="{{$thong_tin['lon'] ?? ''}}"><i class="fa-solid fa-diamond-turn-right"></i></div>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
+                                                    @php
+        $placeName = $thong_tin['Tên'] ?? ($thong_tin['Tên địa điểm'] ?? null);
+                                                    @endphp
+                                                                                                        <div class="w-100 h-30 border me-1 mb-2">
+                                                                                                            <div class="row h-100 w-100 ms-1">
+                                                                                                                <div class="h-100 col-11 p-0 d-flex" >
+                                                                                                                    <div class="w-35 align-content-center position-relative h-100 p-0">
+                                                                                                                        <img class="w-85 h-90 ms-2 rounded mt-0 " src="
+
+                                                                                                                            @if(isset($wikicontent[$placeName]['image']))
+                                                                                                                                {{ $wikicontent[$placeName]['image'] }}
+                                                                                                                            @else
+                                                                                                                                {{ asset('frontend/images/image-coming-soon.jpg') }}
+                                                                                                                            @endif
+
+
+                                                                                                                        ">
+                                                    {{--                                                                    <img class="w-65 h-80 ms-2 rounded position-absolute sec-image" src="{{asset('frontend/images/destination-3.jpg')}}">--}}
+                                                                                                                    </div>
+                                                                                                                    <div class="w-65 h-60 m-auto p-0">
+                                                                                                                        @foreach ($thong_tin as $key => $value)
+                                                                                                                            @if($key == "Tên" || $key == "Tên địa điểm" || $key == 0)
+                                                                                                                                <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal" data-place="{{ $value }}"><p class="fw-bold" >{{$value}}</p></a>
+                                                                                                                            @elseif($key != "lat" && $key != "lon")
+                                                                                                                                @if(is_array($value))
+                                                                                                                                    <div id="scroll-tag" class="overflow-x-scroll d-flex w-95">
+                                                                                                                                            @foreach($value as $tag)
+                                                                                                                                                <a class="me-2" href="" style="flex-shrink: 0;"><span class="btn mb-1">{{ $tag }}</span></a>
+                                                                                                                                            @endforeach
+                                                                                                                                    </div>
+                                                                                                                                @else
+                                                                                                                                <p>
+                                                                                                                                    {{$key}} : {{$value}}
+                                                                                                                                </p>
+                                                                                                                                @endif
+                                                                                                                            @endif
+                                                                                                                        @endforeach
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <a href="#" class="col-1 p-0">
+                                                                                                                    <div class=" h-100 p-0 border-start align-content-center white" >
+                                                                                                                        <div class="h-33 d-flex align-items-center justify-content-center comment border-bottom"><i class="fa-solid fa-comment"></i></div>
+                                                                                                                        <div class="h-33 d-flex align-items-center justify-content-center delete border-bottom"><i class="fa-solid fa-trash"></i></div>
+                                                                                                                        <div class="h-33 d-flex align-items-center justify-content-center redirect" data-lat="{{$thong_tin['lat'] ?? ''}}" data-lon="{{$thong_tin['lon'] ?? ''}}"><i class="fa-solid fa-diamond-turn-right"></i></div>
+                                                                                                                    </div>
+                                                                                                                </a>
+                                                                                                            </div>
+                                                                                                        </div>
                                                 @endforeach
                                             @endif
                                         </div>
@@ -416,57 +428,66 @@
 
 
     <!-- Modal Dialog-->
+    <style>
+        .modal-body img {
+            max-height: 60vh;
+            object-fit: cover;
+            width: 100%;
+        }
+    </style>
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Explore the place</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body h-100">
-                   <div class="row h-100">
-                       <div class="col-6 h-100">
-                           <div id="carouselExample" class="carousel slide">
-                               <div class="carousel-inner">
-                                   <div class="carousel-item active">
-                                       <img src="{{ asset('frontend/images/image-coming-soon.jpg') }}" class="d-block w-100" alt="...">
-                                   </div>
-                                   <div class="carousel-item">
-                                       <img src="{{ asset('frontend/images/image-coming-soon.jpg') }}" class="d-block w-100" alt="...">
-                                   </div>
-                                   <div class="carousel-item">
-                                       <img src="{{ asset('frontend/images/image-coming-soon.jpg') }}" class="d-block w-100" alt="...">
-                                   </div>
-                               </div>
-                               <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                   <span class="visually-hidden">Previous</span>
-                               </button>
-                               <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                   <span class="visually-hidden">Next</span>
-                               </button>
-                           </div>
-                       </div>
-                       <div class="col-6 h-100"></div>
-                   </div>
+                <div class="modal-body">
+                    <div class="row flex-column flex-md-row">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <div id="carouselExample" class="carousel slide">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img id="modal-main-image"
+                                            src="{{ asset('frontend/images/image-coming-soon.jpg') }}"
+                                            class="d-block w-100 img-fluid" alt="...">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img id="modal-night-image"
+                                            src="{{ asset('frontend/images/image-coming-soon.jpg') }}"
+                                            class="d-block w-100 img-fluid" alt="...">
+                                    </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                                    data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                                    data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6 overflow-auto" style="max-height: 60vh;">
+                            <h4 id="modal-title" class="mb-3"></h4>
+                            <p id="modal-description" class="mb-2"></p>
+                            <div id="modal-summary" class="mb-3"></div>
+                            <div id="modal-details">
+                                <p id="modal-area"></p>
+                                <p id="modal-population"></p>
+                                <p id="modal-coordinates"></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- Spinner Start -->
-{{--                <div class="position-relative h-50">--}}
-{{--                    <div id="spinner4" class="show bg-white position-absolute translate-middle w-100 top-50 start-50 align-items-center justify-content-center d-flex">--}}
-{{--                        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">--}}
-{{--                            <span class="sr-only">Loading...</span>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-                <!-- Spinner End -->
             </div>
         </div>
     </div>
-    <!-- End Modal Dialog -->
 
 
+    <!-- Modal Dialog End -->
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary btn-primary-outline-0 btn-md-square back-to-top"><i class="fa fa-arrow-up"></i></a>
@@ -772,6 +793,47 @@
     @endif
 
 @endsection
+@push('extra_scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var modal = document.getElementById('exampleModal');
+    modal.addEventListener('show.bs.modal', function (event) {
+        // Get clicked place name from data attribute
+        var trigger = event.relatedTarget;
+        var placeName = trigger.getAttribute('data-place');
+        var content = window.wikicontent[placeName] || {};
+
+        // Update modal title
+        document.getElementById('exampleModalLabel').textContent = content.title || placeName;
+        document.getElementById('modal-title').textContent = content.title || placeName;
+
+        // Update images
+        document.getElementById('modal-main-image').src = content.image || '{{ asset("frontend/images/image-coming-soon.jpg") }}';
+        document.getElementById('modal-night-image').src = content.night_view_image || '{{ asset("frontend/images/image-coming-soon.jpg") }}';
+
+        // Update text content
+        document.getElementById('modal-description').textContent = content.description || '';
+        document.getElementById('modal-summary').textContent = content.summary || '';
+
+        // Update details if they exist
+        document.getElementById('modal-area').textContent = content.area ? `Area: ${content.area}` : '';
+        document.getElementById('modal-population').textContent = content.population ? `Population: ${content.population}` : '';
+        if (content.coordinates && content.coordinates.lat && content.coordinates.lon) {
+            document.getElementById('modal-coordinates').textContent = 
+                `Coordinates: ${content.coordinates.lat}, ${content.coordinates.lon}`;
+        } else {
+            document.getElementById('modal-coordinates').textContent = '';
+        }
+    });
+});
+</script>
+@endpush
+@push('extra_scripts')
+<script>
+    // Make wikicontent available globally
+    window.wikicontent = @json($wikicontent);
+</script>
+@endpush
 @push('extra_scripts')
     <script>
         console.log("Hello from view con!");

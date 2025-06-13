@@ -110,9 +110,9 @@ class ScheduleController
 
         $currencies = DB::table('currencies')->get();
         $preferences = DB::table('preferences')->get();
+        $wikicontent = [];
 
-
-        return view('frontend.schedule.index', compact('currencies', 'preferences'));
+        return view('frontend.schedule.index', compact('currencies', 'preferences','wikicontent'));
     }
     public function testMap($placeName)
     {
@@ -179,9 +179,9 @@ class ScheduleController
         $preferences = $request->input('interest');
 
         $places = $this->geminiService->getTourismInfo($address, $preferences);
-
-        $placeNames = array_keys($places);
-
+       
+        $placeNames = array_keys($places );
+        
 
         $placeNames = implode(", ", $placeNames);
 
@@ -198,7 +198,11 @@ class ScheduleController
             $origin = $this->map4DService->geocode2($name);
             $place['lat'] = $origin['lat'] ?? '';
             $place['lon'] = $origin['lon'] ?? '';
+            
+            $wikicontent[$place['Tên']] = $this->wikipediaService->getPlaceInfo($name);
+
         }
+        //dd($placeNames);
         $data = [
             'map' => $map,
             'currencies' => $currencies,
@@ -235,56 +239,39 @@ class ScheduleController
     }
      public function build_schedule(Request $request)
 {
-    $placeNames = $request->input('placeNames');
-
+    
+    $placeName = $request->input('placeNames', []);
+    
     $data = [
-        'address' => $placeNames['address'] ?? '',
-        'start_date' => $placeNames['start_date'] ?? '',
-        'end_date' => $placeNames['end_date'] ?? '',
-        'placeName' => $placeNames['placeNames'] ?? '',
-        'budget' => $placeNames['budget'] ?? '',
-        'currency' => $placeNames['currency'] ?? '',
-        'adults' => $placeNames['adults'] ?? 0,
-        'children_1' => $placeNames['children_1'] ?? 0,
-        'children_2' => $placeNames['children_2'] ?? 0,
-        'transportation' => $placeNames['transportation'] ?? '',
-        'interest' => $placeNames['interest'] ?? [],
+        'address' => $placeName['address'] ?? '',
+        'start_date' => $placeName['start_date'] ?? '',
+        'end_date' => $placeName['end_date'] ?? '',
+        'placeName' => $placeName['placeNames'] ?? '',
+        'budget' => $placeName['budget'] ?? '',
+        'currency' => $placeName['currency'] ?? '',
+        'adults' => $placeName['adults'] ?? 0,
+        'children_1' => $placeName['children_1'] ?? 0,
+        'children_2' => $placeName['children_2'] ?? 0,
+        'transportation' => $placeName['transportation'] ?? '',
+        'interest' => $placeName['interest'] ?? [],
     ];
 
     $currencies = Currency::query()->get();
     $preferences = Preference::query()->get();
 
     $plans = $this->geminiService->generateItinerary($data);
-    $wikicontent = [];
-    foreach ($plans as $day => &$activities){
-        foreach ($activities as &$session_key){
-            foreach ($session_key as &$session_active){
-                $type = $session_active['type'];
-                if($type == 'Di chuyển'){
-                    $from = str_replace(" (tự tìm)", "", $session_active['details']['Địa chỉ điểm đi']);
-                    $to = str_replace(" (tự tìm)", "", $session_active['details']['Địa chỉ điểm đến']);
-                    $origin = $this->map4DService->geocode2($from);
-                    $destination = $this->map4DService->geocode2($to);
-//                        print_r($origin);
-//                        dd($destination);
-                    $session_active['details']['origin_lat'] = $origin['lat'] ?? '';
-                    $session_active['details']['origin_lon'] = $origin['lon'] ?? '';
-                    $session_active['details']['destination_lat'] = $destination['lat'] ?? '';
-                    $session_active['details']['destination_lon'] = $destination['lon'] ?? '';
-                }  else if (in_array($type, ['Ăn sáng', 'Ăn trưa', 'Ăn tối', 'Chỗ ngủ', 'Địa điểm tham quan'])) {
-                    $geocode = str_replace(" (tự tìm)", "", $session_active['details']['Địa chỉ']);
-                    $geocode = $this->map4DService->geocode2($geocode);
-                    $session_active['details']['lat'] = '';
-                    $session_active['details']['lon'] = '';
-                }
-            }
-        }
-    }
-  session([
-    'plans' => $plans,
-    'start_date' => $placeNames['start_date'],
-]);
 
+    if (!$plans || !is_array($plans)) {
+    \Log::error('Không tạo được plans', ['plans' => $plans, 'data' => $data]);
+    return response()->json(['error' => 'Không tạo được lịch trình'], 500);
+    }
+    $wikicontent = [];
+
+
+      session([
+        'plans' => $plans,
+        'start_date' => $placeName['start_date'],
+    ]);
     return view('frontend.schedule.ajax.schedule-built', compact('plans', 'currencies', 'preferences', 'wikicontent'));
 }
     public function getToaDo($location){
