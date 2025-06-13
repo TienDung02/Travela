@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\auth\LoginController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\backend;
@@ -26,10 +26,14 @@ Route::prefix('management')->group(function () {
 
 
 
-    Route::get('', function () {
+    Route::get('/', function () {
+        if (!Auth::check()) {
+            return redirect('/management/login');
+        }
         return view('backend.layouts.layout');
     });
-
+Route::get('/login', [LoginController::class, 'backendindex'])->name('backend.login.index');
+Route::post('login-backend' , [LoginController::class, 'backendlogin'])->name('backend.login');
 // Use a middleware class for role checking, e.g., 'admin'
     
     Route::middleware([RoleMiddleware::class . ':Admin'])->group(function () {

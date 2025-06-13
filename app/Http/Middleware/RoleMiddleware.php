@@ -21,14 +21,16 @@ class RoleMiddleware
      */
     public function handle($request, Closure $next, ...$roles)
     {
-        $user = Auth::user();
-        // Support comma-separated roles in a single argument
-        if (count($roles) === 1 && str_contains($roles[0], ',')) {
-            $roles = array_map('trim', explode(',', $roles[0]));
-        }
-        if (!$user || !in_array($user->role->name ?? null, $roles)) {
-            abort(403, 'Unauthorized');
-        }
-        return $next($request);
+        $user = \Auth::user();
+    if (!$user) {
+        return redirect('/management/login');
+    }
+    if (count($roles) === 1 && str_contains($roles[0], ',')) {
+        $roles = array_map('trim', explode(',', $roles[0]));
+    }
+    if (!in_array($user->role->name ?? null, $roles)) {
+        abort(403, 'Unauthorized');
+    }
+    return $next($request);
     }
 }
