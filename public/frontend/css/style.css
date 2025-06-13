@@ -2023,6 +2023,9 @@ input[type=number]::-webkit-outer-spin-button
     .schedule-item {
         width: 159px;
     }
+    .schedule-page .carousel-indicators li{
+        font-size: 10px;
+    }
 }
 
 
@@ -2495,6 +2498,15 @@ input[type=number]::-webkit-outer-spin-button
 
 /* ----------------------------Chat bot--------------------------------------- */
 
+@media (max-width: 576px) {
+    .container-chatbot{
+        width: 410px !important;
+        bottom: 90px !important;
+        right: 10px !important;
+    }
+}
+
+
 .ai-chatbot{
     position: fixed;
     right: 30px;
@@ -2919,7 +2931,7 @@ button.thumb-btn {
 .gallery-thumbs {
     display: flex;
     overflow: hidden;
-    max-width: calc(6 * 80px + 5 * 0.4rem); 
+    max-width: calc(6 * 80px + 5 * 0.4rem);
     gap: 0.4rem;
     width: auto;
     scroll-behavior: smooth;
@@ -2961,15 +2973,15 @@ button.thumb-btn {
 .thumb-nav-btn:hover {
     background-color: #e0e0e0;
   }
-  #thumb-prev { 
-    left: -1.5rem; 
+  #thumb-prev {
+    left: -1.5rem;
     width: 70px;
     background-color: transparent;
     border-radius: 20%;
     height: 50px;
 }
-  #thumb-next { 
-    right: -1.5rem; 
+  #thumb-next {
+    right: -1.5rem;
     width: 70px;
     background-color: transparent;
     border-radius: 20%;
@@ -3035,7 +3047,7 @@ button.thumb-btn {
         transform: translateY(-100%);
     }
     .filter-sidebar.open {
-        display: block; 
+        display: block;
         z-index: 1051;
         transform: translateX(+15%);
     }
