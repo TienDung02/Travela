@@ -476,6 +476,9 @@
                             <div id="modal-summary" class="mb-3"></div>
                             <div id="modal-details">
                                 <p id="modal-area"></p>
+                                <p id="modal-width"></p>
+                                <p id="modal-length"></p>
+                                <p id="modal-depth"></p>
                                 <p id="modal-population"></p>
                                 <p id="modal-coordinates"></p>
                             </div>
@@ -812,18 +815,21 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('modal-night-image').src = content.night_view_image || '{{ asset("frontend/images/image-coming-soon.jpg") }}';
 
         // Update text content
-        document.getElementById('modal-description').textContent = content.description || '';
-        document.getElementById('modal-summary').textContent = content.summary || '';
+        document.getElementById('modal-description').textContent =`Mô tả: ${content.description} `|| '';
+        document.getElementById('modal-summary').textContent =`Tổng quan: ${content.summary} `|| '';
 
         // Update details if they exist
-        document.getElementById('modal-area').textContent = content.area ? `Area: ${content.area}` : '';
-        document.getElementById('modal-population').textContent = content.population ? `Population: ${content.population}` : '';
+        document.getElementById('modal-area').textContent = content.area ? `Diện tích: ${content.area}` : '';
+        document.getElementById('modal-population').textContent = content.population ? `Dân số: ${content.population}` : '';
         if (content.coordinates && content.coordinates.lat && content.coordinates.lon) {
             document.getElementById('modal-coordinates').textContent = 
-                `Coordinates: ${content.coordinates.lat}, ${content.coordinates.lon}`;
+                `Tọa độ: ${content.coordinates.lat}, ${content.coordinates.lon}`;
         } else {
             document.getElementById('modal-coordinates').textContent = '';
         }
+        document.getElementById('modal-width').textContent = content.width ? `Rộng: ${content.width}` : '';
+        document.getElementById('modal-length').textContent = content.length ? `Dài: ${content.length}` : '';
+        document.getElementById('modal-depth').textContent = content.depth ? `Chiều sâu: ${content.depth}` : '';
     });
 });
 </script>
