@@ -41,6 +41,9 @@ Route::get('/register', [RegisterController::class, 'index'])->name('register.in
 
 Route::get('/login', [LoginController::class, 'index'])->name('login.index');
 Route::POST('/login-local', [LoginController::class, 'login'])->name('login.login');
+Route::get('/privacy', [LoginController::class, 'privacy'])->name('login.privacy');
+Route::get('/terms', [LoginController::class, 'terms'])->name('login.terms');
+
 
 Route::post('/register/sub', [RegisterController::class, 'register'])->name('auth.reg');
 
@@ -95,7 +98,6 @@ Route::get('tour', [TourController::class, 'index'])->name('tour.index');
 Route::post('tour/{id}/reviews', [ReviewController::class, 'storeTourReview'])->name('tour.reviews.store');
 Route::get('/booking/create/tour/{id}', [BookingController::class, 'createTour'])->name('booking.tour.create');
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');
-
 
 Route::get('/map-route', [ScheduleController::class, 'showRoute'])->name('map.route');
 
