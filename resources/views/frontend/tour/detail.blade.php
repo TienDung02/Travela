@@ -177,9 +177,7 @@
                                         </ul>
                                     </div>
                                     <div class="text-center mt-3"></div>
-                                        <a href="#contact" class="btn btn-primary fw-bold px-5 py-2" style="font-size: 1.1rem; background: #009cff; border: none;">
-                                            Đặt ngay
-                                        </a>
+                                        <a href="{{ route('booking.tour.create', ['id' => $tour->id]) }}" class="btn btn-primary">Book Now</a>
                                     </div>
                                 </div>
                             </div>

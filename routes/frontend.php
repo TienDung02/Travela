@@ -93,7 +93,7 @@ Route::post('{type}/{id}/reviews', [ReviewController::class, 'store'])->name('re
 
 Route::get('tour', [TourController::class, 'index'])->name('tour.index');
 Route::post('tour/{id}/reviews', [ReviewController::class, 'storeTourReview'])->name('tour.reviews.store');
-
+Route::get('/booking/create/tour/{id}', [BookingController::class, 'createTour'])->name('booking.tour.create');
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 
 
