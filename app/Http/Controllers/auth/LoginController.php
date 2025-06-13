@@ -10,10 +10,19 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 class LoginController extends Controller
 {
+
+
     public function index()
     {
-
         return view('auth.login.index');
+    }
+    public function privacy()
+    {
+        return view('auth.login.privacy');
+    }
+    public function terms()
+    {
+        return view('auth.login.terms');
     }
     public function login(Request $request)
     {

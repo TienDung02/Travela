@@ -102,19 +102,19 @@
                                     <div class="col-4">
                                         <div class="form-floating">
                                             <input type="number" class="form-control border-0" name="adults" id="adults" placeholder="">
-                                            <label for="adults">Adults > 10 years old</label>
+                                            <label for="adults">Adults</label>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-floating">
                                             <input type="number" class="form-control border-0" name="children-2" id="children-2" placeholder="">
-                                            <label for="children-2">Children 2 - 10 years old</label>
+                                            <label for="children-2">Children</label>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-floating">
                                             <input type="number" class="form-control border-0" name="children-1" id="children-1" placeholder="">
-                                            <label for="children-1">Children < 2 years old </label>
+                                            <label for="children-1">Baby</label>
                                         </div>
                                     </div>
                                 </div>
@@ -822,7 +822,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('modal-area').textContent = content.area ? `Diện tích: ${content.area}` : '';
         document.getElementById('modal-population').textContent = content.population ? `Dân số: ${content.population}` : '';
         if (content.coordinates && content.coordinates.lat && content.coordinates.lon) {
-            document.getElementById('modal-coordinates').textContent = 
+            document.getElementById('modal-coordinates').textContent =
                 `Tọa độ: ${content.coordinates.lat}, ${content.coordinates.lon}`;
         } else {
             document.getElementById('modal-coordinates').textContent = '';

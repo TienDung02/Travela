@@ -269,6 +269,10 @@
         </div>
         <!-- Footer End -->
 
+        <!-- Chatbot -->
+            @include('.frontend.component.chatbot')
+        <!-- Chatbot End -->
+
         <!-- Copyright Start -->
         <div class="container-fluid copyright text-body py-4">
             <div class="container">

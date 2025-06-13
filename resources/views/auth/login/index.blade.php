@@ -64,19 +64,19 @@
                         </div>
                     </div>
                     <div class="carousel-item active">
-                        <img src="{{asset("images/carousel-2.jpg")}}" class="img-fluid" alt="Image">
+                        <img src="{{asset("frontend/images/carousel-2.jpg")}}" class="img-fluid" alt="Image">
                         <div class="carousel-caption">
                             <div class="p-3" style="max-width: 900px;">
                             </div>
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="{{asset('images/carousel-1.jpg')}}" class="img-fluid" alt="Image">
+                        <img src="{{asset('frontend/images/carousel-1.jpg')}}" class="img-fluid" alt="Image">
                         <div class="p-3" style="max-width: 900px;">
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="{{asset('images/carousel-3.jpg')}}" class="img-fluid" alt="Image">
+                        <img src="{{asset('frontend/images/carousel-3.jpg')}}" class="img-fluid" alt="Image">
                         <div class="carousel-caption">
                             <div class="p-3" style="max-width: 900px;">
 
