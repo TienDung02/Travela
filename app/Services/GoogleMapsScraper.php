@@ -1,43 +1,63 @@
 <?php
-
 namespace App\Services;
 
-use Facebook\WebDriver\Remote\RemoteWebDriver;
-use Facebook\WebDriver\Remote\DesiredCapabilities;
-use Facebook\WebDriver\WebDriverBy;
-
+use App\Jobs\FetchPlaceInfo;
+use Illuminate\Support\Facades\Cache;
+use GuzzleHttp\Client;
 class GoogleMapsScraper
 {
-    protected $driver;
+    private $apilink;
 
     public function __construct()
     {
-        $host = 'http://localhost:9515'; // ChromeDriver đang chạy
-        $capabilities = DesiredCapabilities::chrome();
-        $this->driver = RemoteWebDriver::create($host, $capabilities);
+        $this->apilink = env('MAP_SCRAPER_LINK');
     }
 
-    public function getPlaceInfo($query)
+    public function queuePlaceInfo(string $name): void
     {
-        $this->driver->get("https://www.google.com/maps");
-        sleep(2);
+        $lockKey = 'place_info_lock_' . md5($name);
+        if (Cache::lock($lockKey, 300)->get()) {
+            // Lock acquired — dispatch job and it will release lock when finished
+            dispatch(new FetchPlaceInfo($name));
+        } else {
+            // Job already running or in queue
+            logger("Skipping duplicate job for: $name");
+        }
+    }
 
-        // Tìm ô search
-        $searchBox = $this->driver->findElement(WebDriverBy::cssSelector("input[aria-label='Search Google Maps']"));
-        $searchBox->sendKeys($query);
-        $searchBox->submit();
-
-        sleep(5); // đợi kết quả load
-
-        // Lấy thông tin (VD: tên địa điểm)
-        $name = $this->driver->findElement(WebDriverBy::cssSelector('h1[class*=fontHeadlineLarge]'))->getText();
-
-        // Tắt trình duyệt
-        $this->driver->quit();
+    public function getPlaceInfo(string $name): ?array
+    {
+        $client = new Client();
+        $response = $client->get(env('MAP_SCRAPER_LINK'), [
+            'query' => ['place' => $name]
+        ]);
+        $data = json_decode($response->getBody()->getContents(), true);
 
         return [
-            'name' => $name,
-            // bạn có thể tiếp tục lấy rating, địa chỉ, reviews,...
+            'title'     => $data['title'] ?? $name,
+            'info'      => $data['info'] ?? null,
+            'rating'    => $data['rating'] ?? null,
+            'category'  => $data['category'] ?? null,
+            'reviews'   => array_slice($data['reviews'] ?? [], 0, 5),
+            'thumbnail' => $data['images'][0] ?? null,
+            'images'    => array_slice($data['images'] ?? [], 0, 5),
+        ];
+    }
+
+    public function getCachedPlaceInfo(string $name): ?array
+    {
+        $data = Cache::get("place_info_{$name}");
+        if (!$data) return null;
+
+        return [
+            'title'     => $data['title'] ?? $name,
+            'info'      => $data['info'] ?? null,
+            'rating'    => $data['rating'] ?? null,
+            'category'  => $data['category'] ?? null,
+            'reviews'   => array_slice($data['reviews'] ?? [], 0, 5),
+            'thumbnail' => $data['images'][0] ?? null,
+            'images'    => array_slice($data['images'] ?? [], 0, 5),
         ];
     }
 }
+

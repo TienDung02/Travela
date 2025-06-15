@@ -189,8 +189,8 @@
                                                                                                                     <div class="w-35 align-content-center position-relative h-100 p-0">
                                                                                                                         <img class="w-85 h-90 ms-2 rounded mt-0 " src="
 
-                                                                                                                            @if(isset($wikicontent[$placeName]['image']))
-                                                                                                                                {{ $wikicontent[$placeName]['image'] }}
+                                                                                                                            @if(isset($placecontent[$placeName]['thumbnail']))
+                                                                                                                                {{ $placecontent[$placeName]['thumbnail'] }}
                                                                                                                             @else
                                                                                                                                 {{ asset('frontend/images/image-coming-soon.jpg') }}
                                                                                                                             @endif
@@ -427,67 +427,71 @@
     <!-- Copyright End -->
 
 
-    <!-- Modal Dialog-->
-    <style>
-        .modal-body img {
-            max-height: 60vh;
-            object-fit: cover;
-            width: 100%;
-        }
-    </style>
+    
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Explore the place</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row flex-column flex-md-row">
-                        <div class="col-md-6 mb-3 mb-md-0">
-                            <div id="carouselExample" class="carousel slide">
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img id="modal-main-image"
-                                            src="{{ asset('frontend/images/image-coming-soon.jpg') }}"
-                                            class="d-block w-100 img-fluid" alt="...">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img id="modal-night-image"
-                                            src="{{ asset('frontend/images/image-coming-soon.jpg') }}"
-                                            class="d-block w-100 img-fluid" alt="...">
-                                    </div>
-                                </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
-                                    data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
-                                    data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="exampleModalLabel">Explore the Place</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="row g-4">
+                    <!-- Image Carousel -->
+                    <div class="col-md-6">
+                        <div id="carouselExample" class="carousel slide">
+                            <div id="carousel-inner" class="carousel-inner rounded overflow-hidden shadow-sm">
+                                <!-- Images will be injected dynamically here -->
                             </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
                         </div>
-                        <div class="col-md-6 overflow-auto" style="max-height: 60vh;">
-                            <h4 id="modal-title" class="mb-3"></h4>
-                            <p id="modal-description" class="mb-2"></p>
-                            <div id="modal-summary" class="mb-3"></div>
-                            <div id="modal-details">
-                                <p id="modal-area"></p>
-                                <p id="modal-width"></p>
-                                <p id="modal-length"></p>
-                                <p id="modal-depth"></p>
-                                <p id="modal-population"></p>
-                                <p id="modal-coordinates"></p>
-                            </div>
+                    </div>
+
+                    <!-- Info Section -->
+                    <div class="col-md-6 overflow-auto" style="max-height: 60vh;">
+                        <div class="mb-3">
+                            <h4 class="mb-0" id="modal-title">Tên địa điểm</h4>
+                            <span id="modal-category" class="badge bg-secondary fs-6">Loại địa điểm</span>
+                        </div>
+
+                        <div class="mb-4">
+                            <h5>📌 Thông tin chi tiết:</h5>
+                            <div id="modal-info" class="list-group small"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <h5 class="d-flex align-items-center">⭐ Đánh giá: 
+                                <span id="modal-rating" class="ms-2 badge bg-warning text-dark fs-6">4.5</span>
+                            </h5>
+                            <div id="modal-review" class="list-group small mt-2"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<style>
+    #carousel-inner img {
+        max-height: 350px;
+        object-fit: cover;
+    }
+    #modal-info .list-group-item,
+    #modal-review .list-group-item {
+        background: #f8f9fa;
+        border: none;
+        padding: 0.5rem 0.75rem;
+    }
+</style>
+
 
 
     <!-- Modal Dialog End -->
@@ -796,6 +800,8 @@
     @endif
 
 @endsection
+
+
 @push('extra_scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -804,42 +810,80 @@ document.addEventListener('DOMContentLoaded', function () {
         // Get clicked place name from data attribute
         var trigger = event.relatedTarget;
         var placeName = trigger.getAttribute('data-place');
-        var content = window.wikicontent[placeName] || {};
+        @if (isset($placecontent) )
+        var placecontent = {!! json_encode($placecontent) !!};
+        @endif
 
+        
+        var content = placecontent[placeName] || {};
+        console.log('content', content);
         // Update modal title
-        document.getElementById('exampleModalLabel').textContent = content.title || placeName;
+     
         document.getElementById('modal-title').textContent = content.title || placeName;
 
-        // Update images
-        document.getElementById('modal-main-image').src = content.image || '{{ asset("frontend/images/image-coming-soon.jpg") }}';
-        document.getElementById('modal-night-image').src = content.night_view_image || '{{ asset("frontend/images/image-coming-soon.jpg") }}';
+        // Update modal content
+        const carouselInner = document.getElementById('carousel-inner');
+        carouselInner.innerHTML = ''; // Clear previous items
 
-        // Update text content
-        document.getElementById('modal-description').textContent =`Mô tả: ${content.description} `|| '';
-        document.getElementById('modal-summary').textContent =`Tổng quan: ${content.summary} `|| '';
+        if (Array.isArray(content.images) && content.images.length > 0) {
+            content.images.forEach((imgUrl, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'carousel-item' + (index === 0 ? ' active' : '');
 
-        // Update details if they exist
-        document.getElementById('modal-area').textContent = content.area ? `Diện tích: ${content.area}` : '';
-        document.getElementById('modal-population').textContent = content.population ? `Dân số: ${content.population}` : '';
-        if (content.coordinates && content.coordinates.lat && content.coordinates.lon) {
-            document.getElementById('modal-coordinates').textContent =
-                `Tọa độ: ${content.coordinates.lat}, ${content.coordinates.lon}`;
+                const img = document.createElement('img');
+                img.src = imgUrl;
+                img.className = 'd-block w-100 img-fluid';
+                img.alt = `Image ${index + 1}`;
+
+                itemDiv.appendChild(img);
+                carouselInner.appendChild(itemDiv);
+            });
         } else {
-            document.getElementById('modal-coordinates').textContent = '';
+            // fallback placeholder
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'carousel-item active';
+
+            const img = document.createElement('img');
+            img.src = '{{ asset("frontend/images/image-coming-soon.jpg") }}';
+            img.className = 'd-block w-100 img-fluid';
+            img.alt = 'Placeholder';
+
+            itemDiv.appendChild(img);
+            carouselInner.appendChild(itemDiv);
         }
-        document.getElementById('modal-width').textContent = content.width ? `Rộng: ${content.width}` : '';
-        document.getElementById('modal-length').textContent = content.length ? `Dài: ${content.length}` : '';
-        document.getElementById('modal-depth').textContent = content.depth ? `Chiều sâu: ${content.depth}` : '';
+
+        $info = "<ul class= 'list-group list-group-flush'>";
+        if (Array.isArray(content.info) && content.info.length > 0) {
+            content.info.forEach((info, index) => {
+                $info += `<li class='list-group-item'>${info}</li>`;
+            });
+        }
+        $info += "</ul>";
+        document.getElementById('modal-info').innerHTML = $info;
+        // Update text content
+       
+
+        $review = "<ul class= 'list-group list-group-flush'>";
+        if (Array.isArray(content.reviews) && content.reviews.length > 0) {
+            content.reviews.forEach((review, index) => {
+                $review += `<li class='list-group-item'>${review}</li>`;
+            });
+        }
+        $review += "</ul>";
+
+
+        document.getElementById('modal-review').innerHTML = $review;
+
+        document.getElementById('modal-category').textContent = content.category || '';
+        
+        document.getElementById('modal-rating').innerHTML = content.rating 
+    ? `${content.rating} <i class="bi bi-star-fill"></i>` 
+    : '';
     });
 });
 </script>
 @endpush
-@push('extra_scripts')
-<script>
-    // Make wikicontent available globally
-    window.wikicontent = @json($wikicontent);
-</script>
-@endpush
+
 @push('extra_scripts')
     <script>
         console.log("Hello from view con!");
