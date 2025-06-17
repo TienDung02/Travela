@@ -252,7 +252,7 @@
                         </div>
                     <!--End Row -->
 
-                    <!--Row Customer rivew summary-->
+                    <!--Row Category rivew summary-->
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="card">
@@ -316,7 +316,7 @@
 
                     <!-- end row -->
 
-                 
+
                     <!-- ============================================================== -->
                     <!-- End PAge Content -->
 @endsection

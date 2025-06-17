@@ -13,7 +13,7 @@ use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\Package;
 use App\Models\Tour;
-use App\Models\Customer;
+use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Review;
@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(PackageSeeder::class);
 
-        Customer::factory(10)->create();
+        Category::factory(10)->create();
 
         Order::factory(5)->create();
 

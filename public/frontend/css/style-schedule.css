@@ -484,7 +484,7 @@
 /*** Service End ***/
 
 
-/*** Destination Start ***/
+/*** Payment Start ***/
 .destination .tab-class .tab-content .tab-pane .destination-img {
     position: relative;
     overflow: hidden;
@@ -551,7 +551,7 @@
 .destination .tab-class .tab-content .destination-img:hover img {
     /*transform: scale(1.2);*/
 }
-/*** Destination End ***/
+/*** Payment End ***/
 
 
 /*** Packages Start ***/
@@ -916,7 +916,7 @@
 
 /*** Gallery End ***/
 
-/*** Tour Booking Start ***/
+/*** Tour Product Start ***/
 .booking {
     background: linear-gradient(rgba(19, 53, 123, .8), rgba(19, 53, 123, .8)), url(../images/tour-booking-bg.jpg);
     background-position: center center;
@@ -956,7 +956,7 @@
 
 
 
-/*** Tour Booking end ***/
+/*** Tour Product end ***/
 
 /*** Travel Guide Start ***/
 .guide .guide-item .guide-img {

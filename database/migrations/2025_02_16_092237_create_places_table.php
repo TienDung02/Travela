@@ -19,12 +19,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('desc')->nullable();
-            $table->string('address')->nullable();
-            $table->string('provinces')->nullable();
+            $table->integer('ward_id');
             $table->string('tag')->nullable();
             $table->decimal('lat', 10, 7)->nullable();
             $table->decimal('lon', 10, 7)->nullable();
-            $table->boolean('status')->default(true); // trạng thái hoạt động
+            $table->boolean('status')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });

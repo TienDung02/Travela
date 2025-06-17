@@ -10,25 +10,20 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class ItineraryDetail extends Authenticatable
+class DiscountCondition extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use  HasFactory, Notifiable, SoftDeletes;
+    use  HasFactory, Notifiable;
 
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'booking_id',
-        'location_id',
-        'arrival_time',
-        'day_number',
-        'note',
-        'created_at',
-        'updated_at',
-        'deleted_at'
+        'discount_id',
+        'min_quantity',
+        'min_price',
     ];
 
-    protected $dates = ['deleted_at'];
-    public $timestamps = true;
+//    protected $dates = ['deleted_at'];
+    public $timestamps = false;
 
 }

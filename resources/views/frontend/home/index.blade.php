@@ -73,7 +73,7 @@
 
 
 
-    <!-- Destination Start -->
+    <!-- Payment Start -->
     <div class="container-fluid destination py-5">
         <div class="container py-5">
             <div class="mx-auto text-center mb-5" style="max-width: 900px; margin-top: 10rem;">
@@ -176,7 +176,7 @@
                 </div>
             </div>
         </div>
-        <!-- Destination End -->
+        <!-- Payment End -->
 
         <!-- Explore Tour Start -->
         <div class="container-fluid ExploreTour py-5">
@@ -537,7 +537,7 @@
         </div>
         <!-- Gallery End -->
 
-        <!-- Tour Booking Start -->
+        <!-- Tour Product Start -->
         <div class="container-fluid booking py-5">
             <div class="container py-5">
                 <div class="row g-5 align-items-center">
@@ -619,7 +619,7 @@
                 </div>
             </div>
         </div>
-        <!-- Tour Booking End -->
+        <!-- Tour Product End -->
 
         <!-- Travel Guide Start -->
         <div class="container-fluid guide py-5">

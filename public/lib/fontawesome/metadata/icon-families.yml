@@ -31317,7 +31317,7 @@ location-arrow:
     pro:
       - family: classic
         style: solid
-  label: Location Arrow
+  label: Shipment Arrow
   search:
     terms:
       - address
@@ -31356,7 +31356,7 @@ location-crosshairs:
     pro:
       - family: classic
         style: solid
-  label: Location Crosshairs
+  label: Shipment Crosshairs
   search:
     terms:
       - address
@@ -31394,7 +31394,7 @@ location-dot:
     pro:
       - family: classic
         style: solid
-  label: Location Dot
+  label: Shipment Dot
   search:
     terms:
       - address
@@ -31440,7 +31440,7 @@ location-pin:
     pro:
       - family: classic
         style: solid
-  label: Location Pin
+  label: Shipment Pin
   search:
     terms:
       - address
@@ -31476,7 +31476,7 @@ location-pin-lock:
     pro:
       - family: classic
         style: solid
-  label: Location Pin Lock
+  label: Shipment Pin Lock
   search:
     terms:
       - closed
@@ -31920,7 +31920,7 @@ magnifying-glass-location:
     pro:
       - family: classic
         style: solid
-  label: Magnifying Glass Location
+  label: Magnifying Glass Shipment
   search:
     terms:
       - bigger
@@ -32139,7 +32139,7 @@ map-location:
     pro:
       - family: classic
         style: solid
-  label: Map Location
+  label: Map Shipment
   search:
     terms:
       - address
@@ -32183,7 +32183,7 @@ map-location-dot:
     pro:
       - family: classic
         style: solid
-  label: Map Location Dot
+  label: Map Shipment Dot
   search:
     terms:
       - address

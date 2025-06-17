@@ -17,14 +17,16 @@ return new class extends Migration
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->string('email')->unique();
+            $table->string('password')->nullable();
+            $table->string('fullname')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('phone')->nullable();
+            $table->integer('ward_id')->default('0');
+            $table->integer('role_id')->default('0');
             $table->string('provider_id')->nullable()->default(null);
             $table->string('provider')->nullable()->default(null);
             $table->rememberToken();
-            $table->string('password')->nullable();
-            $table->string('phone')->nullable();
-            $table->integer('role_id')->default('0');
             $table->timestamps();
             $table->softDeletes();
         });

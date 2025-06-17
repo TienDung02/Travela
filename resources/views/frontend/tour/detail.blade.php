@@ -29,7 +29,7 @@
 </div>
 <!-- Header End -->
 
-<!-- Destination Start -->
+<!-- Payment Start -->
 <div class="container-fluid ExploreTour py-5">
     <div class="container-fluid py-5">
         <div class="mx-auto text-center mb-5" style="max-width: 900px;">
@@ -273,7 +273,7 @@
         </div>
     </div>
 </div>
-<!-- Destination End -->
+<!-- Payment End -->
 
 <!-- Subscribe Start -->
 <div class="container-fluid subscribe py-5">

@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        Schema::dropIfExists('orders');
-
+        Schema::dropIfExists('products');
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->decimal('total_price', 10, 2);
-            $table->string('status');
-            $table->text('note')->nullable();
+            $table->unsignedBigInteger('category_id');
+            $table->string('name');
+            $table->text('desc')->nullable();
+            $table->decimal('price', 10, 2);
+            $table->integer('stock');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,11 +30,8 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down()
+    public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('email_verified_at');
-            $table->dropColumn('remember_token');
-        });
+        Schema::dropIfExists('products');
     }
 };
