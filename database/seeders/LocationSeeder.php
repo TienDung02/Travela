@@ -3,13 +3,13 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Location;
+use App\Models\Shipment;
 
 class LocationSeeder extends Seeder
 {
     public function run()
     {
-        Location::insert([
+        Shipment::insert([
             [
                 'name' => 'Hà Nội',
                 'address' => 'Hà Nội',

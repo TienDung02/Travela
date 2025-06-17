@@ -25811,7 +25811,7 @@ location-arrow:
     - 6.5.0
     - 6.6.0
     - 6.7.0
-  label: Location Arrow
+  label: Shipment Arrow
   search:
     terms:
       - address
@@ -25845,7 +25845,7 @@ location-crosshairs:
     - 6.5.0
     - 6.6.0
     - 6.7.0
-  label: Location Crosshairs
+  label: Shipment Crosshairs
   search:
     terms:
       - address
@@ -25878,7 +25878,7 @@ location-dot:
     - 6.5.0
     - 6.6.0
     - 6.7.0
-  label: Location Dot
+  label: Shipment Dot
   search:
     terms:
       - address
@@ -25919,7 +25919,7 @@ location-pin:
     - 6.5.0
     - 6.6.0
     - 6.7.0
-  label: Location Pin
+  label: Shipment Pin
   search:
     terms:
       - address
@@ -25950,7 +25950,7 @@ location-pin-lock:
     - 6.5.0
     - 6.6.0
     - 6.7.0
-  label: Location Pin Lock
+  label: Shipment Pin Lock
   search:
     terms:
       - closed
@@ -26324,7 +26324,7 @@ magnifying-glass-location:
     - 6.5.0
     - 6.6.0
     - 6.7.0
-  label: Magnifying Glass Location
+  label: Magnifying Glass Shipment
   search:
     terms:
       - bigger
@@ -26505,7 +26505,7 @@ map-location:
     - 6.5.0
     - 6.6.0
     - 6.7.0
-  label: Map Location
+  label: Map Shipment
   search:
     terms:
       - address
@@ -26544,7 +26544,7 @@ map-location-dot:
     - 6.5.0
     - 6.6.0
     - 6.7.0
-  label: Map Location Dot
+  label: Map Shipment Dot
   search:
     terms:
       - address

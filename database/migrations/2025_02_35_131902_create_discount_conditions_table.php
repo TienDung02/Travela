@@ -12,20 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        Schema::dropIfExists('order_details');
+        Schema::dropIfExists('discount_conditions');
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-        Schema::create('order_details', function (Blueprint $table) {
+        Schema::create('discount_conditions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('order_id');
-            $table->unsignedBigInteger('item_id');
-            $table->string('item_type');
-            $table->integer('quantity');
-            $table->decimal('price', 10, 2);
-            $table->timestamps();
-            $table->softDeletes();
+            $table->unsignedBigInteger('discount_id');
+            $table->DECIMAL('min_quantity',10, 2);
+            $table->DECIMAL('min_price',10, 2);
         });
+
     }
+
 
     /**
      * Reverse the migrations.

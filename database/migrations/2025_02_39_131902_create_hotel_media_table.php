@@ -12,25 +12,30 @@ return new class extends Migration
     public function up(): void
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        Schema::dropIfExists('activities');
+        Schema::dropIfExists('hotel_media');
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-        Schema::create('activities', function (Blueprint $table) {
+        Schema::create('hotel_media', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->enum('type', ['sightseeing', 'food', 'adventure', 'cultural']);
-            $table->decimal('price', 10, 2)->nullable();
-            $table->integer('duration')->nullable(); // Thời gian hoàn thành (phút, giờ)
+            $table->unsignedBigInteger('hotel_id');
+            $table->text('media');
+            $table->string('media_type');
+            $table->boolean('is_primary')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
+
     }
+
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('activities');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('email_verified_at');
+            $table->dropColumn('remember_token');
+        });
     }
 };

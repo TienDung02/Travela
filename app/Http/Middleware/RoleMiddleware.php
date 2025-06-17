@@ -12,7 +12,7 @@ class RoleMiddleware
      *
      * Usage in routes:
      * Route::middleware([RoleMiddleware::class . ':Admin'])->group(...);
-     * Route::middleware([RoleMiddleware::class . ':Admin,Booking manager'])->group(...);
+     * Route::middleware([RoleMiddleware::class . ':Admin,Product manager'])->group(...);
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next

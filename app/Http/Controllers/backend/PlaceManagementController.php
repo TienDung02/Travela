@@ -23,7 +23,7 @@ class PlaceManagementController extends Controller
             'desc' => 'nullable',
         ]);
         Place::create($request->all());
-        return redirect()->route('admin.package.index')->with('success', 'Destination created!');
+        return redirect()->route('admin.package.index')->with('success', 'Payment created!');
     }
 
     public function update(Request $request, $id)
@@ -35,13 +35,13 @@ class PlaceManagementController extends Controller
             'desc' => 'nullable',
         ]);
         $place->update($request->all());
-        return redirect()->route('admin.package.index')->with('success', 'Destination updated!');
+        return redirect()->route('admin.package.index')->with('success', 'Payment updated!');
     }
 
     public function destroy($id)
     {
         $place = Place::findOrFail($id);
         $place->delete();
-        return redirect()->route('admin.package.index')->with('success', 'Destination deleted!');
+        return redirect()->route('admin.package.index')->with('success', 'Payment deleted!');
     }
 }

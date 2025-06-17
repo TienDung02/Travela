@@ -1,5 +1,5 @@
 @extends('backend.layouts.layout')
-@section('title', 'Booking Management')
+@section('title', 'Product Management')
 @section('content')
 <div class="container py-4">
     <a href="{{ route('admin.booking.create') }}" class="btn btn-primary mb-3">Add Order</a>
@@ -27,7 +27,7 @@
                 <td>{{ $order->customer->fullname ?? '-' }}</td>
                 <td>{{ $order->status }}</td>
                 <td>{{ $order->deposit ? 'Yes' : 'No' }}</td>
-           
+
                 <td>{{ $order->payment_method }}</td>
                 <td>{{ number_format($order->total_price) }}</td>
                 <td>

@@ -12,20 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('product_media');
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('product_media', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->decimal('total_price', 10, 2);
-            $table->string('status');
-            $table->text('note')->nullable();
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->text('media');
+            $table->string('media_type');
+            $table->boolean('is_primary')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
 
     }
+
 
     /**
      * Reverse the migrations.

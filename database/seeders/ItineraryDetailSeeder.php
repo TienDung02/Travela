@@ -3,19 +3,19 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\ItineraryDetail;
-use App\Models\Booking;
-use App\Models\Location;
+use App\Models\Discount;
+use App\Models\Product;
+use App\Models\Shipment;
 
 class ItineraryDetailSeeder extends Seeder
 {
     public function run()
     {
-        $bookings = Booking::all();
-        $locations = Location::all();
+        $bookings = Product::all();
+        $locations = Shipment::all();
 
         foreach ($bookings as $booking) {
-            ItineraryDetail::create([
+            Discount::create([
                 'booking_id' => $booking->id,
                 'location_id' => $locations->random()->id,
                 'arrival_time' => now()->addHours(rand(1, 10)),

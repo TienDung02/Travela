@@ -2,22 +2,22 @@
 
 namespace Database\Seeders;
 
-use App\Models\location;
+use App\Models\Shipment;
 use Illuminate\Database\Seeder;
-use App\Models\Booking;
+use App\Models\Product;
 use App\Models\User;
-use App\Models\Destination;
+use App\Models\Payment;
 
 class BookingSeeder extends Seeder
 {
     public function run()
     {
         $users = User::all();
-        $locations = location::all();
+        $locations = Shipment::all();
 
         foreach ($users as $user) {
             foreach ($locations as $location) {
-            Booking::create([
+            Product::create([
                 'user_id' => $user->id,
                 'location_id' => $location->id,
                 'pickup_time' => rand(1, 7),

@@ -12,25 +12,25 @@ return new class extends Migration
     public function up(): void
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        Schema::dropIfExists('locations');
+        Schema::dropIfExists('discount_type');
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-        Schema::create('locations', function (Blueprint $table) {
+        Schema::create('discount_type', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('address');
-            $table->decimal('average_rating', 3, 2)->nullable();
-            $table->text('note')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
         });
+
     }
+
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('locations');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('email_verified_at');
+            $table->dropColumn('remember_token');
+        });
     }
 };

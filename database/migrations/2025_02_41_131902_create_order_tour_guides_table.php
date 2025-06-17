@@ -12,26 +12,30 @@ return new class extends Migration
     public function up(): void
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        Schema::dropIfExists('itinerary_details');
+        Schema::dropIfExists('hotel_media');
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-        Schema::create('itinerary_details', function (Blueprint $table) {
+        Schema::create('hotel_media', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('booking_id')->constrained('bookings')->onDelete('cascade');
-            $table->foreignId('location_id')->constrained('locations')->onDelete('cascade');
-            $table->time('arrival_time');
-            $table->integer('day_number'); // Ngày thứ 1, 2, 3,...
-            $table->text('note')->nullable();
+            $table->unsignedBigInteger('order_id');
+            $table->unsignedBigInteger('tour_guide_id');
+            $table->date('assigned_date');
+            $table->text('note');
             $table->timestamps();
             $table->softDeletes();
         });
+
     }
+
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('itinerary_details');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('email_verified_at');
+            $table->dropColumn('remember_token');
+        });
     }
 };

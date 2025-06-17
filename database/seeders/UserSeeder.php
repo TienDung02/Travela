@@ -62,13 +62,13 @@ class UserSeeder extends Seeder
             );
         User::create(
             [
-                'name' => 'Booking Manager',
+                'name' => 'Product Manager',
                 'email' => 'bookingManager@gmail.com'
                 ,
                 'password' => Hash::make('password123'),
                 'provider' => 'local',
                 'provider_id' => null,
-                'role_id' => 2, // Giả sử role_id 2 là Booking Manager
+                'role_id' => 2, // Giả sử role_id 2 là Product Manager
             ]
         );
         User::create(

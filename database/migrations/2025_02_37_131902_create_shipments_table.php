@@ -12,26 +12,29 @@ return new class extends Migration
     public function up(): void
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        Schema::dropIfExists('bookings');
+        Schema::dropIfExists('shipments');
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-        Schema::create('bookings', function (Blueprint $table) {
+        Schema::create('shipments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('location_id');
-            $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
-            $table->integer('pickup_time');
+            $table->string('tracking_code');
+            $table->string('status');
+            $table->date('edtimated_delivery');
             $table->timestamps();
             $table->softDeletes();
         });
+
     }
+
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('bookings');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('email_verified_at');
+            $table->dropColumn('remember_token');
+        });
     }
 };

@@ -10,23 +10,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Destination extends Authenticatable
+class DiscountType extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use  HasFactory, Notifiable, SoftDeletes;
+    use  HasFactory, Notifiable;
 
     protected $primaryKey = 'id';
 
     protected $fillable = [
         'name',
-        'region',
-        'image',
-        'created_at',
-        'updated_at',
-        'deleted_at'
     ];
 
-    protected $dates = ['deleted_at'];
-    public $timestamps = true;
+//    protected $dates = ['deleted_at'];
+    public $timestamps = false;
 
 }

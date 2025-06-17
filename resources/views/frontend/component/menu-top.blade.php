@@ -7,7 +7,7 @@
         <a href="{{route('blog.index')}}" class="nav-item nav-link">Blog</a>
         <a href="{{route('destination.index')}}" class="nav-item nav-link">Destination</a>
         <a href="{{route('tour.index')}}" class="nav-item nav-link">Explore Tour</a>
-{{--        <a href="{{route('booking.index')}}" class="nav-item nav-link">Travel Booking</a>--}}
+{{--        <a href="{{route('booking.index')}}" class="nav-item nav-link">Travel Product</a>--}}
 {{--        <a href="{{route('gallery.index')}}" class="nav-item nav-link">Our Gallery</a>--}}
 {{--        <a href="{{route('guide.index')}}" class="nav-item nav-link">Travel Guides</a>--}}
 {{--        <a href="{{route('testimonial.index')}}" class="nav-item nav-link">Testimonial</a>--}}

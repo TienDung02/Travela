@@ -7,19 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
-class Order extends Model
+class HotelMedia extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['customer_id', 'total_price', 'status', 'note'];
+    protected $fillable = ['hotel_id', 'media', 'media_type', 'is_primary'];
 
-    public function customer()
+    public function hotel()
     {
-        return $this->belongsTo(Category::class);
-    }
-
-    public function orderDetails()
-    {
-        return $this->hasMany(OrderDetail::class);
+        return $this->belongsTo(Hotel::class);
     }
 }

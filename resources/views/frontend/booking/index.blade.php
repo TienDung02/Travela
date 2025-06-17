@@ -32,7 +32,7 @@
         </div>
         <!-- Header End -->
 
-        <!-- Tour Booking Start -->
+        <!-- Tour Product Start -->
         <div class="container-fluid booking py-5" >
             <div class="container-fluid py-5">
                 <div class="row g-5 align-items-center">
@@ -123,7 +123,7 @@
                 </div>
             </div>
         </div>
-        <!-- Tour Booking End -->
+        <!-- Tour Product End -->
 
         <!-- Subscribe Start -->
         <div class="container-fluid subscribe py-5">
