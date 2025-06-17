@@ -17,6 +17,7 @@ use GuzzleHttp\Promise;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 class ScheduleController
 {
     protected $goMapsService;
@@ -27,10 +28,12 @@ class ScheduleController
     protected $rapidApiService;
     protected $map4DService;
 
+    protected $googleMapsScraper;
+
 
     public function __construct(MapAPIService $goMapsService, ProvinceService $provinceService, WeatherService $weatherService,
                                 GeminiService $geminiService, WikipediaService $wikipediaService, RapidApiService $rapidApiService,
-                                Map4DService  $map4DService)
+                                Map4DService  $map4DService, GoogleMapsScraper $googleMapsScraper)
     {
         $this->goMapsService = $goMapsService;
         $this->provinceService = $provinceService;
@@ -39,6 +42,7 @@ class ScheduleController
         $this->wikipediaService = $wikipediaService;
         $this->rapidApiService = $rapidApiService;
         $this->map4DService = $map4DService;
+        $this->googleMapsScraper = $googleMapsScraper;
 
     }
     public function getThumbnail($query)
@@ -192,17 +196,37 @@ class ScheduleController
         $query = http_build_query($params);
         $finalUrl = url('/build-schedule') . '?' . $query;
 
-        $wikicontent = [];
+    
+        
+
+
+
+        // Try to read cached version
+        $placecontent = Session::get(
+            'placecontent',
+        ) ??[];
+
         foreach ($places as &$place){
             $name = cleanLocationString($place['Tên']);
             $origin = $this->map4DService->geocode2($name);
             $place['lat'] = $origin['lat'] ?? '';
             $place['lon'] = $origin['lon'] ?? '';
-            
-            $wikicontent[$place['Tên']] = $this->wikipediaService->getPlaceInfo($name);
+          
+
+            $cacheKey = "place_info_" . $place['Tên'];
+            if (!Cache::has($cacheKey )) {
+                $this->googleMapsScraper->queuePlaceInfo($place['Tên']);
+            }
+            if (!isset($placecontent[$place['Tên']])) {
+                
+                $placecontent[$place['Tên']] = $this->googleMapsScraper->getCachedPlaceInfo($place['Tên']);
+            }
+           // $placecontent[$place['Tên']] = $this->googleMapsScraper->getPlaceInfo($place['Tên']);
 
         }
-        //dd($placeNames);
+        Session::put('placecontent', $placecontent);
+         
+        //dd($placecontent);
         $data = [
             'map' => $map,
             'currencies' => $currencies,
@@ -215,7 +239,7 @@ class ScheduleController
             'address_old' => $address_old,
             'places' => $places,
             'finalUrl' => $finalUrl,
-            'wikicontent' => $wikicontent,
+            'placecontent' => $placecontent,
             'for_schedule' => [
                 'address' => $address,
                 'start_date' => $startDate,
@@ -237,43 +261,71 @@ class ScheduleController
         ];
         return view('frontend.schedule.index', $data);
     }
-     public function build_schedule(Request $request)
-{
-    
-    $placeName = $request->input('placeNames', []);
-    
-    $data = [
-        'address' => $placeName['address'] ?? '',
-        'start_date' => $placeName['start_date'] ?? '',
-        'end_date' => $placeName['end_date'] ?? '',
-        'placeName' => $placeName['placeNames'] ?? '',
-        'budget' => $placeName['budget'] ?? '',
-        'currency' => $placeName['currency'] ?? '',
-        'adults' => $placeName['adults'] ?? 0,
-        'children_1' => $placeName['children_1'] ?? 0,
-        'children_2' => $placeName['children_2'] ?? 0,
-        'transportation' => $placeName['transportation'] ?? '',
-        'interest' => $placeName['interest'] ?? [],
-    ];
+    public function build_schedule(Request $request)
+    {
 
-    $currencies = Currency::query()->get();
-    $preferences = Preference::query()->get();
+        $placeName = $request->input('placeNames', []);
 
-    $plans = $this->geminiService->generateItinerary($data);
+        $data = [
+            'address' => $placeName['address'] ?? '',
+            'start_date' => $placeName['start_date'] ?? '',
+            'end_date' => $placeName['end_date'] ?? '',
+            'placeName' => $placeName['placeNames'] ?? '',
+            'budget' => $placeName['budget'] ?? '',
+            'currency' => $placeName['currency'] ?? '',
+            'adults' => $placeName['adults'] ?? 0,
+            'children_1' => $placeName['children_1'] ?? 0,
+            'children_2' => $placeName['children_2'] ?? 0,
+            'transportation' => $placeName['transportation'] ?? '',
+            'interest' => $placeName['interest'] ?? [],
+        ];
 
-    if (!$plans || !is_array($plans)) {
-    \Log::error('Không tạo được plans', ['plans' => $plans, 'data' => $data]);
-    return response()->json(['error' => 'Không tạo được lịch trình'], 500);
+        $currencies = Currency::query()->get();
+        $preferences = Preference::query()->get();
+
+        $plans = $this->geminiService->generateItinerary($data);
+
+        if (!$plans || !is_array($plans)) {
+            \Log::error('Không tạo được plans', ['plans' => $plans, 'data' => $data]);
+            return response()->json(['error' => 'Không tạo được lịch trình'], 500);
+        }
+        $wikicontent = [];
+        $placecontent = Session::get(
+            key: 'placecontent',
+        ) ?? [];
+        
+        foreach($plans as $day => $activities){
+            foreach($activities as $activity => $details)
+            {
+                foreach($details as $detail)
+                {
+                    $detailInfo = $detail['details'] ?? [];
+
+                    if (isset($detailInfo['Tên địa điểm'])) 
+                    {
+                        $cacheKey = "place_info_" . $detailInfo['Tên địa điểm'];
+                        if (!Cache::has($cacheKey )) {
+                            $this->googleMapsScraper->queuePlaceInfo($detailInfo['Tên địa điểm']);
+                        }
+                        if (!isset($placecontent[$detailInfo['Tên địa điểm']])) {
+                            
+                            $placecontent[$detailInfo['Tên địa điểm']] = $this->googleMapsScraper->getCachedPlaceInfo($detailInfo['Tên địa điểm']);
+                        }
+                        
+                    }
+         
+                }
+            }
+        }
+
+
+        Session::put('placecontent',$placecontent);
+        session([
+            'plans' => $plans,
+            'start_date' => $placeName['start_date'],
+        ]);
+        return view('frontend.schedule.ajax.schedule-built', compact('plans', 'currencies', 'preferences', 'wikicontent','placecontent'));
     }
-    $wikicontent = [];
-
-
-      session([
-        'plans' => $plans,
-        'start_date' => $placeName['start_date'],
-    ]);
-    return view('frontend.schedule.ajax.schedule-built', compact('plans', 'currencies', 'preferences', 'wikicontent'));
-}
     public function getToaDo($location){
 
     }

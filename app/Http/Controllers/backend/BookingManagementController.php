@@ -38,9 +38,9 @@ class BookingManagementController extends Controller
             'customer_id' => 'required|exists:customers,id',
             'status' => 'required',
             'note' => 'nullable',
-            'deposit' => 'required|boolean',
-            'amount_pending' => 'required|numeric',
-            'payment_method' => 'required|string',
+            'deposit' => 'boolean',
+            'amount_pending' => 'numeric',
+            'payment_method' => 'string',
             'order_details' => 'required|array|min:1',
             'order_details.*.item_type' => 'required|in:tour,package',
             'order_details.*.item_id' => 'required|integer',
@@ -90,9 +90,11 @@ class BookingManagementController extends Controller
             'customer_id' => 'required|exists:customers,id',
             'status' => 'required',
             'note' => 'nullable',
-            'deposit' => 'required|boolean',
 
-            'payment_method' => 'required|string',
+            'deposit' => 'boolean',
+         
+            'payment_method' => 'string',
+
             'order_details' => 'required|array|min:1',
             'order_details.*.item_type' => 'required|in:tour,package',
             'order_details.*.item_id' => 'required|integer',
@@ -104,9 +106,9 @@ class BookingManagementController extends Controller
             'customer_id' => $request->customer_id,
             'status' => $request->status,
             'note' => $request->note,
-            'deposit' => $request->deposit,
-            'amount_pending' => $request->amount_pending,
-            'payment_method' => $request->payment_method,
+            'deposit' => $request->deposit ?? '',
+            'amount_pending' => $request->amount_pending?? '',
+            'payment_method' => $request->payment_method ??'',
             'total_price' => collect($request->order_details)->sum(function($d){ return $d['price'] * $d['quantity']; }),
         ]);
 
