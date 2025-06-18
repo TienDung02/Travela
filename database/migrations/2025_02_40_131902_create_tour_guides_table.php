@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        Schema::dropIfExists('hotel_media');
+        Schema::dropIfExists('tour_guides');
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-        Schema::create('hotel_media', function (Blueprint $table) {
+        Schema::create('tour_guides', function (Blueprint $table) {
             $table->id();
             $table->string('fullname');
             $table->string('phone');
