@@ -52,8 +52,7 @@ class UserSeeder extends Seeder
 
             [
                 'name' => 'Admin',
-                'email' => 'admin@gmail.com
-                ',
+                'email' => 'admin@gmail.com',
                 'password' => Hash::make('password123'),
                 'provider' => 'local',
                 'provider_id' => null,
@@ -84,8 +83,7 @@ class UserSeeder extends Seeder
         User::create(
             [
                 'name' => 'Packages Manager',
-                'email' => 'packageManager@gmail.com'
-                ,
+                'email' => 'packageManager@gmail.com',
                 'password' => Hash::make('password123'),
                 'provider' => 'local',
                 'provider_id' => null,

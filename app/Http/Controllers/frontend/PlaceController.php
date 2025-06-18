@@ -44,7 +44,9 @@ class PlaceController
                 ->avg('rating');
             $provinceRatings[$province] = $avg ?? 0;
         }
+        
         arsort($provinceRatings); // Sắp xếp giảm dần
+        
         $topProvinces = array_slice(array_keys($provinceRatings), 0, 6); // Tỉnh có rating cao nhất
         return view('frontend.destination.index', [
             'topProvinces' => $topProvinces,

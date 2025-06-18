@@ -41,15 +41,27 @@
                             </div>
                         </div>
                         <div class="row h-100 w-90 ms-1 position-absolute end-0 border me-1 mb-2 rounded-start">
-                            <a href="#" class="h-100 col-lg-11 p-0 d-flex show-place-modal">
+                            <a href="#" class="h-100 col-lg-11 p-0 d-flex show-place-modal"   data-bs-toggle="modal" data-bs-target="#exampleModal" data-place="{{ $detailInfo['Tên địa điểm']  }}">
                                 <div class="w-35 align-content-center position-relative h-100 p-0">
-                                    @if ($type == 'Địa điểm tham quan' && is_array($detailInfo))
+
+                                    @if (
+                                        isset($placecontent[$detailInfo['Tên địa điểm']]['thumbnail'])
+
+                                    )
+                                        <img class="w-75 h-90 ms-2 rounded mt-0" src="{{ $placecontent[$detailInfo['Tên địa điểm']]['thumbnail'] }}">
+                                        
+                                        
+                                    @else
+                                        <img class="w-75 h-90 ms-2 rounded mt-0" src="{{ asset('frontend/images/image-coming-soon.jpg') }}">
+                                    @endif
+                                    <!-- @if ($type == 'Địa điểm tham quan' && is_array($detailInfo))
+    
                                         <img class="w-75 h-90 ms-2 rounded mt-0" src="{{ asset('frontend/images/image-coming-soon.jpg') }}">
                                     @elseif ($type == 'Ăn sáng' || $type == 'Ăn trưa' || $type == 'Ăn tối')
                                         <img class="w-75 h-90 ms-2 rounded mt-0" src="{{ asset('frontend/images/image-coming-soon.jpg') }}">
                                     @elseif ($type == 'Chỗ ngủ')
                                         <img class="w-75 h-90 ms-2 rounded mt-0" src="{{ asset('frontend/images/image-coming-soon.jpg') }}">
-                                    @endif
+                                    @endif -->
                                 </div>
                                 <div class="w-65 h-60 m-auto p-0">
                                     @if($type == 'Địa điểm tham quan' && is_array($detailInfo))
