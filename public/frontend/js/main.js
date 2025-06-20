@@ -443,50 +443,50 @@
         /*  Ajax Provinces
         /*----------------------------------------------------*/
         // $(document).ready(function () {
-            $('#searchInput').on('input', function () {
-                let query = $(this).val().trim();
+        $('#searchInput').on('input', function () {
+            let query = $(this).val().trim();
 
-                if (query.length === 0) {
-                    $('#results').hide();
-                    return;
-                }
-
-                $.ajax({
-                    url: '/api/search',
-                    type: 'GET',
-                    data: { q: query },
-                    success: function (data) {
-                        let resultsDiv = $('#results');
-                        resultsDiv.empty();
-
-                        if (data.length === 0) {
-                            resultsDiv.hide();
-                            return;
-                        }
-
-                        $.each(data, function (index, item) {
-                            resultsDiv.append(`<div class="dropdown-item">${item.name}</div>`);
-                        });
-
-                        resultsDiv.show();
-                    },
-                    error: function (xhr) {
-                        console.error('Lỗi khi gọi API:', xhr);
-                    }
-                });
-            });
-
-            $(document).on('click', '.dropdown-item', function () {
-                $('#searchInput').val($(this).text());
-
+            if (query.length === 0) {
                 $('#results').hide();
-            });
+                return;
+            }
 
-            $(document).click(function (e) {
-                if (!$(e.target).closest('#searchInput, #results').length) {
-                    $('#results').hide();
+            $.ajax({
+                url: '/api/search',
+                type: 'GET',
+                data: { q: query },
+                success: function (data) {
+                    let resultsDiv = $('#results');
+                    resultsDiv.empty();
+
+                    if (data.length === 0) {
+                        resultsDiv.hide();
+                        return;
+                    }
+
+                    $.each(data, function (index, item) {
+                        resultsDiv.append(`<div class="dropdown-item">${item.name}</div>`);
+                    });
+
+                    resultsDiv.show();
+                },
+                error: function (xhr) {
+                    console.error('Lỗi khi gọi API:', xhr);
                 }
             });
+        });
+
+        $(document).on('click', '.dropdown-item', function () {
+            $('#searchInput').val($(this).text());
+
+            $('#results').hide();
+        });
+
+        $(document).click(function (e) {
+            if (!$(e.target).closest('#searchInput, #results').length) {
+                $('#results').hide();
+            }
+        });
         /*----------------------------------------------------*/
         /*  End Ajax Provinces
         /*----------------------------------------------------*/
@@ -517,75 +517,75 @@
             $('.slick-track').css('transform', 'translate3d(-756px, 0px, 0px)');
         }, 500);
 
-     /*----------------------------------------------------*/
+        /*----------------------------------------------------*/
         /*  Ajax Build Schedule
         /*----------------------------------------------------*/
-            $('#generateSchedule').click(function () {
-                let placeNames = $(this).data('place-names');
-                var url = $('#get-url-schedule').attr('data-url');
-                $('#btn-build-schedule').remove();
-                $('#spinner2').removeClass('d-none').addClass('d-flex');
+        $('#generateSchedule').click(function () {
+            let placeNames = $(this).data('place-names');
+            var url = $('#get-url-schedule').attr('data-url');
+            $('#btn-build-schedule').remove();
+            $('#spinner2').removeClass('d-none').addClass('d-flex');
 
-                $.ajax({
-                    url: url,
-                    type: "GET",
-                    data: { placeNames: placeNames },
-                    success: function (data) {
+            $.ajax({
+                url: url,
+                type: "GET",
+                data: { placeNames: placeNames },
+                success: function (data) {
 
-                        var $data = $(data);
-                        $('#schedule-response').html($data);
-                        updateRouteButtons();
-                        $('.schedule-carousel').slick({
-                            centerMode: true,
-                            centerPadding: '0px',
-                            slidesToShow: 3,
-                            responsive: [
-                                {
-                                    breakpoint: 768,
-                                    settings: {
-                                        arrows: true,
-                                        centerMode: true,
-                                        centerPadding: '0px',
-                                        slidesToShow: 3
-                                    }
-                                },
-                                {
-                                    breakpoint: 480,
-                                    settings: {
-                                        arrows: true,
-                                        centerMode: true,
-                                        centerPadding: '0px',
-                                        slidesToShow: 1
-                                    }
+                    var $data = $(data);
+                    $('#schedule-response').html($data);
+                    updateRouteButtons();
+                    $('.schedule-carousel').slick({
+                        centerMode: true,
+                        centerPadding: '0px',
+                        slidesToShow: 3,
+                        responsive: [
+                            {
+                                breakpoint: 768,
+                                settings: {
+                                    arrows: true,
+                                    centerMode: true,
+                                    centerPadding: '0px',
+                                    slidesToShow: 3
                                 }
-                            ]
-                        });
-                        $('#spinner2').removeClass('d-flex').addClass('d-none');
-                        initScheduleScrollHandler();
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Lỗi status:", status);  // Lỗi HTTP (404, 500, v.v.)
-                        console.error("Lỗi từ server:", xhr.responseText);  // Nội dung lỗi
-                        console.error("Chi tiết lỗi:", error);  // Mô tả lỗi
+                            },
+                            {
+                                breakpoint: 480,
+                                settings: {
+                                    arrows: true,
+                                    centerMode: true,
+                                    centerPadding: '0px',
+                                    slidesToShow: 1
+                                }
+                            }
+                        ]
+                    });
+                    $('#spinner2').removeClass('d-flex').addClass('d-none');
+                    initScheduleScrollHandler();
+                },
+                error: function (xhr, status, error) {
+                    console.error("Lỗi status:", status);  // Lỗi HTTP (404, 500, v.v.)
+                    console.error("Lỗi từ server:", xhr.responseText);  // Nội dung lỗi
+                    console.error("Chi tiết lỗi:", error);  // Mô tả lỗi
 
-                        alert("Có lỗi xảy ra: " + xhr.status + " - " + error);
-                    }
-                });
+                    alert("Có lỗi xảy ra: " + xhr.status + " - " + error);
+                }
             });
-            let isManualClick = false;
-            $(document).on('init','.schedule-carousel', function(event, slick) {
-                $('.slick-prev').on('click', function () {
-                    isManualClick = true;
-                    slickAfterChange();
-                    console.log(isManualClick)
-                });
+        });
+        let isManualClick = false;
+        $(document).on('init','.schedule-carousel', function(event, slick) {
+            $('.slick-prev').on('click', function () {
+                isManualClick = true;
+                slickAfterChange();
+                console.log(isManualClick)
+            });
 
-                $('.slick-next').on('click', function () {
-                    isManualClick = true;
-                    slickAfterChange();
-                    console.log(isManualClick)
-                });
+            $('.slick-next').on('click', function () {
+                isManualClick = true;
+                slickAfterChange();
+                console.log(isManualClick)
             });
+        });
         /*----------------------------------------------------*/
         /*  End Ajax Build Schedule
         /*----------------------------------------------------*/
@@ -945,6 +945,145 @@
         /*----------------------------------------------------*/
         /*  End Function Check For Button Direction
         /*----------------------------------------------------*/
+
+
+
+        /*----------------------------------------------------*/
+        /*  Ajax Load More Place
+        /*----------------------------------------------------*/
+        $(document).on('click', '#load-more', function() {
+            var button = $(this);
+            const urlParams = new URLSearchParams(window.location.search);
+            const keyword = urlParams.get('keyword');
+            const province = urlParams.get('province');
+            console.log(keyword)
+            var pageParam = parseInt(button.attr('data-next-page'));
+            if (pageParam) {
+                console.log("Current Page:", pageParam);
+            }
+            $.ajax({
+                url: $('#get-url').attr('data-url'),
+                type: 'GET',
+                data: {
+                    'keyword': keyword,
+                    'province': province,
+                    'pageParam': pageParam,
+                    'id': $('#get-url').attr('data-id')
+                },
+                success: function(data) {
+                    var $data = $(data);
+                    $('#loading').append($data);
+                    button.attr('data-next-page', pageParam+1);
+                    for (var selector in config) {
+                        $(selector).chosen(config[selector]);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+
+
+        /*----------------------------------------------------*/
+        /*  Check Have More
+        /*----------------------------------------------------*/
+        $(document).on('click', '#load-more', function() {
+            setTimeout(function() {
+                var have_more = $('#have-more').attr('data-have-more');
+                console.log('have more',have_more)
+                if (have_more === '0'){
+                    $('#load-more').remove();
+                }else{
+                    $('#have-more').remove();
+                }
+            }, 500);
+        });
+        /*----------------------------------------------------*/
+        /*  End Ajax Load More Place
+        /*----------------------------------------------------*/
+
+
+        //------------------------------ Ajax show Result Search Destination ---------------------------//
+        $(document).ready(function() {
+            let searchTimer;
+            function fetchProducts(page = 1) {
+                const keyword = $('#search-input').val();
+                const urlParams = new URLSearchParams(window.location.search);
+                const province = urlParams.get('province');
+                $.ajax({
+                    url: $('#url_search').attr('data-url'),
+                    type: 'GET',
+                    data: {
+                        'keyword': keyword,
+                        'province': province,
+                        'page': page,
+                    },
+                    success: function(data) {
+                        var $data = $(data);
+                        $('.tab-content').html($data);
+                        var newUrl = new URL(window.location.href);
+                        newUrl.searchParams.set('keyword', keyword);
+                        window.history.pushState({path: newUrl.href}, '', newUrl.href);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Lỗi khi tìm kiếm:", xhr.responseText);
+                        $('#get-result-search').html('<p class="text-danger">Đã xảy ra lỗi khi tải dữ liệu.</p>');
+                    }
+                });
+            }
+
+            $('#search-input').on('keyup', function() {
+                clearTimeout(searchTimer);
+                console.log('aaaa')
+                searchTimer = setTimeout(function() {
+                    fetchProducts(1);
+                }, 300);
+            });
+            $('#search-form').on('submit', function(e) {
+                e.preventDefault();
+                clearTimeout(searchTimer);
+                fetchProducts(1);
+            });
+            if (window.location.search.includes('keyword')) {
+                const initialKeyword = new URLSearchParams(window.location.search).get('keyword');
+                const initialPage = new URLSearchParams(window.location.search).get('page') || 1;
+                $('#search-input').val(initialKeyword);
+                fetchProducts(initialPage);
+            } else {
+            }
+        });
+        //------------------------ Ajax Sort Destination By Province ---------------------------------//
+        $('#destination-select').on('change', function (){
+            var province = $(this).val();
+            const urlParams = new URLSearchParams(window.location.search);
+            const keyword = urlParams.get('keyword');
+            console.log(province)
+            $.ajax({
+                url: $('#url_sort').attr('data-url'),
+                type: 'GET',
+                data: {
+                    'province': province,
+                    'keyword': keyword,
+                },
+                success: function(data) {
+                    var $data = $(data);
+                    $('.tab-content').html($data);
+                    var newUrl = new URL(window.location.href);
+                    newUrl.searchParams.set('province', province);
+                    window.history.pushState({path: newUrl.href}, '', newUrl.href);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Lỗi khi tìm kiếm:", xhr.responseText);
+                    $('#get-result-search').html('<p class="text-danger">Đã xảy ra lỗi khi tải dữ liệu.</p>');
+                }
+            });
+        })
+        //---------------------------------------------------------//
+
+
+
+
 
     });
 

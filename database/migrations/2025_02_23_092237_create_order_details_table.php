@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('item_type');
             $table->integer('quantity');
             $table->decimal('unit_price', 10, 2);
-            $table->unsignedBigInteger('discount_id');
+            $table->unsignedBigInteger('discount_id')->nullable()->default(null);
             $table->decimal('subtotal', 10, 2);
             $table->timestamps();
             $table->softDeletes();

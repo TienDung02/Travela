@@ -37,6 +37,28 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+//    public function places()
+//    {
+//        return $this->hasMany(Place::class);
+//    }
+
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class);
+    }
+    public function ward()
+    {
+        return $this->belongsTo(Ward::class, 'ward_id');
+    }
     protected function casts(): array
     {
         return [

@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Preference;
-use Database\Seeders\RoleSeeder;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Role;
@@ -20,27 +19,37 @@ use App\Models\Review;
 use App\Models\Contact;
 use App\Models\ActivityLog;
 use App\Models\TourPlace;
-//use Database\Seeders\RoleSeeder;
 class DatabaseSeeder extends Seeder
 {
     public function run()
     {
         $this->call([
+            ProvinceSeeder::class,
+            DistrictSeeder::class,
+            WardSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
-            PlaceSeeder::class,
-            PlaceMediaSeeder::class,
+//            PlaceSeeder::class,
             TourSeeder::class,
             ReviewSeeder::class,
             CurrencySeeder::class,
             PreferencesSeeder::class,
+            CategorySeeder::class,
         ]);
 
         User::factory(10)->create();
 
-//        Place::factory(10)->create();
+        Place::factory(50)->create();
 
-        PlaceMedia::factory(10)->create();
+        PlaceMedia::factory(750)->create();
+
+        Place::all()->each(function ($place) {
+            $media = $place->placeMedia()->inRandomOrder()->first();
+            if ($media) {
+                $media->is_primary = true;
+                $media->save();
+            }
+        });
 
         BlogCategory::factory(5)->create();
 
@@ -51,7 +60,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(PackageSeeder::class);
 
-        Category::factory(10)->create();
+//        Category::factory(10)->create();
 
         Order::factory(5)->create();
 
@@ -70,6 +79,7 @@ class DatabaseSeeder extends Seeder
         ActivityLog::factory(10)->create();
 
         $this->call([
+//            PlaceMediaSeeder::class,
             TourPlaceSeeder::class,
             PackageImageSeeder::class,
         ]);

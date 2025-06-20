@@ -23,17 +23,21 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $providers = ['google', 'facebook', 'github', 'local']; // Cho thêm null để giả lập trường hợp không dùng social login
+        $providers = ['google', 'facebook', 'local']; // Cho thêm null để giả lập trường hợp không dùng social login
         $provider = $this->faker->randomElement($providers);
 
         return [
-            'name' => $this->faker->name,
+            'fullname' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'password' => bcrypt('password'),
             'phone' => $this->faker->phoneNumber,
+            'dob' => $this->faker->date('Y-m-d', '2006-01-01'),
+            'rank' => $this->faker->randomElement(['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond']),
+            'avatar' => 'frontend/images/avatar/avatar_' . $this->faker->numberBetween(1, 50) . '.jpg',
             'role_id' => \App\Models\Role::inRandomOrder()->value('id'),
+            'ward_id' => \App\Models\Ward::inRandomOrder()->value('id'),
             'provider' => $provider,
-            'provider_id' => $provider ? Str::uuid() : null, // Chỉ sinh provider_id nếu có provider
+            'gender' => $this->faker->randomElement(['Male','Female']),
             'remember_token' => Str::random(10),
             'created_at' => now(),
             'updated_at' => now(),

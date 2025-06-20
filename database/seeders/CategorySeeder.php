@@ -1,5 +1,5 @@
 <?php
-
+namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Category; // Đảm bảo bạn đã tạo model Category
 
@@ -17,15 +17,15 @@ class CategorySeeder extends Seeder
 
         $fixedCategories = [
             // Danh mục cấp 1: Nhóm sản phẩm chính
-            ['name' => 'Phụ kiện Hành lý', 'parent_id' => null, 'created_at' => now(), 'updated_at' => now(), 'deleted_at' => null],
-            ['name' => 'Thiết bị Điện tử Du lịch', 'parent_id' => null, 'created_at' => now(), 'updated_at' => now(), 'deleted_at' => null],
-            ['name' => 'Trang phục Du lịch', 'parent_id' => null, 'created_at' => now(), 'updated_at' => now(), 'deleted_at' => null],
-            ['name' => 'Chăm sóc Cá nhân & Y tế', 'parent_id' => null, 'created_at' => now(), 'updated_at' => now(), 'deleted_at' => null],
-            ['name' => 'Vật dụng Cắm trại & Dã ngoại', 'parent_id' => null, 'created_at' => now(), 'updated_at' => now(), 'deleted_at' => null],
-            ['name' => 'Sản phẩm An toàn & Bảo mật', 'parent_id' => null, 'created_at' => now(), 'updated_at' => now(), 'deleted_at' => null],
-            ['name' => 'Vật phẩm Lưu niệm & Quà tặng', 'parent_id' => null, 'created_at' => now(), 'updated_at' => now(), 'deleted_at' => null],
-            ['name' => 'Sách & Hướng dẫn Du lịch', 'parent_id' => null, 'created_at' => now(), 'updated_at' => now(), 'deleted_at' => null],
-            ['name' => 'Phụ kiện cho Trẻ em', 'parent_id' => null, 'created_at' => now(), 'updated_at' => now(), 'deleted_at' => null],
+            ['name' => 'Phụ kiện Hành lý', 'parent_id' => 0, 'created_at' => now(), 'updated_at' => now(), 'deleted_at' => null],
+            ['name' => 'Thiết bị Điện tử Du lịch', 'parent_id' => 0, 'created_at' => now(), 'updated_at' => now(), 'deleted_at' => null],
+            ['name' => 'Trang phục Du lịch', 'parent_id' => 0, 'created_at' => now(), 'updated_at' => now(), 'deleted_at' => null],
+            ['name' => 'Chăm sóc Cá nhân & Y tế', 'parent_id' => 0, 'created_at' => now(), 'updated_at' => now(), 'deleted_at' => null],
+            ['name' => 'Vật dụng Cắm trại & Dã ngoại', 'parent_id' => 0, 'created_at' => now(), 'updated_at' => now(), 'deleted_at' => null],
+            ['name' => 'Sản phẩm An toàn & Bảo mật', 'parent_id' => 0, 'created_at' => now(), 'updated_at' => now(), 'deleted_at' => null],
+            ['name' => 'Vật phẩm Lưu niệm & Quà tặng', 'parent_id' => 0, 'created_at' => now(), 'updated_at' => now(), 'deleted_at' => null],
+            ['name' => 'Sách & Hướng dẫn Du lịch', 'parent_id' => 0, 'created_at' => now(), 'updated_at' => now(), 'deleted_at' => null],
+            ['name' => 'Phụ kiện cho Trẻ em', 'parent_id' => 0, 'created_at' => now(), 'updated_at' => now(), 'deleted_at' => null],
         ];
 
         // Chèn các danh mục cha trước để lấy ID

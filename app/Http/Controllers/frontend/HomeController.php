@@ -4,35 +4,40 @@ namespace App\Http\Controllers\frontend;
 use App\Models\Place;
 use App\Models\Review;
 use App\Models\Tour;
+use Illuminate\Support\Facades\DB;
 class HomeController
 {
     public function index()
     {
-        $provinces = [
-            'An Giang', 'Bà Rịa - Vũng Tàu', 'Bạc Liêu', 'Bắc Giang', 'Bắc Kạn', 'Bắc Ninh',
-            'Bến Tre', 'Bình Dương', 'Bình Định', 'Bình Phước', 'Bình Thuận', 'Cà Mau',
-            'Cao Bằng', 'Cần Thơ', 'Đà Nẵng', 'Đắk Lắk', 'Đắk Nông', 'Điện Biên',
-            'Đồng Nai', 'Đồng Tháp', 'Gia Lai', 'Hà Giang', 'Hà Nam', 'Hà Nội', 'Hà Tĩnh',
-            'Hải Dương', 'Hải Phòng', 'Hậu Giang', 'Hòa Bình', 'Hưng Yên', 'Khánh Hòa',
-            'Kiên Giang', 'Kon Tum', 'Lai Châu', 'Lâm Đồng', 'Lạng Sơn', 'Lào Cai',
-            'Long An', 'Nam Định', 'Nghệ An', 'Ninh Bình', 'Ninh Thuận', 'Phú Thọ',
-            'Phú Yên', 'Quảng Bình', 'Quảng Nam', 'Quảng Ngãi', 'Quảng Ninh', 'Quảng Trị',
-            'Sóc Trăng', 'Sơn La', 'Tây Ninh', 'Thái Bình', 'Thái Nguyên', 'Thanh Hóa',
-            'Thừa Thiên Huế', 'Tiền Giang', 'TP. Hồ Chí Minh', 'Trà Vinh', 'Tuyên Quang',
-            'Vĩnh Long', 'Vĩnh Phúc', 'Yên Bái'
-        ];
 
-        // Tính điểm trung bình từng tỉnh
-        $provinceRatings = [];
-        foreach ($provinces as $province) {
-            $placeIds = Place::where('provinces', $province)->pluck('id');
-            $avg = Review::whereIn('reviewable_id', $placeIds)
-                ->where('reviewable_type', Place::class)
-                ->avg('rating');
-            $provinceRatings[$province] = $avg ?? 0;
-        }
-        arsort($provinceRatings); // Sắp xếp giảm dần
-        $topProvinces = array_slice(array_keys($provinceRatings), 0, 6); // Lấy 6 tỉnh có rating cao nhất
+        $topPlaces = Place::select(
+            'places.id',
+            'places.name',
+            'place_media.media',
+            DB::raw('media_counts.total_media'),
+            DB::raw('COUNT(tour_places.place_id) AS total_bookings_for_place')
+        )
+            ->join('tour_places', 'places.id', '=', 'tour_places.place_id')
+            ->join('tours', 'tour_places.tour_id', '=', 'tours.id')
+            ->join('order_details', function($join) {
+                $join->on('tours.id', '=', 'order_details.item_id')
+                    ->where('order_details.item_type', '=', 'tour');
+            })
+            ->join('orders', 'order_details.order_id', '=', 'orders.id')
+            ->join('place_media', function($join) {
+                $join->on('places.id', '=', 'place_media.place_id')
+                    ->where('place_media.is_primary', '=', 1);
+            })
+            ->join(DB::raw('(
+                SELECT place_id, COUNT(*) as total_media
+                FROM place_media
+                GROUP BY place_id
+            ) as media_counts'), 'places.id', '=', 'media_counts.place_id')
+            ->groupBy('places.id', 'places.name', 'place_media.media', 'media_counts.total_media')
+            ->orderByDesc('total_bookings_for_place')
+            ->limit(6)
+            ->get();
+//dd($topPlaces);
         $topTours = Tour::withCount('reviews')
             ->withCount(['reviews as avg_rating' => function($query) {
                 $query->select(\DB::raw('coalesce(avg(rating),0)'));
@@ -42,6 +47,6 @@ class HomeController
             ->limit(6)
             ->get();
         // Truyền sang view
-        return view('frontend.home.index', compact('topProvinces', 'provinces', 'topTours'));
+        return view('frontend.home.index', compact('topTours', 'topPlaces'));
     }
 }
