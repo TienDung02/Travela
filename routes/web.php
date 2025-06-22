@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\frontend\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\frontend\BookingController;
 use App\Http\Controllers\frontend\PackageController;
@@ -10,7 +10,9 @@ Route::get('/booking/create/{id}', [BookingController::class, 'create'])->name('
 require base_path('routes/frontend.php');
 require base_path('routes/backend.php');
 
-
+Route::middleware(['auth'])->group(function () {
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+});
 
 use App\Http\Controllers\GoogleCalendarController;
 

@@ -78,6 +78,30 @@ class DatabaseSeeder extends Seeder
 
         ActivityLog::factory(10)->create();
 
+<<<<<<< Updated upstream
+=======
+        Post::factory(60)->create([
+            'user_id' => User::inRandomOrder()->first()->id,
+            'place_id' => \App\Models\Place::inRandomOrder()->first()->id,
+            'caption' => fake()->paragraph(),
+        ]);
+        PostLike::factory(180)->create([
+            'user_id' => \App\Models\User::inRandomOrder()->first()->id,
+            'post_id' => \App\Models\Post::inRandomOrder()->first()->id,
+        ]);
+        PostComment::factory(120)->create([
+            'user_id' => \App\Models\User::inRandomOrder()->first()->id,
+            'post_id' => \App\Models\Post::inRandomOrder()->first()->id,
+            'comment' => fake()->sentence(),
+        ]);
+        PostMedia::factory(180)->create([
+            'post_id' => \App\Models\Post::inRandomOrder()->first()->id,
+            'media' => fake()->imageUrl(),          
+            'media_type' => 'image',                
+        ]);
+
+
+>>>>>>> Stashed changes
         $this->call([
 //            PlaceMediaSeeder::class,
             TourPlaceSeeder::class,

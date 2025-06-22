@@ -122,7 +122,51 @@
                         <div class="text-center tab1 mb-4">
                             <div class="tab-content" id="profileTabContent">
                                 <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+<<<<<<< Updated upstream
                                     <p>Nội dung của Activity feed</p>
+=======
+                                    <div class="bg-white p-3 rounded mb-4 border">
+
+                                        @foreach($posts as $post)
+                                            <div class="card mb-3">
+                                                <div class="card-body">
+                                                    <div class="d-flex align-items-center mb-2">
+                                                        <img src="{{ asset($post->user->avatar ?? 'images/default-avatar.png') }}" alt="avatar" class="rounded-circle me-2" width="40" height="40">
+                                                        <div>
+                                                            <strong>{{ $post->user->name }}</strong><br>
+                                                            <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
+                                                        </div>
+                                                    </div>
+
+                                                    <p>{{ $post->caption }}</p>
+
+                                                    @if($post->media->isNotEmpty())
+                                                        <div class="mb-2">
+                                                            @foreach($post->media as $media)
+                                                                <img src="{{  asset($media->media) }}" class="img-fluid rounded mb-1" style="max-width: 100%; max-height: 300px;">
+                                                            @endforeach
+                                                        </div>
+                                                    @endif
+
+                                                    <div class="d-flex justify-content-between">
+                                                        <span>👍 {{ $post->likes->count() }} likes</span>
+                                                        <span>💬 {{ $post->comments->count() }} comments</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                   
+                                    </div>
+
+
+                                </div>
+                                    @forelse($posts as $post)
+                                        @include('frontend.profile.components.post-card', ['post' => $post])
+                                    @empty
+                                        <div class="text-center text-muted py-3">Chưa có bài viết nào để hiển thị.</div>
+                                    @endforelse
+                                    
+>>>>>>> Stashed changes
                                 </div>
                                 <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
                                     <p>Nội dung của Trips</p>
