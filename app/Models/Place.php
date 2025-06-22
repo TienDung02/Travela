@@ -21,5 +21,8 @@ class Place extends Model
     {
         return $this->morphMany(Review::class, 'reviewable');
     }
-
+    public function ward()
+    {
+        return $this->belongsTo(Ward::class);
+    }
 }

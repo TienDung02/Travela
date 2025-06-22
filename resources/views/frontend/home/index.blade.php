@@ -80,98 +80,49 @@
                 <h5 class="section-title px-3">Destination</h5>
                 <h1 class="mb-0">Popular Destination</h1>
             </div>
-            <div class="tab-class text-center col-lg-11 col-xl-11 col-xxl-9 mx-auto">
-                <div class="w-100 d-flex justify-content-between align-items-center mb-4">
-                    <div class="text-start">
-                        <h5 class="mb-0" id="destination-title">
-                            @if(!empty($showAll))
-                                {{ isset($selectedProvince) && $selectedProvince ? $selectedProvince : 'All Place' }}
-                            @else
-                                Most Rating
-                            @endif
-                        </h5>
-                    </div>
-                    @if(!empty($showAll))
-                    <div class="text-end">
-                        <form method="get">
-                            <select id="destination-select" name="province" class="form-select" style="width: 220px;" onchange="this.form.submit()">
-                                <option value="">Tất cả tỉnh thành</option>
-                                @foreach($provinces as $province)
-                                    <option value="{{ $province }}" {{ (isset($selectedProvince) && $selectedProvince == $province) ? 'selected' : '' }}>{{ $province }}</option>
-                                @endforeach
-                            </select>
-                        </form>
-                    </div>
-                    @endif
-                </div>
+            <div class="tab-class text-center col-lg-11 col-xl-11 mx-auto">
                 <div class="tab-content">
                     <div id="tab-all" class="tab-pane fade show p-0 active">
-                        @if(!empty($showAll) && isset($allPlaces))
-                            <div class="row g-4">
-                                @foreach($allPlaces as $place)
-                                    <div class="col-lg-4">
-                                        <div class="destination-img">
-                                            <img class="img-fluid rounded w-100" src="{{ asset('frontend/images/destination-1.jpg') }}" alt="{{ $place->name }}">
-                                            <div class="destination-overlay p-4">
-                                                <h4 class="text-white mb-2 mt-3">{{ $place->name }}</h4>
-                                                <div class="text-white">{{ $place->provinces }}</div>
-                                                <a href="{{ route('destination.detail', $place->id) }}" class="btn btn-primary mt-2">View Detail</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                            <div class="mt-4">
-                                {{ $allPlaces->withQueryString()->links() }}
-                            </div>
-                        @else
-                            <div id="destination-container" class="row g-4">
-                                <div class="col-xl-12">
-                                    <div class="row g-4">
-                                        @foreach($topProvinces as $province)
+                        <div id="destination-container" class="row g-4">
+                            <div class="col-xl-12">
+                                <div class="row g-4">
+                                    @foreach($topPlaces as $place)
                                         @php
-                                                $topPlace = \App\Models\Place::where('provinces', $province)->first();
-                                                if ($topPlace) {
-                                                    $media = \App\Models\PlaceMedia::where('place_id', $topPlace->id)
-                                                        ->where('is_primary', true)
-                                                        ->first();
-                                                }
                                             @endphp
-                                            <div class="col-lg-4 destination-item">
-                                                <div class="destination-img">
-                                                    @if($media && $media->media_type === 'image')
-                                                        <img class="img-fluid rounded w-100"
-                                                            src="{{ asset($media->media) }}"
-                                                            alt="{{ $topPlace->name }}">
-                                                    @else
-                                                        <img class="img-fluid rounded w-100"
-                                                            src="{{ asset('frontend/images/destination-1.jpg') }}"
-                                                            alt="">
-                                                    @endif
-                                                    <div class="destination-overlay p-4">
-                                                        <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">
-                                                            {{ $topPlace ? $topPlace->reviews()->count() : 0 }} Photos
-                                                        </a>
-                                                        <h4 class="text-white mb-2 mt-3">{{ $province }}</h4>
-                                                        <a href="#" class="btn-hover text-white view-all-place-btn" data-province="{{ $province }}">
-                                                            View All Place <i class="fa fa-arrow-right ms-2"></i>
-                                                        </a>
-                                                    </div>
-                                                    <div class="search-icon">
-                                                        <a href="{{ $media && $media->media_type === 'image' ? asset('storage/' . $media->media) : '#' }}" data-lightbox="destination-1">
-                                                            <i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i>
-                                                        </a>
-                                                    </div>
+                                        <div class="col-lg-4 destination-item">
+                                            <div class="destination-img">
+                                                @if($place->media)
+                                                    <img class="img-fluid rounded w-100"
+                                                         src="{{ asset($place->media) }}"
+                                                         alt="{{ $place->name }}">
+                                                @else
+                                                    <img class="img-fluid rounded w-100"
+                                                         src="{{ asset('frontend/images/destination-1.jpg') }}"
+                                                         alt="">
+                                                @endif
+                                                <div class="destination-overlay p-4">
+                                                    <a href="#" class="btn btn-primary text-white rounded-pill border py-2 px-3">
+                                                        {{ $place->total_media }} Photos
+                                                    </a>
+                                                    <h4 class="text-white mb-2 mt-3">{{ $place->name }}</h4>
+                                                    <a href="#" class="btn-hover text-white view-all-place-btn" data-province="">
+                                                        View All Place <i class="fa fa-arrow-right ms-2"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="search-icon">
+                                                    <a href="#" data-lightbox="destination-1">
+                                                        <i class="fa fa-plus-square fa-1x btn btn-light btn-lg-square text-primary"></i>
+                                                    </a>
                                                 </div>
                                             </div>
-                                        @endforeach
-                                    </div>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
-                            <div class="text-center mt-4">
-                                <a href="{{ route('destination.all') }}" class="btn btn-primary px-4 py-2">See All Place</a>
-                            </div>
-                        @endif
+                        </div>
+                        <div class="text-center mt-4">
+                            <a href="{{ route('destination.index') }}" class="btn btn-primary px-4 py-2">See All Place</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -187,13 +138,8 @@
                     <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum tempore nam, architecto doloremque velit explicabo? Voluptate sunt eveniet fuga eligendi! Expedita laudantium fugiat corrupti eum cum repellat a laborum quasi.
                     </p>
                 </div>
-                <div class="tab-class text-center col-lg-11 col-xl-11 col-xxl-9 mx-auto">
+                <div class="tab-class text-center col-lg-11 col-xl-11 col-xxl-11 mx-auto">
                     <div class="tab-content">
-                        <div class="text-start">
-                            <h5 class="mb-0" id="destination-title">
-                                Most Rating
-                            </h5>
-                        </div>
                         <div id="NationalTab-1" class="tab-pane fade show p-0 active">
                             <div class="row g-4">
                                 @foreach($topTours as $tour)
@@ -719,96 +665,96 @@
         <!-- Travel Guide End -->
 
         <!-- Testimonial Start -->
-{{--        <div class="container-fluid testimonial py-5">--}}
-{{--            <div class="container py-5">--}}
-{{--                <div class="mx-auto text-center mb-5" style="max-width: 900px;">--}}
-{{--                    <h5 class="section-title px-3">Testimonial</h5>--}}
-{{--                    <h1 class="mb-0">Our Clients Say!!!</h1>--}}
-{{--                </div>--}}
-{{--                <div class="testimonial-carousel owl-carousel">--}}
-{{--                    <div class="testimonial-item text-center rounded pb-4">--}}
-{{--                        <div class="testimonial-comment bg-light rounded p-4">--}}
-{{--                            <p class="text-center mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis nostrum cupiditate, eligendi repellendus saepe illum earum architecto dicta quisquam quasi porro officiis. Vero reiciendis,--}}
-{{--                            </p>--}}
-{{--                        </div>--}}
-{{--                        <div class="testimonial-img p-1">--}}
-{{--                            <img src="{{asset("frontend/images/testimonial-1.jpg")}}" class="img-fluid rounded-circle" alt="Image">--}}
-{{--                        </div>--}}
-{{--                        <div style="margin-top: -35px;">--}}
-{{--                            <h5 class="mb-0">John Abraham</h5>--}}
-{{--                            <p class="mb-0">New York, USA</p>--}}
-{{--                            <div class="d-flex justify-content-center">--}}
-{{--                                <i class="fas fa-star text-primary"></i>--}}
-{{--                                <i class="fas fa-star text-primary"></i>--}}
-{{--                                <i class="fas fa-star text-primary"></i>--}}
-{{--                                <i class="fas fa-star text-primary"></i>--}}
-{{--                                <i class="fas fa-star text-primary"></i>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="testimonial-item text-center rounded pb-4">--}}
-{{--                        <div class="testimonial-comment bg-light rounded p-4">--}}
-{{--                            <p class="text-center mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis nostrum cupiditate, eligendi repellendus saepe illum earum architecto dicta quisquam quasi porro officiis. Vero reiciendis,--}}
-{{--                            </p>--}}
-{{--                        </div>--}}
-{{--                        <div class="testimonial-img p-1">--}}
-{{--                            <img src="{{asset("frontend/images/testimonial-2.jpg")}}" class="img-fluid rounded-circle" alt="Image">--}}
-{{--                        </div>--}}
-{{--                        <div style="margin-top: -35px;">--}}
-{{--                            <h5 class="mb-0">John Abraham</h5>--}}
-{{--                            <p class="mb-0">New York, USA</p>--}}
-{{--                            <div class="d-flex justify-content-center">--}}
-{{--                                <i class="fas fa-star text-primary"></i>--}}
-{{--                                <i class="fas fa-star text-primary"></i>--}}
-{{--                                <i class="fas fa-star text-primary"></i>--}}
-{{--                                <i class="fas fa-star text-primary"></i>--}}
-{{--                                <i class="fas fa-star text-primary"></i>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="testimonial-item text-center rounded pb-4">--}}
-{{--                        <div class="testimonial-comment bg-light rounded p-4">--}}
-{{--                            <p class="text-center mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis nostrum cupiditate, eligendi repellendus saepe illum earum architecto dicta quisquam quasi porro officiis. Vero reiciendis,--}}
-{{--                            </p>--}}
-{{--                        </div>--}}
-{{--                        <div class="testimonial-img p-1">--}}
-{{--                            <img src="{{asset("frontend/images/testimonial-3.jpg")}}" class="img-fluid rounded-circle" alt="Image">--}}
-{{--                        </div>--}}
-{{--                        <div style="margin-top: -35px;">--}}
-{{--                            <h5 class="mb-0">John Abraham</h5>--}}
-{{--                            <p class="mb-0">New York, USA</p>--}}
-{{--                            <div class="d-flex justify-content-center">--}}
-{{--                                <i class="fas fa-star text-primary"></i>--}}
-{{--                                <i class="fas fa-star text-primary"></i>--}}
-{{--                                <i class="fas fa-star text-primary"></i>--}}
-{{--                                <i class="fas fa-star text-primary"></i>--}}
-{{--                                <i class="fas fa-star text-primary"></i>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="testimonial-item text-center rounded pb-4">--}}
-{{--                        <div class="testimonial-comment bg-light rounded p-4">--}}
-{{--                            <p class="text-center mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis nostrum cupiditate, eligendi repellendus saepe illum earum architecto dicta quisquam quasi porro officiis. Vero reiciendis,--}}
-{{--                            </p>--}}
-{{--                        </div>--}}
-{{--                        <div class="testimonial-img p-1">--}}
-{{--                            <img src="{{asset("frontend/images/testimonial-4.jpg")}}" class="img-fluid rounded-circle" alt="Image">--}}
-{{--                        </div>--}}
-{{--                        <div style="margin-top: -35px;">--}}
-{{--                            <h5 class="mb-0">John Abraham</h5>--}}
-{{--                            <p class="mb-0">New York, USA</p>--}}
-{{--                            <div class="d-flex justify-content-center">--}}
-{{--                                <i class="fas fa-star text-primary"></i>--}}
-{{--                                <i class="fas fa-star text-primary"></i>--}}
-{{--                                <i class="fas fa-star text-primary"></i>--}}
-{{--                                <i class="fas fa-star text-primary"></i>--}}
-{{--                                <i class="fas fa-star text-primary"></i>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
+        {{--        <div class="container-fluid testimonial py-5">--}}
+        {{--            <div class="container py-5">--}}
+        {{--                <div class="mx-auto text-center mb-5" style="max-width: 900px;">--}}
+        {{--                    <h5 class="section-title px-3">Testimonial</h5>--}}
+        {{--                    <h1 class="mb-0">Our Clients Say!!!</h1>--}}
+        {{--                </div>--}}
+        {{--                <div class="testimonial-carousel owl-carousel">--}}
+        {{--                    <div class="testimonial-item text-center rounded pb-4">--}}
+        {{--                        <div class="testimonial-comment bg-light rounded p-4">--}}
+        {{--                            <p class="text-center mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis nostrum cupiditate, eligendi repellendus saepe illum earum architecto dicta quisquam quasi porro officiis. Vero reiciendis,--}}
+        {{--                            </p>--}}
+        {{--                        </div>--}}
+        {{--                        <div class="testimonial-img p-1">--}}
+        {{--                            <img src="{{asset("frontend/images/testimonial-1.jpg")}}" class="img-fluid rounded-circle" alt="Image">--}}
+        {{--                        </div>--}}
+        {{--                        <div style="margin-top: -35px;">--}}
+        {{--                            <h5 class="mb-0">John Abraham</h5>--}}
+        {{--                            <p class="mb-0">New York, USA</p>--}}
+        {{--                            <div class="d-flex justify-content-center">--}}
+        {{--                                <i class="fas fa-star text-primary"></i>--}}
+        {{--                                <i class="fas fa-star text-primary"></i>--}}
+        {{--                                <i class="fas fa-star text-primary"></i>--}}
+        {{--                                <i class="fas fa-star text-primary"></i>--}}
+        {{--                                <i class="fas fa-star text-primary"></i>--}}
+        {{--                            </div>--}}
+        {{--                        </div>--}}
+        {{--                    </div>--}}
+        {{--                    <div class="testimonial-item text-center rounded pb-4">--}}
+        {{--                        <div class="testimonial-comment bg-light rounded p-4">--}}
+        {{--                            <p class="text-center mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis nostrum cupiditate, eligendi repellendus saepe illum earum architecto dicta quisquam quasi porro officiis. Vero reiciendis,--}}
+        {{--                            </p>--}}
+        {{--                        </div>--}}
+        {{--                        <div class="testimonial-img p-1">--}}
+        {{--                            <img src="{{asset("frontend/images/testimonial-2.jpg")}}" class="img-fluid rounded-circle" alt="Image">--}}
+        {{--                        </div>--}}
+        {{--                        <div style="margin-top: -35px;">--}}
+        {{--                            <h5 class="mb-0">John Abraham</h5>--}}
+        {{--                            <p class="mb-0">New York, USA</p>--}}
+        {{--                            <div class="d-flex justify-content-center">--}}
+        {{--                                <i class="fas fa-star text-primary"></i>--}}
+        {{--                                <i class="fas fa-star text-primary"></i>--}}
+        {{--                                <i class="fas fa-star text-primary"></i>--}}
+        {{--                                <i class="fas fa-star text-primary"></i>--}}
+        {{--                                <i class="fas fa-star text-primary"></i>--}}
+        {{--                            </div>--}}
+        {{--                        </div>--}}
+        {{--                    </div>--}}
+        {{--                    <div class="testimonial-item text-center rounded pb-4">--}}
+        {{--                        <div class="testimonial-comment bg-light rounded p-4">--}}
+        {{--                            <p class="text-center mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis nostrum cupiditate, eligendi repellendus saepe illum earum architecto dicta quisquam quasi porro officiis. Vero reiciendis,--}}
+        {{--                            </p>--}}
+        {{--                        </div>--}}
+        {{--                        <div class="testimonial-img p-1">--}}
+        {{--                            <img src="{{asset("frontend/images/testimonial-3.jpg")}}" class="img-fluid rounded-circle" alt="Image">--}}
+        {{--                        </div>--}}
+        {{--                        <div style="margin-top: -35px;">--}}
+        {{--                            <h5 class="mb-0">John Abraham</h5>--}}
+        {{--                            <p class="mb-0">New York, USA</p>--}}
+        {{--                            <div class="d-flex justify-content-center">--}}
+        {{--                                <i class="fas fa-star text-primary"></i>--}}
+        {{--                                <i class="fas fa-star text-primary"></i>--}}
+        {{--                                <i class="fas fa-star text-primary"></i>--}}
+        {{--                                <i class="fas fa-star text-primary"></i>--}}
+        {{--                                <i class="fas fa-star text-primary"></i>--}}
+        {{--                            </div>--}}
+        {{--                        </div>--}}
+        {{--                    </div>--}}
+        {{--                    <div class="testimonial-item text-center rounded pb-4">--}}
+        {{--                        <div class="testimonial-comment bg-light rounded p-4">--}}
+        {{--                            <p class="text-center mb-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis nostrum cupiditate, eligendi repellendus saepe illum earum architecto dicta quisquam quasi porro officiis. Vero reiciendis,--}}
+        {{--                            </p>--}}
+        {{--                        </div>--}}
+        {{--                        <div class="testimonial-img p-1">--}}
+        {{--                            <img src="{{asset("frontend/images/testimonial-4.jpg")}}" class="img-fluid rounded-circle" alt="Image">--}}
+        {{--                        </div>--}}
+        {{--                        <div style="margin-top: -35px;">--}}
+        {{--                            <h5 class="mb-0">John Abraham</h5>--}}
+        {{--                            <p class="mb-0">New York, USA</p>--}}
+        {{--                            <div class="d-flex justify-content-center">--}}
+        {{--                                <i class="fas fa-star text-primary"></i>--}}
+        {{--                                <i class="fas fa-star text-primary"></i>--}}
+        {{--                                <i class="fas fa-star text-primary"></i>--}}
+        {{--                                <i class="fas fa-star text-primary"></i>--}}
+        {{--                                <i class="fas fa-star text-primary"></i>--}}
+        {{--                            </div>--}}
+        {{--                        </div>--}}
+        {{--                    </div>--}}
+        {{--                </div>--}}
+        {{--            </div>--}}
+        {{--        </div>--}}
         <!-- Testimonial End -->
 
         <!-- Subscribe Start -->

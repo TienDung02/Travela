@@ -15,7 +15,7 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'customer_id' => \App\Models\Category::inRandomOrder()->first(),
+            'user_id' => \App\Models\User::inRandomOrder()->first(),
             'total_price' => $this->faker->randomFloat(2, 200, 2000),
             'status' => 'pending',
             'note' => $this->faker->sentence,

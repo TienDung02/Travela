@@ -33,9 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('email_verified_at');
-            $table->dropColumn('remember_token');
-        });
+        Schema::dropIfExists('hotels');
     }
 };

@@ -17,8 +17,7 @@ class PlaceFactory extends Factory
         return [
             'name' => $this->faker->city,
             'desc' => $this->faker->sentence,
-            'address' => $this->faker->address,
-            'provinces' => $this->faker->address,
+            'ward_id' => \App\Models\Ward::inRandomOrder()->value('id'),
             'tag' => $this->faker->word,
             'lat' => $this->faker->latitude,
             'lon' => $this->faker->longitude,

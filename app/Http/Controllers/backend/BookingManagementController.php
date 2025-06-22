@@ -8,7 +8,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Tour;
 use App\Models\Package;
-use App\Models\Category;
+use App\Models\Customer;
 
 class BookingManagementController extends Controller
 {
@@ -18,7 +18,7 @@ class BookingManagementController extends Controller
         $orders = Order::with(['customer', 'orderDetails'])->orderByDesc('id')->get();
         $tours = Tour::all();
         $packages = Package::all();
-        $customers = Category::all();
+        $customers = Customer::all();
         return view('backend.admin-booking.index', compact('orders', 'tours', 'packages', 'customers'));
     }
 
@@ -27,7 +27,7 @@ class BookingManagementController extends Controller
     {
         $tours = Tour::all();
         $packages = Package::all();
-        $customers = Category::all();
+        $customers = Customer::all();
         return view('backend.admin-booking.create', compact('tours', 'packages', 'customers'));
     }
 
@@ -38,9 +38,9 @@ class BookingManagementController extends Controller
             'customer_id' => 'required|exists:customers,id',
             'status' => 'required',
             'note' => 'nullable',
-            'deposit' => 'boolean',
-            'amount_pending' => 'numeric',
-            'payment_method' => 'string',
+            'deposit' => 'required|boolean',
+            'amount_pending' => 'required|numeric',
+            'payment_method' => 'required|string',
             'order_details' => 'required|array|min:1',
             'order_details.*.item_type' => 'required|in:tour,package',
             'order_details.*.item_id' => 'required|integer',
@@ -77,7 +77,7 @@ class BookingManagementController extends Controller
         $order = Order::with('orderDetails')->findOrFail($id);
         $tours = Tour::all();
         $packages = Package::all();
-        $customers = Category::all();
+        $customers = Customer::all();
         return view('backend.admin-booking.edit', compact('order', 'tours', 'packages', 'customers'));
     }
 
@@ -90,11 +90,9 @@ class BookingManagementController extends Controller
             'customer_id' => 'required|exists:customers,id',
             'status' => 'required',
             'note' => 'nullable',
+            'deposit' => 'required|boolean',
 
-            'deposit' => 'boolean',
-         
-            'payment_method' => 'string',
-
+            'payment_method' => 'required|string',
             'order_details' => 'required|array|min:1',
             'order_details.*.item_type' => 'required|in:tour,package',
             'order_details.*.item_id' => 'required|integer',
@@ -106,9 +104,9 @@ class BookingManagementController extends Controller
             'customer_id' => $request->customer_id,
             'status' => $request->status,
             'note' => $request->note,
-            'deposit' => $request->deposit ?? '',
-            'amount_pending' => $request->amount_pending?? '',
-            'payment_method' => $request->payment_method ??'',
+            'deposit' => $request->deposit,
+            'amount_pending' => $request->amount_pending,
+            'payment_method' => $request->payment_method,
             'total_price' => collect($request->order_details)->sum(function($d){ return $d['price'] * $d['quantity']; }),
         ]);
 

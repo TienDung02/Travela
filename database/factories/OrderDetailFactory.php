@@ -26,7 +26,9 @@ class OrderDetailFactory extends Factory
             'item_id' => $item->id,
             'item_type' => $itemType,
             'quantity' => rand(1, 5),
-            'price' => $this->faker->randomFloat(2, 100, 500),
+            'unit_price' => $this->faker->randomFloat(2, 100, 500),
+            'subtotal' => $this->faker->randomFloat(2, 100, 500),
+            'discount_id' => null,
         ];
     }
 }

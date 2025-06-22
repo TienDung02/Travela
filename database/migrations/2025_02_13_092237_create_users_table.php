@@ -22,6 +22,9 @@ return new class extends Migration
             $table->string('fullname')->nullable();
             $table->string('gender')->nullable();
             $table->string('phone')->nullable();
+            $table->date('dob')->nullable();
+            $table->string('rank')->nullable();
+            $table->string('avatar')->nullable();
             $table->integer('ward_id')->default('0');
             $table->integer('role_id')->default('0');
             $table->string('provider_id')->nullable()->default(null);

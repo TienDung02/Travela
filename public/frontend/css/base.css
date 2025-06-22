@@ -48,6 +48,30 @@
 .min-h-95 { min-height: 95%; }
 .min-h-100 { min-height: 100%; }
 
+
+/* Min-height in vh */
+.min-h-5vh { min-height: 5vh; }
+.min-h-10vh { min-height: 10vh; }
+.min-h-15vh { min-height: 15vh; }
+.min-h-20vh { min-height: 20vh; }
+.min-h-25vh { min-height: 25vh; }
+.min-h-30vh { min-height: 30vh; }
+.min-h-35vh { min-height: 35vh; }
+.min-h-40vh { min-height: 40vh; }
+.min-h-45vh { min-height: 45vh; }
+.min-h-50vh { min-height: 50vh; }
+.min-h-55vh { min-height: 55vh; }
+.min-h-60vh { min-height: 60vh; }
+.min-h-65vh { min-height: 65vh; }
+.min-h-70vh { min-height: 70vh; }
+.min-h-75vh { min-height: 75vh; }
+.min-h-80vh { min-height: 80vh; }
+.min-h-85vh { min-height: 85vh; }
+.min-h-90vh { min-height: 90vh; }
+.min-h-95vh { min-height: 95vh; }
+.min-h-100vh { min-height: 100vh; }
+
+
 /* Max-height */
 .max-h-5 { max-height: 5%; }
 .max-h-10 { max-height: 10%; }
@@ -369,4 +393,22 @@
     & i{
         color: #FFFFFF;
     }
+}
+.bg-bronze{
+    background-image: linear-gradient(#82572C, #CE8946);
+}
+.bg-silver{
+    background-image: linear-gradient(#C4C4C4, #E0E0E0);
+}
+.bg-gold{
+    background-image: linear-gradient(#EAA221, #ffed29);
+}
+.bg-platinum{
+    background-image: linear-gradient(#8fd9fb, #b8e3e9);
+}
+.bg-diamond{
+    background-image: linear-gradient(#021068, #0086E9);
+}
+.cursor-pointer{
+    cursor: pointer;
 }
