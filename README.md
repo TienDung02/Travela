@@ -36,6 +36,7 @@
   
 ## Mô hình hệ thống - ERD
 
+[Mô hình ERD](https://github.com/user-attachments/files/20853402/web_ww.pdf)
 
 
 
