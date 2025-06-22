@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Post;
+use App\Models\PostComment;
+use App\Models\PostLike;
+use App\Models\PostMedia;
 use App\Models\Preference;
 use Illuminate\Database\Seeder;
 use App\Models\User;
@@ -37,7 +41,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
         ]);
 
-        User::factory(10)->create();
+        User::factory(20)->create();
 
         Place::factory(50)->create();
 
@@ -77,6 +81,12 @@ class DatabaseSeeder extends Seeder
         Contact::factory(5)->create();
 
         ActivityLog::factory(10)->create();
+
+        Post::factory(60)->create();
+        PostLike::factory(180)->create();
+        PostComment::factory(120)->create();
+        PostMedia::factory(180)->create();
+
 
         $this->call([
 //            PlaceMediaSeeder::class,

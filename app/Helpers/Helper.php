@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Candidate;
-use App\Models\Employer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,6 +11,35 @@ if (!function_exists('cleanLocationString')) {
         return trim($cleanedStr);
     }
 
+}
+
+if (!function_exists('getDayDifference')) {
+    function getDayDifference($data)
+    {
+        $updated = Carbon::parse($data->updated_at);
+        $now = Carbon::now();
+        $secondsDiff = $updated->diffInSeconds($now, false);
+
+        $suffix = $secondsDiff < 0 ? 'from now' : 'ago';
+        $seconds = abs($secondsDiff);
+
+        if ($seconds < 60) {
+            return $seconds . ' seconds ' . $suffix;
+        }
+
+        $minutes = floor($seconds / 60);
+        if ($minutes < 60) {
+            return $minutes . ' minutes ' . $suffix;
+        }
+
+        $hours = floor($minutes / 60);
+        if ($hours < 24) {
+            return $hours . ' hours ' . $suffix;
+        }
+
+        $days = floor($hours / 24);
+        return $days . ' days ' . $suffix;
+    }
 }
 if (!function_exists('convertVietnameseToLatin')) {
     function convertVietnameseToLatin($str)

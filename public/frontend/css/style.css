@@ -3218,8 +3218,8 @@ button.thumb-btn {
 /*  User Profile
 /*------------------------------------------*/
 .avatar-user{
-    width: 15rem;
-    height: 15rem;
+    width: 13rem;
+    height: 13rem;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -3241,6 +3241,197 @@ button.thumb-btn {
     background-color: #13357b !important;
     border-color: #dee2e6 #dee2e6 #fff;
 }
+.avatar-profile-post{
+    width: 100%;
+    border-radius: 50%;
+}
 /* -----------------------------------------*/
 /*  User Profile
 /*------------------------------------------*/
+/* Styling chung cho container và các item (giữ nguyên hoặc điều chỉnh theo ý bạn) */
+.media-gallery {
+    display: grid;
+    gap: 5px; /* Khoảng cách giữa các ảnh */
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #f0f0f0;
+}
+
+.media-item {
+    position: relative; /* Rất quan trọng để .view-more-overlay định vị tuyệt đối trong nó */
+    width: 100%;
+    overflow: hidden;
+    display: flex; /* Để căn giữa nội dung (ảnh) */
+    justify-content: center;
+    align-items: center;
+    background-color: #ccc;
+}
+
+.media-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* --- CSS cho lớp phủ "Xem thêm" --- */
+.view-more-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Sử dụng rgba() để có màu nền với độ trong suốt */
+    background-color: rgba(0, 0, 0, 0.6); /* Đen với độ mờ 60% (1 - 0.3 opacity) */
+    color: white; /* Màu chữ trắng */
+    font-size: 2em;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex; /* Dùng flexbox để căn giữa chữ */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 2; /* Đảm bảo lớp phủ nằm trên ảnh (nếu ảnh có z-index mặc định hoặc 1) */
+}
+
+/* --- CÁC BỐ CỤC DỰA TRÊN SỐ LƯỢNG ẢNH (giữ nguyên hoặc điều chỉnh) --- */
+
+/* 1 ảnh */
+.media-gallery.media-count-1 {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+}
+.media-gallery.media-count-1 .media-item:first-child {
+    padding-bottom: 75%;
+}
+
+/* 2 ảnh */
+.media-gallery.media-count-2 {
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 250px;
+}
+
+/* 3 ảnh */
+.media-gallery.media-count-3 {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 250px;
+}
+.media-gallery.media-count-3 .media-item:first-child {
+    grid-column: 1 / span 2;
+}
+
+/* 4 ảnh (và trường hợp >4 ảnh với "xem thêm" trên ảnh cuối cùng) */
+.media-gallery.media-count-4 {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 250px;
+}
+
+/* --- Responsive (tùy chọn) --- */
+@media (max-width: 600px) {
+    .media-gallery {
+        gap: 3px;
+    }
+    .media-gallery.media-count-2,
+    .media-gallery.media-count-3,
+    .media-gallery.media-count-4 {
+        grid-auto-rows: 150px;
+    }
+    .media-gallery.media-count-2,
+    .media-gallery.media-count-3,
+    .media-gallery.media-count-4 {
+        grid-template-columns: 1fr;
+    }
+    .media-gallery.media-count-3 .media-item:first-child {
+        grid-column: unset;
+    }
+}
+/* CSS cho Modal/Lightbox */
+.profile-post-modal {
+    display: none;
+    position: fixed;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+    width: 60%;
+    padding: 3rem 0;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.profile-post-modal .modal-content {
+    position: relative; /* Để các nút prev/next định vị tương đối */
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain; /* Đảm bảo ảnh vừa khung mà không bị cắt */
+}
+
+#modalImage {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Đảm bảo ảnh vừa khung modal */
+}
+
+.profile-post-modal .close-button {
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    padding: 10px 10px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    z-index: 1001; /* Nằm trên cả modal-content */
+}
+
+.profile-post-modal .close-button:hover,
+.profile-post-modal .close-button:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Nút Next/Previous */
+.profile-post-modal .prev-button,.profile-post-modal .next-button {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -50px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    -webkit-user-select: none;
+    background-color: rgba(0,0,0,0.5); /* Nền hơi mờ cho nút */
+}
+
+.profile-post-modal .next-button {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.profile-post-modal .prev-button {
+    left: 0;
+    border-radius: 0 3px 3px 0;
+}
+
+.profile-post-modal .prev-button:hover,.profile-post-modal .next-button:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+.btn-interact:hover{
+    background-color: #e1e1e1;
+    border-radius: 5px;
+}

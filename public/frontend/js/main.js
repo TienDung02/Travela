@@ -1085,6 +1085,118 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+        //---------------------------------------------------------//
+        $(document).ready(function() {
+            const $modal = $('#imageModal');
+            const $modalImage = $('#modalImage');
+            const $closeButton = $('.close-button');
+            const $prevButton = $('.prev-button');
+            const $nextButton = $('.next-button');
+
+            let currentImageIndex = 0;
+            const allImageUrls = []; // Mảng này sẽ chứa TẤT CẢ các URL ảnh từ TẤT CẢ các bài đăng
+            let $currentPostMediaItems = null; // Biến để lưu trữ các media-item của bài đăng hiện tại
+
+            // Thu thập tất cả các URL ảnh từ TẤT CẢ các gallery trên trang
+            // và gán sự kiện click cho từng media-item
+            $('.media-item img').each(function() {
+                // Lưu URL của tất cả các ảnh vào một mảng duy nhất
+                // Điều này cần được điều chỉnh nếu bạn muốn nhóm ảnh theo từng bài đăng riêng biệt trong modal.
+                // Để đơn giản cho mục đích hiện tại, chúng ta coi tất cả ảnh là một gallery lớn.
+                // Nếu bạn muốn mỗi bài đăng có gallery riêng, cần truyền dữ liệu khác.
+                allImageUrls.push($(this).attr('src'));
+            });
+
+            // Xử lý click trên media-item
+            $('.media-item').on('click', function() {
+                const clickedImgSrc = $(this).find('img').attr('src');
+                // Tìm index của ảnh được click trong mảng allImageUrls
+                const index = allImageUrls.indexOf(clickedImgSrc);
+
+                if (index !== -1) {
+                    openModal(index);
+                }
+            });
+
+            // Xử lý click vào lớp phủ "view-more-overlay"
+            // Quan trọng: Sử dụng "event delegation" vì các overlay này được tạo động
+            $(document).on('click', '.view-more-overlay', function() {
+                // Khi bấm vào overlay, chúng ta muốn mở gallery của BÀI ĐĂNG đó.
+                // Cần tìm ảnh đầu tiên của bài đăng đó để bắt đầu gallery từ đó.
+                const $postMediaGallery = $(this).closest('.media-gallery');
+                const $firstImageInThisPost = $postMediaGallery.find('.media-item img').first();
+
+                if ($firstImageInThisPost.length > 0) {
+                    const firstImgSrc = $firstImageInThisPost.attr('src');
+                    const index = allImageUrls.indexOf(firstImgSrc); // Tìm index của ảnh đầu tiên của post này
+
+                    if (index !== -1) {
+                        openModal(index);
+                    }
+                }
+            });
+
+            function openModal(index) {
+                currentImageIndex = index;
+                $modalImage.attr('src', allImageUrls[currentImageIndex]);
+                $modal.css('display', 'flex'); // Sử dụng flex để căn giữa
+            }
+
+            function closeModal() {
+                $modal.css('display', 'none');
+            }
+
+            function showNextImage() {
+                currentImageIndex = (currentImageIndex + 1) % allImageUrls.length;
+                $modalImage.attr('src', allImageUrls[currentImageIndex]);
+            }
+
+            function showPrevImage() {
+                currentImageIndex = (currentImageIndex - 1 + allImageUrls.length) % allImageUrls.length;
+                $modalImage.attr('src', allImageUrls[currentImageIndex]);
+            }
+
+            // Gán sự kiện cho các nút
+            $closeButton.on('click', closeModal);
+            $nextButton.on('click', showNextImage);
+            $prevButton.on('click', showPrevImage);
+
+            // Đóng modal khi bấm ra ngoài ảnh (trên nền đen)
+            $modal.on('click', function(e) {
+                if ($(e.target).is($modal)) {
+                    closeModal();
+                }
+            });
+
+            // Điều hướng bằng phím mũi tên
+            $(document).on('keydown', function(e) {
+                if ($modal.css('display') === 'flex') { // Chỉ hoạt động khi modal đang mở
+                    if (e.key === 'ArrowRight') {
+                        showNextImage();
+                    } else if (e.key === 'ArrowLeft') {
+                        showPrevImage();
+                    } else if (e.key === 'Escape') {
+                        closeModal();
+                    }
+                }
+            });
+        });
+        //---------------------------------------------------------//
+
+
+
+
+
     });
 
 
