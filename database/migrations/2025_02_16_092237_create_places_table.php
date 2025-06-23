@@ -19,6 +19,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('desc')->nullable();
+            $table->string('address')->nullable();
             $table->integer('ward_id');
             $table->string('tag')->nullable();
             $table->decimal('lat', 10, 7)->nullable();

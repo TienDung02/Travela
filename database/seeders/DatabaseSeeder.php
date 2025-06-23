@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
             CurrencySeeder::class,
             PreferencesSeeder::class,
             CategorySeeder::class,
+            HotelSeeder::class,
         ]);
 
         User::factory(10)->create();
