@@ -77,8 +77,8 @@
 | `FB_CLIENT_ID` | `string` |                         |
 | `WEATHER_API_KEY` | `string` | **Required** Fetching destination's weather. |
 | `GEMINI_API_KEY` | `string` | **Required** Generate Schedule |
-| `GOOGLE_CALENDAR_CLIENT_ID` | 'string' | Google Calendar Client|
-| `MAP_SCRAPER_LINK` | 'string' | Deployed Scraping service | 
+| `GOOGLE_CALENDAR_CLIENT_ID` | `string` | Google Calendar Client|
+| `MAP_SCRAPER_LINK` | `string` | Deployed Scraping service | 
 
 ## Công nghệ sử dụng:
 
