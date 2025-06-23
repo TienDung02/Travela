@@ -65,7 +65,8 @@
 
 ## Mô hình hệ thống - ERD
 
-[Mô hình ERD](https://github.com/user-attachments/files/20853402/web_ww.pdf)
+
+[<img src="https://github.com/user-attachments/assets/0c565adc-fc18-4cd2-807c-dbd20e8b096b" width="300"></img>](https://github.com/user-attachments/files/20853402/web_ww.pdf)
 
 ## Công nghệ sử dụng:
 
