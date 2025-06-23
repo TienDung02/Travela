@@ -68,6 +68,18 @@
 
 [<img src="https://github.com/user-attachments/assets/0c565adc-fc18-4cd2-807c-dbd20e8b096b" width="300"></img>](https://github.com/user-attachments/files/20853402/web_ww.pdf)
 
+
+## APIS 
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `GOOGLE_CLIENT_ID` | `string` | **Required**. Google client for login & google calender schedule. |
+| `FB_CLIENT_ID` | `string` |                         |
+| `WEATHER_API_KEY` | `string` | **Required** Fetching destination's weather. |
+| `GEMINI_API_KEY` | `string` | **Required** Generate Schedule |
+| `GOOGLE_CALENDAR_CLIENT_ID` | 'string' | Google Calendar Client|
+| `MAP_SCRAPER_LINK` | 'string' | Deployed Scraping service | 
+
 ## Công nghệ sử dụng:
 
 
@@ -81,6 +93,7 @@
     <img src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo-shadow.png" alt="Bootstrap logo" width="200" height="165">
   </a>
 </p>
+
 
 
 
