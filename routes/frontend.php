@@ -39,7 +39,8 @@ Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/service', [ServiceController::class, 'index'])->name('service.index');
 Route::get('/package', [PackageController::class, 'index'])->name('package.index');
 
-
+//Hotels
+Route::get('/hotels/{id}', [App\Http\Controllers\frontend\HotelController::class, 'show'])->name('hotels.show');
 
 // Login
 Route::get('/login', [LoginController::class, 'index'])->name('login');

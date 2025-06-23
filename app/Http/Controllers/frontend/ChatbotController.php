@@ -41,7 +41,7 @@ class ChatbotController
                     $q->orWhere('address', 'like', "%{$name}%")
                       ->orWhere('name', 'like', "%{$name}%");
                 }
-            })->get();
+            })->get()->take(5);
 
             // Places with matching partial name or partial address
             $places = \App\Models\Place::where(function($q) use ($locationNames) {
@@ -49,7 +49,7 @@ class ChatbotController
                     $q->orWhere('name', 'like', "%{$name}%")
                       ->orWhere('address', 'like', "%{$name}%");
                 }
-            })->get();
+            })->get()->take(5);
 
             // Tours that have places with partial name or partial address match
             $tours = \App\Models\Tour::whereHas('places', function($q) use ($locationNames) {
@@ -57,7 +57,7 @@ class ChatbotController
                     $q->orWhere('places.name', 'like', "%{$name}%")
                       ->orWhere('places.address', 'like', "%{$name}%");
                 }
-            })->with('places')->get();
+            })->with('places')->get()->take(5);
 
             // Packages whose tour has places with partial name or partial address match
             $packages = \App\Models\Package::whereHas('tour.places', function($q) use ($locationNames) {
@@ -65,7 +65,7 @@ class ChatbotController
                     $q->orWhere('places.name', 'like', "%{$name}%")
                       ->orWhere('places.address', 'like', "%{$name}%");
                 }
-            })->with('tour.places')->get();
+            })->with('tour.places')->get()->take(5);
         } else {
             $places = collect();
         }
@@ -86,7 +86,8 @@ Dưới đây là một số dữ liệu liên quan đến địa chỉ mà ngư
 
 $context
 
-Hãy trả lời ngắn gọn, đúng trọng tâm. Nếu có nội dung liên quan, hãy gợi ý kèm link cụ thể. **không cần dùng cú pháp Markdown [link](url)**. Hãy chỉ hiển thị link đơn giản
+Hãy trả lời câu hỏi của người dùng một cách tự nhiên, thân thiện và dễ hiểu nhất có thể. Nếu có các gợi ý liên quan, hãy liệt kê chúng kèm theo link. Mỗi link hãy trình bày dưới dạng thẻ <a> với thuộc tính title là nội dung gợi ý và href là đường dẫn tương ứng. Nếu không có thông tin nào phù hợp, hãy trả lời rằng không tìm thấy thông tin liên quan. Trả lời bằng tiếng Việt.
+
 
 Câu hỏi người dùng: $userMessage
 EOT;
@@ -97,9 +98,9 @@ EOT;
         try {
             // Gọi Gemini
             $reply = $this->geminiService->chatBot(['message' => $prompt]);
-
+            
             // Xử lý phản hồi để biến đổi URLs thành links có thể click được
-            $processedReply = $this->processReplyForLinks($reply);
+            $processedReply = $reply;
 
             // Ghi log phản hồi
             Log::info("🟩 Phản hồi từ Gemini:\n" . $reply);
@@ -124,16 +125,62 @@ EOT;
      */
     private function processReplyForLinks($reply)
     {
-        // Chuyển đổi URLs thành thẻ <a>
-        $urlPattern = '/(https?:\/\/[^\s]+)/i';
-        $reply = preg_replace($urlPattern, '<a href="$1" target="_blank">$1</a>', $reply);
-        
-        // Chuyển đổi localhost URLs
-        $localUrlPattern = '/(localhost:[0-9]+\/[^\s]+)/i';
-        $reply = preg_replace($localUrlPattern, '<a href="http://$1" target="_blank">$1</a>', $reply);
-        
-        // Chuyển đổi định dạng markdown bold (**text**) thành <strong>
+        // Chuyển đổi định dạng markdown bold (**text**) thành <strong> trước khi xử lý URL
         $reply = preg_replace('/\*\*(.*?)\*\*/m', '<strong>$1</strong>', $reply);
+        
+        // Tìm tất cả URLs và lưu lại để xử lý
+        preg_match_all('/(https?:\/\/[^\s"<>]+)|(localhost:[0-9]+\/[^\s"<>]+)/i', $reply, $matches);
+        $allUrls = array_merge($matches[0], $matches[1], $matches[2]);
+        $allUrls = array_filter($allUrls);
+        
+        // Tạo mảng lưu trữ các URL và tên tương ứng để thay thế
+        $urlMappings = $this->prepareUrlNameMappings();
+        
+        // Xử lý từng URL tìm được
+        foreach ($allUrls as $url) {
+            // Nếu URL là localhost, thêm http://
+            if (strpos($url, 'localhost') === 0) {
+                $fullUrl = 'http://' . $url;
+            } else {
+                $fullUrl = $url;
+            }
+            
+            // Trích xuất ID từ URL
+            $parts = explode('/', $url);
+            $id = end($parts);
+            
+            // Xác định loại URL và tên hiển thị phù hợp
+            $linkText = $url; // Mặc định là URL gốc
+            
+            // Kiểm tra xem URL có trong mapping không
+            if (isset($urlMappings[$url]) || isset($urlMappings[$fullUrl])) {
+                $linkText = $urlMappings[$url] ?? $urlMappings[$fullUrl];
+            } 
+            // Hoặc kiểm tra theo pattern URL
+            else {
+                if (strpos($url, '/hotels/') !== false) {
+                    $hotel = Hotel::find($id);
+                    if ($hotel) $linkText = "Khách sạn " . $hotel->name;
+                } 
+                elseif (strpos($url, '/destination-detail/') !== false) {
+                    $place = Place::find($id);
+                    if ($place) $linkText = "Địa điểm " . $place->name;
+                } 
+                elseif (strpos($url, '/tour/') !== false) {
+                    $tour = Tour::find($id);
+                    if ($tour) $linkText = "Tour " . $tour->name;
+                } 
+                elseif (strpos($url, '/packages/') !== false) {
+                    $package = Package::find($id);
+                    if ($package) $linkText = "Gói " . $package->name;
+                }
+            }
+            
+            // Thay thế URL với thẻ a
+            $escapedUrl = preg_quote($url, '/');
+            $reply = preg_replace('/(?<!href="|src=")' . $escapedUrl . '/i', 
+                '<a href="' . $fullUrl . '" target="_blank">' . $linkText . '</a>', $reply, 1);
+        }
         
         // Đảm bảo mỗi mục (bắt đầu với dấu - hoặc các biểu tượng emoji phổ biến) có khoảng cách phù hợp
         $reply = preg_replace('/(- (?:🏨|🚍|📦|📍).*?)(\n[^-\n])/s', '$1\n\n$2', $reply);
@@ -142,6 +189,44 @@ EOT;
         $reply = preg_replace('/(\n)(?!\n)([^-\s])/m', "\n\n$2", $reply);
         
         return $reply;
+    }
+    
+    /**
+     * Chuẩn bị mapping từ URLs sang tên thực thể tương ứng
+     */
+    private function prepareUrlNameMappings()
+    {
+        $mappings = [];
+        
+        // Xử lý Hotels
+        $hotels = Hotel::select('id', 'name')->get();
+        foreach ($hotels as $hotel) {
+            $url = url("/hotels/{$hotel->id}");
+            $mappings[$url] = "Khách sạn {$hotel->name}";
+        }
+        
+        // Xử lý Places
+        $places = Place::select('id', 'name')->get();
+        foreach ($places as $place) {
+            $url = url("/destination-detail/{$place->id}");
+            $mappings[$url] = "Địa điểm {$place->name}";
+        }
+        
+        // Xử lý Tours
+        $tours = Tour::select('id', 'name')->get();
+        foreach ($tours as $tour) {
+            $url = url("/tour/{$tour->id}");
+            $mappings[$url] = "Tour {$tour->name}";
+        }
+        
+        // Xử lý Packages
+        $packages = Package::select('id', 'name')->get();
+        foreach ($packages as $package) {
+            $url = url("/packages/{$package->id}");
+            $mappings[$url] = "Gói {$package->name}";
+        }
+        
+        return $mappings;
     }
 
     /**
@@ -187,51 +272,51 @@ EOT;
 
         // Hotels
         foreach ($hotels as $hotel) {
-            $context .= "- 🏨 Khách sạn: {$hotel->name} -" . ($hotel->desc ?? 'Không có mô tả') . "\n";
-            $context .= "  📍 Địa chỉ: {$hotel->address}";
+            $context .= "- Khách sạn: {$hotel->name} -" . ($hotel->desc ?? 'Không có mô tả') . "\n";
+            $context .= "  Địa chỉ: {$hotel->address}";
             if (!is_null($hotel->star_rating)) {
-                $context .= " | ⭐ Xếp hạng: {$hotel->star_rating} sao";
+                $context .= " | Xếp hạng: {$hotel->star_rating} sao";
             }
             $context .= "\n  🔗 Link: " . url("/hotels/{$hotel->id}") . "\n\n";
         }
 
         foreach ($places as $place) {
-            $context .= "- 📍 Địa điểm: {$place->name} -" . ($place->desc ?? 'Không có mô tả') . "\n";
+            $context .= "-Địa điểm: {$place->name} -" . ($place->desc ?? 'Không có mô tả') . "\n";
             $info = [];
             if ($place->tag) {
-                $info[] = "🏷️ Thẻ: {$place->tag}";
+                $info[] = "Thẻ: {$place->tag}";
             }
             if ($place->lat && $place->lon) {
-                $info[] = "📌 Vị trí: ({$place->lat}, {$place->lon})";
+                $info[] = "Vị trí: ({$place->lat}, {$place->lon})";
             }
             if ($place->address) {
-                $info[] = "📍 Địa chỉ: {$place->address}";
+                $info[] = "Địa chỉ: {$place->address}";
             }
             if (!empty($info)) {
                 $context .= "  " . implode(" | ", $info) . "\n";
             }
-            $context .= "  🔗 Link: " . url("/destination-detail/{$place->id}") . "\n\n";
+            $context .= "Link: " . url("/destination-detail/{$place->id}") . "\n\n";
         }
         // Tours
         foreach ($tours as $tour) {
             $placeNames = $tour->places->pluck('name')->join(', ');
-            $context .= "- 🚍 Tour: {$tour->name} - " . ($tour->desc ?? 'Không có mô tả') . "\n";
-            $context .= "  📅 Từ: {$tour->start_date} → {$tour->end_date} | 💰 Giá: {$tour->price} VND\n";
+            $context .= "- Tour: {$tour->name} - " . ($tour->desc ?? 'Không có mô tả') . "\n";
+            $context .= "Từ: {$tour->start_date} → {$tour->end_date} | 💰 Giá: {$tour->price} VND\n";
             if (!empty($placeNames)) {
-                $context .= "  🗺️ Lịch trình: $placeNames\n";
+                $context .= "Lịch trình: $placeNames\n";
             }
-            $context .= "  🔗 Link: " . url("/tour/{$tour->id}") . "\n\n";
+            $context .= "Link: " . url("/tour/{$tour->id}") . "\n\n";
         }
 
         // Packages
         foreach ($packages as $pkg) {
-            $context .= "- 📦 Gói: {$pkg->name} - " . ($pkg->desc ?? 'Không có mô tả') . "\n";
-            $context .= "  💰 Giá: {$pkg->price} VND\n";
+            $context .= "- Gói: {$pkg->name} - " . ($pkg->desc ?? 'Không có mô tả') . "\n";
+            $context .= "  Giá: {$pkg->price} VND\n";
             if ($pkg->tour && $pkg->tour->places) {
                 $placeNames = $pkg->tour->places->pluck('name')->join(', ');
-                $context .= "  🗺️ Lịch trình: $placeNames\n";
+                $context .= "  Lịch trình: $placeNames\n";
             }
-            $context .= "  🔗 Link: " . url("/packages/{$pkg->id}") . "\n\n";
+            $context .= "  Link: " . url("/packages/{$pkg->id}") . "\n\n";
         }
 
         return $context;
