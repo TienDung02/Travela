@@ -9,6 +9,7 @@
 # Hệ thống đề xuất du lịch Travela - NT208
 Đồ án môn lập trình ứng dụng web NT208, Hệ thống đề xuất du lịch thông minh dựa trên AI.
 
+[Liên kết đồ án](https://github.com/TienDung02/Travela/)
 ## Giới thiệu môn học
 
 - **Tên môn học:** Lập trình ứng dụng web
