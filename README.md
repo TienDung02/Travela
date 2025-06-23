@@ -1,11 +1,19 @@
+<p align="center">
+  <a href="travela.online">
+    <img src="https://github.com/user-attachments/assets/24f64dc3-5aad-440b-9759-d735d9564aff" alt="travela logo" width="500">
+  </a>
+</p>
+
+
 
 # Hệ thống đề xuất du lịch Travela - NT208
-Đồ án môn lập trình ứng dụng web NT208
+Đồ án môn lập trình ứng dụng web NT208, Hệ thống đề xuất du lịch thông minh dựa trên AI.
 
 ## Giới thiệu môn học
 
 - **Tên môn học:** Lập trình ứng dụng web
 - **Mã môn học:** NT208
+- **Mã lớp:** NT208.P22.ANTT
 - **Năm học:** 2024-2025
 - **Giảng viên lý thuyết:** Trần Tuấn Dũng
 
@@ -42,12 +50,12 @@
 - Tìm kiếm địa điểm du lịch theo từ khóa, danh mục. Tìm kiếm các chuyến đi và gói dịch vụ theo giá. Đánh giá và bình luận về các địa điểm du lịch.
 
     [<img src="https://github.com/user-attachments/assets/09be9cc7-38e0-4c21-97fd-cd0b4787f8be" width="50%">](  https://uithcm-my.sharepoint.com/:v:/g/personal/23520456_ms_uit_edu_vn/Ednj37rSBANOnOqRU1j8FOEBIqquHPFjGq6ilzq0YtFx4A?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=BtNjBk)
-    [<img src="https://github.com/user-attachments/assets/2ee14793-6697-4139-8fa6-0027f79862db" width="50%">](  https://uithcm-my.sharepoint.com/personal/23520456_ms_uit_edu_vn/_layouts/15/stream.aspx?id=%2Fpersonal%2F23520456%5Fms%5Fuit%5Fedu%5Fvn%2FDocuments%2FTravela%2Ddemo%2FDemo%20%2D%20Packages%20%2D%20Made%20with%20Clipchamp%2Emp4&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&ga=1&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Ebc323714%2Dd7b8%2D404c%2Da0c4%2D1dee99f72628)
+    [<img src="https://github.com/user-attachments/assets/2ee14793-6697-4139-8fa6-0027f79862db" width="50%">]( https://uithcm-my.sharepoint.com/:v:/g/personal/23520456_ms_uit_edu_vn/EdLbPAnrMbVGqnIxI4oHhyQBU774n8oiAjhejZbPYHml1w?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=XNtZCk)
 
 
 - Chat bot hỗ trợ tìm các địa điểm , tour, gói, khách sạn cho người dùng.
 
-   [<img src="https://github.com/user-attachments/assets/650115ab-9d67-4349-ae0c-4468ee40feac" width="50%">](  https://uithcm-my.sharepoint.com/personal/23520456_ms_uit_edu_vn/_layouts/15/stream.aspx?id=%2Fpersonal%2F23520456%5Fms%5Fuit%5Fedu%5Fvn%2FDocuments%2FTravela%2Ddemo%2Fdemo%20%2D%20chat%20bot%20%2D%20Made%20with%20Clipchamp%2Emp4&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&ga=1&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E2354f1f2%2D6f48%2D441d%2Db920%2Dd25b9a459f79)
+   [<img src="https://github.com/user-attachments/assets/650115ab-9d67-4349-ae0c-4468ee40feac" width="50%">]( https://uithcm-my.sharepoint.com/:v:/g/personal/23520456_ms_uit_edu_vn/EcvTtFDmY6BFo9X-D1TiXUgBvsRv7ly-vOT1mGrtpychfQ?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=MLOZJN)
   
 
 
@@ -59,6 +67,19 @@
 
 [Mô hình ERD](https://github.com/user-attachments/files/20853402/web_ww.pdf)
 
+## Công nghệ sử dụng:
+
+
+  <p align="start"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+
+
+
+
+  <p align="start">
+  <a href="https://getbootstrap.com/">
+    <img src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo-shadow.png" alt="Bootstrap logo" width="200" height="165">
+  </a>
+</p>
 
 
 
